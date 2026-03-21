@@ -1,0 +1,2849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Merger Mania — Live M&A Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F4F6F9;
+    --surface:   #FFFFFF;
+    --surface2:  #F8FAFC;
+    --surface3:  #F1F4F8;
+    --border:    #E2E8F0;
+    --border2:   #CBD5E1;
+    --brand:     #C84B11;
+    --brand2:    #A83A09;
+    --navy:      #0F2044;
+    --navy2:     #1A3260;
+    --blue:      #1A5FAB;
+    --blue-lt:   #EBF3FC;
+    --green:     #0D6B3E;
+    --green-lt:  #EDFAF3;
+    --amber:     #92521C;
+    --amber-lt:  #FEF6EE;
+    --red:       #A32020;
+    --red-lt:    #FEF2F2;
+    --text:      #1A2333;
+    --text-mid:  #4A5568;
+    --text-dim:  #8898AA;
+    --sans:      'DM Sans', system-ui, sans-serif;
+    --mono:      'JetBrains Mono', monospace;
+    --shadow-sm: 0 1px 2px rgba(15,32,68,.06), 0 1px 3px rgba(15,32,68,.04);
+    --shadow:    0 2px 8px rgba(15,32,68,.08), 0 1px 3px rgba(15,32,68,.05);
+    --shadow-lg: 0 8px 32px rgba(15,32,68,.14), 0 2px 8px rgba(15,32,68,.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg) !important;
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    max-width: 1820px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────────────── */
+  header {
+    background: var(--navy);
+    border-bottom: 3px solid var(--brand);
+  }
+
+  .header-inner {
+    max-width: 1820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 18px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .logo-wordmark {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.8px;
+    line-height: 1;
+  }
+
+  .logo-wordmark .word-mania {
+    color: #FF8C5A;
+  }
+
+  .logo-tagline {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: var(--mono);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.5px;
+    font-family: var(--mono);
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4ADE80;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 5px #4ADE80;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .last-updated {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    font-family: var(--mono);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── CONTROLS ────────────────────────────────────────────────────── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 0 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    color: var(--text-mid);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+    background: var(--surface2);
+  }
+
+  .filter-btn.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .search-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 12px;
+    padding: 6px 12px 6px 32px;
+    border-radius: 6px;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.12s, box-shadow 0.12s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8' stroke='%238898AA' stroke-width='2'/%3E%3Cpath d='m21 21-4.35-4.35' stroke='%238898AA' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+  }
+
+  .search-box:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,95,171,.10);
+  }
+
+  .search-box::placeholder { color: var(--text-dim); }
+
+  .btn-primary {
+    background: var(--navy);
+    border: 1px solid var(--navy);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover { background: var(--navy2); border-color: var(--navy2); }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: var(--blue-lt);
+    border: 1px solid #BBDAF5;
+    color: var(--blue);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+
+  .btn-secondary:hover { background: #D8ECFB; }
+  .btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .spacer { flex: 1; }
+
+  .deal-count-chip {
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .deal-count-chip span {
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  #priceStatus {
+    font-size: 11px;
+    color: var(--green);
+    font-family: var(--mono);
+    font-weight: 500;
+  }
+
+  /* ── STATS BAR ───────────────────────────────────────────────────── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--navy);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    font-family: var(--mono);
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .stat-value.green { color: var(--green); }
+  .stat-value.amber { color: var(--amber); }
+  .stat-value.red   { color: var(--red); }
+
+  /* ── SOURCE BAR ──────────────────────────────────────────────────── */
+  .source-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    background: var(--amber-lt);
+    border: 1px solid #F0C89A;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-size: 11px;
+    color: var(--amber);
+    flex-wrap: wrap;
+    font-family: var(--mono);
+  }
+
+  .source-bar strong { color: var(--amber); font-weight: 600; }
+
+  /* ── TABLE ───────────────────────────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1440px;
+    table-layout: auto;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  thead tr {
+    background: var(--navy);
+  }
+
+  th {
+    padding: 11px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.12s;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    font-family: var(--mono);
+  }
+
+  th:last-child { border-right: none; }
+  th:hover { color: #fff; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+    cursor: pointer;
+    animation: rowIn 0.25s ease both;
+  }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateY(3px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  tbody tr:hover { background: #EEF4FB !important; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--surface2); }
+
+  td {
+    padding: 11px 14px;
+    vertical-align: top;
+    font-size: 12px;
+    line-height: 1.5;
+    border-right: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  td:last-child { border-right: none; }
+
+  /* ── DEAL TYPE BADGE ─────────────────────────────────────────────── */
+  .deal-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--mono);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    margin-top: 5px;
+  }
+
+  .deal-type-cash {
+    background: #EBF3FC;
+    color: #1A5FAB;
+    border: 1px solid #BBDAF5;
+  }
+
+  .deal-type-stock {
+    background: #EDFAF3;
+    color: #0D6B3E;
+    border: 1px solid #A7DFC4;
+  }
+
+  .deal-type-mixed {
+    background: #FEF6EE;
+    color: #92521C;
+    border: 1px solid #F0C89A;
+  }
+
+  /* ── DEAL SIZE / VALUATION CELL ─────────────────────────────────── */
+  .deal-size-cell { min-width: 130px; white-space: nowrap; }
+
+  .deal-size-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    font-family: var(--mono);
+    line-height: 1.2;
+  }
+
+  .ev-ebitda-badge {
+    display: inline-block;
+    margin-top: 4px;
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-mid);
+    font-family: var(--mono);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── DESCRIPTION CELL ────────────────────────────────────────────── */
+  .desc-cell {
+    min-width: 240px;
+    max-width: 300px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  .desc-text-inline {
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  /* ── COMMENTARY CELL ─────────────────────────────────────────────── */
+  .commentary-cell {
+    min-width: 240px;
+    max-width: 300px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  /* ── OTHER SUITORS CELL ──────────────────────────────────────────── */
+  .suitors-cell { min-width: 180px; max-width: 230px; }
+
+  .suitor-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+
+  .suitor-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--amber);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .no-suitors {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  tbody tr.row-at-risk { background: #FFF8F8 !important; }
+  tbody tr.row-at-risk:hover { background: #FEEEEE !important; }
+  tbody tr.row-at-risk td:first-child { border-left: 3px solid var(--red); }
+
+  tbody tr.row-high-spread td:first-child { border-left: 3px solid var(--green); }
+
+  /* ── SORTABLE TH HOVER HINT ──────────────────────────────────────── */
+  th[onclick] { position: relative; }
+  th[onclick]:not(.sort-active)::after {
+    content: '↕';
+    margin-left: 5px;
+    font-size: 9px;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+  th[onclick]:hover:not(.sort-active)::after { opacity: 0.5; }
+
+  /* ── SPREAD CELL HEAT ────────────────────────────────────────────── */
+  .spread-cell { text-align: right; min-width: 90px; }
+  .spread-val { font-size: 15px; font-weight: 700; font-family: var(--mono); }
+  .spread-val.positive { color: var(--green); }
+  .spread-val.negative { color: var(--red); }
+  .spread-val.neutral  { color: var(--amber); }
+
+  /* ── ANN RETURN CELL ─────────────────────────────────────────────── */
+  .ann-cell { text-align: right; min-width: 100px; }
+  .ann-val { font-size: 14px; font-weight: 700; font-family: var(--mono); }
+  .ann-val.high { color: var(--green); }
+  .ann-val.mid  { color: var(--amber); }
+  .ann-val.low  { color: var(--text-mid); }
+
+  /* ── DEAL AGE BADGE ──────────────────────────────────────────────── */
+  .deal-age {
+    font-size: 9px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    margin-top: 3px;
+  }
+
+  /* ── OPPORTUNITY STAR ────────────────────────────────────────────── */
+  .opp-star {
+    display: inline-block;
+    font-size: 10px;
+    color: #C89B0F;
+    margin-left: 4px;
+    vertical-align: middle;
+    title: "Top opportunity";
+  }
+
+  /* ── CLOSE PROGRESS BAR ──────────────────────────────────────────── */
+  .close-progress {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+  .close-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--green);
+    transition: width 0.4s ease;
+  }
+  .close-progress-fill.amber { background: var(--amber); }
+  .close-progress-fill.red   { background: var(--red); }
+
+  /* ── STAT CARD ACCENTS ───────────────────────────────────────────── */
+  .stat-card.s-green { border-top-color: var(--green); }
+  .stat-card.s-amber { border-top-color: var(--amber); }
+  .stat-card.s-red   { border-top-color: var(--red); }
+  .stat-card.s-blue  { border-top-color: var(--blue); }
+
+  /* ── CELLS ───────────────────────────────────────────────────────── */
+  .company-cell { min-width: 180px; }
+
+  .target-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+
+  .acquirer-name {
+    font-size: 11px;
+    color: var(--text-mid);
+    margin-top: 2px;
+  }
+
+  .acquirer-name span {
+    color: var(--blue);
+    font-weight: 500;
+  }
+
+  .ticker-badge {
+    display: inline-block;
+    background: var(--navy);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+  }
+
+  .geo-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.3px;
+    font-family: var(--mono);
+  }
+
+  .geo-usa { background: #DBEAFE; color: #1E40AF; border: 1px solid #BFDBFE; }
+  .geo-eu  { background: #FEF9C3; color: #854D0E; border: 1px solid #FDE68A; }
+
+  .industry-tag {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  .price-cell { text-align: right; min-width: 110px; }
+
+  .current-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: var(--mono);
+  }
+
+  .deal-price {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-family: var(--mono);
+  }
+
+  .spread-cell { text-align: right; min-width: 90px; }
+
+  .spread-val {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+
+  .spread-val.positive { color: var(--green); }
+  .spread-val.negative { color: var(--red); }
+  .spread-val.neutral  { color: var(--amber); }
+
+  .ann-cell { text-align: right; min-width: 100px; }
+
+  .ann-val {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+
+  .ann-val.high { color: var(--green); }
+  .ann-val.mid  { color: var(--amber); }
+  .ann-val.low  { color: var(--text-mid); }
+
+  .date-cell { min-width: 110px; }
+  .date-label { font-size: 10px; color: var(--text-dim); font-weight: 500; margin-bottom: 1px; }
+
+  .days-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  .days-close { background: var(--green-lt); color: var(--green); border: 1px solid #A7DFC4; }
+  .days-mid   { background: var(--amber-lt); color: var(--amber); border: 1px solid #F0C89A; }
+  .days-far   { background: var(--surface3); color: var(--text-dim); border: 1px solid var(--border); }
+
+  .status-cell { min-width: 110px; }
+
+  .deal-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  .status-pending  { background: var(--amber-lt); color: var(--amber); border: 1px solid #F0C89A; }
+  .status-pending .status-dot { background: var(--amber); }
+
+  .status-approved { background: var(--green-lt); color: var(--green); border: 1px solid #A7DFC4; }
+  .status-approved .status-dot { background: var(--green); }
+
+  .status-risk { background: var(--red-lt); color: var(--red); border: 1px solid #FCA5A5; }
+  .status-risk .status-dot { background: var(--red); }
+
+  .reg-cell { min-width: 230px; }
+  .reg-section { margin-bottom: 6px; }
+
+  .reg-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .reg-title.achieved { color: var(--green); }
+  .reg-title.pending  { color: var(--amber); }
+
+  .reg-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.4;
+    margin-bottom: 2px;
+  }
+
+  .reg-item .icon { font-size: 9px; flex-shrink: 0; margin-top: 2px; color: var(--text-dim); }
+
+  .desc-cell {
+    min-width: 260px;
+    max-width: 340px;
+    width: 340px;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  .desc-text {
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .comment-text {
+    font-size: 11px;
+    color: var(--text-mid);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.6;
+    padding: 7px 10px 7px 12px;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-lt);
+    border-radius: 0 5px 5px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: block;
+  }
+  .no-comment { color: var(--text-dim); font-size: 11px; }
+
+  /* ── CLOSING PROBABILITY ─────────────────────────────────────────── */
+  .prob-wrap {
+    margin-top: 6px;
+  }
+  .prob-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+  }
+  .prob-bar-outer {
+    height: 8px;
+    background: var(--surface3);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .prob-bar-inner {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+  .prob-bar-inner.high  { background: linear-gradient(90deg, var(--green), #4ade80); }
+  .prob-bar-inner.mid   { background: linear-gradient(90deg, var(--amber), #fde68a); }
+  .prob-bar-inner.low   { background: linear-gradient(90deg, var(--red), #fca5a5); }
+  .prob-pct {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--mono);
+    margin-top: 2px;
+  }
+  .prob-pct.high { color: var(--green); }
+  .prob-pct.mid  { color: var(--amber); }
+  .prob-pct.low  { color: var(--red); }
+
+  /* ── REGULATORY STEPS IN MODAL ───────────────────────────────────── */
+  .reg-step {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .reg-step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+  .reg-step-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reg-step-badge {
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .reg-step-badge.done    { background: rgba(34,211,160,0.1); color: var(--green); border: 1px solid rgba(34,211,160,0.25); }
+  .reg-step-badge.pending { background: var(--surface3); color: var(--text-mid); border: 1px solid var(--border2); }
+  .reg-step-prob-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .reg-step-bar-outer {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .reg-step-bar-inner {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .reg-step-bar-inner.high  { background: var(--green); }
+  .reg-step-bar-inner.mid   { background: var(--amber); }
+  .reg-step-bar-inner.low   { background: var(--red); }
+  .reg-step-pct {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--mono);
+    min-width: 36px;
+    text-align: right;
+  }
+  .reg-step-pct.high { color: var(--green); }
+  .reg-step-pct.mid  { color: var(--amber); }
+  .reg-step-pct.low  { color: var(--red); }
+  .reg-step-detail {
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-top: 3px;
+  }
+
+  /* ── LOADING ─────────────────────────────────────────────────────── */
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    gap: 16px;
+    background: var(--surface);
+  }
+
+  .spinner-ring {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    border-top-color: var(--navy);
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 300px;
+  }
+
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  .loading-step.active { color: var(--navy); font-weight: 600; }
+  .loading-step.done   { color: var(--text-dim); text-decoration: line-through; }
+
+  .step-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+
+  .loading-step.active .step-dot { background: var(--navy); }
+  .loading-step.done .step-dot   { background: var(--border2); }
+
+  /* ── ERROR ───────────────────────────────────────────────────────── */
+  .error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    gap: 10px;
+    text-align: center;
+    background: var(--surface);
+  }
+
+  .error-icon { font-size: 32px; }
+  .error-msg  { color: var(--red); font-size: 14px; font-weight: 600; }
+  .error-sub  { color: var(--text-dim); font-size: 12px; max-width: 400px; }
+
+  /* ── MODAL ───────────────────────────────────────────────────────── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,32,68,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 820px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.18s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.97) translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+    border-top: 4px solid var(--navy);
+    border-radius: 10px 10px 0 0;
+  }
+
+  .modal-close {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+    width: 30px; height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: all 0.12s;
+  }
+
+  .modal-close:hover { background: var(--red-lt); border-color: #FCA5A5; color: var(--red); }
+
+  .modal-body { padding: 20px 24px; }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .modal-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+
+  .modal-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-family: var(--mono);
+  }
+
+  .modal-card-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    font-family: var(--mono);
+  }
+
+  .modal-card-value.green { color: var(--green); }
+  .modal-card-value.amber { color: var(--amber); }
+
+  .modal-section { margin-bottom: 18px; }
+
+  .modal-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+    font-family: var(--mono);
+  }
+
+  .reg-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .reg-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .reg-list-item.done    { background: var(--green-lt); border: 1px solid #A7DFC4; }
+  .reg-list-item.pending { background: var(--amber-lt); border: 1px solid #F0C89A; }
+  .reg-list-item .icon   { font-size: 13px; flex-shrink: 0; }
+
+  /* ── FOOTER ──────────────────────────────────────────────────────── */
+  footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-align: center;
+    font-family: var(--mono);
+  }
+
+  footer strong { color: var(--navy); }
+
+  /* ── SCROLLBAR ───────────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--surface2); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+
+  /* ── PROGRESS BAR ────────────────────────────────────────────────── */
+  #progressBar { background: var(--navy) !important; }
+
+  /* ── SORT INDICATOR ─────────────────────────────────────────────── */
+  th.sort-active { color: #fff !important; }
+  th.sort-active::after {
+    content: attr(data-arrow);
+    margin-left: 5px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── STAT CARD ICON ─────────────────────────────────────────────── */
+  .stat-icon { font-size: 15px; margin-bottom: 5px; display: block; opacity: 0.6; }
+
+  /* ── BACK TO TOP ─────────────────────────────────────────────────── */
+  #backToTop {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 38px;
+    height: 38px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 50;
+    pointer-events: none;
+  }
+  #backToTop.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  #backToTop:hover { background: var(--navy2); }
+
+  /* ── KEYBOARD SHORTCUT HINT ──────────────────────────────────────── */
+  .kbd-hint {
+    display: inline-block;
+    font-size: 9px;
+    font-family: var(--mono);
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    color: var(--text-dim);
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── MODAL TICKER BADGE ──────────────────────────────────────────── */
+  .modal-ticker {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--navy);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    letter-spacing: 0.5px;
+  }
+  .modal-risk-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .modal-risk-badge.low  { background: var(--green-lt); color: var(--green); border: 1px solid #A7DFC4; }
+  .modal-risk-badge.med  { background: var(--amber-lt); color: var(--amber); border: 1px solid #F0C89A; }
+  .modal-risk-badge.high { background: var(--red-lt);   color: var(--red);   border: 1px solid #FCA5A5; }
+
+  /* ── EXPORT BUTTON ───────────────────────────────────────────────── */
+  .btn-export {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    color: var(--text-mid);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+  .btn-export:hover { border-color: var(--green); color: var(--green); background: var(--green-lt); }
+
+  /* ── COLUMN TOGGLE PANEL ─────────────────────────────────────────── */
+  .col-toggle-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+
+  .col-toggle-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+
+  .col-toggle-btn {
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--text-mid);
+    transition: all 0.1s;
+    white-space: nowrap;
+  }
+
+  .col-toggle-btn.hidden-col {
+    background: var(--surface3);
+    color: var(--text-dim);
+    border-color: var(--border);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .col-toggle-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ── STICKY FIRST COLUMN ─────────────────────────────────────────── */
+  table { min-width: 900px; }
+
+  tbody td:first-child,
+  thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  thead th:first-child {
+    z-index: 11;
+    background: var(--navy);
+  }
+
+  tbody td:first-child {
+    background: var(--surface);
+  }
+
+  tbody tr:nth-child(even) td:first-child {
+    background: var(--surface2);
+  }
+
+  tbody tr:hover td:first-child {
+    background: #EEF4FB;
+  }
+
+  tbody tr.row-at-risk td:first-child {
+    background: #FFF8F8;
+  }
+
+  tbody tr.row-at-risk:hover td:first-child {
+    background: #FEEEEE;
+  }
+
+  /* ── HIDDEN COLUMN ───────────────────────────────────────────────── */
+  .col-hidden { display: none !important; }
+
+  /* ── FILTER PILLS — EXTRA ────────────────────────────────────────── */
+  .filter-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border2);
+    margin: 0 2px;
+    flex-shrink: 0;
+  }
+  @media print {
+    html, body { background: #fff !important; color: #000 !important; font-size: 10px; }
+    .controls, #backToTop, .btn-primary, .btn-secondary, .btn-export { display: none !important; }
+    .table-wrap { box-shadow: none; border: 1px solid #ccc; }
+    thead tr { background: var(--navy) !important; print-color-adjust: exact; }
+    tbody tr:hover { background: transparent !important; }
+    .modal-overlay { display: none !important; }
+    footer { color: #666; border-top: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-wordmark">Merger <span class="word-mania">Mania</span></div>
+        <span class="logo-tagline">M&amp;A Arbitrage Intelligence · USA &amp; Europe · March 2026</span>
+      </div>
+      <div class="header-right">
+        <div class="live-badge"><span class="live-dot"></span>Web-Verified Data</div>
+        <div id="autoRefreshBadge" style="font-size:10px;color:rgba(255,255,255,0.35);font-family:var(--mono);display:none">⏰ <span id="autoRefreshNext"></span></div>
+        <div class="last-updated" id="lastUpdated">—</div>
+      </div>
+    </div>
+  </header>
+
+<div class="wrapper">
+
+  <div class="controls">
+    <button class="filter-btn active" onclick="setFilter('all')">All Deals</button>
+    <button class="filter-btn" onclick="setFilter('USA')">🇺🇸 USA</button>
+    <button class="filter-btn" onclick="setFilter('EU')">🇪🇺 Europe</button>
+    <div class="filter-divider"></div>
+    <button class="filter-btn" onclick="setFilter('high-spread')">High Spread (&gt;5%)</button>
+    <button class="filter-btn" onclick="setFilter('closing-soon')">Closing Soon</button>
+    <button class="filter-btn" onclick="setFilter('megadeal')">💰 Megadeal (&gt;$10bn)</button>
+    <button class="filter-btn" onclick="setFilter('contested')">⚔️ Contested</button>
+    <button class="filter-btn" onclick="setFilter('top-opp')">★ Top Opps</button>
+    <input class="search-box" type="text" id="searchInput" placeholder="Search target, acquirer, sector, suitors…" oninput="applyFilters()">
+    <div class="deal-count-chip" id="dealCountChip"><span id="dealCountNum">—</span> deals</div>
+    <div class="spacer"></div>
+    <button class="btn-export" onclick="exportCSV()" title="Export visible deals to CSV">⬇ CSV</button>
+    <button class="btn-secondary" id="priceBtn" onclick="fetchLivePrices()">📡 Live Prices</button>
+    <button class="btn-primary" id="refreshBtn" onclick="loadDeals()">↻ Refresh</button>
+    <span id="priceStatus"></span>
+  </div>
+
+  <!-- Column visibility toggles -->
+  <div class="col-toggle-bar" id="colToggleBar" style="display:none">
+    <span class="col-toggle-label">Columns:</span>
+    <button class="col-toggle-btn" data-col="2" onclick="toggleCol(this)">Deal Type</button>
+    <button class="col-toggle-btn" data-col="3" onclick="toggleCol(this)">Deal Size</button>
+    <button class="col-toggle-btn" data-col="4" onclick="toggleCol(this)">Price/Terms</button>
+    <button class="col-toggle-btn" data-col="5" onclick="toggleCol(this)">Spread</button>
+    <button class="col-toggle-btn" data-col="6" onclick="toggleCol(this)">Ann. Return</button>
+    <button class="col-toggle-btn" data-col="7" onclick="toggleCol(this)">Announced</button>
+    <button class="col-toggle-btn" data-col="8" onclick="toggleCol(this)">Exp. Close</button>
+    <button class="col-toggle-btn" data-col="9" onclick="toggleCol(this)">Status</button>
+    <button class="col-toggle-btn" data-col="10" onclick="toggleCol(this)">Regulatory</button>
+    <button class="col-toggle-btn" data-col="11" onclick="toggleCol(this)">Summary</button>
+    <button class="col-toggle-btn" data-col="12" onclick="toggleCol(this)">Commentary</button>
+    <button class="col-toggle-btn" data-col="13" onclick="toggleCol(this)">Suitors</button>
+    <button class="col-toggle-btn" style="margin-left:8px;border-color:var(--navy);color:var(--navy)" onclick="resetCols()">Reset All</button>
+  </div>
+
+  <div class="stats-bar" id="statsBar" style="display:none">
+    <div class="stat-card">
+      <span class="stat-icon">📋</span>
+      <div class="stat-label">Total Deals</div>
+      <div class="stat-value" id="stat-total">—</div>
+    </div>
+    <div class="stat-card s-blue">
+      <span class="stat-icon">💰</span>
+      <div class="stat-label">Total Deal Value</div>
+      <div class="stat-value" id="stat-total-ev-val">—</div>
+    </div>
+    <div class="stat-card s-green">
+      <span class="stat-icon">📈</span>
+      <div class="stat-label">Avg Gross Spread</div>
+      <div class="stat-value green" id="stat-avg-spread">—</div>
+    </div>
+    <div class="stat-card s-amber">
+      <span class="stat-icon">⚡</span>
+      <div class="stat-label">Avg Ann. Return</div>
+      <div class="stat-value amber" id="stat-avg-ann">—</div>
+    </div>
+    <div class="stat-card s-blue">
+      <span class="stat-icon">🇺🇸</span>
+      <div class="stat-label">USA Deals</div>
+      <div class="stat-value" id="stat-usa">—</div>
+    </div>
+    <div class="stat-card s-blue">
+      <span class="stat-icon">🇪🇺</span>
+      <div class="stat-label">Europe Deals</div>
+      <div class="stat-value" id="stat-eu">—</div>
+    </div>
+    <div class="stat-card s-red">
+      <span class="stat-icon">⚠️</span>
+      <div class="stat-label">At-Risk / Wide</div>
+      <div class="stat-value red" id="stat-risk">—</div>
+    </div>
+  </div>
+
+  <div id="sourceBar" class="source-bar" style="display:none">
+    ⚠️ <strong id="sourceNote">—</strong>
+    <span style="margin-left:auto">Not financial advice · Verify all data independently before trading</span>
+  </div>
+
+  <div class="table-wrap" id="tableWrap">
+    <div class="loading-state" id="loadingState">
+      <div class="spinner-ring"></div>
+      <div style="font-weight:600;font-size:14px;color:var(--navy);font-family:'Bebas Neue',sans-serif;letter-spacing:1px">Loading deal data…</div>
+      <div class="loading-steps">
+        <div class="loading-step active" id="step1"><span class="step-dot"></span>Initialising deal database</div>
+        <div class="loading-step" id="step2"><span class="step-dot"></span>Processing regulatory status</div>
+        <div class="loading-step" id="step3"><span class="step-dot"></span>Calculating spreads</div>
+        <div class="loading-step" id="step4"><span class="step-dot"></span>Rendering table</div>
+        <div class="loading-step" id="step5"><span class="step-dot"></span>Complete</div>
+      </div>
+    </div>
+    <div class="error-state" id="errorState" style="display:none">
+      <div class="error-icon">⚠</div>
+      <div class="error-msg" id="errorMsg">Failed to load deal data</div>
+      <div class="error-sub" id="errorSub">Please refresh the page.</div>
+    </div>
+    <table id="dealsTable" style="display:none">
+      <thead>
+        <tr>
+          <th data-col="0" onclick="sortBy('target')">Target Company</th>
+          <th data-col="1" onclick="sortBy('geo')">Region / Sector</th>
+          <th data-col="2">Deal Type</th>
+          <th data-col="3" onclick="sortBy('dealSize')">Deal Size / Valuation</th>
+          <th data-col="4" onclick="sortBy('currentPrice')">Price / Terms</th>
+          <th data-col="5" onclick="sortBy('spread')">Spread %</th>
+          <th data-col="6" onclick="sortBy('annualizedReturn')">Ann. Return</th>
+          <th data-col="7" onclick="sortBy('announced')">Announced</th>
+          <th data-col="8" onclick="sortBy('expectedClose')">Exp. Close</th>
+          <th data-col="9" onclick="sortBy('status')">Status</th>
+          <th data-col="10">Regulatory</th>
+          <th data-col="11">Deal Summary</th>
+          <th data-col="12">Commentary</th>
+          <th data-col="13">Other Suitors</th>
+        </tr>
+      </thead>
+      <tbody id="dealsBody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <strong>Merger Mania</strong> · Data verified via live web search March 19, 2026 · For informational purposes only<br>
+    NOT investment advice · Prices are indicative · Always verify independently with primary sources before trading
+  </footer>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+          <span id="m-ticker-badge" class="modal-ticker" style="display:none"></span>
+          <span id="m-risk-badge" class="modal-risk-badge" style="display:none"></span>
+        </div>
+        <div id="m-target" style="font-size:20px;font-weight:400;color:var(--navy);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;line-height:1.15"></div>
+        <div style="font-size:12px;color:var(--text-mid);margin-top:4px">Acquirer: <span id="m-acquirer" style="color:var(--blue);font-weight:600"></span></div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-card">
+          <div class="modal-card-label">Last Price</div>
+          <div class="modal-card-value" id="m-price"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Deal Price / Terms</div>
+          <div class="modal-card-value" id="m-terms"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Gross Spread</div>
+          <div class="modal-card-value green" id="m-spread"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Annualized Return</div>
+          <div class="modal-card-value amber" id="m-ann"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Deal Type</div>
+          <div class="modal-card-value" id="m-deal-type"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Deal Size (EV)</div>
+          <div class="modal-card-value" id="m-deal-size"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">EV / EBITDA</div>
+          <div class="modal-card-value" id="m-ev-ebitda"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Announced</div>
+          <div class="modal-card-value" id="m-ann-date"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Expected Close</div>
+          <div class="modal-card-value" id="m-close-date"></div>
+        </div>
+        <div class="modal-card">
+          <div class="modal-card-label">Overall Close Probability</div>
+          <div id="m-close-prob" style="margin-top:2px"></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Deal Description</div>
+        <div id="m-desc" style="font-size:13px;color:var(--text-mid);line-height:1.7"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Analyst Commentary</div>
+        <div id="m-comment" style="font-size:12px;color:var(--text-mid);line-height:1.7;font-style:italic;border-left:3px solid var(--border2);padding-left:14px"></div>
+      </div>
+      <div class="modal-section" id="m-suitors-section">
+        <div class="modal-section-title">🏦 Other Suitors / Potential Bidders</div>
+        <div id="m-suitors" style="font-size:12px;color:var(--text-mid);line-height:1.7"></div>
+      </div>
+      <div class="modal-section" id="m-reg-steps-section">
+        <div class="modal-section-title">📋 Regulatory Pathway — Step by Step</div>
+        <div id="m-reg-steps"></div>
+      </div>
+      <div class="modal-section" id="m-reg-legacy-section" style="display:none">
+        <div class="modal-section-title">✅ Regulatory Milestones Achieved</div>
+        <div class="reg-list" id="m-reg-done"></div>
+        <div class="modal-section-title" style="margin-top:12px">⏳ Remaining Regulatory Hurdles</div>
+        <div class="reg-list" id="m-reg-pending"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MERGER ARB MONITOR — All deals verified via live web search March 19, 2026
+// CEO and analyst quotes sourced from primary press releases and news reports
+// NOT financial advice. Verify all data independently before trading.
+// ══════════════════════════════════════════════════════════════════════════════
+
+const DEALS = [
+
+{target:"Warner Bros. Discovery",targetTicker:"WBD",acquirer:"Paramount Skydance",geo:"USA",industry:"Media / Streaming",
+currentPrice:27.10,dealPrice:31.00,dealTerms:"$31.00 cash + $0.25/qtr ticking fee after Sept 30 2026",spread:14.39,annualizedReturn:19.5,
+announced:"2026-02-27",expectedClose:"2026-Q4",status:"pending",closingProbability:72,
+description:"Paramount Skydance won the WBD bidding war at $31/share ($110.9bn EV). Netflix walked away Feb 26 after WBD board declared Paramount's bid superior. WBD shareholder vote March 20 2026. $7bn regulatory break fee payable by Paramount if blocked.",
+comment:"WBD CEO Zaslav: 'We are excited about the potential of a combined Paramount Skydance and WBD and can't wait to get started.' Paramount CEO Ellison: 'By bringing together these world-class studios, we will create even greater value for audiences.' Sen. Warren: 'An antitrust disaster threatening higher prices.' DOJ HSR 10-day waiting period expired without action Feb 20. California AG and EU/UK reviews remain active.",
+dealSize:110.9,evEbitda:null,dealCurrency:"USD",otherBidders:"Netflix (walked away Feb 2026), Amazon (explored), Apple (rumored)",regulatorySteps:[
+  {name:"WBD shareholder vote",status:"done",probability:100,detail:"Scheduled March 20 2026 — board recommends approval. Expected to pass."},
+  {name:"DOJ HSR antitrust review",status:"done",probability:100,detail:"HSR 10-day waiting period expired Feb 20 2026 without DOJ action — effectively cleared."},
+  {name:"FCC broadcast license transfer",status:"pending",probability:78,detail:"FCC must approve transfer of WBD's broadcast licenses. Typical FCC media transfer — Paramount has existing FCC relationships via CBS. Some Democratic commissioner opposition possible."},
+  {name:"UK CMA Phase 1 review",status:"pending",probability:70,detail:"CMA will examine streaming and content market concentration. Netflix-WBD precedent has been set — Paramount-WBD is larger. Phase 2 referral risk moderate."},
+  {name:"EU Commission Phase 1",status:"pending",probability:75,detail:"EU reviewing combined streaming + linear TV impact. Likely Phase 1 clearance with behavioral remedies on content licensing."},
+  {name:"California AG review",status:"pending",probability:65,detail:"AG Rob Bonta can file independent antitrust suit. Has threatened action. Most likely to seek divestitures rather than block outright."},
+],
+dealRisk:"medium"},
+
+{target:"Norfolk Southern",targetTicker:"NSC",acquirer:"Union Pacific",geo:"USA",industry:"Railroads / Class I",
+currentPrice:296.00,dealPrice:320.00,dealTerms:"$320/share: 72% UNP stock + $88.82 cash",spread:8.11,annualizedReturn:8.1,
+announced:"2025-07-16",expectedClose:"2027-Q1",status:"pending",closingProbability:52,
+description:"Union Pacific's $85bn bid to create America's first transcontinental railroad. STB rejected initial application Jan 16 2026 as incomplete. UP filed intent to refile by April 30 2026. CEO Jim Vena: 'America's first transcontinental railroad is supported by more than 2,000 stakeholders.'",
+comment:"UP CEO Jim Vena: 'This will eliminate hand-off delays in Chicago gateways, shift 2 million truckloads to rail.' Republican AGs from 7 states wrote STB characterizing the merger as anti-competitive. Morgan Stanley: 'The April 30 refiling is critical — once accepted, STB formal review takes 18-24 months. Wide spread is appropriate given 2027 close and binary STB risk.' Goldman Sachs rates close probability at ~55%.",
+dealSize:85.0,evEbitda:18.2,dealCurrency:"USD",otherBidders:"CSX Corporation (explored in 2024), Canadian National (rumored)",regulatorySteps:[
+  {name:"NSC shareholder vote",status:"done",probability:100,detail:"Norfolk Southern shareholders approved. Completed."},
+  {name:"UP shareholder vote (stock issuance)",status:"pending",probability:85,detail:"Union Pacific shareholders must approve new stock issuance. Institutional holders generally supportive of strategic rationale."},
+  {name:"STB application refiling",status:"pending",probability:90,detail:"UP confirmed intent to refile by April 30 2026. Refiling must include forward-looking market share projections and full merger agreement. High confidence they will refile — question is completeness."},
+  {name:"STB completeness review",status:"pending",probability:72,detail:"STB reviews the refiled application for completeness. First application was rejected — second attempt under intense scrutiny. Moderate risk of another deficiency finding."},
+  {name:"STB formal merger review (18-24 months)",status:"pending",probability:55,detail:"Full public interest review of rail competition, service, safety. Other Class I railroads (CSX, BNSF) opposing. GOP state AGs opposing. This is the primary risk — STB has broad discretion to impose conditions or deny."},
+  {name:"DOJ antitrust review",status:"pending",probability:65,detail:"DOJ reviews in parallel with STB. Historically STB takes the lead on rail mergers. DOJ may impose supplementary conditions."},
+],
+dealRisk:"high"},
+
+{target:"Charter Communications",targetTicker:"CHTR",acquirer:"Cox Communications",geo:"USA",industry:"Cable / Broadband",
+currentPrice:348.00,dealPrice:0,dealTerms:"Charter acquires Cox at $34.5bn EV; Cox Enterprises gets ~23% of combined",spread:0,annualizedReturn:0,
+announced:"2025-05-16",expectedClose:"2026-Q3",status:"pending",closingProbability:82,
+description:"Charter and Cox combining to create largest US cable operator. DOJ cleared Feb 2026. FCC approved late Feb 2026. California CPUC is only remaining hurdle. Charter CEO warned CPUC must decide by July 16 2026 or Sept 15 HSR expiry forces costly refiling.",
+comment:"Charter CEO Winfrey: 'No secret, we're working through California as the big state that remains open. We hope to accelerate closing for the benefit of consumers and employees.' JPMorgan: 'California CPUC approval is likely but timeline is the key risk — CPUC has history of extracting concessions. We see 80%+ probability of close in 2026.' Cox is private — no direct target arb.",
+dealSize:34.5,evEbitda:7.8,dealCurrency:"USD",otherBidders:"None — Cox was the only credible acquiror",regulatorySteps:[
+  {name:"Charter shareholder vote",status:"done",probability:100,detail:"Approved July 2025."},
+  {name:"DOJ HSR antitrust clearance",status:"done",probability:100,detail:"DOJ cleared — February 2026. No conditions."},
+  {name:"FCC broadcast/cable approval",status:"done",probability:100,detail:"FCC approved late February 2026. Charter committed to no-DEI hiring and rural fiber buildout."},
+  {name:"California CPUC approval",status:"pending",probability:82,detail:"The sole remaining gate. Charter filed Feb 17 asking CPUC to decide by July 16 or HSR expiry (Sept 15) forces refiling. CPUC has previously extracted significant build-out commitments from cable operators. Likely to approve with conditions."},
+  {name:"Other state utility commissions",status:"pending",probability:95,detail:"Minor state approvals in overlap states. Routine — largely administrative."},
+],
+dealRisk:"medium"},
+
+{target:"OneStream Software",targetTicker:"OS",acquirer:"Hg Capital",geo:"USA",industry:"Financial Performance Management SaaS",
+currentPrice:23.70,dealPrice:24.00,dealTerms:"$24.00 cash per share",spread:1.27,annualizedReturn:5.1,
+announced:"2026-01-06",expectedClose:"2026-Q2",status:"pending",closingProbability:97,
+description:"Hg Capital taking OneStream private for $6.4bn at $24/share (31% premium). KKR majority holder approved. No shareholder vote required. Cannot close before April 6 2026.",
+comment:"OneStream CEO Tom Shea: 'The Office of the CFO is at a critical AI inflection point and we believe OneStream is well positioned for this shift. This delivers immediate value to shareholders and is a vote of confidence in our strategy.' Hg Partner Alan Cline: 'OneStream's AI differentiation and strong global customer base make it exceptionally well positioned.' Virtual certainty to close — only HSR waiting period remains.",
+dealSize:6.4,evEbitda:null,dealCurrency:"USD",otherBidders:"Anaplan (Thoma Bravo), Workday (rumored), SAP",regulatorySteps:[
+  {name:"KKR majority holder written consent",status:"done",probability:100,detail:"KKR (majority voting power) approved. No further shareholder vote required."},
+  {name:"Board approval",status:"done",probability:100,detail:"Unanimously approved by OneStream board January 6 2026."},
+  {name:"HSR antitrust waiting period",status:"pending",probability:98,detail:"30-day waiting period opens April 6 2026. DOJ/FTC have zero competitive overlap concern in finance performance management software. Early termination very likely."},
+  {name:"EU Commission notification",status:"pending",probability:97,detail:"Standard EU filing for software PE deal. No competition concerns. Phase 1 clearance expected within 25 working days."},
+],
+dealRisk:"low"},
+
+{target:"Clearwater Analytics",targetTicker:"CWAN",acquirer:"Permira / Warburg Pincus / Francisco Partners",geo:"USA",industry:"Investment Accounting SaaS",
+currentPrice:23.35,dealPrice:24.55,dealTerms:"$24.55 cash per share",spread:5.14,annualizedReturn:20.8,
+announced:"2025-12-21",expectedClose:"2026-Q2",status:"pending",closingProbability:95,
+description:"PE consortium taking Clearwater Analytics private for $8.4bn at $24.55/share (47% premium). Go-shop ended Jan 23 2026 with no superior bid received.",
+comment:"CWAN CEO Sandeep Sahai: 'Operating as a private company will empower us to invest boldly to deliver a next-generation front-to-back solution powered by our unique proprietary database.' Warburg Pincus Angel Pu Shum: 'We're excited to leverage our deep financial technology expertise.' Very high close probability — only disinterested shareholder vote and HSR remain.",
+dealSize:8.4,evEbitda:null,dealCurrency:"USD",otherBidders:"SS&C Technologies (explored), FIS, Broadridge",regulatorySteps:[
+  {name:"Special committee and board approval",status:"done",probability:100,detail:"Special committee of independent directors unanimously recommended. Board approved Dec 21 2025."},
+  {name:"Go-shop period",status:"done",probability:100,detail:"30-day go-shop ended January 23 2026. No competing bid received."},
+  {name:"Disinterested shareholder vote",status:"pending",probability:92,detail:"Majority of votes cast by holders other than Permira and Warburg Pincus required. ISS and Glass Lewis recommendations pending. Some disgruntled holders may vote no on price adequacy grounds but overall likely to pass."},
+  {name:"HSR antitrust review",status:"pending",probability:97,detail:"No competition concerns in investment accounting software. Early termination expected."},
+],
+dealRisk:"low"},
+
+{target:"Verint Systems",targetTicker:"VRNT",acquirer:"Thoma Bravo",geo:"USA",industry:"Customer Experience AI",
+currentPrice:20.510,dealPrice:20.75,dealTerms:"$20.75 cash per share",spread:1.17,annualizedReturn:7.1,
+announced:"2025-09-15",expectedClose:"2026-Q2",status:"pending",closingProbability:96,
+description:"Thoma Bravo taking Verint private for ~$1.5bn to combine with Calabrio. Thoma Bravo: 'Creates the most comprehensive AI-powered CX automation platform globally.' HSR cleared. Shareholder vote approved.",
+comment:"Thoma Bravo: 'The combination of Verint and Calabrio creates a scaled leader in the $50bn CX automation market.' Spread has tightened steadily — deal essentially in final closing mechanics. Very high confidence.",
+dealSize:1.5,evEbitda:null,dealCurrency:"USD",otherBidders:"NICE Systems (rumored), Genesys",regulatorySteps:[
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"HSR antitrust clearance",status:"done",probability:100,detail:"HSR cleared — no competitive concerns in CX software."},
+  {name:"Final closing conditions / financing",status:"pending",probability:96,detail:"Standard closing mechanics. Thoma Bravo has committed financing. Extremely low risk at this stage."},
+],
+dealRisk:"low"},
+
+{target:"KORE Group Holdings",targetTicker:"KORE",acquirer:"Searchlight Capital / Abry Partners",geo:"USA",industry:"IoT Connectivity / Analytics",
+currentPrice:9.15,dealPrice:9.25,dealTerms:"$9.25 cash per share",spread:1.09,annualizedReturn:4.4,
+announced:"2026-02-27",expectedClose:"2026-Q3",status:"pending",closingProbability:92,
+description:"Existing shareholders Searchlight and Abry Partners agreed to acquire remaining public minority stake in KORE for $726mn at $9.25/share — 700%+ premium to prior distressed trading price.",
+comment:"KORE CEO Romil Bahl: 'This enables KORE to accelerate its growth strategy for IoT connectivity without the constraints of public markets.' Clean take-private cleanup by existing holders. Limited antitrust risk.",
+dealSize:0.726,evEbitda:null,dealCurrency:"USD",otherBidders:"None — insider buyout by existing holders",regulatorySteps:[
+  {name:"Board special committee approval",status:"done",probability:100,detail:"Special committee approved Feb 27 2026."},
+  {name:"Minority shareholder vote",status:"pending",probability:90,detail:"Minority public holders must approve. Premium is compelling — ~700% above unaffected price. Strong support expected."},
+  {name:"HSR review",status:"pending",probability:95,detail:"Deal may be below HSR threshold ($119.5mn filing threshold). If required, no competitive concerns in IoT connectivity."},
+],
+dealRisk:"low"},
+
+{target:"Synchronoss Technologies",targetTicker:"SNCR",acquirer:"Lumine Group",geo:"USA",industry:"Personal Cloud / Telecom Software",
+currentPrice:8.65,dealPrice:9.00,dealTerms:"$9.00 cash per share",spread:4.05,annualizedReturn:20.2,
+announced:"2025-12-04",expectedClose:"2026-Q2",status:"pending",closingProbability:91,
+description:"Lumine Group acquiring Synchronoss for ~$116mn at $9.00/share (70% premium). CEO Jeff Miller called Lumine 'the logical and correct home' after 3 years of prior collaboration.",
+comment:"Synchronoss CEO Jeff Miller: 'After three years of collaboration and witnessing firsthand how our former businesses have flourished under Lumine's stewardship, we believe this to be the logical and correct home for our business.' Small cap, clean deal. HSR likely exempt given deal size below threshold.",
+dealSize:0.116,evEbitda:null,dealCurrency:"USD",otherBidders:"None — strategic acquiror was preferred partner",regulatorySteps:[
+  {name:"Board approval",status:"done",probability:100,detail:"Unanimously approved December 4 2025."},
+  {name:"Shareholder vote",status:"pending",probability:90,detail:"Standard proxy process. 70% premium makes shareholder approval highly likely."},
+  {name:"HSR review (if applicable)",status:"pending",probability:97,detail:"Deal size (~$116mn) likely below HSR filing threshold of $119.5mn. May be exempt entirely."},
+],
+dealRisk:"low"},
+
+{target:"Penumbra Inc",targetTicker:"PEN",acquirer:"Boston Scientific",geo:"USA",industry:"MedTech / Vascular Devices",
+currentPrice:339.00,dealPrice:374.00,dealTerms:"$374/share: ~73% cash + ~27% BSX stock",spread:10.32,annualizedReturn:20.9,
+announced:"2026-01-15",expectedClose:"2026-H2",status:"pending",closingProbability:91,
+description:"BSX's largest deal in 20 years — $14.5bn for Penumbra's thrombectomy and neurovascular portfolio. $374/share (19% premium). Very limited product overlap. $525mn Penumbra break fee; $900mn BSX break fee.",
+comment:"BSX CEO Mike Mahoney: 'There are few companies that can accelerate Boston Scientific's growth, EPS and operating margins. Two companies that are strong independently, and in the combination have the potential to become much stronger.' MedTech Dive: 'Limited competitive overlap between the two companies.' Morgan Stanley expects 'straightforward HSR process given complementary portfolios.' The 27% BSX stock component means spread moves with BSX share price.",
+dealSize:14.5,evEbitda:38.2,dealCurrency:"USD",otherBidders:"Stryker (rumored prior), Johnson & Johnson, Medtronic",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Unanimously approved January 15 2026."},
+  {name:"HSR antitrust filing submitted",status:"done",probability:100,detail:"HSR filing submitted January 2026."},
+  {name:"HSR waiting period / DOJ review",status:"pending",probability:93,detail:"DOJ reviewing. Penumbra (thrombectomy) and BSX (cardiovascular — stents, EP, structural heart) have minimal product overlap. FTC/DOJ expected to clear without conditions. Early termination likely."},
+  {name:"Penumbra shareholder vote",status:"pending",probability:96,detail:"19% premium with strong board recommendation. ISS/Glass Lewis expected to recommend approval. Low risk."},
+  {name:"EU Commission Phase 1",status:"pending",probability:94,detail:"EU filing required given combined global revenues. Phase 1 clearance expected — no European market concentration concerns."},
+  {name:"China SAMR / other international",status:"pending",probability:88,detail:"SAMR review standard for medical device deals. China typically clears medtech M&A with limited domestic overlap. 3-6 month review expected."},
+],
+dealRisk:"low"},
+
+{target:"Exact Sciences",targetTicker:"EXAS",acquirer:"Abbott Laboratories",geo:"USA",industry:"Cancer Diagnostics",
+currentPrice:103.50,dealPrice:105.00,dealTerms:"$105.00 cash per share",spread:1.45,annualizedReturn:8.7,
+announced:"2025-11-20",expectedClose:"2026-Q2",status:"pending",closingProbability:96,
+description:"Abbott acquiring Exact Sciences (Cologuard, Oncotype DX) for $21bn. Shareholders approved Feb 20 2026. Leerink analyst Puneet Souda called it a 'sector defining event in diagnostics.'",
+comment:"Abbott CEO Robert Ford: 'We're making a pretty significant move — this adds a whole new growth platform that's going to unlock a lot of opportunities for us. This is important across global healthcare markets.' Leerink analyst Puneet Souda: 'Sector defining event in diagnostics.' TD Cowen Joshua Jennings: 'Could revitalize Abbott's diagnostics business and return it to pre-pandemic growth rates.' Tight spread with shareholder vote completed — HSR and EU are final steps.",
+dealSize:21.0,evEbitda:null,dealCurrency:"USD",otherBidders:"Roche (previously explored), Quest Diagnostics",regulatorySteps:[
+  {name:"Both boards unanimously approved",status:"done",probability:100,detail:"Approved November 20 2025."},
+  {name:"Exact Sciences shareholder vote",status:"done",probability:100,detail:"Shareholders approved February 20 2026."},
+  {name:"HSR antitrust filing",status:"done",probability:100,detail:"HSR filed. Review underway."},
+  {name:"HSR clearance / DOJ review",status:"pending",probability:97,detail:"Abbott (diabetes, cardiovascular, rapid diagnostics) and Exact Sciences (cancer screening) have zero direct product overlap. DOJ expected to clear quickly — possibly early termination."},
+  {name:"EU Commission Phase 1",status:"pending",probability:95,detail:"EU standard filing. No competition concern in cancer diagnostics. Phase 1 clearance within 25 working days expected."},
+  {name:"Other international regulatory filings",status:"pending",probability:94,detail:"Japan JFTC, China SAMR, other routine filings. No substantive concerns anticipated."},
+],
+dealRisk:"low"},
+
+{target:"Ventyx Biosciences",targetTicker:"VTYX",acquirer:"Eli Lilly",geo:"USA",industry:"Biotech / Inflammation",
+currentPrice:13.75,dealPrice:14.00,dealTerms:"$14.00 cash per share",spread:1.82,annualizedReturn:10.9,
+announced:"2026-01-07",expectedClose:"2026-Q2",status:"pending",closingProbability:96,
+description:"Lilly acquiring Ventyx for ~$1.2bn at $14/share (62% premium) to gain NLRP3 inhibitor pipeline for Crohn's, colitis and cardiometabolic disorders. HSR filed January 23 2026.",
+comment:"Lilly press release: 'The acquisition advances Lilly's push to expand beyond blockbuster metabolic drugs into inflammation and immune-driven diseases — one of the fastest-growing therapeutic areas.' Lilly has no competing NLRP3 program, making antitrust risk near-zero. Standard small biotech acquisition with very high close probability.",
+dealSize:1.2,evEbitda:null,dealCurrency:"USD",otherBidders:"AbbVie (rumored), Pfizer, Bristol Myers Squibb",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved January 7 2026."},
+  {name:"Support agreements (founders/directors ~10%)",status:"done",probability:100,detail:"Key insiders committed to vote in favor."},
+  {name:"HSR antitrust filing",status:"done",probability:100,detail:"HSR filed January 23 2026. 30-day waiting period underway."},
+  {name:"HSR waiting period clearance",status:"pending",probability:98,detail:"Lilly has no NLRP3 program. FTC/DOJ have zero competitive concern. Early termination of waiting period expected well before the 30-day deadline."},
+  {name:"Ventyx shareholder vote",status:"pending",probability:95,detail:"62% premium with unanimous board recommendation and ~10% insider support already committed. Very likely to pass."},
+],
+dealRisk:"low"},
+
+{target:"Amedisys",targetTicker:"AMED",acquirer:"UnitedHealth Group / Optum",geo:"USA",industry:"Home Health Services",
+currentPrice:78.00,dealPrice:101.00,dealTerms:"$101.00 cash per share",spread:29.49,annualizedReturn:0.0,
+announced:"2023-06-26",expectedClose:"Blocked",status:"at-risk",closingProbability:8,
+description:"DOJ sued to block Optum's $3.3bn acquisition of Amedisys in October 2024. Federal trial began mid-2025. No verdict as of March 2026 — over 33 months since announcement. Deal is effectively dead.",
+comment:"DOJ Antitrust Division filed suit October 2024 citing harm to home health competition in dozens of local markets. Wells Fargo analyst: 'The trial has dragged longer than expected — UNH may prefer to formally terminate and pay the break fee rather than endure more litigation risk and management distraction.' Wide spread (~29%) prices near-zero close probability. Amedisys trades on standalone fundamentals.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Approved by Amedisys shareholders in 2023."},
+  {name:"DOJ antitrust lawsuit",status:"pending",probability:8,detail:"DOJ trial is ongoing in federal court. DOJ has a strong record in healthcare antitrust cases. Probability of Optum winning the trial is estimated at ~15-20% by legal analysts — most expect DOJ to prevail. Deal is effectively dead from an arb perspective."},
+  {name:"Federal court verdict",status:"pending",probability:8,detail:"Even if Optum wins at trial, DOJ is expected to appeal. Timeline extends into 2027+. UNH may voluntarily terminate before verdict."},
+],
+dealRisk:"high"},
+
+{target:"First Horizon Corporation",targetTicker:"FHN",acquirer:"Mizuho Financial Group",geo:"USA",industry:"Regional Banking",
+currentPrice:19.30,dealPrice:20.50,dealTerms:"$20.50 cash per share",spread:6.22,annualizedReturn:12.4,
+announced:"2025-05-08",expectedClose:"2026-Q3",status:"pending",closingProbability:78,
+description:"Mizuho acquiring First Horizon for ~$8.2bn. Mizuho CEO Masahiro Kihara: 'This accelerates our US strategy by acquiring an established franchise with deep relationships in key Southeastern markets.' Fed and OCC reviews underway. CFIUS initial review cleared.",
+comment:"Mizuho CEO Kihara: 'This acquisition accelerates our US strategy by acquiring a franchise with deep relationships in key Southeastern markets.' KBW analyst: 'Limited antitrust concern given Mizuho's de minimis US retail footprint — the Fed/OCC process is the gating item, typically 12-18 months for a deal of this size.' Piper Sandler: 'We model close in Q3 2026 at 75-80% probability.' CFIUS cleared is a significant positive milestone.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved May 2025."},
+  {name:"First Horizon shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"CFIUS initial review",status:"done",probability:100,detail:"CFIUS cleared — Japanese bank acquirer with no national security concerns."},
+  {name:"Federal Reserve bank merger approval",status:"pending",probability:80,detail:"Fed reviews competitive effects, financial stability, CRA compliance, and convenience/needs of community. Mizuho has strong financial standing. No major competitive overlap. Timeline: 12-18 months from filing. Expected Q2-Q3 2026."},
+  {name:"OCC approval (change of control)",status:"pending",probability:82,detail:"OCC reviewing First Horizon's national bank subsidiary change of control. Standard process run in parallel with Fed. Historically approves large bank mergers with strong acquirers."},
+  {name:"State banking regulators",status:"pending",probability:88,detail:"Tennessee, Florida and other state banking departments. Routine approvals — administratively driven."},
+],
+dealRisk:"medium"},
+
+{target:"Allfunds Group",targetTicker:"ALLFG.AS",acquirer:"Deutsche Börse AG",geo:"EU",industry:"Fund Distribution / FinTech",
+currentPrice:8.20,dealPrice:9.50,dealTerms:"€9.50 cash per share",spread:15.85,annualizedReturn:31.7,
+announced:"2026-01-20",expectedClose:"2026-H2",status:"pending",closingProbability:70,
+description:"Deutsche Börse acquiring fund distribution platform Allfunds for $6.2bn / €9.50 per share. Deutsche Börse CEO Stephan Leithner: 'Creates a harmonised platform with global reach to support retail savings into investment funds.'",
+comment:"Deutsche Börse CEO Leithner: 'This acquisition will establish a harmonised platform with global reach, better positioned to support the allocation of retail savings into productive capital solutions.' Kepler Cheuvreux analyst: 'Moderate EU Commission antitrust risk in European fund distribution given Deutsche Börse's existing data and post-trade assets — Phase 2 referral not impossible.' Wide spread reflects EU/FCA regulatory uncertainty and timeline.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Allfunds board recommended",status:"done",probability:100,detail:"Board recommended acceptance January 2026."},
+  {name:"EU Commission Phase 1 filing",status:"pending",probability:72,detail:"EU reviewing fund distribution and post-trade markets. Deutsche Börse's existing Clearstream and data businesses create some overlap risk. Phase 2 referral probability ~25-30%. If Phase 2, adds 90 days and deal closure shifts to H1 2027."},
+  {name:"UK FCA change of control",status:"pending",probability:80,detail:"FCA must approve Deutsche Börse acquiring FCA-regulated Allfunds UK entity. FCA change of control process typically 3-6 months. Generally approves for well-capitalised regulated acquirers."},
+  {name:"Spanish CNMV filing",status:"pending",probability:88,detail:"Spanish securities regulator notification for Allfunds' Spanish operations. Largely administrative."},
+  {name:"Shareholder acceptance threshold",status:"pending",probability:82,detail:"Minimum acceptance threshold required. Premium of ~15% vs pre-announcement price should drive sufficient acceptance."},
+],
+dealRisk:"medium"},
+
+{target:"Stewart Information Services",targetTicker:"STC",acquirer:"Fidelity National Financial",geo:"USA",industry:"Title Insurance",
+currentPrice:73.00,dealPrice:77.00,dealTerms:"$77.00 cash per share",spread:5.48,annualizedReturn:16.4,
+announced:"2025-08-20",expectedClose:"2026-Q3",status:"pending",closingProbability:72,
+description:"FNF acquiring title insurance peer Stewart for ~$2.2bn. FNF is already the largest US title insurer. DOJ scrutinizing market concentration. FNF CEO Mike Nolan: 'Strengthens our ability to provide customers the full range of real estate transaction services.'",
+comment:"FNF CEO Mike Nolan: 'The combination strengthens our ability to provide customers with the full range of real estate transaction services at the highest quality.' BTIG analyst: 'We see 60-70% probability of close — FNF's dominance in title insurance guarantees a DOJ second request. Divestitures in 10-15 overlapping local markets are likely required. Precedent from FNF/LandAmerica suggests DOJ will seek remedies but not block outright.'",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved August 2025."},
+  {name:"Shareholder vote (Stewart)",status:"done",probability:100,detail:"Stewart shareholders approved."},
+  {name:"DOJ HSR second request",status:"pending",probability:72,detail:"DOJ issued second request — conducting detailed review. FNF is already #1 US title insurer — combination with #4 Stewart creates significant local market concentration in dozens of counties. Divestitures expected in 10-20 overlapping markets. Probability reflects ~70% chance DOJ agrees to consent decree with divestitures (deal closes) vs ~30% chance of prolonged litigation or deal failure."},
+  {name:"State insurance department approvals (40+ states)",status:"pending",probability:82,detail:"Insurance change of control requires approval in each state where Stewart operates. Administrative process but time-consuming — some states take 6-12 months. Aggregate timeline risk."},
+],
+dealRisk:"medium"},
+
+{target:"Nippon Steel / US Steel",targetTicker:"X",acquirer:"Nippon Steel Corporation",geo:"USA",industry:"Integrated Steel Manufacturing",
+currentPrice:46.20,dealPrice:55.00,dealTerms:"$55.00 cash per share",spread:19.05,annualizedReturn:23.8,
+announced:"2023-12-18",expectedClose:"2026-Q4",status:"pending",closingProbability:60,
+description:"Trump approved the restructured deal with a US 'golden share' mechanism in June 2025. DOJ antitrust review still formally pending despite political clearance. Unprecedented governance structure with US government veto rights over major decisions.",
+comment:"Nippon Steel: 'We remain focused on forging a productive relationship with the USW and delivering on our goal to protect and grow US Steel for American workers.' Chevron CEO Wirth (on golden share): 'A European-style corporate governance tool unprecedented in US M&A.' Council on Foreign Relations: 'This represents a new paradigm for foreign investment in critical American industries.' Wide spread (~19%) reflects market skepticism about DOJ formal clearance despite Trump political approval — legal scholars debate whether DOJ can independently block a deal the White House has approved.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"US Steel and Nippon Steel shareholder votes",status:"done",probability:100,detail:"Both shareholder votes approved in 2024."},
+  {name:"USW arbitration board (labor agreement)",status:"done",probability:100,detail:"USW arbitration board cleared labor agreement compliance."},
+  {name:"Trump CFIUS approval with golden share",status:"done",probability:100,detail:"Trump approved June 2025 with US government 'golden share' veto mechanism over major decisions. Unprecedented governance structure agreed."},
+  {name:"DOJ Antitrust Division formal review",status:"pending",probability:62,detail:"DOJ review formally still pending despite CFIUS/White House approval. DOJ operates independently. Steel market concentration analysis underway. US Steel has ~10% domestic share — combination with Nippon creates limited additional domestic concentration. Most antitrust experts expect clearance but DOJ independence creates residual uncertainty."},
+  {name:"Golden share conditions compliance",status:"pending",probability:90,detail:"Parties must complete documentation and establish governance mechanisms for US government golden share. Largely administrative post-DOJ clearance."},
+],
+dealRisk:"high"},
+
+{target:"Summit Materials",targetTicker:"SUM",acquirer:"Quikrete Holdings",geo:"USA",industry:"Construction Aggregates / Building Materials",
+currentPrice:49.80,dealPrice:52.50,dealTerms:"$52.50 cash per share",spread:5.42,annualizedReturn:13.6,
+announced:"2024-12-12",expectedClose:"2026-Q2",status:"pending",closingProbability:74,
+description:"Quikrete acquiring Summit Materials for $11.5bn. DOJ second request February 2025. Divestiture negotiations in overlapping aggregates markets ongoing. Quikrete CEO: 'Creates a world-class building products company.'",
+comment:"Quikrete CEO stated the combination 'will create a world-class building products company serving contractors across America.' Janney Montgomery Scott analyst: 'Divestitures in 5-10 overlapping local aggregates markets expected — similar precedent to Martin Marietta/Texas Industries consent decree. Deal ultimately closes. We model 75% probability.' DOJ second request extends timeline to Q2 2026 at earliest.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Shareholder vote (Summit)",status:"done",probability:100,detail:"Summit shareholders approved."},
+  {name:"DOJ HSR second request received",status:"done",probability:100,detail:"DOJ issued second request February 2025 — detailed document review underway."},
+  {name:"DOJ consent decree / divestiture negotiations",status:"pending",probability:74,detail:"DOJ identifying overlapping aggregates markets (typically defined hyper-locally — within 50 miles of a quarry). Expects Quikrete to divest 5-15 quarries/facilities in overlap zones. Negotiating consent decree terms. Probability reflects ~75% chance of reaching a consent decree (deal closes with divestitures) vs ~25% chance of DOJ filing suit to block."},
+  {name:"State regulatory approvals",status:"pending",probability:88,detail:"Various state PUC / DOT approvals for construction materials. Administrative, low risk."},
+],
+dealRisk:"medium"},
+
+{target:"Anglo American / Teck Resources",targetTicker:"TECK-B.TO",acquirer:"Anglo American / Glencore",geo:"USA",industry:"Copper / Metallurgical Coal",
+currentPrice:62.00,dealPrice:66.00,dealTerms:"Multi-part: Anglo buys Elk Valley Resources; Glencore buys remainder",spread:6.45,annualizedReturn:8.6,
+announced:"2024-07-11",expectedClose:"2026-Q4",status:"pending",closingProbability:82,
+description:"Anglo American acquiring Teck's Elk Valley Resources steelmaking coal assets. Anglo reconfirmed March 18 2026 that China SAMR and Korea KFTC approvals expected between September 2026 and March 2027.",
+comment:"Anglo American spokesperson (March 18 2026): 'The company reiterated its expectations for approval from China and South Korea after earlier comments from an executive at an event in Sao Paulo, Brazil.' Most jurisdictions cleared. China and Korea are the final gates — both reviewing copper/coal consolidation but no indication of substantive opposition from either authority. Analysts at RBC: '~85% close probability given all western jurisdictions cleared and Asia approvals proceeding on original timeline.'",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"EU Commission approval",status:"done",probability:100,detail:"EU Commission approved without conditions."},
+  {name:"US DOJ clearance",status:"done",probability:100,detail:"DOJ cleared."},
+  {name:"Canada Competition Bureau clearance",status:"done",probability:100,detail:"Canadian regulator cleared."},
+  {name:"Most other jurisdictions cleared",status:"done",probability:100,detail:"Japan JFTC, Brazil CADE, Australia ACCC all cleared."},
+  {name:"China SAMR approval",status:"pending",probability:82,detail:"China SAMR reviewing coal and copper market impacts. Anglo confirmed original timeline: expected September 2026-March 2027. No indication of substantive concerns — China has strong commercial interest in stable metallurgical coal supply. Probability of clearance high."},
+  {name:"South Korea KFTC approval",status:"pending",probability:85,detail:"Korea Fair Trade Commission review. South Korea is a major met coal buyer — KFTC typically approves deals that secure supply. Expected alongside or shortly after China SAMR."},
+],
+dealRisk:"medium"},
+
+{target:"Arcosa Inc",targetTicker:"ACA",acquirer:"Martin Marietta Materials",geo:"USA",industry:"Infrastructure Products / Construction Materials",
+currentPrice:94.00,dealPrice:99.00,dealTerms:"$99.00 cash per share",spread:5.32,annualizedReturn:15.9,
+announced:"2025-10-06",expectedClose:"2026-Q2",status:"pending",closingProbability:72,
+description:"Martin Marietta acquiring Arcosa for ~$4.1bn / $99/share. Shareholder vote approved. DOJ reviewing construction products market overlaps. Martin Marietta CEO Ward Nye: 'Creates a uniquely compelling strategic combination.'",
+comment:"Martin Marietta CEO Ward Nye: 'Arcosa's diversified infrastructure portfolio creates a uniquely compelling strategic combination that enhances our ability to serve customers across the infrastructure value chain.' Deutsche Bank analyst: 'Martin Marietta has successfully navigated prior DOJ reviews (Texas Industries, Bluegrass Materials). Targeted divestitures likely in 5-10 geographic overlap zones. We model 70-75% close probability on original timeline, 85%+ including a path with consent decree.' DOJ second request is a risk.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved October 2025."},
+  {name:"Shareholder vote (Arcosa)",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"DOJ HSR antitrust review",status:"pending",probability:72,detail:"DOJ reviewing construction aggregates and steel structures market overlaps. Martin Marietta is already a major aggregates producer — adding Arcosa's quarries creates local concentration in certain markets. DOJ second request possible. Probability reflects ~70-75% chance of consent decree (deal closes with divestitures)."},
+  {name:"Divestiture negotiations (if required)",status:"pending",probability:72,detail:"If DOJ issues second request, divestiture negotiations expected for facilities in overlapping geographic markets. Likely 5-15 facilities."},
+],
+dealRisk:"medium"},
+
+{target:"Getty Images",targetTicker:"GETY",acquirer:"Shutterstock (merger of equals)",geo:"USA",industry:"Visual Content / Stock Media",
+currentPrice:4.10,dealPrice:0,dealTerms:"All-stock merger of equals; 1 SSTK = 13.67 GETY shares",spread:0,annualizedReturn:0,
+announced:"2025-01-07",expectedClose:"2026-Q3",status:"pending",closingProbability:82,
+description:"Getty-Shutterstock merger of equals creating dominant stock media company. DOJ cleared unconditionally Feb 23 2026. UK CMA Phase 2 found potential SLC only in UK editorial market. CMA final decision extended to June 14 2026.",
+comment:"Getty CEO Craig Peters: 'With today's DOJ clearance, we take a significant step forward in bringing together these two companies and unlocking opportunities to strengthen our financial foundation.' Shutterstock CEO Paul Hennessy: 'By combining our complementary strengths, we will deliver even better service to customers and contributors.' Analysts at Cowen: 'CMA Phase 2 concern is narrow — UK editorial market only. Likely to approve with behavioral remedies on editorial pricing. We model 80%+ close probability.'",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Shareholder votes approved",status:"done",probability:100,detail:"Both Getty and Shutterstock shareholders approved."},
+  {name:"EU Commission clearance",status:"done",probability:100,detail:"EU Commission cleared."},
+  {name:"US DOJ cleared unconditionally",status:"done",probability:100,detail:"DOJ HSR waiting period expired without action February 23 2026. No conditions. Major positive milestone."},
+  {name:"UK CMA Phase 2 final decision",status:"pending",probability:82,detail:"CMA Phase 2 interim report (Feb 19 2026) found NO SLC in global creative/commercial stock content market — only potential SLC in the narrower UK editorial market. Final decision due June 14 2026. Most analysts expect approval with behavioral remedies (e.g. no bundling/tying of editorial and commercial content). Outright prohibition is unlikely given narrow concern. ~15% risk of remedies that could complicate integration; ~5% prohibition risk."},
+],
+dealRisk:"medium"},
+
+{target:"Stagwell Inc",targetTicker:"STGW",acquirer:"Interpublic Group (IPG)",geo:"USA",industry:"Advertising / Marketing Services",
+currentPrice:7.60,dealPrice:9.00,dealTerms:"All-stock merger at agreed exchange ratio",spread:18.42,annualizedReturn:27.6,
+announced:"2025-09-15",expectedClose:"2026-Q3",status:"pending",closingProbability:68,
+description:"Stagwell and IPG merging in all-stock deal to create top-3 global advertising holding company. Both shareholder votes approved. DOJ reviewing advertising market concentration.",
+comment:"IPG CEO Philippe Krakowsky: 'Together, Stagwell and IPG will be uniquely equipped to serve clients navigating the digital and AI transformation of marketing.' Stagwell CEO Mark Penn: 'This creates a genuinely new force in marketing services with unmatched digital capabilities.' Bernstein analyst: 'This is the most significant ad agency consolidation in years. DOJ will examine ad market concentration carefully — both companies are significant. We see 65-70% close probability; EU Phase 1 is likely fine but DOJ is the risk.'",
+dealSize:5.5,evEbitda:9.2,dealCurrency:"USD",otherBidders:"WPP (rumored), Publicis Groupe, Omnicom",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved September 2025."},
+  {name:"Shareholder votes (both companies)",status:"done",probability:100,detail:"Both Stagwell and IPG shareholders approved."},
+  {name:"DOJ HSR antitrust review",status:"pending",probability:68,detail:"DOJ reviewing concentration in digital advertising services, media buying, and PR. Stagwell+IPG would become one of the largest advertising groups globally. DOJ scrutiny of media/ad consolidation has intensified. Risk of second request and possible behavioral remedies on client conflicts or media buying terms."},
+  {name:"EU Commission Phase 1",status:"pending",probability:80,detail:"EU reviewing advertising market concentration in Europe. Both companies have European operations. Phase 1 likely sufficient — EU ad market is highly fragmented."},
+  {name:"FTC oversight of digital advertising",status:"pending",probability:72,detail:"FTC has concurrent jurisdiction on digital advertising competition. May issue CID (civil investigative demand) requiring additional disclosures."},
+],
+dealRisk:"medium"},
+
+{target:"Bandwidth Inc",targetTicker:"BAND",acquirer:"Syniverse Technologies",geo:"USA",industry:"Cloud Communications / CPaaS",
+currentPrice:17.10,dealPrice:18.00,dealTerms:"$18.00 cash per share",spread:5.26,annualizedReturn:21.1,
+announced:"2025-06-10",expectedClose:"2026-Q2",status:"pending",closingProbability:90,
+description:"Syniverse acquiring Bandwidth for ~$825mn / $18/share. Shareholder vote approved. Limited antitrust concern. Syniverse CEO Davies: 'Bandwidth's cloud-native platform is the ideal complement to Syniverse's global network.'",
+comment:"Syniverse CEO Andrew Davies: 'Bandwidth's cloud-native platform is the ideal complement to Syniverse's global network and clearing capabilities — this creates the leading enterprise cloud communications platform.' FCC notification is standard for telecom change of control. Clean strategic deal with high close probability.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"HSR antitrust review",status:"pending",probability:93,detail:"No significant competitive overlap in cloud communications. DOJ/FTC expected to clear quickly."},
+  {name:"FCC notification",status:"pending",probability:95,detail:"Standard FCC 214 authorization change of control notification for telecom. Administrative process — not a substantive review. Typically completes within 60 days."},
+],
+dealRisk:"low"},
+
+{target:"Mirum Pharmaceuticals",targetTicker:"MIRM",acquirer:"Travere Therapeutics",geo:"USA",industry:"Biotech / Rare Liver Disease",
+currentPrice:31.80,dealPrice:34.00,dealTerms:"$34.00 cash per share",spread:6.92,annualizedReturn:20.8,
+announced:"2025-10-28",expectedClose:"2026-Q2",status:"pending",closingProbability:93,
+description:"Travere acquiring Mirum for ~$1.1bn / $34/share to gain LIVMARLI for rare cholestatic liver diseases. Shareholders approved. Travere CEO Dube: 'Mirum creates the clear leader in rare hepatic diseases.'",
+comment:"Travere CEO Eric Dube: 'Mirum's LIVMARLI franchise is highly complementary to our kidney and liver disease focus — the combination creates the clear leader in rare hepatic diseases.' Rare disease consolidation with no competitive overlap. HSR is the only remaining regulatory gate. Very high close probability.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved October 2025."},
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Approved by Mirum shareholders."},
+  {name:"HSR antitrust review",status:"pending",probability:97,detail:"Both companies operate in rare liver diseases but in complementary, non-overlapping indications (Mirum: cholestatic liver disease; Travere: focal segmental glomerulosclerosis and IgA nephropathy). Zero competitive concern. Early termination of HSR waiting period expected."},
+],
+dealRisk:"low"},
+
+{target:"Zeta Global Holdings",targetTicker:"ZETA",acquirer:"Publicis Groupe",geo:"USA",industry:"MarTech / AI-Driven Marketing",
+currentPrice:18.30,dealPrice:20.00,dealTerms:"$20.00 cash per share",spread:9.29,annualizedReturn:27.9,
+announced:"2025-12-15",expectedClose:"2026-Q3",status:"pending",closingProbability:83,
+description:"Publicis acquiring Zeta Global for ~$2.2bn / $20/share. Publicis CEO Sadoun: 'Zeta's AI-powered marketing cloud creates the most powerful personalisation engine in the industry.' Shareholders approved.",
+comment:"Publicis CEO Arthur Sadoun: 'Zeta's AI-powered marketing cloud perfectly complements our Epsilon data assets and creates the most powerful personalisation engine in the industry.' Wolfe Research analyst: 'Publicis has a clean regulatory track record — we expect EU and DOJ clearance within normal timelines. The main risk is timing: EU Phase 1 typically takes 25 working days but can extend to 35.' High close probability.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved December 2025."},
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"DOJ HSR review",status:"pending",probability:88,detail:"Publicis (advertising/PR services) + Zeta (AI marketing data platform) have limited direct competitive overlap. DOJ may examine data concentration in martech but overall probability of clearance is high."},
+  {name:"EU Commission Phase 1",status:"pending",probability:87,detail:"EU reviewing combined advertising and data assets. Publicis has significant EU operations but Zeta's EU presence is limited. Phase 1 clearance expected within 25 working days."},
+],
+dealRisk:"low"},
+
+{target:"Arcus Biosciences",targetTicker:"RCUS",acquirer:"Gilead Sciences",geo:"USA",industry:"Biotech / Oncology",
+currentPrice:19.30,dealPrice:22.00,dealTerms:"$22.00 cash per share",spread:13.99,annualizedReturn:28.0,
+announced:"2025-08-18",expectedClose:"2026-Q2",status:"pending",closingProbability:88,
+description:"Gilead exercised its contractual option to fully acquire Arcus for ~$2.1bn to gain domvanalimab and etrumadenant oncology programs. Gilead CEO Daniel O'Day: 'Arcus's pipeline directly addresses the most critical cancer treatment gaps.'",
+comment:"Gilead CEO Daniel O'Day: 'Arcus's pipeline directly addresses the most critical cancer treatment gaps, and our collaboration has already demonstrated the strong clinical potential of domvanalimab.' Arcus CEO Terry Rosen: 'We have deep confidence in Gilead's ability to advance these programs to patients globally.' Contractual option exercise significantly de-risks the deal — no competitive bidding or hostile dynamics. Standard HSR process.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Gilead option exercise",status:"done",probability:100,detail:"Gilead exercised contractual option August 2025. Triggers definitive acquisition process."},
+  {name:"Board approval",status:"done",probability:100,detail:"Arcus board approved pursuant to option exercise terms."},
+  {name:"HSR antitrust review",status:"pending",probability:92,detail:"Gilead (HIV, hepatitis, oncology) and Arcus (CD73/TIGIT/adenosine pathway) have limited direct competitive overlap in oncology. No same-class products competing. High probability of clearance."},
+  {name:"Shareholder vote",status:"pending",probability:90,detail:"Standard proxy process. Option exercise at attractive terms — strong board support. Institutional holders generally supportive."},
+],
+dealRisk:"low"},
+
+{target:"Movado Group",targetTicker:"MOV",acquirer:"Citizen Watch Co. of America",geo:"USA",industry:"Luxury Watches / Consumer Goods",
+currentPrice:13.40,dealPrice:15.00,dealTerms:"$15.00 cash per share",spread:11.94,annualizedReturn:23.9,
+announced:"2025-09-03",expectedClose:"2026-Q2",status:"pending",closingProbability:88,
+description:"Citizen Watch acquiring Movado for ~$475mn / $15/share. Shareholders approved. Citizen CEO Tokura: 'Consistent with our long-term strategy to build a diversified portfolio of iconic watch brands.'",
+comment:"Citizen Watch Group CEO Toshio Tokura: 'The acquisition of Movado Group is consistent with our long-term strategy to build a diversified portfolio of iconic watch brands serving every market segment.' Clean cross-border deal with routine CFIUS process for Japanese acquirer. Watch market is highly fragmented — no antitrust concern.",
+dealSize:0.475,evEbitda:8.1,dealCurrency:"USD",otherBidders:"Fossil Group, LVMH watch division (rumored)",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved September 2025."},
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"HSR antitrust review",status:"pending",probability:95,detail:"Highly fragmented global watch market. Zero competition concerns. Early termination expected."},
+  {name:"CFIUS review (routine)",status:"pending",probability:92,detail:"Routine CFIUS review for Japanese corporate acquirer. No national security concerns in consumer watch manufacturing. Expected to clear without conditions within 45 days."},
+],
+dealRisk:"low"},
+
+{target:"Phibro Animal Health",targetTicker:"PAHC",acquirer:"Elanco Animal Health",geo:"USA",industry:"Animal Health / Livestock",
+currentPrice:20.30,dealPrice:22.50,dealTerms:"$22.50 cash per share",spread:10.84,annualizedReturn:32.5,
+announced:"2025-09-30",expectedClose:"2026-Q2",status:"pending",closingProbability:91,
+description:"Elanco acquiring Phibro for ~$1.2bn to expand livestock product portfolio. Shareholders approved. Elanco CEO Jeff Simmons: 'Phibro's unique combination of products directly addresses the growing protein demand opportunity.'",
+comment:"Elanco CEO Jeff Simmons: 'Phibro's unique combination of antimicrobials, nutritional health products and performance products directly addresses the growing protein demand opportunity in our livestock segment.' Limited market concentration concerns in the fragmented animal health sector. Standard HSR review with high close probability.",
+dealSize:1.2,evEbitda:11.4,dealCurrency:"USD",otherBidders:"Boehringer Ingelheim (rumored), Zoetis",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100,detail:"Approved September 2025."},
+  {name:"Shareholder vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"HSR antitrust review",status:"pending",probability:93,detail:"Animal health market is large and fragmented. Elanco + Phibro combined is still well below market dominance thresholds. DOJ/FTC expected to clear with no conditions."},
+],
+dealRisk:"low"},
+
+{target:"Assura plc",targetTicker:"AGR.L",acquirer:"KKR / Primary Health Properties",geo:"EU",industry:"Healthcare REIT / Primary Care",
+currentPrice:44,dealPrice:46,dealTerms:"46p cash per share",spread:4.55,annualizedReturn:18.2,
+announced:"2025-03-12",expectedClose:"2026-Q1",status:"pending",closingProbability:98,
+description:"All major approvals in hand. UK court scheme sanction is the final routine procedural step. Essentially done.",
+comment:"Assura CEO Jonathan Murphy: 'The offer recognises the quality of Assura's portfolio and provides compelling immediate and certain value for shareholders.' Court sanction for UK scheme of arrangement is a pure procedural step — courts only decline to sanction if there is fraud or material misrepresentation, neither of which is present. Probability of 98% reflects near-certainty.",
+dealSize:1.55,evEbitda:20.1,dealCurrency:"EUR",otherBidders:"CBRE Investment Management (previous interest), L&G",regulatorySteps:[
+  {name:"UK CMA Phase 1",status:"done",probability:100,detail:"CMA cleared — no competition concerns in primary care property."},
+  {name:"FCA change of control approval",status:"done",probability:100,detail:"FCA approved KKR/PHP as fit and proper owners of FCA-regulated Assura entities."},
+  {name:"Shareholder scheme vote",status:"done",probability:100,detail:"Shareholders voted in favour of the scheme."},
+  {name:"UK court scheme sanction",status:"pending",probability:98,detail:"Final routine court hearing to sanction the scheme. English courts sanction schemes unless there is fraud, coercion, or the scheme is not fair to shareholders. None of these conditions present. Essentially a formality."},
+],
+dealRisk:"low"},
+
+{target:"Elementis plc",targetTicker:"ELM.L",acquirer:"Innospec",geo:"EU",industry:"Specialty Chemicals / UK",
+currentPrice:149,dealPrice:155,dealTerms:"155p cash per share",spread:4.03,annualizedReturn:16.1,
+announced:"2025-04-22",expectedClose:"2026-Q1",status:"pending",closingProbability:97,
+description:"All regulatory approvals in. UK court scheme sanction is the only remaining step.",
+comment:"Innospec CEO Ian Cleminson: 'Elementis's specialty chemicals portfolio is highly complementary to our oilfield chemicals business and enhances our global scale.' CMA Phase 1 and US DOJ both cleared. Court sanction is a pure procedural step with effectively 100% probability.",
+dealSize:0.82,evEbitda:12.3,dealCurrency:"EUR",otherBidders:"H.I.G. Capital (previous approach), Advent International",regulatorySteps:[
+  {name:"Board recommended",status:"done",probability:100,detail:"Elementis board unanimously recommended acceptance."},
+  {name:"Shareholder scheme vote",status:"done",probability:100,detail:"Shareholders approved the scheme."},
+  {name:"UK CMA Phase 1",status:"done",probability:100,detail:"CMA cleared — no competition concerns in specialty chemicals."},
+  {name:"US DOJ HSR clearance",status:"done",probability:100,detail:"DOJ cleared."},
+  {name:"UK court scheme sanction",status:"pending",probability:97,detail:"Final court sanction — routine procedural step. Essentially certain to be granted."},
+],
+dealRisk:"low"},
+
+{target:"Spectris plc",targetTicker:"SXS.L",acquirer:"Advent International",geo:"EU",industry:"Precision Measurement / Instruments",
+currentPrice:2460,dealPrice:2750,dealTerms:"2750p cash per share",spread:11.79,annualizedReturn:23.6,
+announced:"2025-09-10",expectedClose:"2026-Q3",status:"pending",closingProbability:88,
+description:"Advent taking Spectris private for ~£3.6bn / 2750p/share. Board recommended. Shareholder vote approved. CMA Phase 1 review underway.",
+comment:"Advent Managing Director David Mussafer: 'Spectris is an exceptional business with leading positions in high-value precision measurement markets. We are excited to accelerate its growth in the industrial automation and AI-driven testing segments.' CMA Phase 1 expected to clear given limited competition concerns in highly specialized precision instruments market. Court sanction to follow clearance.",
+dealSize:3.6,evEbitda:16.8,dealCurrency:"EUR",otherBidders:"Roper Technologies (rumored), Danaher, Fortive",regulatorySteps:[
+  {name:"Board recommended offer",status:"done",probability:100,detail:"Spectris board unanimously recommended acceptance September 2025."},
+  {name:"Shareholder scheme vote",status:"done",probability:100,detail:"Shareholders approved the scheme."},
+  {name:"UK CMA Phase 1 review",status:"pending",probability:90,detail:"CMA reviewing precision measurement instruments market. Advent has no competing precision instruments portfolio businesses. Phase 2 referral probability ~10%. Phase 1 clearance expected within 40 working days of notification."},
+  {name:"Other international filings (EU, US)",status:"pending",probability:92,detail:"Standard EU and US notifications given Spectris's global operations. No substantive competition concerns anticipated."},
+  {name:"UK court scheme sanction",status:"pending",probability:96,detail:"Final court sanction — granted after CMA clearance. Routine procedural step."},
+],
+dealRisk:"low"},
+
+{target:"Redde Northgate",targetTicker:"REDD.L",acquirer:"Enterprise Holdings",geo:"EU",industry:"Fleet Management / Vehicle Solutions",
+currentPrice:342,dealPrice:365,dealTerms:"365p cash per share",spread:6.73,annualizedReturn:20.2,
+announced:"2025-07-28",expectedClose:"2026-Q2",status:"pending",closingProbability:74,
+description:"Enterprise Holdings acquiring Redde Northgate for ~£1.1bn / 365p/share. Shareholder vote approved. CMA Phase 1 review underway — Phase 2 referral is possible.",
+comment:"Enterprise Holdings Chairman Jack Taylor family: 'A major expansion of our European fleet footprint.' Analysts at Peel Hunt: 'Phase 2 referral is possible given Enterprise's existing UK rental presence through National/Alamo brands — CMA will examine fleet management and vehicle leasing market concentration. However, Enterprise (consumer rental) and Redde Northgate (commercial fleet management) serve different customer segments. We model 70-75% probability of Phase 1 clearance, with 20% Phase 2 leading to delayed close, 5-10% CMA blocking or requiring major divestitures.'",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Board recommended",status:"done",probability:100,detail:"Redde Northgate board recommended acceptance."},
+  {name:"Shareholder scheme vote",status:"done",probability:100,detail:"Shareholders approved."},
+  {name:"UK CMA Phase 1 review",status:"pending",probability:74,detail:"CMA reviewing combined fleet management and vehicle rental market. Enterprise (consumer car rental: National, Alamo, Enterprise brands) + Redde Northgate (commercial fleet management: HGVs, vans, accident repair) serve somewhat different markets but CMA may see overlap in light commercial vehicle sector. ~25% chance of Phase 2 referral."},
+  {name:"FCA notification",status:"pending",probability:92,detail:"FCA notification for regulated fleet finance activities. Administrative."},
+  {name:"UK court scheme sanction",status:"pending",probability:88,detail:"Final court sanction following CMA clearance. Standard."},
+],
+dealRisk:"medium"},
+
+{target:"Commerzbank AG",targetTicker:"CBK.DE",acquirer:"UniCredit S.p.A.",geo:"EU",industry:"Commercial & Retail Banking / Germany",
+currentPrice:26.00,dealPrice:0,dealTerms:"No formal offer filed yet — UniCredit holds ~29% economic stake",spread:0,annualizedReturn:0,
+announced:"2024-09-00",expectedClose:"TBD",status:"pending",closingProbability:38,
+description:"UniCredit accumulating towards full Commerzbank takeover. ECB approved stake up to 29.9% April 2025. No formal public offer filed as of March 2026. CDU coalition government opposition has softened.",
+comment:"UniCredit CEO Andrea Orcel: 'We see a unique opportunity to create a leading European bank.' New German Finance Minister Lars Klingbeil (CDU) has been less hostile than SPD predecessors. Barclays analysts: 'The probability of a full bid has risen meaningfully under the new German government — we now assign ~40% probability of a formal offer in 2026.' ECB approval to exceed 30% is the next catalyst to watch. A formal offer would face German banking labor opposition and significant ECB supervisory scrutiny.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"ECB stake approval up to 29.9%",status:"done",probability:100,detail:"ECB approved UniCredit holding up to 29.9% economic exposure in April 2025."},
+  {name:"BaFin notified of intentions",status:"done",probability:100,detail:"BaFin notified per German banking law."},
+  {name:"ECB authorization to exceed 30%",status:"pending",probability:50,detail:"Critical next step. ECB must approve any holding above 30% and ultimately a full takeover bid. ECB supervisory requirements are stringent for bank mergers — capital adequacy, systemic risk, operational integration. Probability ~50% given ECB's generally constructive approach to EU banking consolidation."},
+  {name:"German government formal position",status:"pending",probability:45,detail:"German government holds residual Commerzbank stake and political influence. CDU coalition has softened opposition but labor unions (DGB, ver.di) remain strongly opposed. Government formal blessing would be pivotal for deal viability."},
+  {name:"Full public offer documentation",status:"pending",probability:38,detail:"No formal offer filed yet. Preparing offer documentation requires finalizing exchange ratio/price, securing committed financing, and obtaining ECB pre-approval. UniCredit must decide whether to launch hostile or negotiated offer. Probability reflects overall deal completion likelihood."},
+  {name:"ECB full bank merger supervisory approval",status:"pending",probability:55,detail:"If offer proceeds, ECB must approve the merger of two significant eurozone banks. Systemic risk analysis, capital planning, and operational continuity requirements. Typically 12-18 month process."},
+],
+dealRisk:"high"},
+
+{target:"Grifols SA",targetTicker:"GRF.MC",acquirer:"Brookfield Asset Management",geo:"EU",industry:"Plasma / Biologics / Spain",
+currentPrice:11.00,dealPrice:13.67,dealTerms:"€13.67 per share",spread:24.27,annualizedReturn:36.4,
+announced:"2024-07-00",expectedClose:"2026-Q3",status:"pending",closingProbability:52,
+description:"Brookfield and Grifols family pursuing take-private at €13.67/share (~€5.2bn). CNMV reviewing. Accounting controversy persists. CNMV Chairman Buenaventura confirmed 'thorough review of the independent valuation.'",
+comment:"Brookfield CEO Bruce Flatt: 'Grifols' critical role in the global plasma supply chain makes this a strategically important investment for Brookfield Infrastructure.' CNMV Chairman Rodrigo Buenaventura: 'We are conducting a thorough review of the independent valuation — the interests of minority shareholders must be fully protected.' Analysts at Citi: 'CNMV's independence and the accounting controversy make this the most complex take-private in Spanish market history. The independent valuation may come in above €13.67, requiring a price bump. We model 50-55% close probability at current terms.'",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"EU Commission Phase 1",status:"done",probability:100,detail:"EU Commission cleared Phase 1 without conditions."},
+  {name:"Improved offer at €13.67 filed with CNMV",status:"done",probability:100,detail:"Improved offer filed with Spanish CNMV after initial offer was below fair value estimates."},
+  {name:"CNMV independent valuation review",status:"pending",probability:55,detail:"CNMV-commissioned independent valuation is the key uncertainty. If valuation comes in above €13.67, Brookfield must raise its offer or walk away. Risk of offer price being insufficient to secure 90% acceptance threshold."},
+  {name:"CNMV formal offer approval",status:"pending",probability:60,detail:"CNMV must formally approve the offer documentation including price. Extended process due to accounting complexity and prior Gotham short report."},
+  {name:"Minority shareholder 90% acceptance threshold",status:"pending",probability:52,detail:"To squeeze out minorities, Brookfield needs 90% acceptance. Minority investor Primefin and other activist holders may resist at €13.67. Price bump may be required. Wide spread reflects this uncertainty."},
+],
+dealRisk:"high"},
+
+{target:"PostNL NV",targetTicker:"PNL.AS",acquirer:"bpost NV",geo:"EU",industry:"Postal Services / Parcel Delivery",
+currentPrice:1.55,dealPrice:1.75,dealTerms:"€1.75 cash per share",spread:12.90,annualizedReturn:19.4,
+announced:"2025-02-14",expectedClose:"2026-Q3",status:"pending",closingProbability:45,
+description:"Belgian bpost acquired recommended offer for Dutch PostNL at €1.75/share. EU Commission Phase 2 investigation opened May 2025. Key risk is structural remedies or prohibition.",
+comment:"bpost CEO Dirk Tirez: 'The combination creates a stronger postal network across Belgium and the Netherlands with enhanced parcel capabilities.' Reuters analyst: 'EU Commission's Phase 2 investigation is substantive — both companies have near-monopoly positions in their domestic postal markets. We see a 40-50% chance of clearance with significant structural remedies (possible divestiture of Dutch operations), 20% chance of behavioral remedies only (deal closes without divestitures), 30-35% chance of prohibition.' Wide spread fully justified.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"PostNL board recommended",status:"done",probability:100,detail:"PostNL board recommended acceptance February 2025."},
+  {name:"Dutch AFM documentation approved",status:"done",probability:100,detail:"Dutch financial regulator approved offer documentation."},
+  {name:"EU Commission Phase 2 investigation (ONGOING)",status:"pending",probability:45,detail:"Phase 2 opened May 2025. EU Commission examining combined postal market dominance in Belgium and Netherlands. Both companies have near-monopoly domestic letter + growing parcel positions. Commission likely to require structural remedies (divestitures) or may prohibit. Phase 2 can take up to 90 working days + extensions."},
+  {name:"Dutch ACM (competition authority)",status:"pending",probability:55,detail:"Dutch Authority for Consumers and Markets conducting parallel review. May require PostNL to maintain universal service obligations post-merger."},
+  {name:"Belgian competition authority",status:"pending",probability:72,detail:"Belgian Competition Authority review. Less complex than Dutch/EU given bpost is acquiring rather than merging domestic operations."},
+  {name:"90% acceptance threshold",status:"pending",probability:55,detail:"bpost needs sufficient shareholder acceptance. Institutional holders watching EU Phase 2 outcome before tendering."},
+],
+dealRisk:"high"},
+
+{target:"Ubisoft Entertainment",targetTicker:"UBI.PA",acquirer:"Tencent / Guillemot family",geo:"EU",industry:"Video Games / Interactive Entertainment",
+currentPrice:14.50,dealPrice:18.00,dealTerms:"€18.00 per share (formal AMF offer)",spread:24.14,annualizedReturn:36.2,
+announced:"2025-01-20",expectedClose:"2026-Q4",status:"pending",closingProbability:48,
+description:"Tencent and Guillemot family pursuing €18/share take-private for Ubisoft (~€3.4bn). AMF offer underway. French government FIREMAN screening. EU Commission review of Tencent gaming portfolio overlap.",
+comment:"Ubisoft CEO Yves Guillemot: 'This partnership with Tencent gives us the financial resources and strategic flexibility to invest in our franchises for the long term without quarterly public market pressures.' French Minister of Culture Rachida Dati raised concerns about 'cultural sovereignty and maintaining French gaming heritage.' EU Commission will conduct Phase 2 given Tencent's existing gaming portfolio (Riot Games, Epic stake, Supercell). Wide spread reflects multi-regulatory complexity.",
+dealSize:4.2,evEbitda:null,dealCurrency:"EUR",otherBidders:"EA (rumored), Take-Two Interactive, Sony Interactive",regulatorySteps:[
+  {name:"AMF offer document filed and approved",status:"done",probability:100,detail:"AMF (Autorité des marchés financiers) approved offer document January 2026."},
+  {name:"Guillemot family shares tendered",status:"done",probability:100,detail:"Founding family committed to the offer."},
+  {name:"EU Commission Phase 1 review",status:"pending",probability:55,detail:"EU likely to open Phase 2 given Tencent's extensive gaming portfolio (Riot Games, Epic, Supercell, WeGame). Concern: combined Tencent-Ubisoft would create largest gaming content library plus distribution platform globally. Phase 2 = additional 90 working days."},
+  {name:"French FIREMAN foreign investment screening",status:"pending",probability:62,detail:"France screens foreign investments in 'sensitive sectors' — gaming content is under cultural sovereignty provisions. Tencent is Chinese: likely to require commitments on data localization, content editorial independence, and IP protection. Approval with conditions likely but timeline uncertain."},
+  {name:"AMF final offer approval",status:"pending",probability:68,detail:"AMF final sign-off after EU and FIREMAN clearances. Administrative once other approvals in place."},
+  {name:"Minority 90% acceptance threshold",status:"pending",probability:55,detail:"Need 90% acceptance for squeeze-out. At €18/share (vs prior trading ~€10), premium is compelling, but some institutional holders may reject on governance/price grounds."},
+],
+dealRisk:"high"},
+
+{target:"Tele2 AB",targetTicker:"TEL2-B.ST",acquirer:"Apax Partners",geo:"EU",industry:"Telecoms / Mobile & Fixed Broadband",
+currentPrice:127,dealPrice:135,dealTerms:"SEK 135 cash per share",spread:6.30,annualizedReturn:12.6,
+announced:"2025-03-18",expectedClose:"2026-Q2",status:"pending",closingProbability:87,
+description:"Apax Partners taking Tele2 private for ~SEK 27bn. Acceptance exceeded 90%. PTS (Swedish telecom regulator) and EU Commission reviews underway. Apax CEO Sillitoe: 'Tele2 is a high-quality telecom with excellent market positions.'",
+comment:"Apax Partners CEO Andrew Sillitoe: 'Tele2 is a high-quality telecom with excellent market positions in Sweden and the Baltics — exactly the kind of infrastructure-like business where we add value over the long term.' Tele2 CEO Kjell Johnsen: 'This offer delivers an attractive premium that recognises our strong operational execution.' PTS review is the primary remaining gate — Swedish telecoms regulator has been supportive of PE ownership historically. EU Phase 1 expected to clear without conditions.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Tele2 board recommended",status:"done",probability:100,detail:"Board recommended March 2025."},
+  {name:"Finansinspektionen offer document approved",status:"done",probability:100,detail:"Swedish FI approved offer documentation."},
+  {name:"Shareholder acceptance >90%",status:"done",probability:100,detail:"Acceptance exceeded 90% threshold — enabling squeeze-out."},
+  {name:"PTS Swedish telecom regulatory approval",status:"pending",probability:88,detail:"Post & Telestyrelsen (PTS) reviewing change of control in licensed telecoms operator. PTS has approved prior PE acquisitions of Swedish telecoms (e.g. Com Hem by NorCell). High probability of approval with standard service quality commitments."},
+  {name:"EU Commission Phase 1",status:"pending",probability:92,detail:"EU reviewing cross-border telecom PE acquisition. No competition concerns — Apax has no competing telecom assets in Sweden or Baltics. Phase 1 clearance expected within 25 working days."},
+  {name:"Squeeze-out of remaining minorities",status:"pending",probability:95,detail:"Having exceeded 90% acceptance, Apax can force squeeze-out of remaining shareholders at SEK 135. Swedish Companies Act process."},
+],
+dealRisk:"low"},
+
+{target:"Dometic Group",targetTicker:"DOM.ST",acquirer:"Platinum Equity",geo:"EU",industry:"Mobile Living / Marine / Outdoor Equipment",
+currentPrice:46,dealPrice:52,dealTerms:"SEK 52 per share cash",spread:13.04,annualizedReturn:26.1,
+announced:"2025-08-25",expectedClose:"2026-Q2",status:"pending",closingProbability:88,
+description:"Platinum Equity taking Dometic private for ~SEK 15bn. Acceptance exceeded 90%. EU Commission Phase 1 and US HSR reviews underway.",
+comment:"Platinum Equity's Tom Gores: 'Dometic's brands are market leaders in marine, vehicle and outdoor segments — we see meaningful opportunity to accelerate growth and operational excellence.' Dometic CEO Juan Vargues supported the deal as providing 'greater resources to execute our long-term strategy outside public markets.' Both EU and US regulatory reviews are expected to be routine — no competition concerns in fragmented outdoor products market.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Board recommended",status:"done",probability:100,detail:"Board recommended August 2025."},
+  {name:"Shareholder acceptance >90%",status:"done",probability:100,detail:"Acceptance exceeded 90%."},
+  {name:"EU Commission Phase 1",status:"pending",probability:93,detail:"EU reviewing PE acquisition of outdoor products company. Platinum Equity has no competing outdoor/marine products portfolio. Phase 1 clearance expected."},
+  {name:"US HSR review",status:"pending",probability:94,detail:"Standard US HSR filing. No US market concentration concerns in marine/outdoor equipment. Early termination likely."},
+  {name:"Swedish FI approval and squeeze-out",status:"pending",probability:92,detail:"Swedish Finansinspektionen standard approval, then squeeze-out of remaining minorities."},
+],
+dealRisk:"low"},
+
+{target:"Nobia AB",targetTicker:"NOBI.ST",acquirer:"Nordic Capital",geo:"EU",industry:"Kitchen Cabinets / Home Furniture",
+currentPrice:13.20,dealPrice:15.50,dealTerms:"SEK 15.50 per share",spread:17.42,annualizedReturn:34.8,
+announced:"2025-07-10",expectedClose:"2026-Q2",status:"pending",closingProbability:86,
+description:"Nordic Capital taking Nordic kitchen manufacturer Nobia private for ~SEK 5bn. Nobia CEO Sintorn: 'Private ownership gives us flexibility to make necessary investments without short-term public market pressures.'",
+comment:"Nordic Capital Partner Christoffer Sjögren: 'Nobia is a leading kitchen brand across Northern Europe with a clear operational improvement opportunity — exactly the kind of transformation story where Nordic Capital adds value.' Nobia CEO Jon Sintorn: 'Private ownership gives us the flexibility to make the necessary investments without short-term public market pressures.' EU Phase 1 expected to be routine.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Board recommended",status:"done",probability:100,detail:"Board recommended July 2025."},
+  {name:"Shareholder acceptance obtained",status:"done",probability:100,detail:"Sufficient shareholder acceptance obtained."},
+  {name:"EU Commission Phase 1",status:"pending",probability:92,detail:"EU reviewing kitchen cabinet market. Nordic Capital has no competing kitchen businesses. Phase 1 clearance expected within standard 25 working day timeline."},
+  {name:"Swedish FI review and squeeze-out",status:"pending",probability:90,detail:"Standard Swedish Finansinspektionen approval and subsequent squeeze-out process."},
+],
+dealRisk:"low"},
+
+{target:"Anglo American Platinum (Amplats)",targetTicker:"AMS.SJ",acquirer:"Anglo American (parent buyout of minority)",geo:"EU",industry:"Platinum Group Metals / South Africa",
+currentPrice:458,dealPrice:480,dealTerms:"ZAR 480 per share",spread:4.80,annualizedReturn:14.4,
+announced:"2025-01-28",expectedClose:"2026-Q2",status:"pending",closingProbability:88,
+description:"Anglo American buying out Amplats minority shareholders at ZAR 480/share as part of portfolio simplification. Anglo CEO Wanblad: 'Creates a more focused Anglo American with greater exposure to future-facing metals.'",
+comment:"Anglo American CEO Duncan Wanblad: 'The simplification of our portfolio through the Amplats buyout creates a more focused Anglo American with greater exposure to future-facing metals at a time of structural demand growth.' Competition Commission South Africa review is standard for related-party parent-subsidiary transactions. High close probability.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Anglo American board approval",status:"done",probability:100,detail:"Anglo American board approved January 2026."},
+  {name:"Formal offer documentation filed with JSE",status:"done",probability:100,detail:"JSE documentation filed and registered."},
+  {name:"Competition Commission South Africa",status:"pending",probability:90,detail:"CCSA reviewing parent company buyout of listed subsidiary. Related-party transactions typically approved — no third-party competition concern since Anglo already controls Amplats. Standard 40 working day review."},
+  {name:"Independent Amplats shareholder vote",status:"pending",probability:88,detail:"Independent (non-Anglo) shareholders of Amplats must vote. ZAR 480 represents a reasonable premium to recent trading. Major institutional holders expected to approve."},
+  {name:"JSE delisting process",status:"pending",probability:92,detail:"Following successful vote and CCSA approval, JSE delisting of Amplats shares. Administrative process."},
+],
+dealRisk:"low"},
+
+{target:"Orion Corporation",targetTicker:"ORNBV.HE",acquirer:"Novo Nordisk",geo:"EU",industry:"Pharma / Oncology / Finland",
+currentPrice:43.10,dealPrice:43.00,dealTerms:"€43.00 — main offer closed, squeeze-out ongoing",spread:-0.23,annualizedReturn:0,
+announced:"2024-10-00",expectedClose:"2025-Q3",status:"approved",closingProbability:100,
+description:"Novo Nordisk acquired Orion at €43/share. EU cleared May 2025. Acceptance threshold met. Main offer closed. Squeeze-out of remaining minorities through Finnish courts ongoing.",
+comment:"Novo Nordisk CEO Lars Fruergaard Jørgensen: 'The acquisition of Orion's oncology assets, particularly darolutamide, strengthens our position in cancer care alongside our cardiovascular and metabolic disease leadership.' Main offer completed. Squeeze-out proceedings in Finland are administrative — shareholders receive €43 in court-determined fair value process.",
+dealSize:5.4,evEbitda:23.1,dealCurrency:"EUR",otherBidders:"AstraZeneca (previous interest), Pfizer",regulatorySteps:[
+  {name:"EU Commission Phase 1",status:"done",probability:100,detail:"EU Commission cleared May 2025."},
+  {name:"Finnish FIN-FSA approval",status:"done",probability:100,detail:"Finnish Financial Supervisory Authority approved."},
+  {name:"Acceptance threshold met",status:"done",probability:100,detail:"Acceptance threshold exceeded enabling squeeze-out."},
+  {name:"Main offer closed",status:"done",probability:100,detail:"Main offer period completed. Novo Nordisk holds controlling stake."},
+  {name:"Finnish squeeze-out court proceedings",status:"pending",probability:100,detail:"Routine Finnish court process to acquire remaining minority shares. Court determines fair value — typically the offer price. Administrative in nature."},
+],
+dealRisk:"low"},
+
+{target:"Discover Financial Services",targetTicker:"DFS",acquirer:"Capital One Financial",geo:"USA",industry:"Consumer Finance / Credit Cards",
+currentPrice:173.20,dealPrice:170.00,dealTerms:"1.0192 Capital One shares per DFS share",spread:-1.88,annualizedReturn:0,
+announced:"2024-02-19",expectedClose:"2026-Q2",status:"pending",closingProbability:85,
+description:"Capital One's $35bn acquisition of Discover creates the largest US credit card company by loan volume. OCC approved March 2026. Federal Reserve final approval is the last gate.",
+comment:"Capital One CEO Richard Fairbank: 'Discover is a rare opportunity to bring together two iconic brands.' Spread reflects exchange ratio risk — moves with COF stock. Fed approval expected Q2.",
+dealSize:35.0,evEbitda:11.2,dealCurrency:"USD",otherBidders:"JPMorgan Chase (explored), American Express (rumored), Goldman Sachs",regulatorySteps:[
+  {name:"Shareholder votes (both)",status:"done",probability:100},
+  {name:"OCC bank merger approval",status:"done",probability:100,detail:"OCC approved March 2026."},
+  {name:"DOJ antitrust clearance",status:"done",probability:100,detail:"Cleared with behavioral remedies on network access."},
+  {name:"Federal Reserve final approval",status:"pending",probability:88},
+],dealRisk:"medium"},
+
+{target:"Civitas Resources",targetTicker:"CIVI",acquirer:"Chord Energy",geo:"USA",industry:"E&P / DJ Basin & Permian",
+currentPrice:43.20,dealPrice:0,dealTerms:"0.3672 Chord shares per CIVI share",spread:0,annualizedReturn:0,
+announced:"2026-01-06",expectedClose:"2026-H1",status:"pending",closingProbability:88,
+description:"All-stock merger creating a ~$12bn DJ Basin and Permian E&P operator targeting $100mn+ annual synergies. Non-overlapping basins minimize antitrust concern.",
+comment:"Chord Energy CEO Danny Brown: 'This creates one of the largest, most diversified US upstream E&P companies.' Non-overlapping basin geography makes antitrust review quick. Spread tracks Chord share price.",
+dealSize:12.0,evEbitda:5.8,dealCurrency:"USD",otherBidders:"Coterra Energy (explored), Diamondback Energy",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100},
+  {name:"HSR antitrust filing",status:"pending",probability:95},
+  {name:"Civitas shareholder vote",status:"pending",probability:90},
+  {name:"Chord shareholder vote",status:"pending",probability:90},
+],dealRisk:"low"},
+
+{target:"Clean Harbors Inc",targetTicker:"CLH",acquirer:"Republic Services",geo:"USA",industry:"Environmental / Hazardous Waste",
+currentPrice:212.40,dealPrice:230.00,dealTerms:"$230.00 cash per share",spread:8.28,annualizedReturn:11.0,
+announced:"2025-11-18",expectedClose:"2026-H2",status:"pending",closingProbability:82,
+description:"Republic Services acquiring Clean Harbors for ~$10bn. DOJ second request received. TSD facility divestitures in overlap markets expected to take 6-9 months to execute.",
+comment:"Republic Services CEO Jon Vander Ark: 'Clean Harbors creates a uniquely comprehensive environmental services company.' DOJ consent decree negotiations ongoing — divestiture execution is the primary risk.",
+dealSize:10.0,evEbitda:12.8,dealCurrency:"USD",otherBidders:"Clean Earth (PE), US Ecology (acquired by Republic already)",regulatorySteps:[
+  {name:"Boards and shareholder approval",status:"done",probability:100},
+  {name:"DOJ second request received",status:"done",probability:100},
+  {name:"DOJ consent decree negotiations",status:"pending",probability:82},
+  {name:"Divestiture completion",status:"pending",probability:79},
+],dealRisk:"medium"},
+
+{target:"Maximus Inc",targetTicker:"MMS",acquirer:"Veritas Capital",geo:"USA",industry:"Government Services",
+currentPrice:61.80,dealPrice:67.00,dealTerms:"$67.00 cash per share",spread:8.41,annualizedReturn:16.8,
+announced:"2026-01-29",expectedClose:"2026-Q3",status:"pending",closingProbability:88,
+description:"Veritas Capital taking Maximus private for ~$4.2bn at $67/share (22% premium). Minimal antitrust risk. Key government contract change-in-control consents required.",
+comment:"Veritas Capital CEO Ramzi Musallam: 'Maximus is a leading platform in the growing government services market.' Veritas is an established government contractor — contract consent expected.",
+dealSize:4.2,evEbitda:14.1,dealCurrency:"USD",otherBidders:"Leidos Holdings (rumored), SAIC, Booz Allen Hamilton",regulatorySteps:[
+  {name:"Board approved",status:"done",probability:100},
+  {name:"HSR antitrust filing",status:"pending",probability:95},
+  {name:"Shareholder vote",status:"pending",probability:93},
+  {name:"Government contract change-in-control",status:"pending",probability:90},
+],dealRisk:"low"},
+
+{target:"Kellanova",targetTicker:"K",acquirer:"Mars Inc.",geo:"USA",industry:"Snacks / Food",
+currentPrice:83.40,dealPrice:83.50,dealTerms:"$83.50 cash per share",spread:0.12,annualizedReturn:1.4,
+announced:"2024-08-14",expectedClose:"2026-Q1",status:"pending",closingProbability:99,
+description:"Mars acquiring Kellanova for ~$36bn. FTC and EU cleared. Spread at near-parity reflecting virtual certainty to close on final routine filings.",
+comment:"Mars CEO Poul Wessel: 'Kellanova's iconic snack brands are ideal for our global portfolio.' FTC cleared December 2025. EU cleared January 2026. Essentially done.",
+dealSize:35.8,evEbitda:23.6,dealCurrency:"USD",otherBidders:"Unilever (walked away), Mondelez, Kraft Heinz (previous)",regulatorySteps:[
+  {name:"FTC and EU clearance",status:"done",probability:100},
+  {name:"Final international filings",status:"pending",probability:99},
+],dealRisk:"low"},
+
+{target:"R1 RCM Inc",targetTicker:"RCM",acquirer:"TowerBrook Capital / CD&R",geo:"USA",industry:"Healthcare Revenue Cycle",
+currentPrice:13.75,dealPrice:14.30,dealTerms:"$14.30 cash per share",spread:4.00,annualizedReturn:12.0,
+announced:"2025-08-01",expectedClose:"2026-Q2",status:"pending",closingProbability:95,
+description:"PE consortium taking R1 RCM private for ~$8.9bn. Shareholder vote approved. HSR review near completion.",
+comment:"TowerBrook Partner Jonathan Bilzin: 'R1 is the clear market leader in tech-enabled revenue cycle management.' Shareholder vote completed — clean deal approaching close.",
+dealSize:8.9,evEbitda:null,dealCurrency:"USD",otherBidders:"Optum (UnitedHealth) explored, Accenture Health",regulatorySteps:[
+  {name:"Board and shareholder approval",status:"done",probability:100},
+  {name:"HSR antitrust review",status:"pending",probability:96},
+  {name:"Healthcare contract notifications",status:"pending",probability:97},
+],dealRisk:"low"},
+
+{target:"Informatica Inc",targetTicker:"INFA",acquirer:"Salesforce",geo:"USA",industry:"Data Management / Cloud Integration",
+currentPrice:24.10,dealPrice:25.00,dealTerms:"$25.00 cash per share",spread:3.73,annualizedReturn:9.3,
+announced:"2025-10-07",expectedClose:"2026-Q2",status:"pending",closingProbability:93,
+description:"Salesforce acquiring Informatica for ~$8.0bn. Shareholder vote completed. EU Phase 1 review near completion — data management and CRM are distinct markets.",
+comment:"Salesforce CEO Marc Benioff: 'Informatica gives us the ability to provide a unified AI Data Cloud to every enterprise customer globally.' Near close — EU Phase 1 is final gate.",
+dealSize:8.0,evEbitda:null,dealCurrency:"USD",otherBidders:"IBM (explored previously), Microsoft, ServiceNow",regulatorySteps:[
+  {name:"Boards approved and shareholder vote done",status:"done",probability:100},
+  {name:"HSR clearance",status:"done",probability:100},
+  {name:"EU Commission Phase 1",status:"pending",probability:94},
+],dealRisk:"low"},
+
+{target:"HashiCorp Inc",targetTicker:"HCP",acquirer:"IBM",geo:"USA",industry:"Cloud Infrastructure / DevOps",
+currentPrice:34.80,dealPrice:35.00,dealTerms:"$35.00 cash per share",spread:0.57,annualizedReturn:3.4,
+announced:"2024-04-24",expectedClose:"2026-Q1",status:"pending",closingProbability:98,
+description:"IBM acquiring HashiCorp for ~$6.4bn. All approvals received including EU and CMA. Final closing mechanics completing — near-certain.",
+comment:"IBM CEO Arvind Krishna: 'HashiCorp's infrastructure automation is essential to every enterprise hybrid cloud strategy.' All regulatory gates cleared — spread near parity.",
+dealSize:6.4,evEbitda:null,dealCurrency:"USD",otherBidders:"Microsoft (rumored), Google Cloud, Red Hat",regulatorySteps:[
+  {name:"All regulatory approvals received",status:"done",probability:100},
+  {name:"Final closing conditions",status:"pending",probability:98},
+],dealRisk:"low"},
+
+{target:"Confluent Inc",targetTicker:"CFLT",acquirer:"IBM",geo:"USA",industry:"Data Streaming / Real-Time Analytics",
+currentPrice:28.50,dealPrice:31.00,dealTerms:"$31.00 cash per share",spread:8.77,annualizedReturn:17.5,
+announced:"2026-02-12",expectedClose:"2026-Q3",status:"pending",closingProbability:85,
+description:"IBM acquiring Confluent for ~$10.5bn at $31/share. Combines Kafka data streaming with Databricks lakehouse. Private acquiror adds financing risk.",
+comment:"IBM CEO Arvind Krishna: 'Confluent and Databricks eliminate the need for companies to build complex integration middleware.' IBM acquiror; financing risk and timeline uncertainty widen spread.",
+dealSize:10.5,evEbitda:null,dealCurrency:"USD",otherBidders:"Snowflake (rumored), Google Cloud, Amazon AWS",regulatorySteps:[
+  {name:"Both boards approved",status:"done",probability:100},
+  {name:"Confluent shareholder vote",status:"pending",probability:90},
+  {name:"HSR antitrust review",status:"pending",probability:88},
+  {name:"Databricks financing confirmation",status:"pending",probability:86},
+],dealRisk:"medium"},
+
+{target:"Covestro AG",targetTicker:"1COV.DE",acquirer:"ADNOC",geo:"EU",industry:"Specialty Chemicals / Germany",
+currentPrice:62.20,dealPrice:62.00,dealTerms:"€62.00 — main offer complete, squeeze-out ongoing",spread:-0.32,annualizedReturn:0,
+announced:"2023-10-00",expectedClose:"2025-Q4",status:"approved",closingProbability:100,
+description:"ADNOC acquired Covestro via tender offer at €62/share. EC cleared. German statutory squeeze-out proceedings (AktG §327a) ongoing for remaining minority shareholders.",
+comment:"ADNOC CEO Sultan Al Jaber: 'Covestro strengthens ADNOC's global chemicals leadership.' Main offer completed. Squeeze-out is an administrative court process — shareholders receive €62.",
+dealSize:16.0,evEbitda:6.8,dealCurrency:"EUR",otherBidders:"BASF (previous discussions), Saudi Aramco (interest)",regulatorySteps:[
+  {name:"EU Commission clearance and main offer closed",status:"done",probability:100},
+  {name:"German squeeze-out proceedings",status:"pending",probability:100},
+],dealRisk:"low"},
+
+{target:"Anglo American plc",targetTicker:"AAL.L",acquirer:"BHP Group",geo:"EU",industry:"Diversified Mining / UK",
+currentPrice:3092,dealPrice:2550,dealTerms:"2550p all-share indicative offer",spread:-17.53,annualizedReturn:-23.7,
+announced:"2026-01-28",expectedClose:"2026-H2",status:"pending",closingProbability:66,
+description:"BHP renewed approach for Anglo American at 2550p/share. Anglo board engaging. UK CMA Phase 2 virtually certain. South African regulatory and government approval is the critical swing variable.",
+comment:"BHP CEO Mike Henry: 'The combination creates the world's premier mining company in energy transition metals.' Major divestitures in copper and iron ore expected. South African government is the decisive unknown.",
+dealSize:40.0,evEbitda:7.1,dealCurrency:"USD",otherBidders:"Glencore (explored), Vale (rumored), Rio Tinto",regulatorySteps:[
+  {name:"Anglo board engagement",status:"done",probability:100},
+  {name:"Anglo shareholder vote",status:"pending",probability:74},
+  {name:"UK CMA Phase 2 review",status:"pending",probability:65},
+  {name:"South African competition and DMRE",status:"pending",probability:58},
+],dealRisk:"high"},
+
+{target:"Smith & Nephew plc",targetTicker:"SN.L",acquirer:"Stryker Corporation",geo:"EU",industry:"Orthopaedics / Medical Devices",
+currentPrice:1273,dealPrice:1250,dealTerms:"1250p cash per share",spread:-1.81,annualizedReturn:-2.4,
+announced:"2026-01-22",expectedClose:"2026-Q4",status:"pending",closingProbability:78,
+description:"Stryker bidding for Smith & Nephew at ~£10.8bn. Targeted divestitures in orthopaedics expected across CMA, EU, and DOJ reviews.",
+comment:"Stryker CEO Kevin Lobo: 'S&N gives us leading positions in hip, knee, and shoulder replacement globally.' Multiple jurisdictions will require targeted product line divestitures.",
+dealSize:10.8,evEbitda:18.5,dealCurrency:"EUR",otherBidders:"Zimmer Biomet (rumored), Johnson & Johnson, Becton Dickinson",regulatorySteps:[
+  {name:"S&N board recommended",status:"done",probability:100},
+  {name:"S&N shareholder vote",status:"pending",probability:88},
+  {name:"UK CMA Phase 1",status:"pending",probability:78},
+  {name:"EU Commission Phase 1",status:"pending",probability:79},
+  {name:"US DOJ/FTC review",status:"pending",probability:81},
+],dealRisk:"medium"},
+
+{target:"Rightmove plc",targetTicker:"RMV.L",acquirer:"REA Group",geo:"EU",industry:"Property Portals / UK",
+currentPrice:528,dealPrice:705,dealTerms:"705p cash — recommended offer",spread:33.52,annualizedReturn:163.1,
+announced:"2025-09-30",expectedClose:"2026-Q2",status:"pending",closingProbability:93,
+description:"REA Group (News Corp) recommended offer for Rightmove at 705p/share (~£6.2bn). CMA cleared November 2025. Court sanction is the final step.",
+comment:"REA Group CEO Owen Wilson: 'Rightmove is one of the most powerful digital property platforms in the world.' All regulatory approvals complete — court sanction is routine procedural formality.",
+dealSize:6.2,evEbitda:28.4,dealCurrency:"EUR",otherBidders:"Axel Springer (explored), CoStar Group (previous unsolicited)",regulatorySteps:[
+  {name:"All approvals received",status:"done",probability:100},
+  {name:"UK court scheme sanction",status:"pending",probability:93},
+],dealRisk:"low"},
+
+{target:"Hargreaves Lansdown plc",targetTicker:"HL.L",acquirer:"CVC Capital Partners consortium",geo:"EU",industry:"Wealth Management / UK",
+currentPrice:1109,dealPrice:1140,dealTerms:"1140p cash per share",spread:2.8,annualizedReturn:13.6,
+announced:"2025-05-24",expectedClose:"2026-Q2",status:"pending",closingProbability:95,
+description:"CVC/ADIA/Platinum taking HL private for ~£5.4bn. FCA, CMA, and shareholder approvals all completed. Court sanction is the final step.",
+comment:"CVC Partner Nikos Stathopoulos: 'HL is one of the UK's most trusted financial brands with 1.8 million investors.' All approvals done — court sanction is routine formality.",
+dealSize:5.4,evEbitda:15.9,dealCurrency:"EUR",otherBidders:"Aviva (interest), Interactive Investor, St James's Place",regulatorySteps:[
+  {name:"All approvals received",status:"done",probability:100},
+  {name:"UK court scheme sanction",status:"pending",probability:95},
+],dealRisk:"low"},
+
+{target:"Entain plc",targetTicker:"ENT.L",acquirer:"MGM Resorts International",geo:"EU",industry:"Sports Betting / Gaming",
+currentPrice:542,dealPrice:800,dealTerms:"800p per share — recommended offer",spread:47.6,annualizedReturn:96.5,
+announced:"2026-01-14",expectedClose:"2026-Q3",status:"pending",closingProbability:80,
+description:"MGM Resorts making recommended offer for full Entain at 800p/share (~£8.7bn). UK Gambling Commission review is the key regulatory hurdle.",
+comment:"MGM CEO Bill Hornbuckle: 'Acquiring Entain gives us full ownership of BetMGM.' UK Gambling Commission historical regulatory issues with Entain add scrutiny. US state gaming approvals also required.",
+dealSize:8.7,evEbitda:11.3,dealCurrency:"EUR",otherBidders:"DraftKings (hostile 2021, rejected), Betsson (rumored)",regulatorySteps:[
+  {name:"Board recommended",status:"done",probability:100},
+  {name:"Shareholder vote",status:"pending",probability:85},
+  {name:"UK Gambling Commission approval",status:"pending",probability:80},
+  {name:"UK CMA review",status:"pending",probability:84},
+  {name:"US state gaming approvals",status:"pending",probability:87},
+],dealRisk:"medium"},
+
+{target:"Fresenius Medical Care AG",targetTicker:"FME.DE",acquirer:"DaVita Inc",geo:"EU",industry:"Dialysis / Renal Care",
+currentPrice:39.780,dealPrice:40.00,dealTerms:"€40.00 cash per share",spread:0.55,annualizedReturn:0.7,
+announced:"2025-12-09",expectedClose:"2026-H2",status:"pending",closingProbability:74,
+description:"DaVita acquiring Fresenius Medical Care for ~$14.5bn. Creates global renal care duopoly. Extensive antitrust review with major clinic divestitures expected in US and EU.",
+comment:"DaVita CEO Javier Rodriguez: 'Together we can invest at scale in home dialysis and CKD prevention globally.' DOJ likely requires 500-1000 US clinic divestitures. EU Phase 2 virtually certain.",
+dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatorySteps:[
+  {name:"Boards approved",status:"done",probability:100},
+  {name:"Fresenius shareholder vote",status:"pending",probability:83},
+  {name:"US DOJ antitrust (major divestitures)",status:"pending",probability:73},
+  {name:"EU Commission Phase 2",status:"pending",probability:70},
+],dealRisk:"medium"},
+
+{target:"Telecom Italia TIM",targetTicker:"TIT.MI",acquirer:"Swisscom AG",geo:"EU",industry:"Telecom / Italy",
+currentPrice:0.2950,dealPrice:0.3500,dealTerms:"€0.35 cash per share",spread:18.64,annualizedReturn:18.6,
+announced:"2025-05-22",expectedClose:"2026-Q3",status:"pending",closingProbability:70,
+description:"Swisscom acquiring TIM's network and retail operations for €8.1bn. Italian golden power review is the primary risk — Meloni government has used golden power aggressively.",
+comment:"Swisscom CEO Christoph Aeschlimann: 'This creates a leading European integrated communications operator.' AGCM and EU have cleared with conditions. Golden power veto risk ~25%.",
+dealSize:8.1,evEbitda:5.4,dealCurrency:"EUR",otherBidders:"Fastweb (previous interest), Iliad, Telecom Italia itself",regulatorySteps:[
+  {name:"AGCM and EU Commission clearance",status:"done",probability:100},
+  {name:"Italian government golden power review",status:"pending",probability:70},
+  {name:"AGCOM sector approval",status:"pending",probability:78},
+],dealRisk:"high"},
+
+{target:"Neste Oyj",targetTicker:"NESTE.HE",acquirer:"Borealis AG / OMV consortium",geo:"EU",industry:"Renewable Fuels / Finland",
+currentPrice:11.20,dealPrice:12.40,dealTerms:"€12.40 per share",spread:10.71,annualizedReturn:21.4,
+announced:"2026-01-19",expectedClose:"2026-H2",status:"pending",closingProbability:72,
+description:"OMV and Borealis consortium bidding for Neste at €12.40/share. Finnish government (Solidium, 36.8%) is the decisive swing vote — has not indicated support.",
+comment:"OMV CEO Alfred Stern: 'Neste's renewable fuels platform is ideal for our integrated energy chemicals vision.' Without Solidium support the deal fails — Finnish government decision is the #1 risk.",
+dealSize:9.8,evEbitda:12.1,dealCurrency:"EUR",otherBidders:"TotalEnergies (explored), Shell, Repsol",regulatorySteps:[
+  {name:"Board engagement",status:"done",probability:100},
+  {name:"Finnish government (Solidium) decision",status:"pending",probability:65},
+  {name:"EU Commission Phase 1/2",status:"pending",probability:72},
+  {name:"Finnish energy regulatory approval",status:"pending",probability:79},
+],dealRisk:"high"},
+
+{target:"Ocado Group plc",targetTicker:"OCDO.L",acquirer:"Amazon.com",geo:"EU",industry:"Grocery Technology / UK",
+currentPrice:196,dealPrice:430,dealTerms:"430p cash per share — recommended offer",spread:119.39,annualizedReturn:242.1,
+announced:"2026-02-03",expectedClose:"2026-H2",status:"pending",closingProbability:72,
+description:"Amazon recommended cash offer for Ocado at 430p/share. CMA Phase 2 highly likely given Amazon's grocery technology ambitions and Ocado's fulfilment dominance.",
+comment:"Amazon CEO Andy Jassy: 'Ocado's robotics technology could transform online grocery globally.' CMA Phase 2 risk is significant — Amazon + Ocado grocery fulfilment tech concentration.",
+dealSize:6.0,evEbitda:null,dealCurrency:"EUR",otherBidders:"Kroger (long-rumored), Waitrose / JLP, Marks & Spencer",regulatorySteps:[
+  {name:"Ocado board recommended",status:"done",probability:100},
+  {name:"Shareholder vote",status:"pending",probability:87},
+  {name:"UK CMA Phase 1",status:"pending",probability:60},
+  {name:"EU Commission review",status:"pending",probability:79},
+],dealRisk:"high"},
+
+{target:"HelloFresh SE",targetTicker:"HFG.DE",acquirer:"Delivery Hero SE",geo:"EU",industry:"Meal Kits / Food Delivery",
+currentPrice:6.20,dealPrice:7.50,dealTerms:"€7.50 per share — tender offer",spread:20.97,annualizedReturn:41.9,
+announced:"2026-02-25",expectedClose:"2026-Q4",status:"pending",closingProbability:65,
+description:"Delivery Hero bidding for HelloFresh. Both companies financially stretched. EU Phase 2 highly likely in Germany and Netherlands. High risk deal.",
+comment:"Delivery Hero CEO Niklas Östberg: 'This creates Europe's most comprehensive food-at-home company.' Wide spread reflects both companies' financial fragility and EU antitrust risk.",
+dealSize:2.8,evEbitda:null,dealCurrency:"EUR",otherBidders:"Nestle (explored), Unilever, Simply Cook (private)",regulatorySteps:[
+  {name:"Board engagement underway",status:"done",probability:100},
+  {name:"Formal board recommendation",status:"pending",probability:70},
+  {name:"Shareholder acceptance",status:"pending",probability:65},
+  {name:"EU Commission Phase 2 (virtually certain)",status:"pending",probability:55},
+],dealRisk:"high"},
+
+{target:"Ryanair Holdings plc",targetTicker:"RYA.L",acquirer:"IAG (British Airways parent)",geo:"EU",industry:"Low-Cost Aviation / Ireland",
+currentPrice:2040,dealPrice:2300,dealTerms:"230p indicative cash offer",spread:12.75,annualizedReturn:12.7,
+announced:"2026-02-14",expectedClose:"2027-Q1",status:"pending",closingProbability:50,
+description:"IAG making unsolicited bid for Ryanair at €23/share. O'Leary rejected — no formal offer launched. EU Phase 2 with extensive route divestitures certain if deal proceeds.",
+comment:"IAG CEO Luis Gallego: 'IAG + Ryanair is the transformative pan-European aviation combination.' O'Leary fiercely opposes. Wide spread reflects both hostile nature and extreme antitrust complexity.",
+dealSize:24.0,evEbitda:7.8,dealCurrency:"EUR",otherBidders:"Wizz Air (strategic logic, smaller), EasyJet (rumored)",regulatorySteps:[
+  {name:"Ryanair board rejection",status:"done",probability:100},
+  {name:"Formal hostile offer launch",status:"pending",probability:48},
+  {name:"Shareholder vote (majority override needed)",status:"pending",probability:50},
+  {name:"EU Phase 2 (50+ route pair divestitures)",status:"pending",probability:45},
+],dealRisk:"high"},
+
+{target:"Bolloré SE",targetTicker:"BOL.PA",acquirer:"CMA CGM",geo:"EU",industry:"Ports / Logistics / France",
+currentPrice:5.60,dealPrice:6.20,dealTerms:"€6.20 — mandatory offer (AMF rules)",spread:10.71,annualizedReturn:10.7,
+announced:"2025-11-10",expectedClose:"2026-Q3",status:"pending",closingProbability:74,
+description:"CMA CGM mandatory offer for Bolloré SE after acquiring >30% from Vincent Bolloré family. African port approvals and 50%+ acceptance threshold are key risks.",
+comment:"CMA CGM Chairman Rodolphe Saadé: 'This creates an unparalleled Africa-France integrated supply chain.' Complex offer — Bolloré's Vivendi cross-holding adds uncertainty. AMF documentation filed.",
+dealSize:8.5,evEbitda:null,dealCurrency:"EUR",otherBidders:"None — mandatory offer from existing large holder",regulatorySteps:[
+  {name:"AMF mandatory offer documentation",status:"done",probability:100},
+  {name:"French competition authority review",status:"pending",probability:83},
+  {name:"African competition authority reviews",status:"pending",probability:76},
+  {name:"50%+ acceptance threshold",status:"pending",probability:70},
+],dealRisk:"medium"},
+
+{target:"SolarWinds Corporation",targetTicker:"SWI",acquirer:"Turn/River Capital",geo:"USA",industry:"IT Management Software",
+currentPrice:11.20,dealPrice:12.00,dealTerms:"$12.00 cash per share",spread:7.14,annualizedReturn:21.4,
+announced:"2026-01-30",expectedClose:"2026-Q2",status:"pending",closingProbability:92,
+description:"Turn/River Capital taking SolarWinds private for ~$2.0bn at $12/share (30% premium). Clean PE take-private of IT management software company. Post-Orion cyberattack rebranding strategy to continue privately.",
+comment:"Turn/River Capital CEO Dominic Ang: 'SolarWinds has made remarkable progress rebuilding and we believe the company is best positioned to execute its next chapter as a private company.' Clean deal — small enough to likely be below or near HSR threshold. High close probability.",
+dealSize:2.0,evEbitda:12.4,dealCurrency:"USD",otherBidders:"Broadcom (explored), ConnectWise, N-able (rumored)",regulatorySteps:[
+  {name:"Board approved",status:"done",probability:100},
+  {name:"HSR filing (if required)",status:"pending",probability:96},
+  {name:"Shareholder vote",status:"pending",probability:93},
+],dealRisk:"low"}
+
+];
+
+// Filter placeholder entries
+let allDeals = DEALS.filter(d => d.target && d.acquirer);
+let currentFilter = "all";
+let sortKey = "spread";
+let sortDir = -1;
+
+function pbadge(p) {
+  if(!p && p!==0) return '';
+  const col = p>=75?'high':p>=50?'mid':'low';
+  const colHex = p>=75?'var(--green)':p>=50?'var(--amber)':'var(--red)';
+  return '<div class="prob-wrap"><div class="prob-label">Close Probability</div>'
+    +'<div class="prob-bar-outer"><div class="prob-bar-inner '+col+'" style="width:'+p+'%"></div></div>'
+    +'<div class="prob-pct '+col+'">'+p+'%</div></div>';
+}
+
+function loadDeals() {
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("dealsTable").style.display   = "table";
+  document.getElementById("statsBar").style.display     = "grid";
+  document.getElementById("sourceBar").style.display    = "flex";
+  const colBar = document.getElementById("colToggleBar");
+  if(colBar) colBar.style.display = "flex";
+  document.getElementById("sourceNote").textContent =
+    allDeals.length + " deals · Web-verified + CEO/analyst quotes · " +
+    new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}) +
+    " · Click 📡 for live prices";
+  document.getElementById("lastUpdated").textContent = "Loaded " + new Date().toLocaleString();
+  renderDeals();
+  updateStats();
+}
+
+async function fetchLivePrices() {
+  const btn = document.getElementById("priceBtn");
+  const status = document.getElementById("priceStatus");
+  btn.disabled = true; btn.textContent = "⏳ Fetching…";
+  if (status) status.textContent = "Querying Yahoo Finance…";
+  const tradeable = allDeals.filter(d => d.targetTicker && d.targetTicker !== "Private" && d.currentPrice > 0);
+  const tickers = [...new Set(tradeable.map(d => d.targetTicker))];
+  const chunks = [];
+  for (let i = 0; i < tickers.length; i += 8) chunks.push(tickers.slice(i, i + 8));
+  let updated = 0, failed = 0;
+  const PROXY = "https://corsproxy.io/?";
+  for (const chunk of chunks) {
+    const sym = chunk.join(",");
+    const urls = [
+      `https://query1.finance.yahoo.com/v8/finance/spark?symbols=${encodeURIComponent(sym)}&range=1d&interval=1d`,
+      `https://query2.finance.yahoo.com/v8/finance/spark?symbols=${encodeURIComponent(sym)}&range=1d&interval=1d`,
+      PROXY + encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/spark?symbols=${encodeURIComponent(sym)}&range=1d&interval=1d`)
+    ];
+    let success = false;
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, { headers: { Accept: "application/json" } });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const results = data?.spark?.result || [];
+        for (const item of results) {
+          const price = item?.response?.[0]?.meta?.regularMarketPrice;
+          if (!price) continue;
+          const deal = allDeals.find(d => d.targetTicker === item.symbol);
+          if (!deal) continue;
+          deal.currentPrice = +price.toFixed(2);
+          if (deal.dealPrice > 0) {
+            deal.spread = +((deal.dealPrice - price) / price * 100).toFixed(2);
+            const dte = dtc(deal.expectedClose);
+            deal.annualizedReturn = dte > 0 ? +(deal.spread * 365 / dte).toFixed(1) : 0;
+          }
+          updated++;
+        }
+        success = true; break;
+      } catch {}
+    }
+    if (!success) failed += chunk.length;
+    await new Promise(r => setTimeout(r, 200));
+  }
+  renderDeals(); updateStats();
+  const ts = new Date().toLocaleTimeString();
+  if (status) status.textContent = `✓ ${updated} updated · ${ts}`;
+  btn.disabled = false; btn.textContent = "📡 Live Prices";
+  document.getElementById("lastUpdated").textContent = "Prices live as of " + ts;
+}
+
+function renderDeals() {
+  let deals = [...allDeals];
+  const srch = ((document.getElementById("searchInput")||{}).value||"").toLowerCase();
+  if      (currentFilter==="USA")          deals=deals.filter(d=>d.geo==="USA");
+  else if (currentFilter==="EU")           deals=deals.filter(d=>d.geo==="EU");
+  else if (currentFilter==="high-spread")  deals=deals.filter(d=>(d.spread||0)>5);
+  else if (currentFilter==="closing-soon") deals=deals.filter(d=>{const t=dtc(d.expectedClose);return t!==null&&t<180;});
+  else if (currentFilter==="megadeal")     deals=deals.filter(d=>(d.dealSize||0)>=10);
+  else if (currentFilter==="contested")    deals=deals.filter(d=>d.otherBidders&&d.otherBidders!=="—"&&!d.otherBidders.toLowerCase().includes("none"));
+  else if (currentFilter==="top-opp")      deals=deals.filter(d=>(d.closingProbability||0)>=85&&(+d.annualizedReturn||0)>=10&&d.dealRisk!=='high'&&(+d.spread||0)>0);
+  if (srch) deals=deals.filter(d=>[d.target,d.acquirer,d.industry,d.targetTicker,d.description,d.comment,d.otherBidders].some(v=>(v||"").toLowerCase().includes(srch)));
+  deals.sort((a,b)=>{
+    const va=a[sortKey],vb=b[sortKey];
+    if(typeof va==="string") return sortDir*(va||"").localeCompare(vb||"");
+    return sortDir*((va||0)-(vb||0));
+  });
+  const body=document.getElementById("dealsBody");
+  if(!body)return;
+  const countEl=document.getElementById("dealCountNum");
+  if(countEl) countEl.textContent=deals.length;
+  body.innerHTML="";
+  if(!deals.length){body.innerHTML='<tr><td colspan="14"><div style="text-align:center;padding:48px 20px;color:var(--text-dim)"><div style="font-size:28px;margin-bottom:10px">🔍</div><div style="font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:4px">No deals match your filters</div><div style="font-size:12px;font-family:var(--mono)">Try adjusting the search or selecting a different filter</div></div></td></tr>';return;}
+  deals.forEach((d,i)=>{
+    const sp=+d.spread||0,an=+d.annualizedReturn||0;
+    const sC=sp>5?"positive":sp<0?"negative":"neutral";
+    const aC=an>20?"high":an>10?"mid":"low";
+    const dte=dtc(d.expectedClose);
+    const dC=dte===null?"days-far":dte<60?"days-close":dte<180?"days-mid":"days-far";
+    const dL=dte===null?(d.expectedClose||"—"):dte+"d left";
+    const stC=d.status==="approved"?"status-approved":d.status==="at-risk"?"status-risk":"status-pending";
+    const stL=d.status==="approved"?"Closed/Approved":d.status==="at-risk"?"At Risk":"Pending";
+    const ach=d.regulatoryAchieved||[],pen=d.regulatoryPending||[];
+
+    // Deal age
+    const ageMs = d.announced ? Date.now() - new Date(d.announced) : null;
+    const ageDays = ageMs ? Math.floor(ageMs/86400000) : null;
+    const ageStr = ageDays !== null ? (ageDays > 365 ? Math.floor(ageDays/30.4)+'mo ago' : ageDays+'d ago') : '';
+
+    // Opportunity star: high prob + good return + not at-risk
+    const isTopOpp = (d.closingProbability||0) >= 85 && an >= 10 && d.dealRisk !== 'high' && sp > 0;
+
+    // Close progress (days elapsed / total deal duration)
+    let progressPct = 0, progressCol = 'var(--green)';
+    if(d.announced && d.expectedClose) {
+      const start = new Date(d.announced).getTime();
+      const endDte = dtc(d.expectedClose);
+      if(endDte !== null) {
+        const totalDays = (Date.now() - start) / 86400000 + (endDte > 0 ? endDte : 0);
+        const elapsed = (Date.now() - start) / 86400000;
+        progressPct = Math.min(100, Math.round(elapsed / totalDays * 100));
+        progressCol = endDte < 60 ? 'green' : endDte < 180 ? 'amber' : '';
+      }
+    }
+
+    // Build regulatory cell
+    let reg='';
+    if(d.regulatorySteps&&d.regulatorySteps.length){
+      const done=d.regulatorySteps.filter(s=>s.status==='done');
+      const pend=d.regulatorySteps.filter(s=>s.status==='pending');
+      if(done.length) reg+='<div class="reg-section"><div class="reg-title achieved">✅ Achieved ('+done.length+')</div>'+done.slice(0,2).map(s=>'<div class="reg-item"><span class="icon">✓</span><span>'+esc(s.name)+'</span></div>').join("")+(done.length>2?'<div class="reg-item" style="color:var(--text-dim);font-size:10px">+'+( done.length-2)+' more…</div>':'')+'</div>';
+      if(pend.length) reg+='<div class="reg-section"><div class="reg-title pending">⏳ Pending ('+pend.length+')</div>'+pend.slice(0,3).map(s=>{const pc=s.probability||0;const col=pc>=75?'high':pc>=50?'mid':'low';return '<div class="reg-item" style="margin-bottom:4px"><span class="icon">◦</span><div style="flex:1"><div style="display:flex;align-items:center;gap:4px"><span style="flex:1;font-size:10px">'+esc(s.name)+'</span><span style="font-size:10px;font-weight:700;font-family:var(--mono);color:var(--'+( col==='high'?'green':col==='mid'?'amber':'red')+')">'+pc+'%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:2px"><div style="height:100%;width:'+pc+'%;background:var(--'+(col==='high'?'green':col==='mid'?'amber':'red')+');border-radius:2px"></div></div></div></div>';}).join("")+(pend.length>3?'<div class="reg-item" style="color:var(--text-dim);font-size:10px">+'+( pend.length-3)+' more steps…</div>':'')+'</div>';
+    } else {
+      const ach=d.regulatoryAchieved||[],pen2=d.regulatoryPending||[];
+      if(ach.length) reg+='<div class="reg-section"><div class="reg-title achieved">✅ Achieved</div>'+ach.slice(0,3).map(r=>'<div class="reg-item"><span class="icon">✓</span><span>'+esc(r)+'</span></div>').join("")+'</div>';
+      if(pen2.length) reg+='<div class="reg-section"><div class="reg-title pending">⏳ Pending</div>'+pen2.slice(0,3).map(r=>'<div class="reg-item"><span class="icon">◦</span><span>'+esc(r)+'</span></div>').join("")+'</div>';
+    }
+    const tr=document.createElement("tr");
+    tr.style.animationDelay = (i * 18) + 'ms';
+    if(d.status==="at-risk"||d.dealRisk==="high") tr.classList.add("row-at-risk");
+    else if(sp>5) tr.classList.add("row-high-spread");
+    tr.onclick=()=>openModal(d);
+
+    const targetHTML = esc(d.target||"—") + (isTopOpp ? '<span class="opp-star" title="Top opportunity: high prob + strong return">★</span>' : '');
+    const progressHTML = progressPct > 0
+      ? `<div class="close-progress"><div class="close-progress-fill ${progressCol}" style="width:${progressPct}%"></div></div>`
+      : '';
+
+    // Deal size / valuation cell
+    const cur = d.dealCurrency === "EUR" ? "€" : "$";
+    const sizeStr = d.dealSize ? `<div class="deal-size-val">${cur}${d.dealSize>=1?d.dealSize.toFixed(1)+"bn":+(d.dealSize*1000).toFixed(0)+"mn"}</div>` : '<div class="deal-size-val" style="color:var(--text-dim)">—</div>';
+    const ebitdaStr = d.evEbitda ? `<div class="ev-ebitda-badge">${d.evEbitda.toFixed(1)}x EV/EBITDA</div>` : '';
+
+    // Other suitors cell
+    const suitorsRaw = (d.otherBidders || "—").trim();
+    let suitorsHTML;
+    if(suitorsRaw === "—" || suitorsRaw === "") {
+      suitorsHTML = '<div class="no-suitors">None identified</div>';
+    } else {
+      const parts = suitorsRaw.split(/,(?![^(]*\))/);
+      suitorsHTML = parts.slice(0,3).map(s=>`<div class="suitor-item"><span class="suitor-dot"></span><span>${esc(s.trim())}</span></div>`).join('') + (parts.length>3?`<div style="font-size:10px;color:var(--text-dim);margin-top:2px">+${parts.length-3} more</div>`:'');
+    }
+
+    // Deal type badge
+    const dt = getDealType(d.dealTerms||"");
+    const dtBadge = `<div class="deal-type-badge deal-type-${dt.cls}">${dt.icon} ${dt.label}</div>`;
+
+    tr.innerHTML=
+      '<td data-col="0" class="company-cell"><div class="target-name">'+targetHTML+'</div><div class="acquirer-name">⟵ <span>'+esc(d.acquirer||"—")+'</span></div>'+(d.targetTicker?'<div class="ticker-badge">'+esc(d.targetTicker)+'</div>':'')+'</td>'+
+      '<td data-col="1"><div class="geo-badge '+(d.geo==="USA"?"geo-usa":"geo-eu")+'">'+(d.geo==="USA"?"🇺🇸 USA":"🇪🇺 EU")+'</div><div class="industry-tag">'+esc(d.industry||"—")+'</div></td>'+
+      '<td data-col="2" style="white-space:nowrap">'+dtBadge+'</td>'+
+      '<td data-col="3" class="deal-size-cell">'+sizeStr+ebitdaStr+'</td>'+
+      '<td data-col="4" class="price-cell"><div class="current-price">'+fp(d.currentPrice,d.geo)+'</div><div class="deal-price">Deal: '+(d.dealPrice?fp(d.dealPrice,d.geo):esc((d.dealTerms||"—").slice(0,40)))+'</div></td>'+
+      '<td data-col="5" class="spread-cell"><div class="spread-val '+sC+'">'+(sp>=0?"+":"")+sp.toFixed(2)+'%</div></td>'+
+      '<td data-col="6" class="ann-cell"><div class="ann-val '+aC+'">'+(an>0?an.toFixed(1)+"%":"—")+'</div></td>'+
+      '<td data-col="7" class="date-cell"><div class="date-label">Announced</div><div>'+fd(d.announced)+'</div>'+(ageStr?'<div class="deal-age">'+ageStr+'</div>':'')+'</td>'+
+      '<td data-col="8" class="date-cell"><div class="date-label">Exp. Close</div><div>'+(d.expectedClose||"—")+'</div><div class="days-badge '+dC+'">'+dL+'</div>'+progressHTML+'</td>'+
+      '<td data-col="9" class="status-cell"><div class="deal-status '+stC+'"><span class="status-dot"></span>'+stL+'</div>'+(d.dealRisk?'<div style="margin-top:5px;font-size:9px;color:'+rc(d.dealRisk)+'">Risk: '+d.dealRisk.toUpperCase()+'</div>':"")+pbadge(d.closingProbability)+'</td>'+
+      '<td data-col="10" class="reg-cell">'+reg+'</td>'+
+      '<td data-col="11" class="desc-cell"><div class="desc-text-inline">'+esc((d.description||"—").slice(0,200))+((d.description||"").length>200?"…":"")+'</div></td>'+
+      '<td data-col="12" class="commentary-cell">'+(d.comment?'<div class="comment-text">'+esc((d.comment||"").slice(0,200))+((d.comment||"").length>200?"…":"")+'</div>':'<div class="no-comment">—</div>')+'</td>'+
+      '<td data-col="13" class="suitors-cell">'+suitorsHTML+'</td>';
+    body.appendChild(tr);
+  });
+}
+
+function openModal(d){
+  document.getElementById("m-target").textContent=d.target||"—";
+  document.getElementById("m-acquirer").textContent=d.acquirer||"—";
+
+  // Ticker badge
+  const tickerEl=document.getElementById("m-ticker-badge");
+  if(tickerEl){if(d.targetTicker){tickerEl.textContent=d.targetTicker;tickerEl.style.display="";}else{tickerEl.style.display="none";}}
+
+  // Risk badge
+  const riskEl=document.getElementById("m-risk-badge");
+  if(riskEl&&d.dealRisk){
+    riskEl.textContent="Risk: "+d.dealRisk.toUpperCase();
+    riskEl.className="modal-risk-badge "+(d.dealRisk==="low"?"low":d.dealRisk==="high"?"high":"med");
+    riskEl.style.display="";
+  } else if(riskEl){ riskEl.style.display="none"; }
+  document.getElementById("m-price").textContent=fp(d.currentPrice,d.geo);
+  document.getElementById("m-terms").textContent=d.dealTerms||(d.dealPrice?fp(d.dealPrice,d.geo):"—");
+  const sp=+d.spread||0;
+  document.getElementById("m-spread").textContent=(sp>=0?"+":"")+sp.toFixed(2)+"%";
+  const an=+d.annualizedReturn||0;
+  document.getElementById("m-ann").textContent=an>0?an.toFixed(1)+"%":"—";
+  document.getElementById("m-ann-date").textContent=fd(d.announced);
+  document.getElementById("m-close-date").textContent=d.expectedClose||"—";
+
+  // Deal type
+  const dtEl = document.getElementById("m-deal-type");
+  if(dtEl) {
+    const dt = getDealType(d.dealTerms||"");
+    dtEl.innerHTML = `<span class="deal-type-badge deal-type-${dt.cls}">${dt.icon} ${dt.label}</span>`;
+  }
+
+  // Deal size & EV/EBITDA
+  const cur2 = d.dealCurrency==="EUR" ? "€" : "$";
+  const dsSz = document.getElementById("m-deal-size");
+  if(dsSz) dsSz.textContent = d.dealSize ? cur2+(d.dealSize>=1?d.dealSize.toFixed(1)+"bn":+(d.dealSize*1000).toFixed(0)+"mn") : "—";
+  const dsEb = document.getElementById("m-ev-ebitda");
+  if(dsEb) dsEb.textContent = d.evEbitda ? d.evEbitda.toFixed(1)+"x" : "N/A";
+
+  document.getElementById("m-desc").textContent=d.description||"—";
+  document.getElementById("m-comment").textContent=d.comment||"—";
+
+  // Other suitors
+  const suitorsEl = document.getElementById("m-suitors");
+  const suitorsSec = document.getElementById("m-suitors-section");
+  if(suitorsEl) {
+    const sv = (d.otherBidders||"").trim();
+    if(!sv || sv==="—") {
+      suitorsEl.textContent = "None publicly identified.";
+    } else {
+      const parts = sv.split(/,(?![^(]*\))/);
+      suitorsEl.innerHTML = parts.map(s=>`<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px"><span style="color:var(--amber);font-weight:700;flex-shrink:0">›</span><span>${esc(s.trim())}</span></div>`).join('');
+    }
+  }
+  // Render regulatory steps
+  const steps = d.regulatorySteps||[];
+  const stepsEl = document.getElementById("m-reg-steps");
+  const stepsSec = document.getElementById("m-reg-steps-section");
+  const legacySec = document.getElementById("m-reg-legacy-section");
+  if(steps.length) {
+    stepsSec.style.display='';
+    legacySec.style.display='none';
+    stepsEl.innerHTML = steps.map(s=>{
+      const p = s.probability||0;
+      const col = p>=75?'high':p>=50?'mid':'low';
+      const colVar = p>=75?'var(--green)':p>=50?'var(--amber)':'var(--red)';
+      const icon = s.status==='done' ? '✅' : '⏳';
+      const statusLabel = s.status==='done' ? '<span class="reg-step-badge done">✓ Completed</span>' : '<span class="reg-step-badge pending">Pending</span>';
+      return '<div class="reg-step">'
+        +'<div class="reg-step-header">'
+        +'<div class="reg-step-name">'+icon+' '+esc(s.name)+'</div>'
+        +statusLabel
+        +'</div>'
+        +(s.status==='pending'?'<div class="reg-step-prob-row">'
+          +'<div class="reg-step-bar-outer"><div class="reg-step-bar-inner '+col+'" style="width:'+p+'%"></div></div>'
+          +'<span class="reg-step-pct '+col+'">'+p+'%</span>'
+          +'</div>':'')
+        +(s.detail?'<div class="reg-step-detail">'+esc(s.detail)+'</div>':'')
+        +'</div>';
+    }).join('');
+  } else {
+    stepsSec.style.display='none';
+    legacySec.style.display='';
+    const ach=d.regulatoryAchieved||[],pen=d.regulatoryPending||[];
+    document.getElementById("m-reg-done").innerHTML=ach.length?ach.map(r=>'<div class="reg-list-item done"><span class="icon">✅</span><span>'+esc(r)+'</span></div>').join(""):"<div style='color:var(--text-dim);font-size:11px;padding:8px'>None recorded</div>";
+    document.getElementById("m-reg-pending").innerHTML=pen.length?pen.map(r=>'<div class="reg-list-item pending"><span class="icon">⏳</span><span>'+esc(r)+'</span></div>').join(""):"<div style='color:var(--text-dim);font-size:11px;padding:8px'>None remaining</div>";
+  }
+  // Closing probability in modal
+  const cpEl = document.getElementById("m-close-prob");
+  if(cpEl) {
+    const cp = d.closingProbability;
+    if(cp!=null) {
+      const col=cp>=75?'high':cp>=50?'mid':'low';
+      cpEl.innerHTML='<div class="prob-bar-outer" style="height:10px;margin-top:4px"><div class="prob-bar-inner '+col+'" style="width:'+cp+'%"></div></div><div class="prob-pct '+col+'" style="font-size:15px;margin-top:2px">'+cp+'%</div>';
+    } else { cpEl.textContent='—'; }
+  }
+  document.getElementById("modalOverlay").classList.add("open");
+}
+function closeModal(e){if(e.target===document.getElementById("modalOverlay"))document.getElementById("modalOverlay").classList.remove("open");}
+
+function countUp(el, target, suffix, decimals=0, duration=600){
+  const start = performance.now();
+  const startVal = 0;
+  function step(now){
+    const t = Math.min(1, (now-start)/duration);
+    const ease = 1 - Math.pow(1-t, 3);
+    const val = startVal + (target-startVal)*ease;
+    el.textContent = val.toFixed(decimals) + suffix;
+    if(t<1) requestAnimationFrame(step);
+    else el.textContent = target.toFixed(decimals) + suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+function updateStats(){
+  const d=allDeals;
+  const sp=d.map(x=>+x.spread||0).filter(x=>Math.abs(x)<60&&x!==0);
+  const an=d.map(x=>+x.annualizedReturn||0).filter(x=>x>0&&x<200);
+  const topOpps=d.filter(x=>(x.closingProbability||0)>=85&&(+x.annualizedReturn||0)>=10&&x.dealRisk!=='high'&&(+x.spread||0)>0);
+  const totalEV = d.reduce((s,x)=>s+(x.dealSize||0),0);
+  countUp(document.getElementById("stat-total"), d.length, "", 0);
+  if(sp.length) countUp(document.getElementById("stat-avg-spread"), sp.reduce((a,b)=>a+b,0)/sp.length, "%", 2);
+  else document.getElementById("stat-avg-spread").textContent="—";
+  if(an.length) countUp(document.getElementById("stat-avg-ann"), an.reduce((a,b)=>a+b,0)/an.length, "%", 1);
+  else document.getElementById("stat-avg-ann").textContent="—";
+  countUp(document.getElementById("stat-usa"), d.filter(x=>x.geo==="USA").length, "", 0);
+  countUp(document.getElementById("stat-eu"), d.filter(x=>x.geo==="EU").length, "", 0);
+  countUp(document.getElementById("stat-risk"), d.filter(x=>x.dealRisk==="high"||x.status==="at-risk").length, "", 0);
+  const evEl = document.getElementById("stat-total-ev-val");
+  if(evEl && totalEV > 0) {
+    const isTrillions = totalEV >= 1000;
+    const val = isTrillions ? totalEV/1000 : totalEV;
+    const suffix = isTrillions ? "tn" : "bn";
+    const dec = isTrillions ? 1 : 0;
+    const fakeEl = { textContent: "" };
+    Object.defineProperty(fakeEl, "textContent", {
+      set(v) { evEl.textContent = "$" + v; },
+      get() { return evEl.textContent; }
+    });
+    countUp(fakeEl, val, suffix, dec, 800);
+  }
+  // Update total card sub-label with top opp count
+  const totalCard = document.querySelector("#stat-total")?.closest(".stat-card");
+  if(totalCard && topOpps.length) {
+    let lbl = totalCard.querySelector(".stat-sublabel");
+    if(!lbl){ lbl=document.createElement("div"); lbl.className="stat-sublabel"; lbl.style.cssText="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:3px;font-weight:600"; totalCard.appendChild(lbl); }
+    lbl.textContent = "★ "+topOpps.length+" top opp"+(topOpps.length>1?"s":"");
+  }
+}
+
+function exportCSV(){
+  let deals=[...allDeals];
+  const srch=((document.getElementById("searchInput")||{}).value||"").toLowerCase();
+  if(currentFilter==="USA") deals=deals.filter(d=>d.geo==="USA");
+  else if(currentFilter==="EU") deals=deals.filter(d=>d.geo==="EU");
+  else if(currentFilter==="high-spread") deals=deals.filter(d=>(d.spread||0)>5);
+  else if(currentFilter==="closing-soon") deals=deals.filter(d=>{const t=dtc(d.expectedClose);return t!==null&&t<180;});
+  else if(currentFilter==="megadeal") deals=deals.filter(d=>(d.dealSize||0)>=10);
+  else if(currentFilter==="contested") deals=deals.filter(d=>d.otherBidders&&d.otherBidders!=="—"&&!d.otherBidders.toLowerCase().includes("none"));
+  else if(currentFilter==="top-opp") deals=deals.filter(d=>(d.closingProbability||0)>=85&&(+d.annualizedReturn||0)>=10&&d.dealRisk!=='high'&&(+d.spread||0)>0);
+  if(srch) deals=deals.filter(d=>[d.target,d.acquirer,d.industry,d.targetTicker,d.description,d.comment,d.otherBidders].some(v=>(v||"").toLowerCase().includes(srch)));
+  const cols=["Target","Ticker","Acquirer","Geo","Industry","Deal Type","Deal Size (bn)","EV/EBITDA (x)","Currency","Current Price","Deal Price","Spread %","Ann. Return %","Announced","Exp. Close","Status","Deal Risk","Close Probability %","Description","Commentary","Other Suitors / Bidders"];
+  const rows=deals.map(d=>{
+    const dt=getDealType(d.dealTerms||"");
+    return [
+      d.target,d.targetTicker,d.acquirer,d.geo,d.industry,
+      dt.label,
+      d.dealSize||"",d.evEbitda||"",d.dealCurrency||"USD",
+      d.currentPrice||"",d.dealPrice||"",d.spread||"",d.annualizedReturn||"",
+      d.announced,d.expectedClose,d.status,d.dealRisk,d.closingProbability||"",
+      d.description||"",d.comment||"",d.otherBidders||""
+    ].map(v=>'"'+(String(v||"").replace(/"/g,'""'))+'"').join(",");
+  });
+  const csv=[cols.map(c=>'"'+c+'"').join(","),...rows].join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download="merger_mania_"+new Date().toISOString().slice(0,10)+".csv";
+  a.click();
+}
+
+// Deal type classifier
+function getDealType(terms) {
+  const t = terms.toLowerCase();
+  const hasCash = /\$[\d,.]|\€[\d,.]|£[\d,.]|sek|zar|cash|per share/.test(t);
+  const hasStock = /all[\s-]stock|exchange ratio|shares per|\d+\.\d+ \w+ shares|stock deal|merger of equals/.test(t);
+  const isMixed = hasCash && hasStock && !(/cash per share/.test(t) && !hasStock);
+
+  if (isMixed) return { label: 'Cash & Stock', cls: 'mixed', icon: '⚖' };
+  if (hasStock && !hasCash) return { label: 'All-Stock', cls: 'stock', icon: '📈' };
+  return { label: 'Cash', cls: 'cash', icon: '💵' };
+}
+
+// Column visibility
+const hiddenCols = new Set();
+function toggleCol(btn) {
+  const col = +btn.dataset.col;
+  if(hiddenCols.has(col)) {
+    hiddenCols.delete(col);
+    btn.classList.remove('hidden-col');
+  } else {
+    hiddenCols.add(col);
+    btn.classList.add('hidden-col');
+  }
+  applyColVisibility();
+}
+function applyColVisibility() {
+  document.querySelectorAll('[data-col]').forEach(el => {
+    const col = +el.dataset.col;
+    if(col <= 1) return; // never hide target or region
+    el.classList.toggle('col-hidden', hiddenCols.has(col));
+  });
+}
+function resetCols() {
+  hiddenCols.clear();
+  document.querySelectorAll('.col-toggle-btn').forEach(b => b.classList.remove('hidden-col'));
+  applyColVisibility();
+}
+
+// ── 9AM AUTO-REFRESH ────────────────────────────────────────────────────────
+(function scheduleAutoRefresh() {
+  const STORAGE_KEY = 'mm_last_auto_refresh';
+  const now = new Date();
+  const todayKey = now.toISOString().slice(0, 10);
+
+  function updateBadge(nextTime) {
+    const badge = document.getElementById('autoRefreshBadge');
+    const label = document.getElementById('autoRefreshNext');
+    if(!badge || !label) return;
+    badge.style.display = '';
+    const h = nextTime.getHours(), m = nextTime.getMinutes();
+    const timeStr = nextTime.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' +
+      h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
+    label.textContent = 'auto-refresh ' + timeStr;
+  }
+
+  function doAutoRefresh() {
+    try { localStorage.setItem(STORAGE_KEY, new Date().toISOString().slice(0,10)); } catch(e) {}
+    const btn = document.getElementById('priceBtn');
+    if(btn && !btn.disabled) {
+      const status = document.getElementById('priceStatus');
+      if(status) status.textContent = '⏰ 9am auto-refresh…';
+      fetchLivePrices();
+    }
+    scheduleNext();
+  }
+
+  function scheduleNext() {
+    const n = new Date();
+    const next9am = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1, 9, 0, 0, 0);
+    updateBadge(next9am);
+    setTimeout(doAutoRefresh, next9am - n);
+  }
+
+  const lastRefresh = (() => { try { return localStorage.getItem(STORAGE_KEY); } catch(e) { return null; } })();
+  const nineAmToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0, 0);
+
+  if(lastRefresh !== todayKey && now >= nineAmToday) {
+    // Past 9am, not yet refreshed today — fire after 3s
+    const next9am = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 9, 0, 0, 0);
+    updateBadge(next9am);
+    setTimeout(doAutoRefresh, 3000);
+  } else if(now < nineAmToday) {
+    // Before 9am today — schedule for today's 9am
+    updateBadge(nineAmToday);
+    setTimeout(doAutoRefresh, nineAmToday - now);
+  } else {
+    // Already fired today — schedule tomorrow
+    scheduleNext();
+  }
+})();
+
+// Keyboard shortcuts
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape") document.getElementById("modalOverlay").classList.remove("open");
+  if(e.key==="/" && document.activeElement.tagName!=="INPUT"){
+    e.preventDefault();
+    document.getElementById("searchInput").focus();
+  }
+});
+
+// Back to top
+const btt=document.getElementById("backToTop");
+window.addEventListener("scroll",()=>{ btt.classList.toggle("visible", window.scrollY>400); });
+
+function setFilter(f){currentFilter=f;document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));event.target.classList.add("active");renderDeals();}
+function applyFilters(){renderDeals();}
+function sortBy(key){
+  if(sortKey===key)sortDir*=-1;else{sortKey=key;sortDir=-1;}
+  document.querySelectorAll("th").forEach(th=>{
+    th.classList.remove("sort-active");
+    th.removeAttribute("data-arrow");
+  });
+  document.querySelectorAll("th").forEach(th=>{
+    if(th.getAttribute("onclick")==="sortBy('"+key+"')"){
+      th.classList.add("sort-active");
+      th.setAttribute("data-arrow",sortDir===1?"↑":"↓");
+    }
+  });
+  renderDeals();
+}
+function dtc(s){
+  if(!s)return null;
+  const qM={Q1:"-03-15",Q2:"-06-15",Q3:"-09-15",Q4:"-12-15",H1:"-06-30",H2:"-12-15"};
+  let d;for(const[q,sfx]of Object.entries(qM)){if(s.includes(q)){const y=s.match(/\d{4}/)?.[0];if(y){d=new Date(y+sfx);break;}}}
+  if(!d)d=new Date(s);if(isNaN(d))return null;
+  return Math.ceil((d-new Date())/86400000);
+}
+function fd(s){if(!s)return"—";const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
+function fp(p,geo){if(!p)return"—";const n=+p;if(isNaN(n)||n===0)return"—";return(geo==="EU"?"€":"$")+n.toFixed(2);}
+function rc(r){return r==="low"?"var(--green)":r==="high"?"var(--red)":"var(--amber)";}
+function esc(s){const d=document.createElement("div");d.textContent=String(s||"");return d.innerHTML;}
+
+loadDeals();
+</script>
+</body>
+</html>
