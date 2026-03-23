@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Merger Mania — Live M&A Tracker</title>
+<title>MergerAnalyst — Live M&A Arbitrage Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -85,7 +85,7 @@
     line-height: 1;
   }
 
-  .logo-wordmark .word-mania {
+  .logo-wordmark .word-analyst {
     color: #FF8C5A;
   }
 
@@ -322,6 +322,7 @@
   /* ── TABLE ───────────────────────────────────────────────────────── */
   .table-wrap {
     overflow-x: auto;
+    overflow-y: visible;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--surface);
@@ -335,13 +336,14 @@
     table-layout: auto;
   }
 
-  thead {
+  thead tr {
+    background: var(--navy);
+  }
+
+  thead th {
     position: sticky;
     top: 0;
     z-index: 10;
-  }
-
-  thead tr {
     background: var(--navy);
   }
 
@@ -1234,11 +1236,7 @@
   thead th:first-child {
     position: sticky;
     left: 0;
-    z-index: 2;
-  }
-
-  thead th:first-child {
-    z-index: 11;
+    z-index: 20;  /* above both row-sticky (10) and col-sticky (2) */
     background: var(--navy);
   }
 
@@ -1289,8 +1287,8 @@
   <header>
     <div class="header-inner">
       <div class="logo">
-        <div class="logo-wordmark">Merger <span class="word-mania">Mania</span></div>
-        <span class="logo-tagline">M&amp;A Arbitrage Intelligence · USA &amp; Europe · March 2026</span>
+        <div class="logo-wordmark">Merger<span class="word-analyst">Analyst</span></div>
+        <span class="logo-tagline">M&amp;A Arbitrage Intelligence · mergeranalyst.com · March 2026</span>
       </div>
       <div class="header-right">
         <div class="live-badge"><span class="live-dot"></span>Web-Verified Data</div>
@@ -1423,7 +1421,7 @@
   </div>
 
   <footer>
-    <strong>Merger Mania</strong> · Data verified via live web search March 19, 2026 · For informational purposes only<br>
+    <strong>MergerAnalyst.com</strong> · Data verified via live web search March 2026 · For informational purposes only<br>
     NOT investment advice · Prices are indicative · Always verify independently with primary sources before trading
   </footer>
 </div>
@@ -2707,7 +2705,7 @@ function exportCSV(){
   const csv=[cols.map(c=>'"'+c+'"').join(","),...rows].join("\n");
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
-  a.download="merger_mania_"+new Date().toISOString().slice(0,10)+".csv";
+  a.download="mergeranalyst_"+new Date().toISOString().slice(0,10)+".csv";
   a.click();
 }
 
