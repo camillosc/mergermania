@@ -2301,24 +2301,7 @@ dealSize:2.0,evEbitda:12.4,dealCurrency:"USD",otherBidders:"Broadcom (explored),
   {name:"Board approved",status:"done",probability:100},
   {name:"HSR filing (if required)",status:"pending",probability:96},
   {name:"Shareholder vote",status:"pending",probability:93},
-],dealRisk:"low"}
-
-];
-
-// Filter placeholder entries
-let allDeals = DEALS.filter(d => d.target && d.acquirer);
-let currentFilter = "all";
-let sortKey = "spread";
-let sortDir = -1;
-
-function pbadge(p) {
-  if(!p && p!==0) return '';
-  const col = p>=75?'high':p>=50?'mid':'low';
-  const colHex = p>=75?'var(--green)':p>=50?'var(--amber)':'var(--red)';
-  return '<div class="prob-wrap"><div class="prob-label">Close Probability</div>'
-    +'<div class="prob-bar-outer"><div class="prob-bar-inner '+col+'" style="width:'+p+'%"></div></div>'
-    +'<div class="prob-pct '+col+'">'+p+'%</div></div>';
-},
+],dealRisk:"low"},
 
 {target:"Electronic Arts",targetTicker:"EA",acquirer:"PIF / Silver Lake / Affinity Partners",geo:"USA",industry:"Technology / Gaming",
 currentPrice:201.70,dealPrice:210.00,dealTerms:"$210.00 per share in cash",spread:4.1,annualizedReturn:16.4,
@@ -2369,6 +2352,23 @@ milestones:[
 {name:"Shareholder vote",status:"pending",probability:90,detail:"Both DVN and CTRA shareholders must approve."},
 {name:"FTC review",status:"pending",probability:88,detail:"FTC antitrust review of E&P consolidation."},
 ],dealRisk:"medium"}
+
+];
+
+// Filter placeholder entries
+let allDeals = DEALS.filter(d => d.target && d.acquirer);
+let currentFilter = "all";
+let sortKey = "spread";
+let sortDir = -1;
+
+function pbadge(p) {
+  if(!p && p!==0) return '';
+  const col = p>=75?'high':p>=50?'mid':'low';
+  const colHex = p>=75?'var(--green)':p>=50?'var(--amber)':'var(--red)';
+  return '<div class="prob-wrap"><div class="prob-label">Close Probability</div>'
+    +'<div class="prob-bar-outer"><div class="prob-bar-inner '+col+'" style="width:'+p+'%"></div></div>'
+    +'<div class="prob-pct '+col+'">'+p+'%</div></div>';
+}
 
 function loadDeals() {
   document.getElementById("loadingState").style.display = "none";
