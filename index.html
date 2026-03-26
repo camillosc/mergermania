@@ -1271,6 +1271,65 @@
     margin: 0 2px;
     flex-shrink: 0;
   }
+  /* ── NEWS FEED ──────────────────────────────────────────────────── */
+  .news-section {
+    margin: 32px 0 0;
+  }
+  .news-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+  }
+  .news-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 2px; color: var(--navy);
+  }
+  .news-meta {
+    font-size: 11px; color: var(--text-dim); font-family: var(--mono);
+  }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .news-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: box-shadow .15s, border-color .15s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .news-card:hover {
+    box-shadow: var(--shadow);
+    border-color: var(--border2);
+  }
+  .news-card a {
+    color: var(--navy); text-decoration: none;
+    font-weight: 600; font-size: 13.5px; line-height: 1.4;
+  }
+  .news-card a:hover { color: var(--blue); }
+  .news-card-meta {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--text-dim);
+  }
+  .news-source {
+    background: var(--blue-lt); color: var(--blue);
+    padding: 2px 8px; border-radius: 4px;
+    font-weight: 600; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .news-loading, .news-error {
+    text-align: center; padding: 32px; color: var(--text-dim);
+    font-size: 13px;
+  }
+  .news-refresh-btn {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 12px; font-size: 11px;
+    cursor: pointer; color: var(--text-mid); font-family: var(--sans);
+    transition: all .15s;
+  }
+  .news-refresh-btn:hover { border-color: var(--navy); color: var(--navy); }
+
   @media print {
     html, body { background: #fff !important; color: #000 !important; font-size: 10px; }
     .controls, #backToTop, .btn-primary, .btn-secondary, .btn-export { display: none !important; }
@@ -1278,6 +1337,7 @@
     thead tr { background: var(--navy) !important; print-color-adjust: exact; }
     tbody tr:hover { background: transparent !important; }
     .modal-overlay { display: none !important; }
+    .news-section { display: none !important; }
     footer { color: #666; border-top: 1px solid #ccc; }
   }
 </style>
@@ -1418,6 +1478,20 @@
       </thead>
       <tbody id="dealsBody"></tbody>
     </table>
+  </div>
+
+  <!-- ── M&A NEWS FEED ─────────────────────────────────────────── -->
+  <div class="news-section" id="newsSection">
+    <div class="news-header">
+      <div class="news-title">M&amp;A News Feed</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="news-meta" id="newsLastUpdate"></span>
+        <button class="news-refresh-btn" onclick="fetchAllNews()">↻ Refresh News</button>
+      </div>
+    </div>
+    <div id="newsGrid" class="news-grid">
+      <div class="news-loading" id="newsLoading">Loading M&amp;A news…</div>
+    </div>
   </div>
 
   <footer>
@@ -2862,6 +2936,131 @@ function fd(s){if(!s)return"—";const d=new Date(s);return isNaN(d)?s:d.toLocal
 function fp(p,geo){if(!p)return"—";const n=+p;if(isNaN(n)||n===0)return"—";return(geo==="EU"?"€":"$")+n.toFixed(2);}
 function rc(r){return r==="low"?"var(--green)":r==="high"?"var(--red)":"var(--amber)";}
 function esc(s){const d=document.createElement("div");d.textContent=String(s||"");return d.innerHTML;}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// M&A NEWS FEED — Google News RSS via corsproxy.io
+// Auto-refreshes every 60 minutes
+// ══════════════════════════════════════════════════════════════════════════════
+
+const NEWS_QUERIES = [
+  "merger acquisition announced 2026",
+  "merger arbitrage",
+  "takeover bid announced",
+  "acquisition pending regulatory approval"
+];
+const NEWS_PROXY = "https://corsproxy.io/?";
+const NEWS_REFRESH_MS = 3600000; // 60 minutes
+let newsRefreshTimer = null;
+
+function buildGoogleNewsURL(query) {
+  return NEWS_PROXY + encodeURIComponent(
+    "https://news.google.com/rss/search?q=" + encodeURIComponent(query) + "&hl=en-US&gl=US&ceid=US:en"
+  );
+}
+
+function parseRSSItems(xmlText) {
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlText, "text/xml");
+    const items = doc.querySelectorAll("item");
+    const results = [];
+    items.forEach(item => {
+      const title = item.querySelector("title")?.textContent || "";
+      const link = item.querySelector("link")?.textContent || "";
+      const pubDate = item.querySelector("pubDate")?.textContent || "";
+      const source = item.querySelector("source")?.textContent || "";
+      if (title && link) {
+        results.push({ title, link, pubDate, source });
+      }
+    });
+    return results;
+  } catch (e) {
+    return [];
+  }
+}
+
+function timeAgo(dateStr) {
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return "";
+    const diff = (Date.now() - d.getTime()) / 1000;
+    if (diff < 60) return "just now";
+    if (diff < 3600) return Math.floor(diff / 60) + "m ago";
+    if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
+    if (diff < 604800) return Math.floor(diff / 86400) + "d ago";
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  } catch { return ""; }
+}
+
+async function fetchNewsFeed(query) {
+  try {
+    const url = buildGoogleNewsURL(query);
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const text = await res.text();
+    return parseRSSItems(text);
+  } catch {
+    return [];
+  }
+}
+
+async function fetchAllNews() {
+  const grid = document.getElementById("newsGrid");
+  const loading = document.getElementById("newsLoading");
+  const metaEl = document.getElementById("newsLastUpdate");
+  if (loading) loading.style.display = "";
+  if (loading) loading.textContent = "Loading M&A news\u2026";
+
+  const allItems = [];
+  const seen = new Set();
+
+  for (const query of NEWS_QUERIES) {
+    const items = await fetchNewsFeed(query);
+    for (const item of items) {
+      const key = item.title.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        allItems.push(item);
+      }
+    }
+  }
+
+  // Sort by date descending
+  allItems.sort((a, b) => {
+    const da = new Date(a.pubDate), db = new Date(b.pubDate);
+    return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da);
+  });
+
+  // Take top 24
+  const top = allItems.slice(0, 24);
+
+  if (top.length === 0) {
+    grid.innerHTML = '<div class="news-error">No M&A news found. Try refreshing later.</div>';
+  } else {
+    grid.innerHTML = top.map(item => {
+      const ago = timeAgo(item.pubDate);
+      const srcBadge = item.source ? '<span class="news-source">' + esc(item.source) + '</span>' : '';
+      return '<div class="news-card">' +
+        '<a href="' + esc(item.link) + '" target="_blank" rel="noopener">' + esc(item.title) + '</a>' +
+        '<div class="news-card-meta">' + srcBadge + (ago ? '<span>' + ago + '</span>' : '') + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  if (metaEl) {
+    metaEl.textContent = "Updated " + new Date().toLocaleTimeString() + " \u00b7 auto-refresh every 60 min";
+  }
+}
+
+// Auto-refresh news every 60 minutes
+function startNewsAutoRefresh() {
+  if (newsRefreshTimer) clearInterval(newsRefreshTimer);
+  newsRefreshTimer = setInterval(fetchAllNews, NEWS_REFRESH_MS);
+}
+
+// Initialize news feed
+fetchAllNews();
+startNewsAutoRefresh();
 
 loadDeals();
 </script>
