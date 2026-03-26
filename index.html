@@ -323,11 +323,30 @@
   .table-wrap {
     overflow-x: auto;
     overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--surface);
     box-shadow: var(--shadow);
+    position: relative;
   }
+  .table-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.06));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .table-wrap.has-scroll::after { opacity: 1; }
+  td.col-target, th.col-target { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  td.col-region, th.col-region { max-width: 100px; }
+  td.col-desc, th.col-desc, td.col-comment, th.col-comment { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  td.col-numeric { white-space: nowrap; }
 
   table {
     width: 100%;
@@ -348,7 +367,7 @@
   }
 
   th {
-    padding: 11px 14px;
+    padding: 6px 8px;
     text-align: left;
     font-size: 10px;
     font-weight: 600;
@@ -383,9 +402,9 @@
   tbody tr:nth-child(even) { background: var(--surface2); }
 
   td {
-    padding: 11px 14px;
+    padding: 6px 8px;
     vertical-align: top;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.5;
     border-right: 1px solid var(--border);
     color: var(--text);
@@ -1403,6 +1422,8 @@
     <button class="col-toggle-btn" data-col="11" onclick="toggleCol(this)">Summary</button>
     <button class="col-toggle-btn" data-col="12" onclick="toggleCol(this)">Commentary</button>
     <button class="col-toggle-btn" data-col="13" onclick="toggleCol(this)">Suitors</button>
+    <button class="col-toggle-btn active" data-col="14" onclick="toggleCol(this)">Break Fee</button>
+    <button class="col-toggle-btn active" data-col="15" onclick="toggleCol(this)">Mkt Share</button>
     <button class="col-toggle-btn" style="margin-left:8px;border-color:var(--navy);color:var(--navy)" onclick="resetCols()">Reset All</button>
   </div>
 
@@ -1483,6 +1504,8 @@
           <th data-col="11">Deal Summary</th>
           <th data-col="12">Commentary</th>
           <th data-col="13">Other Suitors</th>
+          <th data-col="14" style="cursor:pointer;user-select:none" onclick="sortTable(14)">Break Fee</th>
+          <th data-col="15" style="cursor:pointer;user-select:none" onclick="sortTable(15)">Mkt Share</th>
         </tr>
       </thead>
       <tbody id="dealsBody"></tbody>
@@ -1619,7 +1642,7 @@ dealSize:110.9,evEbitda:null,dealCurrency:"USD",otherBidders:"Netflix (walked aw
   {name:"EU Commission Phase 1",status:"pending",probability:75,detail:"EU reviewing combined streaming + linear TV impact. Likely Phase 1 clearance with behavioral remedies on content licensing."},
   {name:"California AG review",status:"pending",probability:65,detail:"AG Rob Bonta can file independent antitrust suit. Has threatened action. Most likely to seek divestitures rather than block outright."},
 ],
-dealRisk:"medium"},
+dealRisk:"medium",breakupFee:"$3.9B / $7.0B rev",marketShare:"~15% US SVOD"},
 
 {target:"Norfolk Southern",targetTicker:"NSC",acquirer:"Union Pacific",geo:"USA",industry:"Railroads / Class I",
 currentPrice:281.20,dealPrice:320.00,dealTerms:"$320/share: 72% UNP stock + $88.82 cash",spread:13.8,annualizedReturn:8.6,
@@ -1634,7 +1657,7 @@ dealSize:85.0,evEbitda:18.2,dealCurrency:"USD",otherBidders:"CSX Corporation (ex
   {name:"STB formal merger review (18-24 months)",status:"pending",probability:55,detail:"Full public interest review of rail competition, service, safety. Other Class I railroads (CSX, BNSF) opposing. GOP state AGs opposing. This is the primary risk — STB has broad discretion to impose conditions or deny."},
   {name:"DOJ antitrust review",status:"pending",probability:65,detail:"DOJ reviews in parallel with STB. Historically STB takes the lead on rail mergers. DOJ may impose supplementary conditions."},
 ],
-dealRisk:"high"},
+dealRisk:"high",breakupFee:"Undisclosed",marketShare:"~45% US rail"},
 
 {target:"Charter Communications",targetTicker:"CHTR",acquirer:"Cox Communications",geo:"USA",industry:"Cable / Broadband",
 currentPrice:348.00,dealPrice:0,dealTerms:"Charter acquires Cox at $34.5bn EV; Cox Enterprises gets ~23% of combined",spread:0,annualizedReturn:0,
@@ -1661,7 +1684,7 @@ dealSize:6.4,evEbitda:null,dealCurrency:"USD",otherBidders:"Anaplan (Thoma Bravo
   {name:"HSR antitrust waiting period",status:"pending",probability:98,detail:"30-day waiting period opens April 6 2026. DOJ/FTC have zero competitive overlap concern in finance performance management software. Early termination very likely."},
   {name:"EU Commission notification",status:"pending",probability:97,detail:"Standard EU filing for software PE deal. No competition concerns. Phase 1 clearance expected within 25 working days."},
 ],
-dealRisk:"low"},
+dealRisk:"low",breakupFee:"low92M / $320M",marketShare:"~20% CPM software"},
 
 {target:"Clearwater Analytics",targetTicker:"CWAN",acquirer:"Permira / Warburg Pincus / Francisco Partners",geo:"USA",industry:"Investment Accounting SaaS",
 currentPrice:23.35,dealPrice:24.55,dealTerms:"$24.55 cash per share",spread:5.14,annualizedReturn:20.8,
@@ -1674,7 +1697,7 @@ dealSize:8.4,evEbitda:null,dealCurrency:"USD",otherBidders:"SS&C Technologies (e
   {name:"Disinterested shareholder vote",status:"pending",probability:92,detail:"Majority of votes cast by holders other than Permira and Warburg Pincus required. ISS and Glass Lewis recommendations pending. Some disgruntled holders may vote no on price adequacy grounds but overall likely to pass."},
   {name:"HSR antitrust review",status:"pending",probability:97,detail:"No competition concerns in investment accounting software. Early termination expected."},
 ],
-dealRisk:"low"},
+dealRisk:"low",breakupFee:"$252M / $420M",marketShare:"~15% inv. analytics"},
 
 {target:"Verint Systems",targetTicker:"VRNT",acquirer:"Thoma Bravo",geo:"USA",industry:"Customer Experience AI",
 currentPrice:20.510,dealPrice:20.75,dealTerms:"$20.75 cash per share",spread:1.17,annualizedReturn:7.1,
@@ -1698,7 +1721,7 @@ dealSize:0.726,evEbitda:null,dealCurrency:"USD",otherBidders:"None — insider b
   {name:"Minority shareholder vote",status:"pending",probability:90,detail:"Minority public holders must approve. Premium is compelling — ~700% above unaffected price. Strong support expected."},
   {name:"HSR review",status:"pending",probability:95,detail:"Deal may be below HSR threshold ($119.5mn filing threshold). If required, no competitive concerns in IoT connectivity."},
 ],
-dealRisk:"low"},
+dealRisk:"low",breakupFee:"$7.2M",marketShare:"N/A"},
 
 {target:"Synchronoss Technologies",targetTicker:"SNCR",acquirer:"Lumine Group",geo:"USA",industry:"Personal Cloud / Telecom Software",
 currentPrice:8.65,dealPrice:9.00,dealTerms:"$9.00 cash per share",spread:4.05,annualizedReturn:20.2,
@@ -1725,7 +1748,7 @@ dealSize:14.5,evEbitda:38.2,dealCurrency:"USD",otherBidders:"Stryker (rumored pr
   {name:"EU Commission Phase 1",status:"pending",probability:94,detail:"EU filing required given combined global revenues. Phase 1 clearance expected — no European market concentration concerns."},
   {name:"China SAMR / other international",status:"pending",probability:88,detail:"SAMR review standard for medical device deals. China typically clears medtech M&A with limited domestic overlap. 3-6 month review expected."},
 ],
-dealRisk:"low"},
+dealRisk:"low",breakupFee:"$525M / $900M",marketShare:"~25% neurovascular"},
 
 {target:"Exact Sciences",targetTicker:"EXAS",acquirer:"Abbott Laboratories",geo:"USA",industry:"Cancer Diagnostics",
 currentPrice:103.50,dealPrice:105.00,dealTerms:"$105.00 cash per share",spread:1.45,annualizedReturn:8.7,
@@ -1780,7 +1803,7 @@ dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatoryStep
   {name:"Spanish CNMV filing",status:"pending",probability:88,detail:"Spanish securities regulator notification for Allfunds' Spanish operations. Largely administrative."},
   {name:"Shareholder acceptance threshold",status:"pending",probability:82,detail:"Minimum acceptance threshold required. Premium of ~15% vs pre-announcement price should drive sufficient acceptance."},
 ],
-dealRisk:"medium"},
+dealRisk:"medium",breakupFee:"EUR150M",marketShare:"~30% EU fund dist"},
 
 {target:"Nippon Steel / US Steel",targetTicker:"X",acquirer:"Nippon Steel Corporation",geo:"USA",industry:"Integrated Steel Manufacturing",
 currentPrice:46.20,dealPrice:55.00,dealTerms:"$55.00 cash per share",spread:19.05,annualizedReturn:23.8,
@@ -2395,7 +2418,7 @@ dealValue:"$55B",
 milestones:[
 {name:"Shareholder vote",status:"completed",probability:99,detail:"EA shareholders approved the deal."},
 {name:"Regulatory approvals",status:"pending",probability:88,detail:"Multiple jurisdictions reviewing including FTC, EU, and Saudi Arabia."},
-],dealRisk:"medium"},
+],dealRisk:"medium",breakupFee:"$2.35B / $3.08B",marketShare:"~10% gaming"},
 
 {target:"Boralex",targetTicker:"BLX.TO",acquirer:"Brookfield / La Caisse de depot",geo:"Canada",industry:"Renewable Energy",
 currentPrice:33.00,dealPrice:37.25,dealTerms:"C$37.25 per share in cash",spread:12.9,annualizedReturn:17.2,
@@ -2405,7 +2428,7 @@ dealValue:"C$9.0B",
 milestones:[
 {name:"Shareholder vote",status:"pending",probability:95,detail:"Shareholder approval required."},
 {name:"Regulatory approvals",status:"pending",probability:85,detail:"Competition Bureau and Investment Canada Act review required."},
-],dealRisk:"medium"},
+],dealRisk:"medium",breakupFee:"C$350M",marketShare:"~12% CA renewables"},
 
 {target:"National Storage Affiliates",targetTicker:"NSA",acquirer:"Public Storage",geo:"USA",industry:"Real Estate / REITs",
 currentPrice:33.47,dealPrice:41.68,dealTerms:"0.14 shares of PSA per NSA share (all-stock)",spread:24.5,annualizedReturn:44.6,
@@ -2415,7 +2438,7 @@ dealValue:"$10.5B",
 milestones:[
 {name:"Shareholder vote",status:"pending",probability:90,detail:"Both PSA and NSA shareholders must approve."},
 {name:"Regulatory approvals",status:"pending",probability:75,detail:"FTC review of REIT consolidation."},
-],dealRisk:"high"},
+],dealRisk:"high",breakupFee:"$283M",marketShare:"~15% self-storage"},
 
 {target:"DigitalBridge",targetTicker:"DBRG",acquirer:"SoftBank Group",geo:"USA",industry:"Technology / Digital Infrastructure",
 currentPrice:15.38,dealPrice:16.00,dealTerms:"$16.00 per share in cash",spread:4.0,annualizedReturn:8.2,
@@ -2425,7 +2448,7 @@ dealValue:"$4B",
 milestones:[
 {name:"Shareholder vote",status:"pending",probability:95,detail:"DBRG shareholder approval required."},
 {name:"Regulatory approvals",status:"pending",probability:85,detail:"CFIUS and international regulatory reviews."},
-],dealRisk:"medium"},
+],dealRisk:"medium",breakupFee:"medium00M",marketShare:"~8% digital infra"},
 
 {target:"Coterra Energy",targetTicker:"CTRA",acquirer:"Devon Energy",geo:"USA",industry:"Energy / Oil & Gas",
 currentPrice:33.97,dealPrice:33.25,dealTerms:"0.70 shares of DVN per CTRA share (all-stock merger of equals)",spread:-2.1,annualizedReturn:-8.4,
@@ -2435,7 +2458,7 @@ dealValue:"$58B",
 milestones:[
 {name:"Shareholder vote",status:"pending",probability:90,detail:"Both DVN and CTRA shareholders must approve."},
 {name:"FTC review",status:"pending",probability:88,detail:"FTC antitrust review of E&P consolidation."},
-],dealRisk:"medium"}
+],dealRisk:"medium",breakupFee:"$865M each",marketShare:"~5% US oil"}
 
 ,
 
@@ -2447,7 +2470,7 @@ comment:"",dealSize:48.7,evEbitda:null,dealCurrency:"USD",otherBidders:"",regula
 {name:"FTC second request review",status:"pending",probability:80,detail:"FTC issued second request. Review of consumer health product overlap ongoing."},
 {name:"Shareholder approval",status:"pending",probability:90,detail:"Both KMB and KVUE shareholders must approve the merger."},
 {name:"International regulatory approvals",status:"pending",probability:85,detail:"EU, UK, and other jurisdictions reviewing the combination."},
-],dealRisk:"medium"},
+],dealRisk:"medium",breakupFee:"medium.136B each",marketShare:"~15% consumer health"},
 
 {target:"Qorvo Inc",targetTicker:"QRVO",acquirer:"Skyworks Solutions",geo:"USA",industry:"Semiconductors",
 currentPrice:79.64,dealPrice:130.00,dealTerms:"$32.50 cash + 0.960 SWKS shares per QRVO share",spread:63.3,annualizedReturn:63.3,
@@ -2458,7 +2481,7 @@ comment:"",dealSize:22.0,evEbitda:null,dealCurrency:"USD",otherBidders:"",regula
 {name:"FTC/DOJ antitrust review",status:"pending",probability:75,detail:"US antitrust review of RF semiconductor consolidation."},
 {name:"China SAMR approval",status:"pending",probability:70,detail:"Chinese regulatory approval required for semiconductor deal."},
 {name:"EU Commission review",status:"pending",probability:80,detail:"EU reviewing semiconductor market concentration."},
-],dealRisk:"high"},
+],dealRisk:"high",breakupFee:"$298.7M each",marketShare:"~50% mobile RF"},
 
 {target:"Hologic Inc",targetTicker:"HOLX",acquirer:"Blackstone / TPG Capital",geo:"USA",industry:"MedTech",
 currentPrice:75.52,dealPrice:76.00,dealTerms:"$76.00 cash + up to $3.00 CVR per share",spread:0.6,annualizedReturn:7.2,
@@ -2468,7 +2491,7 @@ comment:"",dealSize:18.3,evEbitda:null,dealCurrency:"USD",otherBidders:"",regula
 {name:"HSR antitrust clearance",status:"done",probability:100,detail:"HSR waiting period expired without action."},
 {name:"Shareholder approval",status:"done",probability:100,detail:"Shareholders approved the take-private transaction."},
 {name:"Final closing conditions",status:"pending",probability:99,detail:"All material conditions satisfied. Closing imminent."},
-],dealRisk:"low"},
+],dealRisk:"low",breakupFee:"$547M / low.1B",marketShare:"~40% cervical screen"},
 
 {target:"Chart Industries",targetTicker:"GTLS",acquirer:"Baker Hughes",geo:"USA",industry:"Energy Equipment",
 currentPrice:207.08,dealPrice:210.00,dealTerms:"$210.00 per share in cash",spread:1.4,annualizedReturn:5.6,
@@ -2478,7 +2501,7 @@ comment:"",dealSize:13.6,evEbitda:null,dealCurrency:"USD",otherBidders:"",regula
 {name:"Shareholder approval",status:"done",probability:100,detail:"GTLS shareholders approved the acquisition."},
 {name:"Bond financing",status:"done",probability:100,detail:"Baker Hughes issued $9.5B in bonds to fund the deal."},
 {name:"Regulatory approvals",status:"pending",probability:97,detail:"Final regulatory clearances pending. No significant antitrust concerns."},
-],dealRisk:"low"},
+],dealRisk:"low",breakupFee:"$413M / $620M",marketShare:"LNG near-monopoly"},
 
 {target:"Sealed Air Corp",targetTicker:"SEE",acquirer:"Clayton Dubilier & Rice",geo:"USA",industry:"Packaging",
 currentPrice:41.88,dealPrice:42.15,dealTerms:"$42.15 per share in cash",spread:0.6,annualizedReturn:7.2,
@@ -2488,7 +2511,7 @@ comment:"",dealSize:10.3,evEbitda:null,dealCurrency:"USD",otherBidders:"",regula
 {name:"Shareholder approval",status:"done",probability:100,detail:"SEE shareholders approved the take-private deal."},
 {name:"Regulatory approvals",status:"done",probability:100,detail:"All regulatory approvals received as of March 23 2026."},
 {name:"Final closing",status:"pending",probability:99,detail:"Closing imminent. All material conditions satisfied."},
-],dealRisk:"low"},
+],dealRisk:"low",breakupFee:"$205M / $426M",marketShare:"~20% packaging"},
 
 {target:"Janus Henderson Group",targetTicker:"JHG",acquirer:"Trian Fund / General Catalyst",geo:"USA",industry:"Asset Management",
 currentPrice:51.37,dealPrice:52.00,dealTerms:"$52.00 per share in cash (raised from $49)",spread:1.2,annualizedReturn:4.8,
@@ -2497,7 +2520,7 @@ description:"Trian and General Catalyst bid $52/share for Janus Henderson. Victo
 comment:"",dealSize:7.4,evEbitda:null,dealCurrency:"USD",otherBidders:"Victory Capital",regulatorySteps:[
 {name:"Shareholder vote",status:"pending",probability:70,detail:"Shareholder vote scheduled April 16 2026. Victory Capital rival bid complicates outcome."},
 {name:"Regulatory approvals",status:"pending",probability:85,detail:"FCA and SEC approvals required for asset management combination."},
-],dealRisk:"high"},
+],dealRisk:"high",breakupFee:"high85M",marketShare:"<2% AUM"},
 
 {target:"UniFirst Corporation",targetTicker:"UNF",acquirer:"Cintas Corporation",geo:"USA",industry:"Business Services",
 currentPrice:266.23,dealPrice:310.00,dealTerms:"$155.00 cash + 0.7720 CTAS shares per UNF share",spread:16.4,annualizedReturn:21.9,
@@ -2507,7 +2530,7 @@ comment:"",dealSize:5.5,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulat
 {name:"Croatti family support",status:"done",probability:100,detail:"Croatti family controlling 2/3 voting power signed support agreement."},
 {name:"DOJ antitrust review",status:"pending",probability:85,detail:"DOJ reviewing uniform services market consolidation."},
 {name:"Shareholder approval",status:"pending",probability:95,detail:"With Croatti family support, shareholder approval highly likely."},
-],dealRisk:"medium"},
+],dealRisk:"medium",breakupFee:"medium66M",marketShare:"~45% uniform rental"},
 
 {target:"Veris Residential",targetTicker:"VRE",acquirer:"Affinius Capital",geo:"USA",industry:"Real Estate / REITs",
 currentPrice:18.92,dealPrice:19.00,dealTerms:"$19.00 per share in cash",spread:0.4,annualizedReturn:1.6,
@@ -2516,7 +2539,7 @@ description:"Affinius Capital to take Veris Residential private at $19/share. Aw
 comment:"",dealSize:3.4,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
 {name:"Shareholder approval",status:"pending",probability:90,detail:"VRE shareholder vote pending. Board unanimously recommends."},
 {name:"Regulatory approvals",status:"pending",probability:95,detail:"Standard real estate transaction regulatory review."},
-],dealRisk:"low"},
+],dealRisk:"low",breakupFee:"~$68M",marketShare:"N/A"},
 
 {target:"Terns Pharmaceuticals",targetTicker:"TERN",acquirer:"Merck & Co.",geo:"USA",industry:"Biotech / Oncology-Hematology",
 currentPrice:52.50,dealPrice:53.00,dealTerms:"$53.00 per share in cash (Tender Offer)",spread:1.0,annualizedReturn:6.0,
@@ -2527,19 +2550,19 @@ milestones:[
 {name:"Tender offer",status:"pending",probability:98,detail:"Tender offer expected to launch shortly. Minimum 50.1% tender condition."},
 {name:"HSR/antitrust",status:"pending",probability:97,detail:"HSR filing expected. No material competitive overlap in CML — Merck has no marketed CML therapy."},
 {name:"Expected close",status:"pending",probability:95,detail:"Q2 2026 (targeting May 10, 2026). Short-form merger to follow tender."},
-],dealRisk:"low"},
+],dealRisk:"low",breakupFee:"$200M",marketShare:"~15% CML"},
 
 {target:"AES Corporation",targetTicker:"AES",acquirer:"Global Infrastructure Partners / EQT",geo:"USA",industry:"Utilities / Power",
 currentPrice:14.50,dealPrice:15.00,dealTerms:"$15.00 per share in cash",spread:3.4,annualizedReturn:20.4,
 announced:"2026-03-02",expectedClose:"2026-Q4",status:"pending",closingProbability:88,
 description:"GIP and EQT consortium to acquire AES Corporation for $15/share cash. Enterprise value ~$33.4B including assumption of existing debt. Major renewable energy and utilities platform. | Breakup: $428M (target) / $642M (reverse). Combined: ~5% US power generation.",
-dealValue:"$33.4B EV ($10.7B equity)",milestones:[],dealRisk:"medium"},
+dealValue:"$33.4B EV ($10.7B equity)",milestones:[],dealRisk:"medium",breakupFee:"$428M / $642M",marketShare:"~5% US power"},
 
 {target:"Select Medical Holdings",targetTicker:"SEM",acquirer:"Ortenzio/Jackson Consortium + Welsh Carson",geo:"USA",industry:"Healthcare Services",
 currentPrice:16.20,dealPrice:16.50,dealTerms:"$16.50 per share in cash",spread:1.9,annualizedReturn:7.6,
 announced:"2026-03-03",expectedClose:"2026-Q3",status:"pending",closingProbability:92,
 description:"MBO led by Executive Chairman Robert Ortenzio and SVP Martin Jackson with Welsh Carson Anderson & Stowe to take Select Medical private at $16.50/share. | Breakup: $78M (target). Combined: ~15% US specialty rehab hospitals.",
-dealValue:"$3.9B EV",milestones:[],dealRisk:"low"},
+dealValue:"$3.9B EV",milestones:[],dealRisk:"low",breakupFee:"$78M",marketShare:"~15% specialty rehab"},
 
 {target:"Caesars Entertainment",targetTicker:"CZR",acquirer:"Fertitta Entertainment",geo:"USA",industry:"Gaming / Hospitality",
 currentPrice:28.50,dealPrice:32.00,dealTerms:"~$32/share cash (CNBC report, 45-day exclusive window)",spread:12.3,annualizedReturn:0,
@@ -2587,19 +2610,19 @@ dealValue:"$17-19/share ($28-31B)",milestones:[],dealRisk:"high"},
 currentPrice:37.59,dealPrice:37.59,dealTerms:"1 EQH = 1.55516 CRBG shares (all-stock merger, no premium)",spread:0.0,annualizedReturn:0.0,
 announced:"2026-03-26",expectedClose:"2026-Q4",status:"pending",closingProbability:80,
 description:"Transformational merger creating leading retirement, life, wealth and asset management company with $1.5T AUM. Pro forma: 51% Corebridge / 49% Equitable. $500M+ synergies, 10%+ EPS accretive by end 2028. $4B combined free cash flows. Requires insurance regulator approvals in AZ, CO, MO, NY, TX plus EQH client consent (75% of advisory fees). S-4, HSR and Form A filings within 45 days (by May 10). $475M termination fees each side. Confidentiality agreement signed Feb 23. Early investor feedback: math works on spreadsheet but watching brief on execution. | Breakup: $475M each (reciprocal). Combined: ~12% US individual annuities.",
-dealValue:"$1.5T AUM combined",milestones:[{name:"S-4/HSR filing",status:"pending",probability:95,detail:"Filings due within 45 days (by May 10, 2026)"},{name:"Insurance regulator approvals",status:"pending",probability:78,detail:"AZ, CO, MO, NY, TX insurance regulators + EQH client consent (75% of advisory fees)"},{name:"Shareholder votes",status:"pending",probability:85,detail:"Majority of outstanding shares required from both CRBG and EQH"}],dealRisk:"medium"},
+dealValue:"$1.5T AUM combined",milestones:[{name:"S-4/HSR filing",status:"pending",probability:95,detail:"Filings due within 45 days (by May 10, 2026)"},{name:"Insurance regulator approvals",status:"pending",probability:78,detail:"AZ, CO, MO, NY, TX insurance regulators + EQH client consent (75% of advisory fees)"},{name:"Shareholder votes",status:"pending",probability:85,detail:"Majority of outstanding shares required from both CRBG and EQH"}],dealRisk:"medium",breakupFee:"$475M each",marketShare:"~12% US annuities"},
 
 {target:"Olaplex Holdings",targetTicker:"OLPX",acquirer:"Henkel AG",geo:"USA",industry:"Consumer / Beauty",
 currentPrice:1.95,dealPrice:2.06,dealTerms:"$2.06 per share in cash",spread:5.6,annualizedReturn:11.2,
 announced:"2026-03-26",expectedClose:"2026-H2",status:"pending",closingProbability:92,
 description:"Henkel to acquire Olaplex for $2.06/share ($1.4B), 55% premium over March 25 close, 45% over 30-day VWAP. Unanimously approved by OLPX Board. Advent (majority voting power) approved by written consent. Combines OLPX science-led innovation and North American presence with Henkel global reach. Enhances professional stylist relationships and accelerates international growth. | Breakup: $42M (target). Combined: ~5% global professional haircare.",
-dealValue:"$1.4B",milestones:[{name:"Written consent obtained",status:"completed",probability:100,detail:"Advent (majority shareholder) approved by written consent"},{name:"Regulatory approvals",status:"pending",probability:92,detail:"Standard antitrust review expected"}],dealRisk:"low"},
+dealValue:"$1.4B",milestones:[{name:"Written consent obtained",status:"completed",probability:100,detail:"Advent (majority shareholder) approved by written consent"},{name:"Regulatory approvals",status:"pending",probability:92,detail:"Standard antitrust review expected"}],dealRisk:"low",breakupFee:"$42M",marketShare:"~5% pro haircare"},
 
 {target:"Day One Biopharmaceuticals",targetTicker:"DAWN",acquirer:"Servier Group",geo:"USA",industry:"Biotech / Oncology",
 currentPrice:21.20,dealPrice:21.50,dealTerms:"$21.50 per share in cash (Tender Offer)",spread:1.4,annualizedReturn:8.4,
 announced:"2026-03-05",expectedClose:"2026-Q2",status:"pending",closingProbability:95,
 description:"Servier to acquire Day One Biopharmaceuticals for $21.50/share via tender offer. Tender launched, expires April 22. HSR filing March 26. Competitive process: Company A bid from $13 to $19.25/share (rejected under exclusivity); Company B and C also approached. Servier won with escalating bids from $18 to $21.50. Day One's lead asset is tovorafenib for pediatric low-grade glioma. | Breakup: ~$60M (target). Combined pediatric oncology: small but growing niche.",
-dealValue:"~$2B",milestones:[{name:"Tender offer",status:"pending",probability:97,detail:"Tender launched, expires April 22, 2026"},{name:"HSR filing",status:"pending",probability:98,detail:"HSR to be filed March 26, 2026"},{name:"Expected close",status:"pending",probability:95,detail:"Q2 2026"}],dealRisk:"low"}
+dealValue:"~$2B",milestones:[{name:"Tender offer",status:"pending",probability:97,detail:"Tender launched, expires April 22, 2026"},{name:"HSR filing",status:"pending",probability:98,detail:"HSR to be filed March 26, 2026"},{name:"Expected close",status:"pending",probability:95,detail:"Q2 2026"}],dealRisk:"low",breakupFee:"~$60M",marketShare:"Niche peds oncology"}
 
 ];
 
@@ -2797,6 +2820,8 @@ function renderDeals() {
       '<td data-col="11" class="desc-cell"><div class="desc-text-inline">'+esc((d.description||"—").slice(0,200))+((d.description||"").length>200?"…":"")+'</div></td>'+
       '<td data-col="12" class="commentary-cell">'+(d.comment?'<div class="comment-text">'+esc((d.comment||"").slice(0,200))+((d.comment||"").length>200?"…":"")+'</div>':'<div class="no-comment">—</div>')+'</td>'+
       '<td data-col="13" class="suitors-cell">'+suitorsHTML+'</td>';
+      tr.innerHTML+='<td data-col="14" class="col-numeric">'+(d.breakupFee||'-')+'</td>';
+      tr.innerHTML+='<td data-col="15" class="col-numeric">'+(d.marketShare||'-')+'</td>';
     body.appendChild(tr);
   });
 }
@@ -2961,7 +2986,7 @@ function exportCSV(){
   else if(currentFilter==="contested") deals=deals.filter(d=>d.otherBidders&&d.otherBidders!=="—"&&!d.otherBidders.toLowerCase().includes("none"));
   else if(currentFilter==="top-opp") deals=deals.filter(d=>(d.closingProbability||0)>=85&&(+d.annualizedReturn||0)>=10&&d.dealRisk!=='high'&&(+d.spread||0)>0);
   if(srch) deals=deals.filter(d=>[d.target,d.acquirer,d.industry,d.targetTicker,d.description,d.comment,d.otherBidders].some(v=>(v||"").toLowerCase().includes(srch)));
-  const cols=["Target","Ticker","Acquirer","Geo","Industry","Deal Type","Deal Size (bn)","EV/EBITDA (x)","Currency","Current Price","Deal Price","Spread %","Ann. Return %","Announced","Exp. Close","Status","Deal Risk","Close Probability %","Description","Commentary","Other Suitors / Bidders"];
+  const cols=["Target","Ticker","Acquirer","Geo","Industry","Deal Type","Deal Size (bn)","EV/EBITDA (x)","Currency","Current Price","Deal Price","Spread %","Ann. Return %","Announced","Exp. Close","Status","Deal Risk","Break Fee","Mkt Share","Close Probability %","Description","Commentary","Other Suitors / Bidders"];
   const rows=deals.map(d=>{
     const dt=getDealType(d.dealTerms||"");
     return [
@@ -2969,7 +2994,7 @@ function exportCSV(){
       dt.label,
       d.dealSize||"",d.evEbitda||"",d.dealCurrency||"USD",
       d.currentPrice||"",d.dealPrice||"",d.spread||"",d.annualizedReturn||"",
-      d.announced,d.expectedClose,d.status,d.dealRisk,d.closingProbability||"",
+      d.announced,d.expectedClose,d.status,d.dealRisk,d.breakupFee||"",d.marketShare||"",d.closingProbability||"",
       d.description||"",d.comment||"",d.otherBidders||""
     ].map(v=>'"'+(String(v||"").replace(/"/g,'""'))+'"').join(",");
   });
@@ -3238,5 +3263,16 @@ loadDeals();
 
 (function(){var t=document.getElementById("newsTabs");if(!t)return;t.addEventListener("click",function(e){if(e.target.tagName!=="BUTTON")return;t.querySelectorAll("button").forEach(function(b){b.classList.remove("active")});e.target.classList.add("active");var c=e.target.dataset.cat;document.querySelectorAll("#newsGrid>a,#newsGrid>div").forEach(function(i){var x=(i.textContent||"").toLowerCase();var s=c==="all";if(c==="deals")s=/acqui|merg|takeover|bid|deal|buy/.test(x);if(c==="regulatory")s=/approv|regulat|ftc|doj|antitrust|clearance|bloc/.test(x);i.style.display=(!s&&c!=="all")?"none":"";});});})();
 </script>
+
+  // Scroll indicator for table
+  document.addEventListener('DOMContentLoaded',function(){
+    var tw=document.querySelector('.table-wrap');
+    if(tw){
+      function checkScroll(){tw.classList.toggle('has-scroll',tw.scrollWidth>tw.clientWidth+5);}
+      checkScroll();
+      window.addEventListener('resize',checkScroll);
+      new MutationObserver(checkScroll).observe(tw,{childList:true,subtree:true});
+    }
+  });
 </body>
 </html>
