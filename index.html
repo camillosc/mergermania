@@ -3221,4 +3221,4 @@ loadDeals();
 (function(){var t=document.getElementById("newsTabs");if(!t)return;t.addEventListener("click",function(e){if(e.target.tagName!=="BUTTON")return;t.querySelectorAll("button").forEach(function(b){b.classList.remove("active")});e.target.classList.add("active");var c=e.target.dataset.cat;document.querySelectorAll("#newsGrid>a,#newsGrid>div").forEach(function(i){var x=(i.textContent||"").toLowerCase();var s=c==="all";if(c==="deals")s=/acqui|merg|takeover|bid|deal|buy/.test(x);if(c==="regulatory")s=/approv|regulat|ftc|doj|antitrust|clearance|bloc/.test(x);i.style.display=(!s&&c!=="all")?"none":"";});});})();
 </script>
 </body>
-</html> 
+</html>
