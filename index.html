@@ -2970,6 +2970,12 @@ function parseRSSItems(data) {
   }
 }
 
+function decodeHTML(str) {
+  const el = document.createElement("textarea");
+  el.innerHTML = str;
+  return el.value;
+}
+
 function timeAgo(dateStr) {
   try {
     const d = new Date(dateStr);
@@ -3030,9 +3036,9 @@ async function fetchAllNews() {
   } else {
     grid.innerHTML = top.map(item => {
       const ago = timeAgo(item.pubDate);
-      const srcBadge = item.source ? '<span class="news-source">' + esc(item.source) + '</span>' : '';
+      const srcBadge = item.source ? '<span class="news-source">' + esc(decodeHTML(item.source)) + '</span>' : '';
       return '<div class="news-card">' +
-        '<a href="' + esc(item.link) + '" target="_blank" rel="noopener">' + esc(item.title) + '</a>' +
+        '<a href="' + esc(item.link) + '" target="_blank" rel="noopener">' + esc(decodeHTML(item.title)) + '</a>' +
         '<div class="news-card-meta">' + srcBadge + (ago ? '<span>' + ago + '</span>' : '') + '</div>' +
         '</div>';
     }).join('');
