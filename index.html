@@ -2948,32 +2948,23 @@ const NEWS_QUERIES = [
   "takeover bid announced",
   "acquisition pending regulatory approval"
 ];
-const NEWS_PROXY = "https://corsproxy.io/?";
 const NEWS_REFRESH_MS = 3600000; // 60 minutes
 let newsRefreshTimer = null;
 
 function buildGoogleNewsURL(query) {
-  return NEWS_PROXY + encodeURIComponent(
-    "https://news.google.com/rss/search?q=" + encodeURIComponent(query) + "&hl=en-US&gl=US&ceid=US:en"
-  );
+  const rssUrl = "https://news.google.com/rss/search?q=" + encodeURIComponent(query) + "&hl=en-US&gl=US&ceid=US:en";
+  return "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
 }
 
-function parseRSSItems(xmlText) {
+function parseRSSItems(data) {
   try {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xmlText, "text/xml");
-    const items = doc.querySelectorAll("item");
-    const results = [];
-    items.forEach(item => {
-      const title = item.querySelector("title")?.textContent || "";
-      const link = item.querySelector("link")?.textContent || "";
-      const pubDate = item.querySelector("pubDate")?.textContent || "";
-      const source = item.querySelector("source")?.textContent || "";
-      if (title && link) {
-        results.push({ title, link, pubDate, source });
-      }
-    });
-    return results;
+    if (data.status !== "ok" || !data.items) return [];
+    return data.items.map(item => ({
+      title: item.title || "",
+      link: item.link || "",
+      pubDate: item.pubDate || "",
+      source: item.author || ""
+    })).filter(item => item.title && item.link);
   } catch (e) {
     return [];
   }
@@ -2997,8 +2988,8 @@ async function fetchNewsFeed(query) {
     const url = buildGoogleNewsURL(query);
     const res = await fetch(url);
     if (!res.ok) return [];
-    const text = await res.text();
-    return parseRSSItems(text);
+    const data = await res.json();
+    return parseRSSItems(data);
   } catch {
     return [];
   }
