@@ -505,6 +505,10 @@
   tbody tr.row-at-risk:hover { background: #FEEEEE !important; }
   tbody tr.row-at-risk td:first-child { border-left: 3px solid var(--red); }
 
+  tbody tr.row-rumored { background: #FAF5FF !important; }
+  tbody tr.row-rumored:hover { background: #F3E8FF !important; }
+  tbody tr.row-rumored td:first-child { border-left: 3px solid #7C3AED; }
+
   tbody tr.row-high-spread td:first-child { border-left: 3px solid var(--green); }
 
   /* ── SORTABLE TH HOVER HINT ──────────────────────────────────────── */
@@ -708,6 +712,9 @@
 
   .status-risk { background: var(--red-lt); color: var(--red); border: 1px solid #FCA5A5; }
   .status-risk .status-dot { background: var(--red); }
+
+  .status-rumored { background: #EDE9FE; color: #7C3AED; border: 1px solid #C4B5FD; }
+  .status-rumored .status-dot { background: #7C3AED; }
 
   .reg-cell { min-width: 230px; }
   .reg-section { margin-bottom: 6px; }
@@ -2520,7 +2527,61 @@ milestones:[
 {name:"Tender offer",status:"pending",probability:98,detail:"Tender offer expected to launch shortly. Minimum 50.1% tender condition."},
 {name:"HSR/antitrust",status:"pending",probability:97,detail:"HSR filing expected. No material competitive overlap in CML — Merck has no marketed CML therapy."},
 {name:"Expected close",status:"pending",probability:95,detail:"Q2 2026 (targeting May 10, 2026). Short-form merger to follow tender."},
-],dealRisk:"low"}
+],dealRisk:"low"},
+
+{target:"AES Corporation",targetTicker:"AES",acquirer:"Global Infrastructure Partners / EQT",geo:"USA",industry:"Utilities / Power",
+currentPrice:14.50,dealPrice:15.00,dealTerms:"$15.00 per share in cash",spread:3.4,annualizedReturn:20.4,
+announced:"2026-03-02",expectedClose:"2026-Q4",status:"pending",closingProbability:88,
+description:"GIP and EQT consortium to acquire AES Corporation for $15/share cash. Enterprise value ~$33.4B including assumption of existing debt. Major renewable energy and utilities platform.",
+dealValue:"$33.4B EV ($10.7B equity)",milestones:[],dealRisk:"medium"},
+
+{target:"Select Medical Holdings",targetTicker:"SEM",acquirer:"Ortenzio/Jackson Consortium + Welsh Carson",geo:"USA",industry:"Healthcare Services",
+currentPrice:16.20,dealPrice:16.50,dealTerms:"$16.50 per share in cash",spread:1.9,annualizedReturn:7.6,
+announced:"2026-03-03",expectedClose:"2026-Q3",status:"pending",closingProbability:92,
+description:"MBO led by Executive Chairman Robert Ortenzio and SVP Martin Jackson with Welsh Carson Anderson & Stowe to take Select Medical private at $16.50/share.",
+dealValue:"$3.9B EV",milestones:[],dealRisk:"low"},
+
+{target:"Caesars Entertainment",targetTicker:"CZR",acquirer:"Fertitta Entertainment",geo:"USA",industry:"Gaming / Hospitality",
+currentPrice:28.50,dealPrice:32.00,dealTerms:"~$32/share cash (CNBC report, 45-day exclusive window)",spread:12.3,annualizedReturn:0,
+announced:"2026-03-26",expectedClose:"TBD",status:"rumored",closingProbability:50,
+description:"CNBC reports Fertitta Entertainment negotiating to buy Caesars at ~$32/share ($6.5B equity, $31.5B EV including debt). 45-day exclusive negotiation window at Fertitta HQ in Houston. Topped competing bid from Carl Icahn.",
+dealValue:"$31.5B EV (~$6.5B equity)",milestones:[],dealRisk:"high"},
+
+{target:"JetBlue Airways",targetTicker:"JBLU",acquirer:"United Airlines / Alaska Air / Southwest (exploring)",geo:"USA",industry:"Airlines",
+currentPrice:6.80,dealPrice:0,dealTerms:"Exploring sale \u2014 scenario-planning deals with UAL, ALK, LUV",spread:0,annualizedReturn:0,
+announced:"2026-03-26",expectedClose:"TBD",status:"rumored",closingProbability:25,
+description:"Semafor reports JetBlue has tapped advisers to assess selling itself to a rival. Scenario-planned deals with United Airlines, Alaska Airlines, and Southwest Airlines.",
+dealValue:"TBD",milestones:[],dealRisk:"high"},
+
+{target:"Papa John's International",targetTicker:"PZZA",acquirer:"Irth Capital (Qatari-backed)",geo:"USA",industry:"Restaurants",
+currentPrice:35.00,dealPrice:47.00,dealTerms:"$47/share cash bid from Irth Capital",spread:34.3,annualizedReturn:0,
+announced:"2026-03-26",expectedClose:"TBD",status:"rumored",closingProbability:30,
+description:"Qatari-backed Irth Capital bid $47/share (~50% premium). Earlier Apollo bid at $64 was withdrawn Nov 2025. TriArtisan consortium also rumored. CEO says focused on standalone plan.",
+dealValue:"~$1.5B equity",milestones:[],dealRisk:"high"},
+
+{target:"Abivax SA",targetTicker:"ABVX",acquirer:"Eli Lilly / AstraZeneca (rumored)",geo:"France",industry:"Biotech / IBD",
+currentPrice:45.00,dealPrice:0,dealTerms:"Multiple suitors reported \u2014 LLY offer rumored at \u20ac15B, AZN also interested",spread:0,annualizedReturn:0,
+announced:"2026-01-15",expectedClose:"TBD",status:"rumored",closingProbability:40,
+description:"La Lettre reports Eli Lilly ready to offer \u20ac15B for Abivax. AstraZeneca also interested. CEO says terms will be better after Q2 data readout. Best-in-class UC drug candidate, multi-billion IBD market.",
+dealValue:"~\u20ac15B (rumored)",milestones:[],dealRisk:"high"},
+
+{target:"CRISPR Therapeutics",targetTicker:"CRSP",acquirer:"Vertex Pharmaceuticals (speculated)",geo:"Switzerland/USA",industry:"Biotech / Gene Editing",
+currentPrice:42.00,dealPrice:0,dealTerms:"Betaville reports US biopharma ($100-200B mkt cap) circling, Vertex speculated",spread:0,annualizedReturn:0,
+announced:"2025-11-15",expectedClose:"TBD",status:"rumored",closingProbability:25,
+description:"Betaville reports a US biopharma with $100-200B market cap has hired Skadden for potential CRSP takeover. Vertex Pharmaceuticals speculated as the buyer. Partners on Casgevy.",
+dealValue:"TBD",milestones:[],dealRisk:"high"},
+
+{target:"Revolution Medicines",targetTicker:"RVMD",acquirer:"Multiple (AbbVie, Merck both walked)",geo:"USA",industry:"Biotech / Oncology",
+currentPrice:35.00,dealPrice:0,dealTerms:"AbbVie and Merck both held talks then walked. Key catalyst: RASolute 302 PDAC readout H1 2026",spread:0,annualizedReturn:0,
+announced:"2026-01-15",expectedClose:"TBD",status:"rumored",closingProbability:30,
+description:"WSJ reported both AbbVie and Merck held advanced acquisition talks at ~$30B but both walked away. Key catalyst: Ph3 RASolute 302 second-line PDAC readout expected H1 2026.",
+dealValue:"~$30B (earlier talks)",milestones:[],dealRisk:"high"},
+
+{target:"Avantor Inc",targetTicker:"AVTR",acquirer:"Engine Capital pushing sale ($17-19/share)",geo:"USA",industry:"Life Sciences / Lab Products",
+currentPrice:11.50,dealPrice:18.00,dealTerms:"Engine Capital (3% stake) pushing sale at $17-19/share",spread:56.5,annualizedReturn:0,
+announced:"2025-08-15",expectedClose:"TBD",status:"rumored",closingProbability:30,
+description:"Activist Engine Capital holds 3% and is pushing for sale at $17-19/share or board refresh, buybacks, cost cuts. Ingersoll Rand reportedly tried to acquire AVTR in 2023. Stock down 45% YTD.",
+dealValue:"$17-19/share ($28-31B)",milestones:[],dealRisk:"high"}
 
 ];
 
@@ -2635,8 +2696,8 @@ function renderDeals() {
     const dte=dtc(d.expectedClose);
     const dC=dte===null?"days-far":dte<60?"days-close":dte<180?"days-mid":"days-far";
     const dL=dte===null?(d.expectedClose||"—"):dte+"d left";
-    const stC=d.status==="approved"?"status-approved":d.status==="at-risk"?"status-risk":"status-pending";
-    const stL=d.status==="approved"?"Closed/Approved":d.status==="at-risk"?"At Risk":"Pending";
+    const stC=d.status==="approved"?"status-approved":d.status==="at-risk"?"status-risk":d.status==="rumored"?"status-rumored":"status-pending";
+    const stL=d.status==="approved"?"Closed/Approved":d.status==="at-risk"?"At Risk":d.status==="rumored"?"Rumored":"Pending";
     const ach=d.regulatoryAchieved||[],pen=d.regulatoryPending||[];
 
     // Deal age
@@ -2675,6 +2736,7 @@ function renderDeals() {
     const tr=document.createElement("tr");
     tr.style.animationDelay = (i * 18) + 'ms';
     if(d.status==="at-risk"||d.dealRisk==="high") tr.classList.add("row-at-risk");
+    if(d.status==="rumored") tr.classList.add("row-rumored");
     else if(sp>5) tr.classList.add("row-high-spread");
     tr.onclick=()=>openModal(d);
 
@@ -3159,4 +3221,4 @@ loadDeals();
 (function(){var t=document.getElementById("newsTabs");if(!t)return;t.addEventListener("click",function(e){if(e.target.tagName!=="BUTTON")return;t.querySelectorAll("button").forEach(function(b){b.classList.remove("active")});e.target.classList.add("active");var c=e.target.dataset.cat;document.querySelectorAll("#newsGrid>a,#newsGrid>div").forEach(function(i){var x=(i.textContent||"").toLowerCase();var s=c==="all";if(c==="deals")s=/acqui|merg|takeover|bid|deal|buy/.test(x);if(c==="regulatory")s=/approv|regulat|ftc|doj|antitrust|clearance|bloc/.test(x);i.style.display=(!s&&c!=="all")?"none":"";});});})();
 </script>
 </body>
-</html>
+</html> 
