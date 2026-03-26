@@ -1340,7 +1340,9 @@
     .news-section { display: none !important; }
     footer { color: #666; border-top: 1px solid #ccc; }
   }
-</style>
+
+    .news-tabs{display:flex;gap:.5rem;margin-bottom:12px}.news-tabs button{padding:6px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s}.news-tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary)}.news-tabs button:hover:not(.active){background:var(--surface2)}
+    </style>
 </head>
 <body>
 
@@ -1489,7 +1491,8 @@
         <button class="news-refresh-btn" onclick="fetchAllNews()">↻ Refresh News</button>
       </div>
     </div>
-    <div id="newsGrid" class="news-grid">
+    <div class="news-tabs" id="newsTabs"><button class="active" data-cat="all">All News</button><button data-cat="deals">Deals</button><button data-cat="regulatory">Regulatory</button></div>
+      <div id="newsGrid" class="news-grid">
       <div class="news-loading" id="newsLoading">Loading M&amp;A news…</div>
     </div>
   </div>
@@ -1597,7 +1600,7 @@
 const DEALS = [
 
 {target:"Warner Bros. Discovery",targetTicker:"WBD",acquirer:"Paramount Skydance",geo:"USA",industry:"Media / Streaming",
-currentPrice:27.28,dealPrice:31.00,dealTerms:"$31.00 cash + $0.25/qtr ticking fee after Sept 30 2026",spread:13.6,annualizedReturn:27.2,
+currentPrice:27.44,dealPrice:31.00,dealTerms:"$31.00 cash + $0.25/qtr ticking fee after Sept 30 2026",spread:13.0,annualizedReturn:27.2,
 announced:"2026-02-27",expectedClose:"2026-Q3",status:"pending",closingProbability:72,
 description:"Paramount Skydance won the WBD bidding war at $31/share ($110.9bn EV). Netflix walked away Feb 26 after WBD board declared Paramount's bid superior. WBD shareholder vote March 20 2026. $7bn regulatory break fee payable by Paramount if blocked.",
 comment:"WBD CEO Zaslav: 'We are excited about the potential of a combined Paramount Skydance and WBD and can't wait to get started.' Paramount CEO Ellison: 'By bringing together these world-class studios, we will create even greater value for audiences.' Sen. Warren: 'An antitrust disaster threatening higher prices.' DOJ HSR 10-day waiting period expired without action Feb 20. California AG and EU/UK reviews remain active.",
@@ -1641,7 +1644,7 @@ dealSize:34.5,evEbitda:7.8,dealCurrency:"USD",otherBidders:"None — Cox was the
 dealRisk:"medium"},
 
 {target:"OneStream Software",targetTicker:"OS",acquirer:"Hg Capital",geo:"USA",industry:"Financial Performance Management SaaS",
-currentPrice:23.70,dealPrice:24.00,dealTerms:"$24.00 cash per share",spread:1.27,annualizedReturn:5.1,
+currentPrice:23.69,dealPrice:24.00,dealTerms:"$24.00 cash per share",spread:1.3,annualizedReturn:5.1,
 announced:"2026-01-06",expectedClose:"2026-Q2",status:"pending",closingProbability:97,
 description:"Hg Capital taking OneStream private for $6.4bn at $24/share (31% premium). KKR majority holder approved. No shareholder vote required. Cannot close before April 6 2026.",
 comment:"OneStream CEO Tom Shea: 'The Office of the CFO is at a critical AI inflection point and we believe OneStream is well positioned for this shift. This delivers immediate value to shareholders and is a vote of confidence in our strategy.' Hg Partner Alan Cline: 'OneStream's AI differentiation and strong global customer base make it exceptionally well positioned.' Virtual certainty to close — only HSR waiting period remains.",
@@ -1759,7 +1762,7 @@ dealSize:null,evEbitda:null,dealCurrency:"USD",otherBidders:"—",regulatoryStep
 dealRisk:"high"},
 
 {target:"Allfunds Group",targetTicker:"ALLFG.AS",acquirer:"Deutsche Börse AG",geo:"EU",industry:"Fund Distribution / FinTech",
-currentPrice:8.20,dealPrice:8.80,dealTerms:"€8.80 cash per share",spread:10.6,annualizedReturn:21.2,
+currentPrice:7.76,dealPrice:8.80,dealTerms:"€8.80 cash per share",spread:13.4,annualizedReturn:21.2,
 announced:"2026-01-20",expectedClose:"2027-H1",status:"pending",closingProbability:70,
 description:"Deutsche Börse acquiring fund distribution platform Allfunds for $6.2bn / €9.50 per share. Deutsche Börse CEO Stephan Leithner: 'Creates a harmonised platform with global reach to support retail savings into investment funds.'",
 comment:"Deutsche Börse CEO Leithner: 'This acquisition will establish a harmonised platform with global reach, better positioned to support the allocation of retail savings into productive capital solutions.' Kepler Cheuvreux analyst: 'Moderate EU Commission antitrust risk in European fund distribution given Deutsche Börse's existing data and post-trade assets — Phase 2 referral not impossible.' Wide spread reflects EU/FCA regulatory uncertainty and timeline.",
@@ -2398,7 +2401,7 @@ milestones:[
 ],dealRisk:"medium"},
 
 {target:"National Storage Affiliates",targetTicker:"NSA",acquirer:"Public Storage",geo:"USA",industry:"Real Estate / REITs",
-currentPrice:34.07,dealPrice:41.68,dealTerms:"0.14 shares of PSA per NSA share (all-stock)",spread:22.3,annualizedReturn:44.6,
+currentPrice:33.47,dealPrice:41.68,dealTerms:"0.14 shares of PSA per NSA share (all-stock)",spread:24.5,annualizedReturn:44.6,
 announced:"2026-02-10",expectedClose:"2026-Q3",status:"pending",closingProbability:75,
 description:"Public Storage to acquire National Storage Affiliates in a $10.5B all-stock deal at 0.14 PSA shares per NSA share. Wide spread reflects execution and regulatory risk.",
 dealValue:"$10.5B",
@@ -2408,7 +2411,7 @@ milestones:[
 ],dealRisk:"high"},
 
 {target:"DigitalBridge",targetTicker:"DBRG",acquirer:"SoftBank Group",geo:"USA",industry:"Technology / Digital Infrastructure",
-currentPrice:15.37,dealPrice:16.00,dealTerms:"$16.00 per share in cash",spread:4.1,annualizedReturn:8.2,
+currentPrice:15.38,dealPrice:16.00,dealTerms:"$16.00 per share in cash",spread:4.0,annualizedReturn:8.2,
 announced:"2026-01-22",expectedClose:"2026-H2",status:"pending",closingProbability:88,
 description:"SoftBank to acquire DigitalBridge for $4B at $16/share all-cash to scale next-gen AI infrastructure investments.",
 dealValue:"$4B",
@@ -2426,6 +2429,87 @@ milestones:[
 {name:"Shareholder vote",status:"pending",probability:90,detail:"Both DVN and CTRA shareholders must approve."},
 {name:"FTC review",status:"pending",probability:88,detail:"FTC antitrust review of E&P consolidation."},
 ],dealRisk:"medium"}
+
+,
+
+{target:"Kenvue Inc",targetTicker:"KVUE",acquirer:"Kimberly-Clark",geo:"USA",industry:"Consumer / Healthcare",
+currentPrice:17.55,dealPrice:21.01,dealTerms:"$3.50 cash + 0.14625 KMB shares per KVUE share",spread:19.7,annualizedReturn:26.3,
+announced:"2025-12-10",expectedClose:"2026-H2",status:"pending",closingProbability:85,
+description:"Kimberly-Clark to merge with Kenvue (J&J consumer health spinoff) creating a $48.7B consumer health giant. FTC second request review ongoing.",
+comment:"",dealSize:48.7,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"FTC second request review",status:"pending",probability:80,detail:"FTC issued second request. Review of consumer health product overlap ongoing."},
+{name:"Shareholder approval",status:"pending",probability:90,detail:"Both KMB and KVUE shareholders must approve the merger."},
+{name:"International regulatory approvals",status:"pending",probability:85,detail:"EU, UK, and other jurisdictions reviewing the combination."},
+],dealRisk:"medium"},
+
+{target:"Qorvo Inc",targetTicker:"QRVO",acquirer:"Skyworks Solutions",geo:"USA",industry:"Semiconductors",
+currentPrice:79.64,dealPrice:130.00,dealTerms:"$32.50 cash + 0.960 SWKS shares per QRVO share",spread:63.3,annualizedReturn:63.3,
+announced:"2025-11-04",expectedClose:"2027-Q1",status:"pending",closingProbability:80,
+description:"Skyworks and Qorvo to combine in a $22B semiconductor deal. Shareholders approved. Awaiting global regulatory approvals.",
+comment:"",dealSize:22.0,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"Shareholder approval",status:"done",probability:100,detail:"Both SWKS and QRVO shareholders approved the deal."},
+{name:"FTC/DOJ antitrust review",status:"pending",probability:75,detail:"US antitrust review of RF semiconductor consolidation."},
+{name:"China SAMR approval",status:"pending",probability:70,detail:"Chinese regulatory approval required for semiconductor deal."},
+{name:"EU Commission review",status:"pending",probability:80,detail:"EU reviewing semiconductor market concentration."},
+],dealRisk:"high"},
+
+{target:"Hologic Inc",targetTicker:"HOLX",acquirer:"Blackstone / TPG Capital",geo:"USA",industry:"MedTech",
+currentPrice:75.52,dealPrice:76.00,dealTerms:"$76.00 cash + up to $3.00 CVR per share",spread:0.6,annualizedReturn:7.2,
+announced:"2025-09-15",expectedClose:"2026-Q1",status:"pending",closingProbability:99,
+description:"Blackstone and TPG to take Hologic private at $76/share plus CVR. All regulatory and shareholder approvals received. Imminent close.",
+comment:"",dealSize:18.3,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"HSR antitrust clearance",status:"done",probability:100,detail:"HSR waiting period expired without action."},
+{name:"Shareholder approval",status:"done",probability:100,detail:"Shareholders approved the take-private transaction."},
+{name:"Final closing conditions",status:"pending",probability:99,detail:"All material conditions satisfied. Closing imminent."},
+],dealRisk:"low"},
+
+{target:"Chart Industries",targetTicker:"GTLS",acquirer:"Baker Hughes",geo:"USA",industry:"Energy Equipment",
+currentPrice:207.08,dealPrice:210.00,dealTerms:"$210.00 per share in cash",spread:1.4,annualizedReturn:5.6,
+announced:"2025-10-28",expectedClose:"2026-Q2",status:"pending",closingProbability:97,
+description:"Baker Hughes to acquire Chart Industries for $210/share all-cash. $9.5B bond issued. Shareholders approved. Near closing.",
+comment:"",dealSize:13.6,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"Shareholder approval",status:"done",probability:100,detail:"GTLS shareholders approved the acquisition."},
+{name:"Bond financing",status:"done",probability:100,detail:"Baker Hughes issued $9.5B in bonds to fund the deal."},
+{name:"Regulatory approvals",status:"pending",probability:97,detail:"Final regulatory clearances pending. No significant antitrust concerns."},
+],dealRisk:"low"},
+
+{target:"Sealed Air Corp",targetTicker:"SEE",acquirer:"Clayton Dubilier & Rice",geo:"USA",industry:"Packaging",
+currentPrice:41.88,dealPrice:42.15,dealTerms:"$42.15 per share in cash",spread:0.6,annualizedReturn:7.2,
+announced:"2025-10-13",expectedClose:"2026-Q2",status:"pending",closingProbability:99,
+description:"CD&R to take Sealed Air private at $42.15/share. All regulatory approvals received March 23. Shareholders approved. Imminent close.",
+comment:"",dealSize:10.3,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"Shareholder approval",status:"done",probability:100,detail:"SEE shareholders approved the take-private deal."},
+{name:"Regulatory approvals",status:"done",probability:100,detail:"All regulatory approvals received as of March 23 2026."},
+{name:"Final closing",status:"pending",probability:99,detail:"Closing imminent. All material conditions satisfied."},
+],dealRisk:"low"},
+
+{target:"Janus Henderson Group",targetTicker:"JHG",acquirer:"Trian Fund / General Catalyst",geo:"USA",industry:"Asset Management",
+currentPrice:51.37,dealPrice:52.00,dealTerms:"$52.00 per share in cash (raised from $49)",spread:1.2,annualizedReturn:4.8,
+announced:"2025-12-16",expectedClose:"2026-H1",status:"pending",closingProbability:75,
+description:"Trian and General Catalyst bid $52/share for Janus Henderson. Victory Capital submitted rival bid. Shareholder vote April 16. Contested deal.",
+comment:"",dealSize:7.4,evEbitda:null,dealCurrency:"USD",otherBidders:"Victory Capital",regulatorySteps:[
+{name:"Shareholder vote",status:"pending",probability:70,detail:"Shareholder vote scheduled April 16 2026. Victory Capital rival bid complicates outcome."},
+{name:"Regulatory approvals",status:"pending",probability:85,detail:"FCA and SEC approvals required for asset management combination."},
+],dealRisk:"high"},
+
+{target:"UniFirst Corporation",targetTicker:"UNF",acquirer:"Cintas Corporation",geo:"USA",industry:"Business Services",
+currentPrice:266.23,dealPrice:310.00,dealTerms:"$155.00 cash + 0.7720 CTAS shares per UNF share",spread:16.4,annualizedReturn:21.9,
+announced:"2026-03-11",expectedClose:"2026-H2",status:"pending",closingProbability:88,
+description:"Cintas to acquire UniFirst for $310/share in cash and stock. Croatti family (2/3 voting power) signed support agreement. Regulatory review ahead.",
+comment:"",dealSize:5.5,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"Croatti family support",status:"done",probability:100,detail:"Croatti family controlling 2/3 voting power signed support agreement."},
+{name:"DOJ antitrust review",status:"pending",probability:85,detail:"DOJ reviewing uniform services market consolidation."},
+{name:"Shareholder approval",status:"pending",probability:95,detail:"With Croatti family support, shareholder approval highly likely."},
+],dealRisk:"medium"},
+
+{target:"Veris Residential",targetTicker:"VRE",acquirer:"Affinius Capital",geo:"USA",industry:"Real Estate / REITs",
+currentPrice:18.92,dealPrice:19.00,dealTerms:"$19.00 per share in cash",spread:0.4,annualizedReturn:1.6,
+announced:"2026-02-23",expectedClose:"2026-Q2",status:"pending",closingProbability:92,
+description:"Affinius Capital to take Veris Residential private at $19/share. Awaiting shareholder approval.",
+comment:"",dealSize:3.4,evEbitda:null,dealCurrency:"USD",otherBidders:"",regulatorySteps:[
+{name:"Shareholder approval",status:"pending",probability:90,detail:"VRE shareholder vote pending. Board unanimously recommends."},
+{name:"Regulatory approvals",status:"pending",probability:95,detail:"Standard real estate transaction regulatory review."},
+],dealRisk:"low"}
 
 ];
 
@@ -3060,6 +3144,8 @@ fetchAllNews();
 startNewsAutoRefresh();
 
 loadDeals();
+
+(function(){var t=document.getElementById("newsTabs");if(!t)return;t.addEventListener("click",function(e){if(e.target.tagName!=="BUTTON")return;t.querySelectorAll("button").forEach(function(b){b.classList.remove("active")});e.target.classList.add("active");var c=e.target.dataset.cat;document.querySelectorAll("#newsGrid>a,#newsGrid>div").forEach(function(i){var x=(i.textContent||"").toLowerCase();var s=c==="all";if(c==="deals")s=/acqui|merg|takeover|bid|deal|buy/.test(x);if(c==="regulatory")s=/approv|regulat|ftc|doj|antitrust|clearance|bloc/.test(x);i.style.display=(!s&&c!=="all")?"none":"";});});})();
 </script>
 </body>
 </html>
