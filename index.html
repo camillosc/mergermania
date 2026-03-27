@@ -15,8 +15,8 @@ h<!DOCTYPE html>
     --border2:   #CBD5E1;
     --brand:     #C84B11;
     --brand2:    #A83A09;
-    --navy:      #0F2044;
-    --navy2:     #1A3260;
+    --navy:      #c8d6e5;
+    --navy2:     #e8edf3;
     --blue:      #1A5FAB;
     --blue-lt:   #EBF3FC;
     --green:     #0D6B3E;
@@ -25,9 +25,9 @@ h<!DOCTYPE html>
     --amber-lt:  #FEF6EE;
     --red:       #A32020;
     --red-lt:    #FEF2F2;
-    --text:      #1A2333;
+    --text:      #e8edf3;
     --text-mid:  #4A5568;
-    --text-dim:  #8898AA;
+    --text-dim:  #8899aa;
     --sans:      'DM Sans', system-ui, sans-serif;
     --mono:      'JetBrains Mono', monospace;
     --shadow-sm: 0 1px 2px rgba(15,32,68,.06), 0 1px 3px rgba(15,32,68,.04);
@@ -290,7 +290,7 @@ h<!DOCTYPE html>
   .stat-value {
     font-size: 24px;
     font-weight: 700;
-    color: var(--navy);
+    color: #e0e6ed;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 1px;
     line-height: 1;
@@ -1356,7 +1356,7 @@ h<!DOCTYPE html>
   .news-refresh-btn:hover { border-color: var(--navy); color: var(--navy); }
 
   @media print {
-    html, body { background: #fff !important; color: #000 !important; font-size: 10px; }
+    html, body { background:var(--surface) !important; color: #000 !important; font-size: 10px; }
     .controls, #backToTop, .btn-primary, .btn-secondary, .btn-export { display: none !important; }
     .table-wrap { box-shadow: none; border: 1px solid #ccc; }
     thead tr { background: var(--navy) !important; print-color-adjust: exact; }
