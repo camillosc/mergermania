@@ -2682,7 +2682,13 @@ announced:"2026-02-03",expectedClose:"2026-Q4",status:"pending",closingProbabili
 dealTerms:"$48.75 cash + 2.0548 SAN per share",dealSize:11,dealCurrency:"USD",dealRisk:"medium"},
 {target:"ZIM Integrated Shipping Services Ltd",targetTicker:"ZIM",acquirer:"Hapag-Lloyd AG",geo:"USA",industry:"Shipping / Container",
 announced:"2026-02-15",expectedClose:"2026-Q4",status:"pending",closingProbability:75,
-dealTerms:"$35.00 per share in cash",dealSize:3.1,dealCurrency:"USD",dealRisk:"medium"}
+dealTerms:"$35.00 per share in cash",dealSize:3.1,dealCurrency:"USD",dealRisk:"medium"},
+{target:"Apellis Pharmaceuticals Inc",targetTicker:"APLS",acquirer:"Biogen Inc",geo:"USA",industry:"Biotech / Immunology",announced:"2026-03-31",expectedClose:"2026-Q2",status:"pending",closingProbability:92,dealTerms:"41.00 per share in cash + up to $4 CVR",dealSize:5.6,dealCurrency:"USD",dealRisk:"low"},
+{target:"Centessa Pharmaceuticals PLC",targetTicker:"CNTA",acquirer:"Eli Lilly and Company",geo:"USA",industry:"Biotech / Neuroscience",announced:"2026-03-31",expectedClose:"2026-Q3",status:"pending",closingProbability:90,dealTerms:"8.00 per share in cash + up to $9 CVR",dealSize:6.3,dealCurrency:"USD",dealRisk:"low"},
+{target:"Unilever Foods Division",targetTicker:"UL",acquirer:"McCormick and Company",geo:"USA",industry:"Consumer / Food and Beverages",announced:"2026-03-31",expectedClose:"2027-H1",status:"pending",closingProbability:80,dealTerms:"4.8B Reverse Morris Trust",dealSize:44.8,dealCurrency:"USD",dealRisk:"medium"},
+{target:"JDE Peets NV",targetTicker:"JDEP.AS",acquirer:"Keurig Dr Pepper Inc",geo:"EU",industry:"Consumer / Coffee and Beverages",announced:"2025-12-16",expectedClose:"2026-Q2",status:"pending",closingProbability:99,dealTerms:"EUR 31.85 per share in cash",dealSize:15.7,dealCurrency:"EUR",dealRisk:"low"},
+{target:"Air Lease Corp",targetTicker:"AL",acquirer:"Sumitomo and Consortium",geo:"USA",industry:"Aircraft Leasing / Finance",announced:"2025-09-02",expectedClose:"2026-Q2",status:"pending",closingProbability:88,dealTerms:"5.00 per share in cash",dealSize:7.3,dealCurrency:"USD",dealRisk:"medium"},
+{target:"Laurentian Bank of Canada",targetTicker:"LB CN",acquirer:"Fairstone Bank of Canada",geo:"Canada",industry:"Banking / Regional",announced:"2025-12-02",expectedClose:"2026-Q4",status:"pending",closingProbability:85,dealTerms:"C$40.50 cash + 0.3504 shares",dealSize:1.8,dealCurrency:"CAD",dealRisk:"medium"}
 
 ];
 
@@ -3259,13 +3265,7 @@ async function fetchNewsFeed(query) {
   } catch {
     return [];
   }
-},
-{target:"Apellis Pharmaceuticals Inc",targetTicker:"APLS",acquirer:"Biogen Inc",geo:"USA",industry:"Biotech / Immunology",announced:"2026-03-31",expectedClose:"2026-Q2",status:"pending",closingProbability:92,dealTerms:"41.00 per share in cash + up to $4 CVR",dealSize:5.6,dealCurrency:"USD",dealRisk:"low"},
-{target:"Centessa Pharmaceuticals PLC",targetTicker:"CNTA",acquirer:"Eli Lilly and Company",geo:"USA",industry:"Biotech / Neuroscience",announced:"2026-03-31",expectedClose:"2026-Q3",status:"pending",closingProbability:90,dealTerms:"8.00 per share in cash + up to $9 CVR",dealSize:6.3,dealCurrency:"USD",dealRisk:"low"},
-{target:"Unilever Foods Division",targetTicker:"UL",acquirer:"McCormick and Company",geo:"USA",industry:"Consumer / Food and Beverages",announced:"2026-03-31",expectedClose:"2027-H1",status:"pending",closingProbability:80,dealTerms:"4.8B Reverse Morris Trust",dealSize:44.8,dealCurrency:"USD",dealRisk:"medium"},
-{target:"JDE Peets NV",targetTicker:"JDEP.AS",acquirer:"Keurig Dr Pepper Inc",geo:"EU",industry:"Consumer / Coffee and Beverages",announced:"2025-12-16",expectedClose:"2026-Q2",status:"pending",closingProbability:99,dealTerms:"EUR 31.85 per share in cash",dealSize:15.7,dealCurrency:"EUR",dealRisk:"low"},
-{target:"Air Lease Corp",targetTicker:"AL",acquirer:"Sumitomo and Consortium",geo:"USA",industry:"Aircraft Leasing / Finance",announced:"2025-09-02",expectedClose:"2026-Q2",status:"pending",closingProbability:88,dealTerms:"5.00 per share in cash",dealSize:7.3,dealCurrency:"USD",dealRisk:"medium"},
-{target:"Laurentian Bank of Canada",targetTicker:"LB CN",acquirer:"Fairstone Bank of Canada",geo:"Canada",industry:"Banking / Regional",announced:"2025-12-02",expectedClose:"2026-Q4",status:"pending",closingProbability:85,dealTerms:"C$40.50 cash + 0.3504 shares",dealSize:1.8,dealCurrency:"CAD",dealRisk:"medium"}
+}
 
 async function fetchAllNews() {
   const grid = document.getElementById("newsGrid");
