@@ -1739,7 +1739,7 @@ const DEALS = [
 
 
 {target:"Brown-Forman",targetTicker:"BF.B",acquirer:"Pernod Ricard",geo:"USA / France",industry:"Spirits / Beverages",currentPrice:0,dealPrice:0,dealTerms:"Merger of equals  -  terms TBD",spread:0,annualizedReturn:0,announced:"2026-03-26",expectedClose:"TBD",status:"rumor",closingProbability:25,description:"Bloomberg reported Mar 26 that Pernod Ricard (mkt cap EUR15.6B/$18B) and Brown-Forman ($10.8B) held initial discussions about a combination. BF official statement: talks are akin to a merger of equals with Pernod Ricard. BF.B surged 21% intraday, closed +9.6%. Combined entity would own 15 of top 100 global spirits brands. Combined revenues EUR14.7B. JPM valuation framework: 15x EV/EBITDA = EUR13.5B market cap. Pernod leverage concern at 3.2x. Brown family controls majority voting via Class A shares. | Spirits sector under pressure from declining US alcohol consumption among younger demographics.",comment:"BF statement: No assurance any agreement will be reached. Pernod CEO confirmed initial discussions. Analysts note Brown family Class A voting control is key hurdle. Would create worlds 2nd-largest spirits co behind Diageo."},{target:"Warner Bros. Discovery",targetTicker:"WBD",acquirer:"Paramount Skydance",geo:"USA",industry:"Media / Streaming",
-currentPrice:27.44,dealPrice:31.00,dealTerms:"$31.00 cash + $0.25/qtr ticking fee after Sept 30 2026",spread:13.0,annualizedReturn:27.2,
+currentPrice:27.44,dealPrice:31.00,dealTerms:"$31.00 cash + $0.25/qtr ticking fee after Sept 30 2026. Senator Booker invited David Ellison to Warner Bros deal hearing; UK regulator inviting comments; Hollywood heavyweights signed letter opposing the deal",spread:13.0,annualizedReturn:27.2,
 announced:"2026-02-27",expectedClose:"2026-Q3",status:"pending",closingProbability:72,
 description:"Paramount Skydance won the WBD bidding war at $31/share ($110.9bn EV). Netflix walked away Feb 26 after WBD board declared Paramount's bid superior. WBD shareholder vote March 20 2026. $7bn regulatory break fee payable by Paramount if blocked. Shareholder vote set for April 23, 2026. | Breakup: $3.9B (target) / $7.0B (regulatory reverse). Combined streaming: ~15% US SVOD market.",
 comment:"WBD CEO Zaslav: 'We are excited about the potential of a combined Paramount Skydance and WBD and can't wait to get started.' Paramount CEO Ellison: 'By bringing together these world-class studios, we will create even greater value for audiences.' Sen. Warren: 'An antitrust disaster threatening higher prices.' DOJ HSR 10-day waiting period expired without action Feb 20. California AG and EU/UK reviews remain active.",
@@ -1751,7 +1751,7 @@ dealSize:110.9,evEbitda:null,dealCurrency:"USD",otherBidders:"Netflix (walked aw
   {name:"EU Commission Phase 1",status:"pending",probability:75,detail:"EU reviewing combined streaming + linear TV impact. Likely Phase 1 clearance with behavioral remedies on content licensing."},
   {name:"California AG review",status:"pending",probability:65,detail:"AG Rob Bonta can file independent antitrust suit. Has threatened action. Most likely to seek divestitures rather than block outright."},
 ],
-dealRisk:"medium",breakupFee:"$3.9B / $7.0B rev",marketShare:"~15% US SVOD"},
+dealRisk:"medium",breakupFee:"$3.9B / $7.0B rev",marketShare:"~15% US SVOD",sourceUrl:"https://www.wsj.com/articles/booker-warner-bros-hearing"},
 
 {target:"Norfolk Southern",targetTicker:"NSC",acquirer:"Union Pacific",geo:"USA",industry:"Railroads / Class I",
 currentPrice:281.20,dealPrice:320.00,dealTerms:"$320/share: 72% UNP stock + $88.82 cash",spread:13.8,annualizedReturn:8.6,
@@ -2418,11 +2418,11 @@ announced:"2026-03-26",expectedClose:"TBD",status:"rumored",closingProbability:5
 description:"CNBC reports Fertitta Entertainment negotiating to buy Caesars at ~$32/share ($6.5B equity, $31.5B EV including debt). 45-day exclusive negotiation window at Fertitta HQ in Houston. Topped competing bid from Carl Icahn.",
 dealValue:"$31.5B EV (~$6.5B equity)",milestones:[],dealRisk:"high"},
 
-{target:"JetBlue Airways",targetTicker:"JBLU",acquirer:"United Airlines / Alaska Air / Southwest (exploring)",geo:"USA",industry:"Airlines",
-currentPrice:6.80,dealPrice:0,dealTerms:"Exploring sale \u2014 scenario-planning deals with UAL, ALK, LUV",spread:0,annualizedReturn:0,
-announced:"2026-03-26",expectedClose:"TBD",status:"rumored",closingProbability:25,
-description:"Semafor reports JetBlue has tapped advisers to assess selling itself to a rival. Scenario-planned deals with United Airlines, Alaska Airlines, and Southwest Airlines.",
-dealValue:"TBD",milestones:[],dealRisk:"high"},
+{target:"JetBlue Airways Corp",targetTicker:"JBLU",acquirer:"Multiple potential acquirers (rumor)",geo:"US",industry:"Airlines",
+currentPrice:6.80,dealPrice:0,dealTerms:"JetBlue reportedly exploring 3 potential combinations per JPM research. UAL-JBLU combination discussed as alternative to UAL-AAL deal. JetBlue's attractiveness as target depends on UAL-AAL outcome — if UAL-AAL materializes, JBLU prospects diminish; if UAL/AAL is a negotiating tactic, UAL may pivot to more palatable JBLU acquisition. Trump DOT signaled receptive to airline mergers.",spread:0,annualizedReturn:0,
+announced:"2026-04-15",expectedClose:"TBD",status:"Rumored",closingProbability:20,
+description:"JetBlue reportedly exploring 3 potential combinations per JPM research. UAL-JBLU combination discussed as alternative to UAL-AAL deal.",
+dealSize:0,dealCurrency:"USD",dealRisk:"Very High",sourceUrl:"https://www.bloomberg.com/news/articles/airlines-consolidation-jetblue"},
 
 {target:"Papa John's International",targetTicker:"PZZA",acquirer:"Irth Capital (Qatari-backed)",geo:"USA",industry:"Restaurants",
 currentPrice:35.00,dealPrice:47.00,dealTerms:"$47/share cash bid from Irth Capital",spread:34.3,annualizedReturn:0,
@@ -2676,8 +2676,11 @@ announced:"2026-03-01",expectedClose:"TBD",status:"rumored",closingProbability:1
 description:"Puig rumored as potential acquirer of Estee Lauder per JPM Special Situations research note. Global prestige beauty conglomerate.",
 dealSize:0,dealCurrency:"USD",dealRisk:"high"},
 {target:"Arcelik Inc",targetTicker:"ACLX",acquirer:"Gilead Sciences Inc",geo:"USA",industry:"Biotech / Pharma",
-announced:"2026-02-23",expectedClose:"2026-Q2",status:"pending",closingProbability:92,
-dealTerms:"$115.00 per share in cash. Austria Phase I expired April 13",dealSize:6.7,dealCurrency:"USD",dealRisk:"low"},
+announced:"2026-02-23",expectedClose:"2026-Q2",status:"pending",closingProbability:95,
+dealTerms:"$115.00 per share in cash. Austria Phase I expired April 13. Austria antitrust cleared April 15; all key approvals in place; expected to close at tender expiration April 24, 2026",dealSize:6.7,dealCurrency:"USD",dealRisk:"low",sourceUrl:"https://www.stocktitan.net/news/ACLX"},
+{target:"Enhabit Inc",targetTicker:"EHAB",acquirer:"Kinderhook Industries",geo:"USA",industry:"Healthcare / Home Health & Hospice",
+announced:"2026-02-01",expectedClose:"2026-Q2",status:"pending",closingProbability:80,
+dealTerms:"Party G walked away April 6 2026 — informed EHAB it would not submit proposal. EHAB trading down ~20c premarket. Definitive proxy filed; vote May 12, 2026; HSR expires May 17; Indiana/Massachusetts state healthcare filings + Rhode Island Change in Effective Control application in progress. Close expected Q2 2026",dealSize:0,dealCurrency:"USD",dealRisk:"medium",sourceUrl:"https://www.businesswire.com/news/home/EHAB-proxy"},
 {target:"Allied Gold Corp",targetTicker:"AAUC CN",acquirer:"ZiJin Mining",geo:"Canada",industry:"Mining / Gold",
 announced:"2026-01-26",expectedClose:"2026-Q2",status:"pending",closingProbability:85,
 dealTerms:"C$44.00 per share in cash",dealSize:5.4,dealCurrency:"CAD",dealRisk:"medium"},
@@ -2728,7 +2731,7 @@ announced:"2024-11-13",expectedClose:"2026-Q2",status:"pending",closingProbabili
 dealTerms:"0.2360 CHTR per LBRDK share",dealSize:6.3,dealCurrency:"USD",dealRisk:"medium"},
 {target:"Masimo Corp",targetTicker:"MASI",acquirer:"Danaher Corp",geo:"USA",industry:"MedTech / Patient Monitoring",
 announced:"2026-02-02",expectedClose:"2026-Q3",status:"pending",closingProbability:82,
-dealTerms:"$180.00 per share in cash. Austria Phase I expired April 13",dealSize:9.3,dealCurrency:"USD",dealRisk:"medium"},
+dealTerms:"$180.00 per share in cash. Austria Phase I expired April 13. Austria Antitrust cleared April 15, 2026",dealSize:9.3,dealCurrency:"USD",dealRisk:"medium",sourceUrl:"https://www.stocktitan.net/news/MASI"},
 {target:"Mister Car Wash Inc",targetTicker:"MCW",acquirer:"Leonard Greene",geo:"USA",industry:"Consumer Services / Car Wash",
 announced:"2026-02-18",expectedClose:"2026-Q2",status:"pending",closingProbability:92,
 dealTerms:"$7.00 per share in cash",dealSize:2.3,dealCurrency:"USD",dealRisk:"low"},
@@ -2819,7 +2822,7 @@ dealSize:39000,dealCurrency:"USD",dealRisk:"high"},
 
 {target:"SECURE Waste Infrastructure Corp",targetTicker:"SES",acquirer:"GFL Environmental Inc",geo:"Canada",industry:"Waste Management",announced:"2026-04-13",expectedClose:"2026-09-30",status:"pending",closingProbability:85,dealTerms:"$24.75/share (23% premium to 60-day VWAP); 80% GFL stock / 20% cash; enterprise value ~$6.4B; election: (i) $24.75 cash, (ii) 0.4195 GFL share, or (iii) $4.95 cash + 0.3356 GFL share, subject to proration; fully financed; 2/3 SECURE shareholder vote required + MI 61-101 majority; court approval needed; ~22% voting support agreements locked; termination fee $200M; GFL expense reimbursement $20M; accretive to adj FCF/share by 12-15%",dealSize:6.4,dealCurrency:"CAD",dealRisk:"low",sourceUrl:"https://www.gflenv.com/news"},
 
-{target:"American Airlines Group Inc",targetTicker:"AAL",acquirer:"United Airlines Holdings (rumor)",geo:"US",industry:"Airlines",announced:"2026-04-13",expectedClose:"TBD",status:"rumored",closingProbability:15,dealTerms:"United CEO Scott Kirby pitched possible tie-up with rival American Airlines per Wall Street Journal. Early stage, no formal offer. Anti-trust concerns would be massive given combined airline would control ~30% of US market.",dealSize:0,dealCurrency:"USD",dealRisk:"Very High",description:"United CEO Scott Kirby pitched possible tie-up with rival American Airlines per Wall Street Journal. Early stage, no formal offer. Anti-trust concerns would be massive given combined airline would control ~30% of US market.",comment:"No formal offer. Early-stage CEO-level conversation only. DOT/DOJ would face enormous political pressure to block given combined ~30% US market share. Rumor only.",sourceUrl:"https://www.wsj.com/business/airlines/united-ceo-american-airlines-merger-pitch"}
+{target:"American Airlines Group Inc",targetTicker:"AAL",acquirer:"United Airlines Holdings (rumor)",geo:"US",industry:"Airlines",announced:"2026-04-13",expectedClose:"TBD",status:"rumored",closingProbability:15,dealTerms:"United CEO Scott Kirby pitched possible tie-up with rival American Airlines per Wall Street Journal. Early stage, no formal offer. Anti-trust concerns would be massive given combined airline would control ~30% of US market. Added to JPM Pre-Event List April 15. UAL CEO Kirby reportedly floated combination with AAL to government officials including the President per Bloomberg. Implied ~40% domestic seat share would require significant carveouts: NYC (45% proforma), Chicago (72%), Washington (71%), LAX (43%). American's unions backed 2013 US Airways merger precedent. Delta CEO Ed Bastian pointed to 2008 Delta-Northwest merger as historical precedent. Transportation Secretary Sean Duffy signaled Trump admin receptive to airline mergers.",dealSize:0,dealCurrency:"USD",dealRisk:"Very High",description:"United CEO Scott Kirby pitched possible tie-up with rival American Airlines per Wall Street Journal. Early stage, no formal offer. Anti-trust concerns would be massive given combined airline would control ~30% of US market.",comment:"No formal offer. Early-stage CEO-level conversation only. DOT/DOJ would face enormous political pressure to block given combined ~30% US market share. Rumor only.",sourceUrl:"https://www.wsj.com/business/airlines/united-ceo-american-airlines-merger-pitch"}
 
 ];
 
