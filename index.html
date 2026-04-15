@@ -1354,202 +1354,96 @@
   }
   .news-refresh-btn:hover { border-color: var(--navy); color: var(--navy); }
 
-  /* -- VIEW TOGGLE --------------------------------------------------- */
-  .view-toggle-wrap {
-    display: flex;
-    align-items: center;
-    background: var(--surface3);
-    border: 1px solid var(--border2);
-    border-radius: 6px;
-    padding: 2px;
-    gap: 2px;
-  }
-  .view-toggle-btn {
-    font-size: 11px;
-    font-family: var(--mono);
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 4px;
-    border: none;
-    background: transparent;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.12s;
-    white-space: nowrap;
-  }
-  .view-toggle-btn.active { background: var(--navy); color: #fff; }
+  /* -- ABBREVIATED HEADER LABELS (default: show full) --------------- */
+  .th-short { display: none; }
 
-  /* -- DEAL CARDS ---------------------------------------------------- */
-  .cards-wrap { display: none; }
-
-  .deal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    box-shadow: var(--shadow-sm);
-    cursor: pointer;
-    transition: box-shadow .15s, border-color .15s;
-    animation: rowIn .25s ease both;
-  }
-  .deal-card:hover { box-shadow: var(--shadow); border-color: var(--border2); }
-  .deal-card.card-rumored     { border-left: 4px solid #7C3AED; }
-  .deal-card.card-at-risk     { border-left: 4px solid var(--red); }
-  .deal-card.card-high-spread { border-left: 4px solid var(--green); }
-
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .card-top-left { flex: 1; min-width: 0; }
-  .card-target-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.2;
-  }
-  .card-ticker {
-    display: inline-block;
-    background: var(--navy);
-    border-radius: 3px;
-    padding: 1px 6px;
-    font-size: 10px;
-    font-weight: 600;
-    color: #fff;
-    font-family: var(--mono);
-    letter-spacing: 0.5px;
-    margin-top: 4px;
-    margin-right: 5px;
-  }
-  .card-acquirer-row {
-    font-size: 12px;
-    color: var(--text-mid);
-    margin-top: 4px;
-  }
-  .card-acquirer-row span { color: var(--blue); font-weight: 500; }
-  .card-top-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
-    flex-shrink: 0;
-  }
-  .card-prob {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-  }
-  .card-prob.high { background: var(--green-lt); color: var(--green); border: 1px solid #A7DFC4; }
-  .card-prob.mid  { background: var(--amber-lt); color: var(--amber); border: 1px solid #F0C89A; }
-  .card-prob.low  { background: var(--red-lt);   color: var(--red);   border: 1px solid #FCA5A5; }
-
-  .card-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .card-pill {
-    background: var(--surface3);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 4px 9px;
-  }
-  .card-pill-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    font-family: var(--mono);
-  }
-  .card-pill-value {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--navy);
-    font-family: var(--mono);
-  }
-  .card-terms-wrap {
-    font-size: 11px;
-    color: var(--text-mid);
-    line-height: 1.5;
-    margin-top: 6px;
-    padding: 8px 10px 8px 12px;
-    background: var(--surface2);
-    border-left: 3px solid var(--blue);
-    border-radius: 0 5px 5px 0;
-  }
-  .card-terms-text.clamped {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .card-expand-btn {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 10px;
-    font-family: var(--mono);
-    font-weight: 600;
-    color: var(--blue);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  .card-expand-btn:hover { text-decoration: underline; }
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-    gap: 8px;
-  }
-  .card-source-link {
-    font-size: 18px;
-    text-decoration: none;
-    opacity: 0.65;
-    transition: opacity 0.12s;
-  }
-  .card-source-link:hover { opacity: 1; }
-  .card-no-results {
-    text-align: center;
-    padding: 48px 20px;
-    color: var(--text-dim);
-  }
-
-  /* -- MOBILE LAYOUT ------------------------------------------------- */
+  /* -- MOBILE TABLE FIXES -------------------------------------------- */
   @media (max-width: 767px) {
-    .wrapper       { padding: 0 12px 32px; }
-    .header-inner  { padding: 12px 12px 10px; gap: 10px; }
-    .logo-wordmark { font-size: 22px; }
-    .logo-tagline  { font-size: 8.5px; letter-spacing: 1px; }
-    .header-right  { gap: 8px; }
-    .last-updated  { display: none; }
-    .live-badge    { font-size: 10px; padding: 4px 10px; }
-    .controls      { gap: 5px; padding: 10px 0; }
-    .search-box    { width: 100%; order: 10; }
-    .stats-bar     { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .stat-card     { padding: 10px 12px; }
-    .stat-value    { font-size: 20px; }
+    .wrapper        { padding: 0 8px 32px; }
+    .header-inner   { padding: 12px 8px 10px; gap: 8px; }
+    .logo-wordmark  { font-size: 20px; }
+    .logo-tagline   { font-size: 8px; letter-spacing: 1px; }
+    .header-right   { gap: 6px; }
+    .last-updated   { display: none; }
+    .live-badge     { font-size: 10px; padding: 4px 8px; }
+    .controls       { gap: 4px; padding: 8px 0; flex-wrap: wrap; }
+    .search-box     { width: 100%; order: 10; }
+    .stats-bar      { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .stat-card      { padding: 8px 10px; }
+    .stat-value     { font-size: 18px; }
     .col-toggle-bar { display: none !important; }
-    .source-bar    { font-size: 10px; }
+    .source-bar     { font-size: 10px; }
+
+    /* Table: remove the large forced min-width, allow natural scroll */
+    table { min-width: 520px; }
+
+    /* Remove sticky first column — it's the root of the mobile problem */
+    tbody td:first-child,
+    thead th:first-child {
+      position: static !important;
+      left: auto !important;
+      z-index: auto !important;
+      background: inherit !important;
+      max-width: 110px;
+      min-width: 85px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    /* Restore per-row background inheritance for first cell */
+    tbody tr:nth-child(even) td:first-child { background: var(--surface2) !important; }
+    tbody tr:hover           td:first-child  { background: #EEF4FB !important; }
+    tbody tr.row-at-risk     td:first-child  { background: #FFF8F8 !important; }
+    tbody tr.row-at-risk:hover td:first-child { background: #FEEEEE !important; }
+    tbody tr.row-rumored     td:first-child  { background: #FAF5FF !important; }
+
+    /* Tighter fonts and padding */
+    th { padding: 5px 4px; font-size: 9px; letter-spacing: 0.5px; }
+    td { padding: 4px; font-size: 10px; }
+
+    /* Switch to abbreviated header labels */
+    .th-full  { display: none; }
+    .th-short { display: inline; }
+
+    /* Compact individual cells */
+    .company-cell  { min-width: 85px; max-width: 110px; }
+    .target-name   { font-size: 11px; }
+    .acquirer-name { font-size: 10px; }
+    .ticker-badge  { font-size: 9px; padding: 1px 4px; margin-top: 2px; }
+    .deal-type-badge { font-size: 9px; padding: 2px 5px; margin-top: 3px; }
+    .price-cell    { min-width: 72px; }
+    .current-price { font-size: 12px; }
+    .deal-price    { font-size: 9px; }
+    .spread-cell   { min-width: 60px; }
+    .spread-val    { font-size: 12px; }
+    .ann-cell      { min-width: 60px; }
+    .ann-val       { font-size: 11px; }
+    .date-cell     { min-width: 72px; }
+    .date-label    { font-size: 9px; }
+    .days-badge    { font-size: 9px; padding: 1px 5px; margin-top: 2px; }
+    .status-cell   { min-width: 80px; }
+    .deal-status   { font-size: 9px; padding: 2px 5px; }
+    .status-dot    { width: 5px; height: 5px; }
+    .deal-size-cell { min-width: 65px; }
+    .deal-size-val { font-size: 11px; }
+    .ev-ebitda-badge { font-size: 9px; padding: 1px 5px; }
+    .prob-pct      { font-size: 10px; }
+    .prob-bar-outer { height: 6px; }
+    .prob-label    { font-size: 8px; }
+    .geo-badge     { font-size: 9px; padding: 1px 5px; }
+    .industry-tag  { font-size: 9px; }
+    .deal-age      { font-size: 8px; }
+    .desc-cell     { min-width: 140px; max-width: 180px; }
+    .reg-cell      { min-width: 150px; }
+    .suitors-cell  { min-width: 120px; max-width: 160px; }
+    .commentary-cell { min-width: 140px; max-width: 180px; }
+    .close-progress { margin-top: 3px; }
   }
 
-  /* -- DESKTOP OVERRIDES --------------------------------------------- */
+  /* -- DESKTOP: REMOVE STICKY FIRST COLUMN, LIMIT WIDTH ------------ */
   @media (min-width: 768px) {
-    /* Hide the view toggle on desktop — table only */
-    .view-toggle-wrap { display: none; }
-    /* Remove sticky first column; restrict its width */
-    tbody td:first-child, thead th:first-child {
+    tbody td:first-child,
+    thead th:first-child {
       position: static;
       max-width: 180px;
       overflow: hidden;
@@ -1608,10 +1502,6 @@
     <button class="btn-secondary" id="priceBtn" onclick="fetchLivePrices()">(*) Live Prices</button>
     <button class="btn-primary" id="refreshBtn" onclick="loadDeals()">(cycle) Refresh</button>
     <span id="priceStatus"></span>
-    <div class="view-toggle-wrap" id="viewToggleWrap">
-      <button class="view-toggle-btn active" id="viewBtnCards" onclick="setViewMode('cards')">Cards</button>
-      <button class="view-toggle-btn" id="viewBtnTable" onclick="setViewMode('table')">Table</button>
-    </div>
   </div>
 
   <!-- Column visibility toggles -->
@@ -1697,20 +1587,20 @@
     <table id="dealsTable" style="display:none">
       <thead>
         <tr>
-          <th data-col="0" onclick="sortBy('target')">Target Company</th>
-          <th data-col="1" onclick="sortBy('geo')">Region / Sector</th>
-          <th data-col="2">Deal Type</th>
-          <th data-col="3" onclick="sortBy('dealSize')">Deal Size / Valuation</th>
-          <th data-col="4" onclick="sortBy('currentPrice')">Price / Terms</th>
+          <th data-col="0" onclick="sortBy('target')"><span class="th-full">Target Company</span><span class="th-short">Target</span></th>
+          <th data-col="1" onclick="sortBy('geo')"><span class="th-full">Region / Sector</span><span class="th-short">Region</span></th>
+          <th data-col="2"><span class="th-full">Deal Type</span><span class="th-short">Type</span></th>
+          <th data-col="3" onclick="sortBy('dealSize')"><span class="th-full">Deal Size / Valuation</span><span class="th-short">Size</span></th>
+          <th data-col="4" onclick="sortBy('currentPrice')"><span class="th-full">Price / Terms</span><span class="th-short">Terms</span></th>
           <th data-col="5" onclick="sortBy('spread')">Spread %</th>
-          <th data-col="6" onclick="sortBy('annualizedReturn')">Ann. Return</th>
+          <th data-col="6" onclick="sortBy('annualizedReturn')"><span class="th-full">Ann. Return</span><span class="th-short">Ann.</span></th>
           <th data-col="7" onclick="sortBy('announced')">Announced</th>
-          <th data-col="8" onclick="sortBy('expectedClose')">Exp. Close</th>
+          <th data-col="8" onclick="sortBy('expectedClose')"><span class="th-full">Exp. Close</span><span class="th-short">Close</span></th>
           <th data-col="9" onclick="sortBy('status')">Status</th>
-          <th data-col="10">Regulatory</th>
-          <th data-col="11">Deal Summary</th>
+          <th data-col="10"><span class="th-full">Regulatory</span><span class="th-short">Reg.</span></th>
+          <th data-col="11"><span class="th-full">Deal Summary</span><span class="th-short">Summary</span></th>
           <th data-col="12">Commentary</th>
-          <th data-col="13">Other Suitors</th>
+          <th data-col="13"><span class="th-full">Other Suitors</span><span class="th-short">Suitors</span></th>
           <th data-col="14" style="cursor:pointer;user-select:none" onclick="sortTable(14)">Break Fee</th>
           <th data-col="15" style="cursor:pointer;user-select:none" onclick="sortTable(15)">Mkt Share</th>
           <th data-col="16">Source</th>
@@ -1719,8 +1609,6 @@
       <tbody id="dealsBody"></tbody>
     </table>
   </div>
-
-  <div id="cardsWrap" class="cards-wrap"></div>
 
   <!-- -- M&A NEWS FEED ------------------------------------------- -->
   <div class="news-section" id="newsSection">
@@ -2940,7 +2828,6 @@ let allDeals = DEALS.filter(d => d.target && d.acquirer);
 let currentFilter = "all";
 let sortKey = "announced";
 let sortDir = -1;
-let viewMode = window.innerWidth < 768 ? 'cards' : 'table';
 
 function pbadge(p) {
   if(!p && p!==0) return '';
@@ -2965,119 +2852,6 @@ function loadDeals() {
   document.getElementById("lastUpdated").textContent = "Loaded " + new Date().toLocaleString();
   renderDeals();
   updateStats();
-  setViewMode(viewMode);
-}
-
-function renderCards() {
-  if (viewMode !== 'cards') return;
-  const wrap = document.getElementById('cardsWrap');
-  if (!wrap) return;
-
-  let deals = [...allDeals];
-  const srch = ((document.getElementById("searchInput")||{}).value||"").toLowerCase();
-  if      (currentFilter==="USA")          deals=deals.filter(d=>d.geo==="USA");
-  else if (currentFilter==="EU")           deals=deals.filter(d=>d.geo==="EU");
-  else if (currentFilter==="high-spread")  deals=deals.filter(d=>(d.spread||0)>5);
-  else if (currentFilter==="closing-soon") deals=deals.filter(d=>{const t=dtc(d.expectedClose);return t!==null&&t<180;});
-  else if (currentFilter==="megadeal")     deals=deals.filter(d=>(d.dealSize||0)>=10);
-  else if (currentFilter==="contested")    deals=deals.filter(d=>d.otherBidders&&d.otherBidders!==" - "&&!d.otherBidders.toLowerCase().includes("none"));
-  else if (currentFilter==="top-opp")      deals=deals.filter(d=>(d.closingProbability||0)>=85&&(+d.annualizedReturn||0)>=10&&d.dealRisk!=='high'&&(+d.spread||0)>0);
-  if (srch) deals=deals.filter(d=>[d.target,d.acquirer,d.industry,d.targetTicker,d.description,d.comment,d.otherBidders].some(v=>(v||"").toLowerCase().includes(srch)));
-  deals.sort((a,b)=>{
-    const va=a[sortKey],vb=b[sortKey];
-    if(typeof va==="string") return sortDir*(va||"").localeCompare(vb||"");
-    return sortDir*((va||0)-(vb||0));
-  });
-
-  if (!deals.length) {
-    wrap.innerHTML='<div class="card-no-results"><div style="font-size:28px;margin-bottom:10px">[?]</div><div style="font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:4px">No deals match your filters</div><div style="font-size:12px;font-family:var(--mono)">Try adjusting the search or filter</div></div>';
-    return;
-  }
-
-  wrap.innerHTML = deals.map((d, i) => {
-    const idx = allDeals.indexOf(d);
-    const sp = +d.spread||0, an = +d.annualizedReturn||0;
-    const prob = d.closingProbability;
-    const probCls = prob>=75?'high':prob>=50?'mid':'low';
-    const isTopOpp = (prob||0)>=85 && an>=10 && d.dealRisk!=='high' && sp>0;
-    const dte = dtc(d.expectedClose);
-    const dL = dte===null?(d.expectedClose||'TBD'):(dte>0?dte+'d':'past');
-    const cur = d.dealCurrency==='EUR'?'EUR':'$';
-    const sizeStr = d.dealSize ? cur+(d.dealSize>=1?d.dealSize.toFixed(1)+'bn':+(d.dealSize*1000).toFixed(0)+'mn') : null;
-    const stC = d.status==='approved'?'status-approved':d.status==='at-risk'?'status-risk':d.status==='rumored'?'status-rumored':'status-pending';
-    const stL = d.status==='approved'?'Closed':d.status==='at-risk'?'At Risk':d.status==='rumored'?'Rumored':'Pending';
-    let cardCls = 'deal-card';
-    if (d.status==='at-risk'||d.dealRisk==='high') cardCls+=' card-at-risk';
-    else if (d.status==='rumored') cardCls+=' card-rumored';
-    else if (sp>5) cardCls+=' card-high-spread';
-    const termsId = 'cterms'+i;
-    const terms = d.dealTerms||'';
-    const termsShort = terms.slice(0,120)+(terms.length>120?'…':'');
-    const hasMoreTerms = terms.length>120;
-
-    return '<div class="'+cardCls+'" style="animation-delay:'+(i*12)+'ms" onclick="openModal(allDeals['+idx+'])">'
-      +'<div class="card-top">'
-        +'<div class="card-top-left">'
-          +'<div class="card-target-name">'+esc(d.target)+(isTopOpp?'<span class="opp-star">*</span>':'')+'</div>'
-          +'<div style="margin-top:4px;display:flex;align-items:center;flex-wrap:wrap;gap:4px">'
-            +(d.targetTicker?'<span class="card-ticker">'+esc(d.targetTicker)+'</span>':'')
-            +'<span class="deal-status '+stC+'" style="font-size:9px;padding:2px 7px"><span class="status-dot"></span>'+stL+'</span>'
-          +'</div>'
-          +'<div class="card-acquirer-row">by <span>'+esc(d.acquirer)+'</span></div>'
-        +'</div>'
-        +'<div class="card-top-right">'
-          +(prob!=null?'<div class="card-prob '+probCls+'">'+prob+'%</div>':'')
-          +(d.dealRisk?'<div style="font-size:9px;font-family:var(--mono);font-weight:700;color:'+rc(d.dealRisk)+'">'+d.dealRisk.toUpperCase()+'</div>':'')
-        +'</div>'
-      +'</div>'
-      +'<div class="card-pills">'
-        +(d.expectedClose?'<div class="card-pill"><div class="card-pill-label">Exp. Close</div><div class="card-pill-value">'+esc(d.expectedClose)+'<span style="color:var(--text-dim);font-size:10px;margin-left:4px">('+dL+')</span></div></div>':'')
-        +(sizeStr?'<div class="card-pill"><div class="card-pill-label">Deal Size</div><div class="card-pill-value">'+esc(sizeStr)+'</div></div>':'')
-        +(sp?'<div class="card-pill"><div class="card-pill-label">Spread</div><div class="card-pill-value" style="color:'+(sp>0?'var(--green)':'var(--red)')+'">'+( sp>0?'+':'')+sp.toFixed(2)+'%</div></div>':'')
-        +(an>0?'<div class="card-pill"><div class="card-pill-label">Ann. Return</div><div class="card-pill-value" style="color:'+(an>20?'var(--green)':an>10?'var(--amber)':'var(--text-mid)')+'">'+an.toFixed(1)+'%</div></div>':'')
-      +'</div>'
-      +(terms?'<div class="card-terms-wrap">'
-        +'<div class="card-terms-text'+(hasMoreTerms?' clamped':'')+'" id="'+termsId+'">'+esc(termsShort)+'</div>'
-        +(hasMoreTerms?'<button class="card-expand-btn" onclick="event.stopPropagation();expandCardTerms(\''+termsId+'\','+JSON.stringify(terms)+')">Show full terms</button>':'')
-        +'</div>':'')
-      +'<div class="card-footer">'
-        +'<div style="display:flex;align-items:center;gap:6px">'
-          +'<span class="geo-badge '+(d.geo==='USA'?'geo-usa':'geo-eu')+'">'+(d.geo==='USA'?'US':'EU')+'</span>'
-          +'<span class="industry-tag" style="font-size:10px;color:var(--text-dim)">'+esc(d.industry||'')+'</span>'
-        +'</div>'
-        +(d.sourceUrl?'<a class="card-source-link" href="'+esc(d.sourceUrl)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Source">&#128240;</a>':'')
-      +'</div>'
-    +'</div>';
-  }).join('');
-}
-
-function expandCardTerms(id, fullText) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.classList.remove('clamped');
-  el.textContent = fullText;
-  const btn = el.nextElementSibling;
-  if (btn && btn.classList.contains('card-expand-btn')) btn.style.display = 'none';
-}
-
-function setViewMode(mode) {
-  viewMode = mode;
-  const tableWrap = document.getElementById('tableWrap');
-  const cardsWrap = document.getElementById('cardsWrap');
-  const btnCards  = document.getElementById('viewBtnCards');
-  const btnTable  = document.getElementById('viewBtnTable');
-  if (mode === 'cards') {
-    if (tableWrap) tableWrap.style.display = 'none';
-    if (cardsWrap) cardsWrap.style.display = 'block';
-    if (btnCards)  btnCards.classList.add('active');
-    if (btnTable)  btnTable.classList.remove('active');
-    renderCards();
-  } else {
-    if (tableWrap) tableWrap.style.display = 'block';
-    if (cardsWrap) cardsWrap.style.display = 'none';
-    if (btnCards)  btnCards.classList.remove('active');
-    if (btnTable)  btnTable.classList.add('active');
-  }
 }
 
 async function fetchLivePrices() {
@@ -3248,7 +3022,6 @@ function renderDeals() {
       tr.innerHTML+='<td data-col="16" class="col-numeric" style="white-space:nowrap">'+(d.sourceUrl?'<a href="'+esc(d.sourceUrl)+'" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="font-size:14px;text-decoration:none" title="Source">&#128240;</a>':'\u2014')+'</td>';
     body.appendChild(tr);
   });
-  renderCards();
 }
 
 function openModal(d){
