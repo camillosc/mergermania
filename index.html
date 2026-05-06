@@ -1853,7 +1853,7 @@ const DEALS = [
     "industry": "Real Estate/Healthcare REIT",
     "currentPrice": 0,
     "dealPrice": 30.38,
-    "dealTerms": "$30.38 cash per share; $2.4B deal value; ~19% premium to last sale; ~30% premium to 52-week low; up to 2 dividends during deal ($0.40 each); prelim proxy in 30 days; termination fee $55.7M; reverse termination fee $152M; termination date Jan 19, 2027",
+    "dealTerms": "$30.38 cash per share; $2.4B deal value; ~19% premium to last sale; ~30% premium to 52-week low; up to 2 dividends during deal ($0.40 each); preliminary proxy filed; no regulatory approvals required; termination fee $55.7M; reverse termination fee $152M; termination date Jan 19, 2027",
     "spread": 0,
     "annualizedReturn": 0,
     "announced": "2026-04-20",
@@ -2179,10 +2179,10 @@ const DEALS = [
         "detail": "HSR 10-day waiting period expired Feb 20 2026 without DOJ action  -  effectively cleared."
       },
       {
-        "name": "FCC broadcast license transfer",
+        "name": "FCC broadcast license transfer + foreign interest review",
         "status": "pending",
-        "probability": 78,
-        "detail": "FCC must approve transfer of WBD's broadcast licenses. Typical FCC media transfer  -  Paramount has existing FCC relationships via CBS. Some Democratic commissioner opposition possible."
+        "probability": 65,
+        "detail": "FCC must approve transfer of WBD broadcast licenses AND conduct foreign interest review. Saudi PIF (15.1%), UAE/Abu Dhabi (12.8%), Qatar Investment Authority (10.6%) — Middle East funds will own ~38.5% equity post-close. Paramount filed petition for advance approval up to 20% per entity. FCC Commissioner Anna Gomez (D) calling for rigorous national security review; Senate Democrats demanding scrutiny of foreign investment from Gulf states + China (Tencent). Foreign investors will not have board seats or voting shares per Paramount."
       },
       {
         "name": "UK CMA Phase 1 review",
@@ -2203,9 +2203,10 @@ const DEALS = [
         "detail": "AG Rob Bonta can file independent antitrust suit. Has threatened action. Most likely to seek divestitures rather than block outright."
       }
     ],
-    "dealRisk": "medium",
+    "dealRisk": "high",
     "breakupFee": "$3.9B / $7.0B rev",
-    "marketShare": "~15% US SVOD"
+    "marketShare": "~15% US SVOD",
+    "sourceUrl": "https://variety.com/2026/film/news/paramount-warner-bros-foreign-ownership-middle-eastern-funds-1236731732/"
   },
   {
     "target": "Norfolk Southern",
@@ -3475,33 +3476,39 @@ const DEALS = [
     "industry": "Energy / Oil & Gas",
     "currentPrice": 33.97,
     "dealPrice": 33.25,
-    "dealTerms": "0.70 shares of DVN per CTRA share (all-stock merger of equals). HSR antitrust waiting period cleared April 30, 2026.",
+    "dealTerms": "0.70 shares of DVN per CTRA share (all-stock merger of equals). HSR cleared April 30, 2026. Shareholders approved May 4, 2026 (DVN: 98%+, CTRA: 99%+). Closing expected on or about May 7, 2026.",
     "spread": -2.1,
     "annualizedReturn": -8.4,
     "announced": "2026-03-10",
-    "expectedClose": "2026-Q2",
+    "expectedClose": "2026-05-07",
     "status": "pending",
-    "closingProbability": 96,
-    "description": "Devon Energy and Coterra Energy to combine in a $58B all-stock merger of equals creating a premier shale operator. CTRA shareholders receive 0.70 DVN shares per share. HSR cleared April 30, 2026. | Breakup: $865M each (reciprocal). Combined: ~5% US oil production, ~8% Permian Basin.",
+    "closingProbability": 99,
+    "description": "Devon Energy and Coterra Energy combining in $58B all-stock merger of equals. CTRA shareholders receive 0.70 DVN shares per share. HSR cleared April 30, 2026. Both DVN (98%+) and CTRA (99%+) shareholders approved May 4, 2026. Closing expected May 7, 2026. Pro forma: 54% DVN / 46% CTRA. | Breakup: $865M each (reciprocal). Combined: ~5% US oil production, ~8% Permian Basin.",
     "dealValue": "$58B",
     "milestones": [
       {
         "name": "Shareholder vote",
-        "status": "pending",
-        "probability": 92,
-        "detail": "Both DVN and CTRA shareholders must approve."
+        "status": "done",
+        "probability": 100,
+        "detail": "Both DVN (98%+) and CTRA (99%+) shareholders approved May 4, 2026."
       },
       {
         "name": "HSR / FTC review",
-        "status": "cleared",
+        "status": "done",
         "probability": 100,
         "detail": "HSR antitrust waiting period cleared April 30, 2026."
+      },
+      {
+        "name": "Closing",
+        "status": "pending",
+        "probability": 99,
+        "detail": "Closing expected on or about May 7, 2026."
       }
     ],
     "dealRisk": "low",
     "breakupFee": "$865M each",
     "marketShare": "~5% US oil",
-    "sourceUrl": "https://www.devonenergy.com/news/2026/Devon-Energy-and-Coterra-Energy-to-Combine-Creating-a-Premier-Shale-Operator"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/04/3287131/0/en/Devon-Energy-and-Coterra-Energy-Shareholders-Approve-Merger.html"
   },
   {
     "target": "Kenvue Inc",
@@ -3561,10 +3568,10 @@ const DEALS = [
     "spread": 63.3,
     "annualizedReturn": 63.3,
     "announced": "2025-11-04",
-    "expectedClose": "2027-Q1",
+    "expectedClose": "2026-Q4",
     "status": "pending",
-    "closingProbability": 80,
-    "description": "Skyworks and Qorvo to combine in a $22B semiconductor deal. Shareholders approved. Awaiting global regulatory approvals. | Breakup: $298.7M each (reciprocal). Combined: ~50% mobile RF semiconductor market  -  significant antitrust risk.",
+    "closingProbability": 85,
+    "description": "Skyworks and Qorvo to combine in a $22B semiconductor deal. Shareholders approved. Skyworks management increasingly hopeful for late 2026 close (vs. prior early 2027 guidance). Confidence in $500M+ synergies and strategic rationale strong. China SAMR Phase II review underway; FTC extended antitrust review remains a hurdle. | Breakup: $298.7M each (reciprocal). Combined: ~50% mobile RF semiconductor market  -  significant antitrust risk.",
     "comment": "",
     "dealSize": 22,
     "evEbitda": null,
@@ -3584,10 +3591,10 @@ const DEALS = [
         "detail": "US antitrust review of RF semiconductor consolidation."
       },
       {
-        "name": "China SAMR approval",
+        "name": "China SAMR Phase II review",
         "status": "pending",
-        "probability": 70,
-        "detail": "Chinese regulatory approval required for semiconductor deal."
+        "probability": 72,
+        "detail": "China SAMR Phase II review underway; key remaining hurdle but progressing."
       },
       {
         "name": "EU Commission review",
@@ -3599,7 +3606,7 @@ const DEALS = [
     "dealRisk": "high",
     "breakupFee": "$298.7M each",
     "marketShare": "~50% mobile RF",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2025/10/28/3175254/0/en/Skyworks-and-Qorvo-to-Combine-to-Create-22-Billion-U-S-Based-Leader-in-High-Performance-RF-Analog-and-Mixed-Signal-Solutions.html"
+    "sourceUrl": "https://investors.skyworksinc.com/news-releases/news-release-details/skyworks-and-qorvo-combine-create-22-billion-us-based-leader"
   },
   {
     "target": "Hologic Inc",
@@ -3871,23 +3878,23 @@ const DEALS = [
     "acquirer": "Merck & Co.",
     "geo": "USA",
     "industry": "Biotech / Oncology-Hematology",
-    "currentPrice": 52.85,
+    "currentPrice": 53,
     "dealPrice": 53,
-    "dealTerms": "$53.00 per share in cash (Tender Offer). HSR waiting period EXPIRED April 23, 2026 without second request - effectively cleared.",
-    "spread": 0.3,
-    "annualizedReturn": 4,
+    "dealTerms": "$53.00 per share in cash (Tender Offer). HSR cleared April 23, 2026. Tender expired May 4, 2026 with 86.36% tendered. Acquisition COMPLETED May 5, 2026.",
+    "spread": 0,
+    "annualizedReturn": 0,
     "announced": "2026-03-25",
-    "expectedClose": "2026-Q2",
-    "status": "pending",
-    "closingProbability": 98,
-    "description": "Merck to acquire Terns Pharmaceuticals for $53/share ($5.7B net of cash) via tender offer. HSR antitrust waiting period EXPIRED April 23, 2026 - effectively cleared. Deal driven by TERN-701, a potential best-in-class TKI for chronic myeloid leukemia (CML). TERN-701 has shown highly positive early data and is positioned to challenge Novartis's Scemblix ($1.3B 2025 sales). MRK plans Ph3 trials in 2L+ (late-2026/early-2027) and 1L settings. Orphan drug designation provides IRA/MFN exclusion. IP exclusivity expected into the 2040s. ~$0.17 EPS dilution in first 12 months. Premium: 31% to 60-day VWAP, 42% to 90-day VWAP. Investor feedback positive; some TERN holders expected $60s pricing. Consistent with MRK's tuck-in deal strategy  -  does not preclude a larger deal given MRK's substantial cash pile. | Breakup: $200M (target). Combined CML: ~15% market (challenging Novartis Scemblix).",
+    "expectedClose": "2026-05-05",
+    "status": "completed",
+    "closingProbability": 100,
+    "description": "Merck completed acquisition of Terns Pharmaceuticals on May 5, 2026 for $53/share via tender offer ($5.7B net of cash). HSR waiting period expired April 23, 2026. Tender offer expired May 4, 2026 with 100,091,794 shares (~86.36%) validly tendered. TERN delisted from Nasdaq. Deal driven by TERN-701, a potential best-in-class TKI for chronic myeloid leukemia (CML), positioned to challenge Novartis's Scemblix. | Combined CML: ~15% market.",
     "dealValue": "$5.7B",
     "milestones": [
       {
         "name": "Tender offer",
-        "status": "pending",
-        "probability": 98,
-        "detail": "Tender offer expected to launch shortly. Minimum 50.1% tender condition."
+        "status": "done",
+        "probability": 100,
+        "detail": "Tender expired May 4, 2026 with 86.36% of shares tendered."
       },
       {
         "name": "HSR/antitrust",
@@ -3896,15 +3903,16 @@ const DEALS = [
         "detail": "HSR waiting period EXPIRED April 23, 2026 without DOJ/FTC action. No material competitive overlap in CML - effectively cleared."
       },
       {
-        "name": "Expected close",
-        "status": "pending",
-        "probability": 95,
-        "detail": "Q2 2026 (targeting May 10, 2026). Short-form merger to follow tender."
+        "name": "Closing",
+        "status": "done",
+        "probability": 100,
+        "detail": "Acquisition completed May 5, 2026. TERN delisted from Nasdaq."
       }
     ],
     "dealRisk": "low",
     "breakupFee": "$200M",
-    "marketShare": "~15% CML"
+    "marketShare": "~15% CML",
+    "sourceUrl": "https://www.merck.com/news/merck-completes-acquisition-of-terns-pharmaceuticals-inc/"
   },
   {
     "target": "AES Corporation",
@@ -4101,7 +4109,7 @@ const DEALS = [
     "industry": "Insurance / Asset Management",
     "currentPrice": 37.59,
     "dealPrice": 37.59,
-    "dealTerms": "1 EQH = 1.55516 CRBG shares (all-stock merger, no premium). Nippon Life (22.9% CRBG) signed voting agreement to support merger.",
+    "dealTerms": "1 EQH = 1.55516 CRBG shares (all-stock merger, no premium). Nippon Life (22.9% CRBG) signed voting agreement to support merger. Preliminary proxy / S-4 filed. Year-end 2026 close target. Extensive regulatory list: HSR, AZ/CO/MO/NY/TX insurance regulators, EQH client consent (75% of advisory fees), Form A filings.",
     "spread": 0,
     "annualizedReturn": 0,
     "announced": "2026-03-26",
@@ -4113,15 +4121,15 @@ const DEALS = [
     "milestones": [
       {
         "name": "S-4/HSR filing",
-        "status": "pending",
-        "probability": 95,
-        "detail": "Filings due within 45 days (by May 10, 2026)"
+        "status": "done",
+        "probability": 100,
+        "detail": "Preliminary S-4/proxy filed."
       },
       {
         "name": "Insurance regulator approvals",
         "status": "pending",
         "probability": 78,
-        "detail": "AZ, CO, MO, NY, TX insurance regulators + EQH client consent (75% of advisory fees)"
+        "detail": "AZ, CO, MO, NY, TX insurance regulators + EQH client consent (75% of advisory fees) + Form A filings"
       },
       {
         "name": "Shareholder votes",
@@ -4659,6 +4667,23 @@ const DEALS = [
     "dealRisk": "medium"
   },
   {
+    "target": "Flex Ltd (Cloud & Power Infrastructure SpinCo)",
+    "targetTicker": "FLEX",
+    "acquirer": "Spin-off (tax-free distribution to FLEX shareholders)",
+    "geo": "USA",
+    "industry": "Technology / Data Center & Power Infrastructure",
+    "announced": "2026-05-05",
+    "expectedClose": "2027-Q1",
+    "status": "pending",
+    "closingProbability": 90,
+    "dealTerms": "Tax-free spin-off of Flex Cloud & Power Infrastructure segment into new independent publicly-traded company (SpinCo). Targeted to close Q1 calendar 2027. SpinCo CEO: Revathi Advaithi (also Flex Chairman during transition). Flex CEO: Michael Hartung. SpinCo target: ~65-75% revenue growth FY27, accelerating to 80%+ FY28. Board unanimously approved May 5, 2026.",
+    "dealSize": null,
+    "dealCurrency": "USD",
+    "dealRisk": "low",
+    "description": "Flex announced May 5, 2026 plan to spin off its Cloud & Power Infrastructure segment into a new independent publicly-traded company (SpinCo) focused on power and thermal management for AI data centers and mission-critical applications. Tax-free distribution targeted Q1 2027. Revathi Advaithi to become SpinCo CEO; Michael Hartung to become Flex CEO post-spin.",
+    "sourceUrl": "https://www.prnewswire.com/news-releases/flex-announces-intention-to-spin-off-its-cloud-and-power-infrastructure-segment-into-a-new-independent-publicly-traded-company-302763151.html"
+  },
+  {
     "target": "LKQ Corporation",
     "targetTicker": "LKQ",
     "acquirer": "Strategic Review (Potential sale)",
@@ -4956,17 +4981,19 @@ const DEALS = [
   {
     "target": "Clear Channel Outdoor Holdings Inc",
     "targetTicker": "CCO",
-    "acquirer": "Mubadala & TWG",
+    "acquirer": "Mubadala Capital & TWG Global",
     "geo": "USA",
     "industry": "Advertising / Outdoor Media",
     "announced": "2026-02-02",
     "expectedClose": "2026-Q3",
     "status": "pending",
-    "closingProbability": 82,
-    "dealTerms": "$2.43 per share in cash. HSR expires April 9, 2026. Definitive proxy filed; shareholder vote May 12, 2026; HSR expired April 9; CFIUS draft notice submitted March 10; closing expected end of Q3 2026",
-    "dealSize": 1.2,
+    "closingProbability": 85,
+    "dealTerms": "$2.43 per share in cash ($6.2B EV). HSR cleared (waiting period expired April 9, 2026 11:59pm ET). Definitive proxy filed; virtual special stockholder meeting May 12, 2026. CFIUS clearance pending. Closing expected end of Q3 2026.",
+    "dealSize": 6.2,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "description": "Mubadala Capital and TWG Global to acquire Clear Channel Outdoor for $2.43/share cash ($6.2B EV). HSR cleared April 9, 2026. Special stockholder meeting May 12, 2026. CFIUS approval still pending. Closing expected end of Q3 2026 between late 2026 / early 2027.",
+    "sourceUrl": "https://investor.clearchannel.com/news/detail/560/clear-channel-outdoor-holdings-inc-agrees-to-be-acquired-by-mubadala-capital-in-partnership-with-twg-global-for-6-2-billion"
   },
   {
     "target": "CSG Systems International Inc",
@@ -5189,13 +5216,15 @@ const DEALS = [
     "geo": "USA",
     "industry": "Insurance / Specialty",
     "announced": "2025-03-19",
-    "expectedClose": "2026-Q2",
+    "expectedClose": "2026-06-30",
     "status": "pending",
     "closingProbability": 90,
-    "dealTerms": "$25.00 per share in cash",
+    "dealTerms": "$25.00 per share in cash. Insurance regulator approvals received in AL, DC, IL, MO, TX, VT; CA and PA reviews pending. Currently expects to close no later than June 30, 2026.",
     "dealSize": 1.3,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "description": "The Doctors Company to acquire ProAssurance for $25.00/share cash ($1.3B) — ~60% premium to March 18, 2025 close. Stockholder approval received. Insurance regulators in AL, DC, IL, MO, TX, VT have approved; CA and PA pending. Combined entity to have ~$12B assets. Company anticipates close no later than June 30, 2026.",
+    "sourceUrl": "https://investor.proassurance.com/news/news-details/2025/ProAssurance-Stockholders-Approve-Its-Proposed-Acquisition-by-The-Doctors-Company/default.aspx"
   },
   {
     "target": "SkyWater Technology Inc",
@@ -5310,13 +5339,15 @@ const DEALS = [
     "geo": "USA",
     "industry": "Homebuilding / Real Estate",
     "announced": "2026-02-13",
-    "expectedClose": "2026-Q2",
+    "expectedClose": "2026-05-14",
     "status": "pending",
-    "closingProbability": 88,
-    "dealTerms": "$47.00 per share in cash. HSR expires April 16; TPH shareholder vote April 16",
+    "closingProbability": 98,
+    "dealTerms": "$47.00 per share in cash. HSR cleared (expired April 16); shareholders approved April 16 (99.99% in favor). Merger effective May 14, 2026; last trading day expected May 13.",
     "dealSize": 4,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "description": "Sumitomo Forestry to acquire Tri Pointe Homes for $47.00/share cash ($4.5B). 29% premium to Feb 12 close, 42% to 90-day VWAP. Shareholders approved April 16 (99.99% in favor); HSR cleared. Merger effective May 14, 2026.",
+    "sourceUrl": "https://investors.tripointehomes.com/newsroom/press-release-details/2026/Sumitomo-Forestry-Announces-Strategic-Combination-with-Tri-Pointe-Homes-to-Create-a-Leading-U-S--Homebuilder/default.aspx"
   },
   {
     "target": "Udemy Inc",
@@ -5371,13 +5402,15 @@ const DEALS = [
     "geo": "USA",
     "industry": "Semiconductor Equipment",
     "announced": "2025-10-01",
-    "expectedClose": "2026-Q4",
+    "expectedClose": "2026-H2",
     "status": "pending",
-    "closingProbability": 82,
-    "dealTerms": "0.3575 ACLS per VECO share",
+    "closingProbability": 78,
+    "dealTerms": "0.3575 ACLS per VECO share ($4.4B all-stock). Both VECO and ACLS shareholders approved Feb 6, 2026. China SAMR Phase II review pending — final regulatory hurdle. SAMR scrutinizing potential bundling impact on Chinese domestic equipment makers. Close expected H2 2026.",
     "dealSize": 2.1,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "description": "Axcelis-Veeco $4.4B all-stock merger to create semiconductor equipment leader. Both shareholder bases approved Feb 6, 2026. China SAMR Phase II review remains the only material outstanding hurdle, with potential to be used as US-China trade negotiation leverage. Close expected H2 2026.",
+    "sourceUrl": "https://www.prnewswire.com/news-releases/axcelis-stockholders-approve-merger-with-veeco-302680838.html"
   },
   {
     "target": "Webster Financial Corp",
@@ -5404,12 +5437,14 @@ const DEALS = [
     "announced": "2026-02-15",
     "expectedClose": "2026-Q4",
     "status": "pending",
-    "closingProbability": 75,
-    "dealTerms": "$35.00 per share in cash. ZIM shareholder vote May 1, 2026.",
+    "closingProbability": 65,
+    "dealTerms": "$35.00 per share cash (Hapag-Lloyd/FIMI signed deal). Competing $37.50/share ($4.5B) bid from Israeli investor group led by Haim Sakal (Skaal/Sakal) submitted to ZIM board chairman; ~7.1% premium to signed deal. ZIM shareholders approved Hapag-Lloyd deal May 1, 2026 with 97% support. Board now evaluating whether Sakal proposal can override existing agreement.",
     "dealSize": 3.1,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://investors.zim.com/news/news-details/2026/ZIM-to-be-Acquired-by-Hapag-Lloyd-for-35-00-per-Share-in-Cash-at-Aggregate-Cash-Consideration-of-Approximately-4-2-Billion-New-Israeli-Company-New-ZIM-to-Acquire-Portion-of-ZIMs-Business/default.aspx"
+    "description": "Hapag-Lloyd to acquire ZIM at $35/share ($4.2B); ZIM shareholders approved May 1, 2026 with 97% support. Israeli investor group led by Haim Sakal then submitted competing $37.50/share ($4.5B) proposal to ZIM board, committing to maintain 145-vessel fleet and Israeli operational HQ. Board evaluating whether competing bid can override existing approved agreement.",
+    "otherBidders": "Skaal/Sakal Israeli investor group ($37.50/share competing bid)",
+    "sourceUrl": "https://www.ynetnews.com/business/article/bkqbo11oa11x"
   },
   {
     "target": "McCormick & Company Inc",
