@@ -2415,15 +2415,21 @@ const DEALS = [
       },
       {
         "name": "Disinterested shareholder vote",
-        "status": "pending",
-        "probability": 92,
-        "detail": "Majority of votes cast by holders other than Permira and Warburg Pincus required. ISS and Glass Lewis recommendations pending. Some disgruntled holders may vote no on price adequacy grounds but overall likely to pass."
+        "status": "done",
+        "probability": 100,
+        "detail": "Shareholders approved the transaction. Majority of disinterested holders voted in favor."
       },
       {
         "name": "HSR antitrust review",
+        "status": "done",
+        "probability": 100,
+        "detail": "HSR cleared. No competition concerns in investment accounting software."
+      },
+      {
+        "name": "FIRB (Australia) approval",
         "status": "pending",
-        "probability": 97,
-        "detail": "No competition concerns in investment accounting software. Early termination expected."
+        "probability": 95,
+        "detail": "FIRB approval still pending; only remaining condition. Close expected Q2 2026."
       }
     ],
     "dealRisk": "low",
@@ -2517,9 +2523,9 @@ const DEALS = [
       },
       {
         "name": "Penumbra shareholder vote",
-        "status": "pending",
-        "probability": 96,
-        "detail": "19% premium with strong board recommendation. ISS/Glass Lewis expected to recommend approval. Low risk."
+        "status": "done",
+        "probability": 100,
+        "detail": "PEN shareholders approved the transaction."
       },
       {
         "name": "EU Commission Phase 1",
@@ -5437,12 +5443,12 @@ const DEALS = [
     "announced": "2026-02-15",
     "expectedClose": "2026-Q4",
     "status": "pending",
-    "closingProbability": 65,
-    "dealTerms": "$35.00 per share cash (Hapag-Lloyd/FIMI signed deal). Competing $37.50/share ($4.5B) bid from Israeli investor group led by Haim Sakal (Skaal/Sakal) submitted to ZIM board chairman; ~7.1% premium to signed deal. ZIM shareholders approved Hapag-Lloyd deal May 1, 2026 with 97% support. Board now evaluating whether Sakal proposal can override existing agreement.",
+    "closingProbability": 68,
+    "dealTerms": "$35.00 per share cash (Hapag-Lloyd/FIMI signed deal). Competing $37.50/share ($4.5B) bid from Israeli investor group led by Haim Sakal (Skaal/Sakal) submitted to ZIM board chairman; ~7.1% premium to signed deal. ZIM shareholders approved Hapag-Lloyd deal May 1, 2026 with 97% support. ZIM board re-confirmed (May 7, 2026) that the Hapag-Lloyd merger pact is binding. Board still evaluating whether Sakal proposal constitutes a Superior Proposal.",
     "dealSize": 3.1,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Hapag-Lloyd to acquire ZIM at $35/share ($4.2B); ZIM shareholders approved May 1, 2026 with 97% support. Israeli investor group led by Haim Sakal then submitted competing $37.50/share ($4.5B) proposal to ZIM board, committing to maintain 145-vessel fleet and Israeli operational HQ. Board evaluating whether competing bid can override existing approved agreement.",
+    "description": "Hapag-Lloyd to acquire ZIM at $35/share ($4.2B); ZIM shareholders approved May 1, 2026 with 97% support. Israeli investor group led by Haim Sakal submitted competing $37.50/share ($4.5B) proposal to ZIM board, committing to maintain 145-vessel fleet and Israeli operational HQ. ZIM board re-confirmed (May 7, 2026) the Hapag-Lloyd merger pact is binding while continuing to evaluate the competing bid.",
     "otherBidders": "Skaal/Sakal Israeli investor group ($37.50/share competing bid)",
     "sourceUrl": "https://www.ynetnews.com/business/article/bkqbo11oa11x"
   },
@@ -5517,11 +5523,12 @@ const DEALS = [
     "announced": "2026-03-31",
     "expectedClose": "2026-Q3",
     "status": "pending",
-    "closingProbability": 90,
-    "dealTerms": "$38.00 per share in cash + CVR up to $9.00/share",
+    "closingProbability": 92,
+    "dealTerms": "$38.00 per share in cash + CVR up to $9.00/share. Definitive proxy filed; shareholder vote June 12, 2026. HSR waiting period expires May 21, 2026.",
     "dealSize": 6.3,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "description": "Eli Lilly to acquire Centessa Pharmaceuticals for $38/share cash + CVR up to $9.00/share. Definitive proxy filed; shareholder vote scheduled June 12, 2026. HSR waiting period expires May 21, 2026. Close expected by Q3 2026."
   },
   {
     "target": "Universal Music Group NV",
@@ -6446,6 +6453,57 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Gilead acquired Arcellx for $115/share + $5 CVR (~$7.8B). Builds on Kite/Arcellx collaboration; gives Gilead full control of anito-cel BCMA-directed CAR-T therapy for multiple myeloma.",
     "sourceUrl": "https://www.gilead.com/news/news-details/2026/gilead-sciences-completes-acquisition-of-arcellx-ahead-of-potential-commercial-launch-of-anito-cel"
+  },
+  {
+    "target": "Catalyst Pharmaceuticals Inc",
+    "targetTicker": "CPRX",
+    "acquirer": "Angelini Pharma",
+    "geo": "USA",
+    "industry": "Pharma / Rare Disease",
+    "announced": "2026-05-07",
+    "expectedClose": "2026-09-01",
+    "status": "pending",
+    "closingProbability": 85,
+    "dealTerms": "$31.50 per share in cash; ~$4.1B equity value; 21% premium to unaffected price Apr 22, 2026 (28% to 30-day VWAP). Financing via Blackstone funds and BNP Paribas; no financing condition.",
+    "dealSize": 4100,
+    "dealCurrency": "USD",
+    "dealRisk": "low",
+    "description": "Angelini Pharma (Italian pharma focused on Brain Health) to acquire Catalyst Pharmaceuticals for $31.50/share cash (~$4.1B). Marks Angelini's entry into the U.S. market. Catalyst is a rare disease pharma with FIRDAPSE, AGAMREE, and FYCOMPA. Approvals required: CPRX stockholders, regulatory. Expected close Q3 2026.",
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/07/3289628/0/en/angelini-pharma-to-acquire-catalyst-pharmaceuticals-for-4-1-billion-usd-3-5-billion-euros-entering-the-u-s-market-and-consolidating-its-leadership-in-brain-health-and-rare-disease.html"
+  },
+  {
+    "target": "Cross Country Healthcare Inc",
+    "targetTicker": "CCRN",
+    "acquirer": "Knox Lane",
+    "geo": "USA",
+    "industry": "Healthcare Services / Staffing",
+    "announced": "2026-05-06",
+    "expectedClose": "2026-09-15",
+    "status": "pending",
+    "closingProbability": 90,
+    "dealTerms": "$13.25 per share in cash; ~$437M equity value; 31% premium to May 6, 2026 close, 45% to 90-day VWAP. Termination date Oct 6, 2026 (extendable to Apr 6, 2027).",
+    "dealSize": 437,
+    "dealCurrency": "USD",
+    "dealRisk": "low",
+    "description": "Knox Lane to acquire Cross Country Healthcare in an all-cash take-private transaction valued at $437M. CCRN to become privately held platform in Knox Lane portfolio. Approvals: CCRN stockholders, HSR, regulatory. Expected close Q3 2026.",
+    "sourceUrl": "https://www.businesswire.com/news/home/20260506144806/en/Cross-Country-Healthcare-to-be-Acquired-by-Knox-Lane-in-All-Cash-Transaction-Valued-at-$437-Million"
+  },
+  {
+    "target": "European Wax Center Inc",
+    "targetTicker": "EWCZ",
+    "acquirer": "General Atlantic",
+    "geo": "USA",
+    "industry": "Consumer Services / Personal Care",
+    "announced": "2026-02-10",
+    "expectedClose": "2026-05-07",
+    "status": "pending",
+    "closingProbability": 99,
+    "dealTerms": "$5.80 per share in cash; ~$330M equity value. General Atlantic existing ~42% holder. Last trading date anticipated May 7, 2026.",
+    "dealSize": 330,
+    "dealCurrency": "USD",
+    "dealRisk": "low",
+    "description": "General Atlantic to take European Wax Center private for $5.80/share cash (~$330M). Existing strategic partner since 2018 with ~42% ownership. Last trading date anticipated May 7, 2026.",
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/02/10/3235176/0/en/European-Wax-Center-to-Be-Taken-Private-by-General-Atlantic-in-All-Cash-Transaction.html"
   }
 ];
 
