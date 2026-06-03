@@ -1466,6 +1466,28 @@
 
     .news-tabs{display:flex;gap:.5rem;margin-bottom:12px}.news-tabs button{padding:6px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s}.news-tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary)}.news-tabs button:hover:not(.active){background:var(--surface2)}
     </style>
+<style id="category-sections-css">
+.category-sections{margin:24px 0 40px;display:flex;flex-direction:column;gap:18px}
+.cat-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;box-shadow:0 1px 2px rgba(15,32,68,.04)}
+.cat-section .cat-head{border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:10px}
+.cat-section .cat-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.1px;color:var(--navy);margin:0 0 4px;display:flex;align-items:baseline;gap:8px}
+.cat-section .cat-count{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--surface3);padding:2px 8px;border-radius:10px;font-weight:600}
+.cat-section .cat-blurb{font-size:11px;color:var(--text-dim);font-family:var(--mono);text-transform:uppercase;letter-spacing:.4px}
+.cat-table-wrap{overflow-x:auto}
+.cat-table{width:100%;border-collapse:collapse;font-size:12px}
+.cat-table th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);font-family:'Bebas Neue',sans-serif;letter-spacing:.6px;color:var(--navy);background:var(--surface2);font-size:11px}
+.cat-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.cat-table tr:hover td{background:var(--surface2)}
+.cat-table .cat-comment{color:var(--blue);font-style:italic;max-width:340px}
+.cat-status{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:.4px;white-space:nowrap}
+.cat-status-rumored,.cat-status-rumor{background:var(--amber-lt);color:var(--amber);border:1px solid var(--amber)}
+.cat-status-activist{background:var(--red-lt);color:var(--red);border:1px solid var(--red)}
+.cat-status-strategic-review{background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue)}
+.cat-rumored{border-left:3px solid var(--amber)}
+.cat-ma_target_press{border-left:3px solid var(--brand)}
+.cat-strategic_review{border-left:3px solid var(--blue)}
+.cat-activist_target{border-left:3px solid var(--red)}
+</style>
 </head>
 <body>
 
@@ -1503,104 +1525,6 @@
     <button class="btn-primary" id="refreshBtn" onclick="loadDeals()">(cycle) Refresh</button>
     <span id="priceStatus"></span>
   </div>
-
-  <!-- BEGIN_DAILY_BRIEF -->
-<style>
-.db-wrap{background:linear-gradient(180deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin:14px 0 22px;font-family:var(--sans);color:var(--text);box-shadow:0 1px 2px rgba(15,32,68,.04)}
-.db-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:14px;gap:14px;flex-wrap:wrap}
-.db-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.2px;color:var(--navy);margin:0}
-.db-title em{color:var(--brand);font-style:normal}
-.db-sub{font-size:11px;color:var(--text-dim);font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px}
-.db-stats{display:flex;gap:14px;font-size:11px;font-family:var(--mono);color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
-.db-stats strong{color:var(--navy);font-weight:700;font-size:13px}
-.db-outlook{background:var(--blue-lt);border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:14px;font-size:13px}
-.db-outlook-h{font-weight:600;color:var(--navy);margin-bottom:4px}
-.db-outlook-missing{background:var(--amber-lt);border-left-color:var(--amber)}
-.db-outlook-missing .db-outlook-h{color:var(--amber)}
-.db-outlook-r{font-size:12px;color:var(--text-dim)}
-.db-ol-list{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.5}
-.db-ol-list li{margin:3px 0}
-.db-ol-tick{display:inline-block;font-family:var(--mono);font-size:10px;background:var(--navy);color:#fff;padding:1px 6px;border-radius:3px;margin-right:4px;letter-spacing:.4px;font-weight:600}
-.db-ol-src{color:var(--text-dim);font-size:10.5px;font-style:italic}
-.db-ol-section{margin-bottom:10px}
-.db-ol-section-h{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:var(--brand);margin:6px 0 2px;text-transform:uppercase}
-.db-ol-body{margin-top:8px}
-details.db-outlook{padding:10px 14px}
-details.db-outlook summary{cursor:pointer;list-style:none}
-details.db-outlook summary::-webkit-details-marker{display:none}
-details.db-outlook summary::before{content:"▶ ";font-size:9px;color:var(--blue);margin-right:4px}
-details.db-outlook[open] summary::before{content:"▼ "}
-.db-notable{background:var(--green-lt);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:14px}
-.db-notable-h{font-weight:600;color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.db-notable ul{margin:0;padding-left:18px;font-size:13px}
-.db-notable li{margin:3px 0}
-.db-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px}
-.db-section{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column}
-.db-sec-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--navy);margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline}
-.db-sec-count{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--surface3);padding:2px 8px;border-radius:10px}
-.db-sec-body{display:flex;flex-direction:column;gap:10px}
-.db-item{border-left:3px solid var(--border2);padding:8px 10px;background:var(--surface2);border-radius:0 4px 4px 0}
-.db-kind-news{border-left-color:var(--navy)}
-.db-kind-targets{border-left-color:var(--brand)}
-.db-kind-review{border-left-color:var(--blue)}
-.db-kind-activist{border-left-color:var(--red)}
-.db-kind-calendar{border-left-color:var(--amber)}
-.db-kind-events{border-left-color:var(--green)}
-.db-kind-research{border-left-color:var(--text-dim)}
-.db-item-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:4px}
-.db-headline{font-weight:600;color:var(--navy);font-size:13px;line-height:1.35;flex:1}
-.db-badges{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
-.db-badge,.db-status{font-family:var(--mono);font-size:9.5px;padding:2px 6px;border-radius:3px;letter-spacing:.4px;font-weight:600;white-space:nowrap}
-.db-badge-size{background:var(--navy);color:#fff}
-.db-badge-intl{background:var(--surface3);color:var(--text-dim);border:1px solid var(--border)}
-.db-st-announced{background:var(--green-lt);color:var(--green);border:1px solid var(--green)}
-.db-st-rumored{background:var(--amber-lt);color:var(--amber);border:1px solid var(--amber)}
-.db-st-closed{background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue)}
-.db-st-terminated{background:var(--red-lt);color:var(--red);border:1px solid var(--red)}
-.db-meta{font-size:11px;color:var(--text-dim);margin-bottom:6px;line-height:1.5}
-.db-meta strong{color:var(--text);font-weight:600}
-.db-summary{font-size:12px;color:var(--text);line-height:1.5;margin-bottom:6px}
-.db-foot{font-size:10.5px}
-.db-source{color:var(--blue);font-family:var(--mono);text-decoration:none}
-.db-source:hover{text-decoration:underline}
-.db-empty{font-size:12px;color:var(--text-dim);font-style:italic;padding:6px 0}
-.db-rejected{margin-top:14px;font-size:11px;color:var(--text-dim);background:var(--surface2);padding:8px 12px;border-radius:6px;border:1px solid var(--border)}
-.db-rejected summary{cursor:pointer;font-family:var(--mono);text-transform:uppercase;letter-spacing:.4px;color:var(--text-dim)}
-.db-rejected ul{margin:8px 0 0;padding-left:18px}
-.db-rejected li{margin:3px 0;line-height:1.4}
-.db-foot-note{font-size:10px;color:var(--text-dim);margin-top:10px;font-family:var(--mono);text-align:right;letter-spacing:.4px}
-</style>
-<div class="db-wrap">
-  <div class="db-head">
-    <div>
-      <h2 class="db-title">Daily <em>Special Sits</em> Brief</h2>
-      <div class="db-sub">Mergeranalyst.com . Wednesday, June 03, 2026 . US Risk Arb &amp; Event-Driven</div>
-    </div>
-    <div class="db-stats"><span><strong>12</strong> items</span><span><strong>29</strong> sources checked</span><span><strong>7</strong> excluded</span></div>
-  </div>
-  <details class="db-outlook" open><summary class="db-outlook-h">Ingested from JPM Special Sits Daily (Neetu Jhamb) &middot; received 09:02 AM ET &middot; 22 items</summary><div class="db-ol-body"><div class="db-ol-section"><div class="db-ol-section-h">Special Sits Today</div><ul class="db-ol-list"><li>JPM Research call TODAY 10AM: Casino M&amp;A — Thoughts on CZR and MGM/IAC (Cory Carpenter, Dan Politzer)</li><li>Research focus: MGM; 2-way flows in CZR, AVNS, DBRG, ESPR, TMHC; Sellers: WBD, SILA, AES</li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Events Today</div><ul class="db-ol-list"><li>LEG/SGI (Leggett &amp; Platt / Somnigroup) — HSR expires today (Approx)</li><li>Honeywell Aerospace (HON) — Inaugural Spin-off Investor Day today</li><li>OGN/SUN.BO (Organon / Sun Pharmaceutical) — Preliminary Proxy File By today</li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">News &amp; Press</div><ul class="db-ol-list"><li><strong>PRA: Doctors Company merger receives multi-state regulatory approval</strong> &mdash; As of June 2, 2026, The Doctors Company received final approval from insurance regulators in Alabama, DC, Illinois, Missouri, Pennsylvania, Texas and Vermont; also Lloyd&#x27;s of London (for PRA Corporate Capital Ltd.) and Cayman Islands Monetary Authority (for Inova Re and Eastern Re). California review remains pending. Company expects to close by June 30, 2026. <span class="db-ol-src">[Company release per Neetu Jhamb 6/3]</span></li><li><span class="db-ol-tick">HON</span> <strong>Honeywell Aerospace to Host Inaugural Investor Day</strong> &mdash; Spin-off investor day TODAY (June 3, 2026). <span class="db-ol-src">[Company / Neetu Jhamb 6/3]</span></li><li><strong>KVUE/KMB merger: China review remains under simplified procedure</strong> &mdash; Dealreporter cites two sources familiar: China&#x27;s merger review of Kenvue/Kimberly-Clark remains under the simplified procedure as of this week. Positive read-through for deal closure. <span class="db-ol-src">[Dealreporter via Neetu Jhamb 6/3]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">JPM Research</div><ul class="db-ol-list"><li><strong>MGM Resorts: Takeaways From NYC Investor Meetings (Daniel Politzer)</strong> &mdash; JPM hosted NYC investor meetings with MGM CFO Jonathan Halkyard. Japan IR remains on time/budget for 2030 opening with $2b+ steady-state EBITDA potential. MGM comfortable with 4.5x lease-adj leverage, could go to 5.5x for compelling/strategic deal. Mgmt did not comment on whether People Incorporated/IAC proposal impacts share repo ability. CZR/Fertitta acquisition viewed as neutral/slightly positive for MGM competitively. <span class="db-ol-src">[JPM Research note via Neetu Jhamb 6/3]</span></li><li><span class="db-ol-tick">OCTAVE</span> <strong>Octave (Hexagon spin-off): SDR vs US conversion technical analysis (Zara Patel)</strong> &mdash; Octave SDRs up 17% past two days, suggesting spin flowback is ending. US line closes notably stronger than SDR opens following day. Misunderstanding around conversion technicals: Hexagon SH received SDRs convertible to US underlying, but conversion is only on specific dates (per Form 10 page 179) — next conversion window is Monday August 6, 2026. Investors who sold SDRs promising to deliver US shares cannot currently convert. <span class="db-ol-src">[JPM EMEA Special Situations Desk (Zara Patel)]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Risk Arb Calendar</div><ul class="db-ol-list"><li>Wed 6/3: Organon/Sun Pharmaceutical (OGN/SUN.BO) — Preliminary Proxy File By</li><li>Wed 6/3: Leggett &amp; Platt/Somnigroup International (LEG/SGI) — HSR Expires (Approximate)</li><li>Wed 6/3: Honeywell Aerospace (HON) — Spin-off Investor Day</li><li>Thu 6/4: Boralex/Brookfield-La Caisse (BLX/BAM) — BLX Shareholder Vote (10 AM ET)</li><li>Fri 6/5: Olaplex/Henkel (OLPX/HEN.KGAA) — HSR Expires (Approximate)</li><li>Fri 6/5: Boralex/Brookfield-La Caisse (BLX/BAM) — Final Order Hearing (9 AM ET)</li><li>Fri 6/5: Aurion Resources/Agnico Eagle Mines (AU/AEM) — AU SH Vote (12:30 PM ET)</li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">M&amp;A Targets (Press Reports)</div><ul class="db-ol-list"><li>JPM Pre-Event List — US M&amp;A targets per press reports: TMUS, TFX, INBX, BF/B, CZR, JBLU, SBAC, PUIG, OGN, CVLT, RVMD, QGEN, MDGL, PZZA, ABVX, CRSP, KNTK, BILL, CSX, BL, ASND, AIG, MRVL, PTGX, DPZ, J, GTLB, GOOS, PD, LION <span class="db-ol-src">[JPM US Special Sits Pre-Event List (updated 4/23/26)]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Active M&amp;A Proposals</div><ul class="db-ol-list"><li>JPM Pre-Event List — Active M&amp;A proposals: GNK, HZO <span class="db-ol-src">[JPM US Special Sits Pre-Event List]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Strategic Reviews</div><ul class="db-ol-list"><li>JPM Pre-Event List — Strategic reviews underway: PLTK, FWRD, FMC, LKQ, EEX, ATKR, CSR <span class="db-ol-src">[JPM US Special Sits Pre-Event List]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Activist Pressure</div><ul class="db-ol-list"><li>JPM Pre-Event List — Activist pressure to sell company: VOYA, FUN, ALKT, TRIP, ITGR, NVAX, AVTR <span class="db-ol-src">[JPM US Special Sits Pre-Event List]</span></li></ul></div><div class="db-ol-section"><div class="db-ol-section-h">Event-Driven Options Activity</div><ul class="db-ol-list"><li>Event-driven options activity (June 3, 2026): AMZN (30 trades &gt;500 contracts), DVN (12), WBD (10), BSX (3), RIG (3), CWAN (1), EA (1), GSAT (1), QXO (1)</li></ul></div></div></details>
-  <div class="db-notable"><div class="db-notable-h">Notable today</div><ul><li>Headline-grabber for the brief is the People Incorporated (IAC) unsolicited $48.30 cash bid for MGM Resorts (June 1) -- chunky US-listed risk-arb name with publicly confirmed board receipt.</li><li>Berkshire/Taylor Morrison ($6.8B equity) still anchors the risk-arb book; first major Berkshire deal under Greg Abel.</li><li>Weatherford/NCS Multistage is the only fresh definitive-agreement US-listed deal in the June 1-3 window; small (~$151M) but clean.</li><li>Two strategic-review/activist signals on US-listed financials this morning: Voya (TCIM letter) and Jasper Therapeutics (formal review). Voya is the higher-quality situation -- TCIM explicitly cites peer M&amp;A appetite.</li><li>Salesforce/Contentful is the marquee tech deal but target is private and terms undisclosed -- limited risk-arb playability; relevant for software M&amp;A read-through.</li></ul></div>
-  <div class="db-grid">
-    <section class="db-section db-sec-news"><h3 class="db-sec-title"><span class="db-sec-name">News &amp; Press</span><span class="db-sec-count">4</span></h3><div class="db-sec-body"><div class="db-item db-kind-news"><div class="db-item-head"><div class="db-headline">Salesforce signs definitive agreement to acquire Contentful</div><div class="db-badges"><span class="db-status db-st-announced">ANNOUNCED</span><span class="db-badge db-badge-intl">INTL</span></div></div><div class="db-meta"><strong>Target:</strong> Contentful (private) &nbsp;.&nbsp; <strong>Acquirer:</strong> Salesforce, Inc. (CRM) &nbsp;.&nbsp; <strong>Consideration:</strong> undisclosed; press reports indicate ~$1.0-1.5B (cash, unconfirmed)</div><div class="db-summary">Salesforce announced a definitive agreement to acquire Contentful, a composable headless content platform serving 4,800+ enterprise brands. Deal will integrate Contentful natively into Customer 360/Agentforce. Expected to close in Q3 of Salesforce&#x27;s FY2027, subject to regulatory approvals. Financial terms not disclosed.</div><div class="db-foot"><a class="db-source" href="https://www.salesforce.com/news/stories/salesforce-signs-definitive-agreement-to-acquire-contentful/" target="_blank" rel="noopener noreferrer">Salesforce Newsroom (press release) . 2026-06-01 &raquo;</a></div></div>
-<div class="db-item db-kind-news"><div class="db-item-head"><div class="db-headline">Weatherford signs definitive agreement to acquire NCS Multistage in ~$151M stock-and-cash deal</div><div class="db-badges"><span class="db-badge db-badge-size">$151M</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> NCS Multistage Holdings, Inc. (NCSM) &nbsp;.&nbsp; <strong>Acquirer:</strong> Weatherford International plc (WFRD) &nbsp;.&nbsp; <strong>Consideration:</strong> stock and cash; 0.463 WFRD shares per NCSM share on a blended basis, up to 19.99% payable in cash</div><div class="db-summary">Weatherford will acquire NCS Multistage, expanding its completions portfolio and unconventional resource exposure. NCSM shareholders can elect 0.554 WFRD shares or a mix of 0.239 shares plus cash equal to 0.137 shares. Expected $15M+ annual run-rate cost synergies within 18 months; immediately accretive to adjusted FCF/share. Closing expected H2 2026, subject to regulatory approval. Approved by boards and NCSM&#x27;s &gt;50% controlling shareholder.</div><div class="db-foot"><a class="db-source" href="https://www.globenewswire.com/news-release/2026/06/01/3304202/0/en/weatherford-announces-definitive-agreement-to-acquire-ncs-multistage-expanding-completions-portfolio-and-unconventional-resource-exposure.html" target="_blank" rel="noopener noreferrer">GlobeNewswire (Weatherford press release) . 2026-06-01 &raquo;</a></div></div>
-<div class="db-item db-kind-news"><div class="db-item-head"><div class="db-headline">Aveanna Healthcare completes $175.5M cash acquisition of Family First Homecare; raises 2026 guidance</div><div class="db-badges"><span class="db-badge db-badge-size">$176M</span><span class="db-status db-st-closed">CLOSED</span></div></div><div class="db-meta"><strong>Target:</strong> Family First Holding, LLC (Family First Homecare) (private) &nbsp;.&nbsp; <strong>Acquirer:</strong> Aveanna Healthcare Holdings Inc. (AVAH) &nbsp;.&nbsp; <strong>Consideration:</strong> $175.5M cash</div><div class="db-summary">Aveanna completed its acquisition of Family First Homecare, a 27-location, 7-state pediatric private-duty nursing provider, for $175.5M cash, funded with cash on hand. Aveanna raised FY26 revenue guidance to $2.63-$2.65B (from $2.56-$2.58B) and Adjusted EBITDA to $338-$342M, reflecting Family First&#x27;s contribution.</div><div class="db-foot"><a class="db-source" href="https://www.globenewswire.com/news-release/2026/06/02/3305023/0/en/aveanna-healthcare-holdings-completes-acquisition-of-family-first-homecare-and-updates-full-year-2026-guidance.html" target="_blank" rel="noopener noreferrer">GlobeNewswire (Aveanna press release) . 2026-06-02 &raquo;</a></div></div>
-<div class="db-item db-kind-news"><div class="db-item-head"><div class="db-headline">Berkshire Hathaway to acquire Taylor Morrison for $72.50/share cash; $6.8B equity / $8.5B EV</div><div class="db-badges"><span class="db-badge db-badge-size">$6.8B</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Taylor Morrison Home Corporation (TMHC) &nbsp;.&nbsp; <strong>Acquirer:</strong> Berkshire Hathaway Inc. (BRK.A/BRK.B) &nbsp;.&nbsp; <strong>Consideration:</strong> $72.50/share all-cash (24% premium to 5/29 close of $58.50)</div><div class="db-summary">Berkshire Hathaway agreed to acquire Taylor Morrison for $72.50/share in cash (~$6.8B equity, ~$8.5B EV). Announced May 31, 2026; remains active in the daily news set. First major acquisition under CEO Greg Abel; TMHC to become private and delist from NYSE. Expected close H2 2026, subject to shareholder and regulatory approvals. Existing TMHC management (CEO Sheryl Palmer) to continue.</div><div class="db-foot"><a class="db-source" href="https://www.sec.gov/Archives/edgar/data/0001562476/000119312526249694/d111152dex991.htm" target="_blank" rel="noopener noreferrer">SEC EDGAR (Taylor Morrison 8-K Ex.99.1) . 2026-05-31 &raquo;</a></div></div></div></section>
-<section class="db-section db-sec-research"><h3 class="db-sec-title"><span class="db-sec-name">Research</span><span class="db-sec-count">0</span></h3><div class="db-sec-body"><div class="db-empty">No items today.</div></div></section>
-<section class="db-section db-sec-events"><h3 class="db-sec-title"><span class="db-sec-name">Events Today</span><span class="db-sec-count">1</span></h3><div class="db-sec-body"><div class="db-item db-kind-events"><div class="db-item-head"><div class="db-headline">Comcast raises tender-offer consideration cap to $4.14B (June 3, 2026)</div><div class="db-badges"><span class="db-badge db-badge-size">$4.1B</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Comcast Corporation senior notes (multiple maturities 2027-2029) &nbsp;.&nbsp; <strong>Acquirer:</strong> Comcast / Comcast Cable (CMCSA) &nbsp;.&nbsp; <strong>Consideration:</strong> cash tender for senior notes</div><div class="db-summary">On June 3, 2026, Comcast and Comcast Cable raised the maximum tender-offer consideration cap to $4.14B, allowing them to repurchase all validly tendered higher-priority notes due 2027-2029. Capital-structure event rather than M&amp;A, but a same-day risk-arb adjacent calendar item.</div><div class="db-foot"><a class="db-source" href="https://www.tipranks.com/news/company-announcements/comcast-expands-cash-tender-offers-to-cut-debt" target="_blank" rel="noopener noreferrer">TipRanks / company announcement . 2026-06-03 &raquo;</a></div></div></div></section>
-<section class="db-section db-sec-calendar"><h3 class="db-sec-title"><span class="db-sec-name">Risk Arb Calendar</span><span class="db-sec-count">2</span></h3><div class="db-sec-body"><div class="db-item db-kind-calendar"><div class="db-item-head"><div class="db-headline">Paramount Skydance / Warner Bros. Discovery: EU antitrust deadline July 7, 2026</div><div class="db-badges"><span class="db-badge db-badge-size">$110.0B</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Warner Bros. Discovery, Inc. (WBD) &nbsp;.&nbsp; <strong>Acquirer:</strong> Paramount Skydance Corp. &nbsp;.&nbsp; <strong>Consideration:</strong> previously announced ~$110B combination</div><div class="db-summary">European Commission has set an initial Phase I deadline of July 7, 2026 to clear, conditionally clear, or open an in-depth probe of Paramount Skydance&#x27;s ~$110B acquisition of Warner Bros. Discovery. Reaffirmed in Bloomberg coverage on June 2, 2026.</div><div class="db-foot"><a class="db-source" href="https://www.bloomberg.com/news/articles/2026-06-02/paramount-seeks-eu-green-light-for-110-billion-warner-deal" target="_blank" rel="noopener noreferrer">Bloomberg . 2026-06-02 &raquo;</a></div></div>
-<div class="db-item db-kind-calendar"><div class="db-item-head"><div class="db-headline">Verizon any-and-all tender offers expire 5:00pm NYC June 16, 2026</div><div class="db-badges"><span class="db-badge db-badge-size">$1.4B</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Verizon notes (20 series) &nbsp;.&nbsp; <strong>Acquirer:</strong> Verizon Communications (VZ) &nbsp;.&nbsp; <strong>Consideration:</strong> cash tender / consent solicitations; ~$1.4B Waterfall cap</div><div class="db-summary">Verizon announced pricing terms for 20-series tender offers; any-and-all tender offers expire 5:00pm ET on June 16, 2026, with Waterfall cap raised to ~$1.4B. Liability-management event on the near-term arb calendar.</div><div class="db-foot"><a class="db-source" href="https://www.globenewswire.com/news-release/2026/06/02/3305526/0/en/Verizon-announces-pricing-terms-of-its-tender-offers-and-consent-solicitations-for-20-series-of-Verizon-and-certain-of-its-subsidiaries-notes.html" target="_blank" rel="noopener noreferrer">GlobeNewswire (Verizon press release) . 2026-06-02 &raquo;</a></div></div></div></section>
-<section class="db-section db-sec-targets"><h3 class="db-sec-title"><span class="db-sec-name">M&amp;A Targets</span><span class="db-sec-count">2</span></h3><div class="db-sec-body"><div class="db-item db-kind-targets"><div class="db-item-head"><div class="db-headline">People Incorporated proposes to acquire MGM Resorts International for $48.30/share cash</div><div class="db-badges"><span class="db-status db-st-rumored">RUMORED</span></div></div><div class="db-meta"><strong>Target:</strong> MGM Resorts International (MGM) &nbsp;.&nbsp; <strong>Acquirer:</strong> People Incorporated (IAC) &nbsp;.&nbsp; <strong>Consideration:</strong> $48.30/share all-cash for shares not already owned (IAC owns 26.1%)</div><div class="db-summary">On June 1, 2026, People Incorporated (formerly IAC) submitted a non-binding proposal to MGM&#x27;s Board to acquire all MGM shares it does not already own for $48.30 in cash. Represents a 24.1% premium to MGM&#x27;s 30-day VWAP through May 29, ~30%+ to 90-day VWAP, and 10.6% to last close. MGM Board confirmed receipt and is reviewing. Not yet a definitive agreement -- labeled rumored/proposed.</div><div class="db-foot"><a class="db-source" href="https://www.prnewswire.com/news-releases/people-incorporated-proposes-to-acquire-mgm-resorts-international-for-48-30-per-share-in-cash-302787093.html" target="_blank" rel="noopener noreferrer">PR Newswire (People Incorporated press release); corroborated by MGM confirmation press release and SEC SC 13D/A . 2026-06-01 &raquo;</a></div></div>
-<div class="db-item db-kind-targets"><div class="db-item-head"><div class="db-headline">ADW Capital pursues unsolicited $18/share (~$3B) buyout of Driven Brands</div><div class="db-badges"><span class="db-badge db-badge-size">$3.0B</span><span class="db-status db-st-rumored">RUMORED</span></div></div><div class="db-meta"><strong>Target:</strong> Driven Brands Holdings Inc. (DRVN) &nbsp;.&nbsp; <strong>Acquirer:</strong> ADW Capital Management &nbsp;.&nbsp; <strong>Consideration:</strong> $18/share cash (~40% premium); unsolicited proposal</div><div class="db-summary">Activist ADW Capital (held ~3.7% stake at time of escalation) has proposed acquiring Driven Brands at $18/share, ~40% premium and nearly $3B. ADW had requested a meeting by May 15, 2026 and threatened to take the offer directly to shareholders absent good-faith engagement. Roark Capital owns ~60% of DRVN, complicating any deal. DRVN extended its 10-K filing deadline to June 10/June 15, 2026. Status: unsolicited proposal, not a definitive deal.</div><div class="db-foot"><a class="db-source" href="https://www.investing.com/news/company-news/adw-capital-proposes-18-per-share-buyout-of-driven-brands-93CH-4649532" target="_blank" rel="noopener noreferrer">Investing.com / Hedgeweek / WSJ coverage . 2026-04-30 (proposal still pending/ongoing into June) &raquo;</a></div></div></div></section>
-<section class="db-section db-sec-review"><h3 class="db-sec-title"><span class="db-sec-name">Strategic Reviews</span><span class="db-sec-count">2</span></h3><div class="db-sec-body"><div class="db-item db-kind-review"><div class="db-item-head"><div class="db-headline">Jasper Therapeutics initiates review of strategic alternatives including sale</div><div class="db-badges"><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Jasper Therapeutics, Inc. (JSPR) &nbsp;.&nbsp; <strong>Consideration:</strong> n/a (review)</div><div class="db-summary">On June 1, 2026, Jasper&#x27;s Board initiated a comprehensive review of strategic alternatives including a sale of assets, licensing, collaborations, a sale of the Company, a business combination/merger, or an orderly wind-down. No defined timeline. Going-concern language flagged in press release.</div><div class="db-foot"><a class="db-source" href="https://www.sec.gov/Archives/edgar/data/0001788028/000121390026063157/ea029290901ex99-1.htm" target="_blank" rel="noopener noreferrer">SEC EDGAR (Jasper 8-K Ex.99.1) . 2026-06-01 &raquo;</a></div></div>
-<div class="db-item db-kind-review"><div class="db-item-head"><div class="db-headline">Centerspace completes strategic review; announces ~$240M portfolio optimization and deleveraging plan</div><div class="db-badges"><span class="db-badge db-badge-size">$240M</span><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Centerspace (CSR) &nbsp;.&nbsp; <strong>Consideration:</strong> n/a (portfolio sales, deleveraging)</div><div class="db-summary">On June 1, 2026, Centerspace&#x27;s Board approved a portfolio optimization and deleveraging plan rather than a sale of the company. Plans approximately $240M of asset sales to enhance portfolio quality and strengthen the balance sheet.</div><div class="db-foot"><a class="db-source" href="https://www.sec.gov/Archives/edgar/data/0000798359/000079835926000057/csrjune12026pressrelease_vf.htm" target="_blank" rel="noopener noreferrer">SEC EDGAR (Centerspace 8-K press release) . 2026-06-01 &raquo;</a></div></div></div></section>
-<section class="db-section db-sec-activist"><h3 class="db-sec-title"><span class="db-sec-name">Activist Pressure</span><span class="db-sec-count">1</span></h3><div class="db-sec-body"><div class="db-item db-kind-activist"><div class="db-item-head"><div class="db-headline">TCIM (TOMS Capital) sends letter to Voya board urging formal strategic review and sale</div><div class="db-badges"><span class="db-status db-st-announced">ANNOUNCED</span></div></div><div class="db-meta"><strong>Target:</strong> Voya Financial, Inc. (VOYA) &nbsp;.&nbsp; <strong>Consideration:</strong> n/a (activist letter)</div><div class="db-summary">On June 1, 2026, TOMS Capital Investment Management (TCIM), one of Voya&#x27;s largest shareholders, sent a letter to the Board calling for an urgent formal review of all strategic alternatives, including a sale of the Company, citing persistent trading discount (8x forward earnings), management &#x27;strategic indecisiveness,&#x27; and the dilutive Benefitfocus acquisition. Says multiple asset managers signaled active M&amp;A appetite for Voya-like profiles in latest earnings cycle.</div><div class="db-foot"><a class="db-source" href="https://www.businesswire.com/news/home/20260601331831/en/TCIM-Sends-Letter-to-Voya-Financials-Board-of-Directors-Calling-on-Them-to-Urgently-Initiate-a-Formal-Strategic-Review-and-Engage-with-All-Interested-Parties" target="_blank" rel="noopener noreferrer">BusinessWire (TCIM press release); corroborated by stocktitan.net and Bloomberg . 2026-06-01 &raquo;</a></div></div></div></section>
-  </div>
-  <details class="db-rejected"><summary>Excluded for insufficient sourcing (7)</summary><ul><li><strong>Nikkon Holdings exploring take-private with Bain Capital / Warburg Pincus / Blackstone</strong> &mdash; Japan-listed target (non-US listed); deal is at pre-bidding stage with no confirmed primary press release. Excluded per scope.</li><li><strong>Delivery Hero faces breakup pressure from activist</strong> &mdash; International (Germany-listed); no fresh primary source dated June 1-3, 2026 confirmed.</li><li><strong>Santander Brasil / Esfera merger vote June 30, 2026</strong> &mdash; International (Brazil); outside US-listed scope.</li><li><strong>Various small/micro-cap deals (Sadot Group/Anira, Eastern Co/Sungear, Arxis/Omnetics, Sphere 3D/Cathedra Bitcoin)</strong> &mdash; Verified but de minimis size and limited relevance to a JPM Special Sits-style brief; excluded to keep signal-to-noise high.</li><li><strong>Optimum Communications $300M tender at $2.50</strong> &mdash; Not a strategic M&amp;A event -- distressed liability-management/capital-structure repositioning.</li><li><strong>FMC Corporation strategic review</strong> &mdash; Authorized in February 2026, not a new June 1-3 development; preliminary stage. Excluded as stale (could be referenced as background in brief).</li><li><strong>FedEx Freight (FDXF) spin-off completion</strong> &mdash; Completed June 1, 2026 -- verified but already widely reported pre-window; could be referenced as background.</li></ul></details>
-  <div class="db-foot-note">Generated 2026-06-03 18:30 UTC . Sourcing rule: every item backed by primary source or two corroborating reports. Not financial advice.</div>
-</div>
-<!-- END_DAILY_BRIEF -->
-
-
 
   <!-- Column visibility toggles -->
   <div class="col-toggle-bar" id="colToggleBar" style="display:none">
@@ -1844,7 +1768,8 @@ const DEALS = [
     "dealRisk": "medium",
     "description": "Sachem Capital and Industrial Realty Group to combine into IRG Realty Trust (IRGT), a top-10 public industrial REIT with ~$3.4B EV. IRG contributes 98 industrial assets (~$2.9B GAV) for 94.1% of pro-forma equity via OP units; SACH common implied at $2.00 (~90% premium to 30-day VWAP, $1.03 May 15 close). SACH transitions from subscale mortgage REIT to scaled industrial REIT. SACH shareholder vote required.",
     "comment": "Implied $2.00 SACH valuation derived from pro-forma 5.9% legacy stake of ~$3.4B EV combined entity. Large dilution overhang; investigation announced by shareholder rights firms.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/18/3296422/0/en/Sachem-Capital-Corp-and-Industrial-Realty-Group-Announce-Strategic-Combination-to-Create-IRG-Realty-Trust-a-Top-10-Public-Industrial-REIT.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/18/3296422/0/en/Sachem-Capital-Corp-and-Industrial-Realty-Group-Announce-Strategic-Combination-to-Create-IRG-Realty-Trust-a-Top-10-Public-Industrial-REIT.html",
+    "category": "active_deal"
   },
   {
     "target": "MiRus LLC (TAVR-Structural Heart NewCo)",
@@ -1863,7 +1788,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Boston Scientific invests $1.5B for ~34% of MiRus LLC and takes exclusive option to acquire MiRus's TAVR-Structural Heart NewCo for up to $3.0B in milestone payments — total potential $4.5B. SIEGEL TAVR is the first nickel-free balloon-expandable TAVR valve, built on proprietary rhenium alloy.",
-    "sourceUrl": "https://news.bostonscientific.com/2026-05-18-Boston-Scientific-announces-strategic-investment-in-MiRus-LLC"
+    "sourceUrl": "https://news.bostonscientific.com/2026-05-18-Boston-Scientific-announces-strategic-investment-in-MiRus-LLC",
+    "category": "active_deal"
   },
   {
     "target": "Omnisys Ltd",
@@ -1882,7 +1808,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Ondas to acquire Israeli defense AI software firm Omnisys for $199M in all-stock plus up to $60M earn-out. Adds Omnisys's AI Battle Resource Optimization platform to ONDS defense systems, expanding into AI-enabled battlefield management. Close targeted June 16, 2026.",
-    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001646188/000121390026058161/ea0291248-8k_ondas.htm"
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001646188/000121390026058161/ea0291248-8k_ondas.htm",
+    "category": "active_deal"
   },
   {
     "target": "Neurovia AI Limited",
@@ -1901,7 +1828,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Robo.ai (AIIO) to acquire Neurovia AI for $100M in Class B ordinary shares (149.1M shares). Neurovia provides data processing and compression technology for physical AI applications — autonomous vehicles, robotics, smart cities. 8-year lock-up structure aligns sellers post-close. Target close on/before June 16, 2026.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/roboai-announces-acquisition-of-data-processing-and-compression-technology-company-neurovia-building-data-infrastructure-for-the-machine-economy-302766695.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/roboai-announces-acquisition-of-data-processing-and-compression-technology-company-neurovia-building-data-infrastructure-for-the-machine-economy-302766695.html",
+    "category": "active_deal"
   },
   {
     "target": "Whitbread plc",
@@ -1918,7 +1846,8 @@ const DEALS = [
     "dealCurrency": "GBP",
     "dealRisk": "high",
     "description": "Corvex Management (Keith Meister, ~7% economic interest) publicly demanding sale process for Whitbread (Premier Inn owner); threatening to nominate alternative slate of directors if Board refuses. Stock at 13-year low — Corvex argues UK freehold value alone exceeds market cap.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/corvex-management-calls-for-sale-of-whitbread-plc-302774464.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/corvex-management-calls-for-sale-of-whitbread-plc-302774464.html",
+    "category": "rumored"
   },
   {
     "target": "Hiscox Ltd",
@@ -1935,7 +1864,8 @@ const DEALS = [
     "dealCurrency": "GBP",
     "dealRisk": "high",
     "description": "Intact Financial (Canada) reportedly exploring a bid for UK specialty insurer Hiscox per Insurance Post May 15. HSX +15% on the report. No firm offer; companies declined to comment.",
-    "sourceUrl": "https://www.postonline.co.uk/news/7960372/intact-exploring-hiscox-acquisition"
+    "sourceUrl": "https://www.postonline.co.uk/news/7960372/intact-exploring-hiscox-acquisition",
+    "category": "rumored"
   },
   {
     "target": "NetApp Inc",
@@ -1952,7 +1882,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "NetApp draws Betaville 'uncooked' takeover speculation May 14, 2026. AI-storage angle driving interest; no bidder identified. Highly speculative — 'uncooked' = unverified.",
-    "sourceUrl": "https://www.gurufocus.com/news/8859886/netapp-ntap-stock-rises-amid-acquisition-rumors"
+    "sourceUrl": "https://www.gurufocus.com/news/8859886/netapp-ntap-stock-rises-amid-acquisition-rumors",
+    "category": "rumored"
   },
       {
     "target": "First Advantage Corp",
@@ -1969,7 +1900,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Merger of First Advantage (FA) and Sterling Check (STER) in background screening sector consolidation. All-stock transaction pending regulatory clearances.",
-    "sourceUrl": "https://www.fadv.com/"
+    "sourceUrl": "https://www.fadv.com/",
+    "category": "active_deal"
   },
           {
     "target": "Sila Realty Trust Inc",
@@ -1990,7 +1922,8 @@ const DEALS = [
     "comment": "Clean all-cash take-private. Non-traded REIT — limited public float risk. Reverse termination fee $152M signals acquirer commitment.",
     "dealSize": 2400,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "category": "active_deal"
   },
   {
     "target": "TopBuild Corp",
@@ -2012,7 +1945,8 @@ const DEALS = [
     "dealSize": 17000,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://investors.qxo.com/news/news-details/2026/QXO-to-Acquire-TopBuild-for-17-Billion/"
+    "sourceUrl": "https://investors.qxo.com/news/news-details/2026/QXO-to-Acquire-TopBuild-for-17-Billion/",
+    "category": "active_deal"
   },
   {
     "target": "Honeywell Productivity Solutions & Services (HON carve-out)",
@@ -2030,11 +1964,12 @@ const DEALS = [
     "status": "pending",
     "closingProbability": 88,
     "description": "Brady Corporation to acquire Honeywell's Productivity Solutions and Services business for $1.4B all-cash (~8x EBITDA). PSS provides mobile computers, barcode scanners, printers, and workflow software; ~$1.1B 2025 revenue; ~3,000 employees. Unanimous board approval. Part of HON's pre-separation portfolio simplification.",
-    "comment": "All-cash, unanimously approved. Carve-out from Honeywell ahead of planned 2H 2026 separation into three companies.",
+    "comment": "(2026-06-03) Inaugural Honeywell Aerospace spin-off Investor Day held today.\nAll-cash, unanimously approved. Carve-out from Honeywell ahead of planned 2H 2026 separation into three companies.",
     "dealSize": 1400,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.stocktitan.net/news/BRC/brady-corporation-to-acquire-honeywell-s-productivity-solutions-and-eoefvkkk4j0l.html"
+    "sourceUrl": "https://www.stocktitan.net/news/BRC/brady-corporation-to-acquire-honeywell-s-productivity-solutions-and-eoefvkkk4j0l.html",
+    "category": "active_deal"
   },
   {
     "target": "Rupert Resources Ltd",
@@ -2056,7 +1991,8 @@ const DEALS = [
     "dealSize": 2900,
     "dealCurrency": "CAD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.stocktitan.net/news/AEM/rupert-resources-to-be-acquired-by-agnico-0b1bsnrser53.html"
+    "sourceUrl": "https://www.stocktitan.net/news/AEM/rupert-resources-to-be-acquired-by-agnico-0b1bsnrser53.html",
+    "category": "active_deal"
   },
   {
     "target": "Serra Verde Group",
@@ -2078,7 +2014,8 @@ const DEALS = [
     "dealSize": 2800,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.stocktitan.net/news/USAR/usa-rare-earth-announces-definitive-agreement-to-acquire-serra-verde-rmz0goc9lln8.html"
+    "sourceUrl": "https://www.stocktitan.net/news/USAR/usa-rare-earth-announces-definitive-agreement-to-acquire-serra-verde-rmz0goc9lln8.html",
+    "category": "active_deal"
   },
   {
     "target": "North Pacific Paper Company (NORPAC)",
@@ -2100,7 +2037,8 @@ const DEALS = [
     "dealSize": 360,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/international-paper-to-acquire-north-pacific-paper-company-302745070.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/international-paper-to-acquire-north-pacific-paper-company-302745070.html",
+    "category": "active_deal"
   },
   {
     "target": "LCI Industries",
@@ -2122,7 +2060,8 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://ir.patrickind.com/investor-news-events/press-releases/detail/304/patrick-industries-inc-confirms-discussions-with-lci-industries-regarding-a-potential-merger-of-equals"
+    "sourceUrl": "https://ir.patrickind.com/investor-news-events/press-releases/detail/304/patrick-industries-inc-confirms-discussions-with-lci-industries-regarding-a-potential-merger-of-equals",
+    "category": "rumored"
   },
   {
     "target": "Repay Holdings Corporation",
@@ -2144,7 +2083,8 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260417336994/en/REPAY-Confirms-Receipt-of-Unsolicited-Non-Binding-Proposal-from-Forager-Capital-Management"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260417336994/en/REPAY-Confirms-Receipt-of-Unsolicited-Non-Binding-Proposal-from-Forager-Capital-Management",
+    "category": "rumored"
   },
   {
     "target": "Avanos Medical Inc",
@@ -2166,7 +2106,8 @@ const DEALS = [
     "dealSize": 1272,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.stocktitan.net/news/AVNS/avanos-medical-inc-agrees-to-be-acquired-by-american-industrial-g944yia1cgs8.html"
+    "sourceUrl": "https://www.stocktitan.net/news/AVNS/avanos-medical-inc-agrees-to-be-acquired-by-american-industrial-g944yia1cgs8.html",
+    "category": "active_deal"
   },
   {
     "target": "Seer Inc",
@@ -2188,7 +2129,8 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260424350279/en/The-Radoff-JEC-Group-Submits-Improved-Non-Binding-Proposal-to-Acquire-Seer-Inc."
+    "sourceUrl": "https://www.businesswire.com/news/home/20260424350279/en/The-Radoff-JEC-Group-Submits-Improved-Non-Binding-Proposal-to-Acquire-Seer-Inc.",
+    "category": "rumored"
   },
   {
     "target": "Two Harbors Investment",
@@ -2210,7 +2152,8 @@ const DEALS = [
     "dealSize": 1300,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://www.twoinv.com/news-events/press-releases/detail/465/two-and-crosscountry-mortgage-llc-announce-amended-merger"
+    "sourceUrl": "https://www.twoinv.com/news-events/press-releases/detail/465/two-and-crosscountry-mortgage-llc-announce-amended-merger",
+    "category": "active_deal"
   },
   {
     "target": "Madrigal Pharmaceuticals",
@@ -2228,8 +2171,9 @@ const DEALS = [
     "status": "rumor",
     "closingProbability": 20,
     "description": "MDGL up 12% on renewed Betaville uncooked takeover speculation. Lead drug Rezdiffra (resmetirom) for NASH/MASH. Multiple large pharma companies potentially interested. ~$7B mkt cap.",
-    "comment": "Betaville uncooked alert. High risk  -  no confirmed acquirer.",
-    "dealRisk": "high"
+    "comment": "(2026-06-03) Press reports name as potential M&A target.\nBetaville uncooked alert. High risk  -  no confirmed acquirer.",
+    "dealRisk": "high",
+    "category": "rumored"
   },
   {
     "target": "Versigent (Aptiv spin-off)",
@@ -2249,7 +2193,8 @@ const DEALS = [
     "description": "Versigent spin-off from Aptiv begins when-issued trading today. Ryan Brinkman values at 4.5x multiple, $32-38 range. Below 4.0x viewed as attractive entry point. Note: This is a spin-off, not a merger.",
     "comment": "VGNT when-issued trading begins. Brinkman 4.5x multiple = $32-38 range. Below 4.0x = attractive entry.",
     "dealRisk": "low",
-    "sourceUrl": "https://www.aptiv.com/en/newsroom/article/aptiv-board-of-directors-approves-spin-off-of-versigent"
+    "sourceUrl": "https://www.aptiv.com/en/newsroom/article/aptiv-board-of-directors-approves-spin-off-of-versigent",
+    "category": "active_deal"
   },
     {
     "target": "Warner Bros. Discovery",
@@ -2313,7 +2258,8 @@ const DEALS = [
     "dealRisk": "high",
     "breakupFee": "$3.9B / $7.0B rev",
     "marketShare": "~15% US SVOD",
-    "sourceUrl": "https://variety.com/2026/film/news/paramount-warner-bros-foreign-ownership-middle-eastern-funds-1236731732/"
+    "sourceUrl": "https://variety.com/2026/film/news/paramount-warner-bros-foreign-ownership-middle-eastern-funds-1236731732/",
+    "category": "active_deal"
   },
   {
     "target": "Norfolk Southern",
@@ -2323,15 +2269,15 @@ const DEALS = [
     "industry": "Railroads / Class I",
     "currentPrice": 281.2,
     "dealPrice": 341,
-    "dealTerms": "$88.82 cash + 1.0000 UNP share per NSC share = ~$341.00; UP filed amended STB application April 30, 2026 claiming $3.5B annual shipper savings; CN response issued. JPM standalone fair values: NSC $275, UNP $290; ~59% implied close probability.",
+    "dealTerms": "$88.82 cash + 1.0000 UNP share per NSC share = ~$341.00; UP filed amended STB application April 30, 2026 claiming $3.5B annual shipper savings; CN response issued. Industry researchstandalone fair values: NSC $275, UNP $290; ~59% implied close probability.",
     "spread": 13.8,
     "annualizedReturn": 8.6,
     "announced": "2025-07-16",
     "expectedClose": "2027-Q2",
     "status": "pending",
     "closingProbability": 59,
-    "description": "Union Pacific's $85bn bid to create America's first transcontinental railroad. STB rejected initial application Jan 16 2026 as incomplete. UP filed amended STB application April 30, 2026 with full merger agreement and forward-looking projections, claiming $3.5bn in annual shipper savings. Canadian National issued formal response opposing. Second application now under STB completeness review. JPM standalone fair value NSC $275 / UNP $290; market-implied close probability ~59% based on current spread. | Breakup: Undisclosed (STB-regulated). Combined: ~45% US Class I rail freight  -  main regulatory concern.",
-    "comment": "Amended STB application filed April 30 with $3.5bn shipper savings claim. CN issued opposing response. JPM standalone valuation: NSC $275, UNP $290 - implies 59% close probability at current trading levels. UP CEO Jim Vena: 'This will eliminate hand-off delays in Chicago gateways, shift 2 million truckloads to rail.' Republican AGs from 7 states wrote STB characterizing the merger as anti-competitive. Morgan Stanley: 'The April 30 refiling is critical - once accepted, STB formal review takes 18-24 months.'",
+    "description": "Union Pacific's $85bn bid to create America's first transcontinental railroad. STB rejected initial application Jan 16 2026 as incomplete. UP filed amended STB application April 30, 2026 with full merger agreement and forward-looking projections, claiming $3.5bn in annual shipper savings. Canadian National issued formal response opposing. Second application now under STB completeness review. Industry researchstandalone fair value NSC $275 / UNP $290; market-implied close probability ~59% based on current spread. | Breakup: Undisclosed (STB-regulated). Combined: ~45% US Class I rail freight  -  main regulatory concern.",
+    "comment": "Amended STB application filed April 30 with $3.5bn shipper savings claim. CN issued opposing response. Industry researchstandalone valuation: NSC $275, UNP $290 - implies 59% close probability at current trading levels. UP CEO Jim Vena: 'This will eliminate hand-off delays in Chicago gateways, shift 2 million truckloads to rail.' Republican AGs from 7 states wrote STB characterizing the merger as anti-competitive. Morgan Stanley: 'The April 30 refiling is critical - once accepted, STB formal review takes 18-24 months.'",
     "dealSize": 85,
     "evEbitda": 18.2,
     "dealCurrency": "USD",
@@ -2377,7 +2323,8 @@ const DEALS = [
     "dealRisk": "high",
     "breakupFee": "Undisclosed",
     "marketShare": "~45% US rail",
-    "sourceUrl": "https://norfolksouthern.investorroom.com/2025-07-29-Union-Pacific-and-Norfolk-Southern-to-Create-Americas-First-Transcontinental-Railroad"
+    "sourceUrl": "https://norfolksouthern.investorroom.com/2025-07-29-Union-Pacific-and-Norfolk-Southern-to-Create-Americas-First-Transcontinental-Railroad",
+    "category": "active_deal"
   },
   {
     "target": "Charter Communications",
@@ -2433,7 +2380,8 @@ const DEALS = [
       }
     ],
     "dealRisk": "medium",
-    "sourceUrl": "https://corporate.charter.com/newsroom/charter-communications-and-cox-communications-announce-definitive-agreement-to-combine-companies"
+    "sourceUrl": "https://corporate.charter.com/newsroom/charter-communications-and-cox-communications-announce-definitive-agreement-to-combine-companies",
+    "category": "active_deal"
   },
     {
     "target": "Clearwater Analytics",
@@ -2490,7 +2438,8 @@ const DEALS = [
     ],
     "dealRisk": "low",
     "breakupFee": "$252M / $420M",
-    "marketShare": "~15% inv. analytics"
+    "marketShare": "~15% inv. analytics",
+    "category": "active_deal"
   },
   {
     "target": "KORE Group Holdings",
@@ -2535,7 +2484,8 @@ const DEALS = [
     ],
     "dealRisk": "low",
     "breakupFee": "$7.2M",
-    "marketShare": "N/A"
+    "marketShare": "N/A",
+    "category": "active_deal"
   },
   {
     "target": "Penumbra Inc",
@@ -2599,7 +2549,8 @@ const DEALS = [
     "dealRisk": "low",
     "breakupFee": "$525M / $900M",
     "marketShare": "~25% neurovascular",
-    "sourceUrl": "https://news.bostonscientific.com/2026-01-15-Boston-Scientific-announces-agreement-to-acquire-Penumbra,-Inc"
+    "sourceUrl": "https://news.bostonscientific.com/2026-01-15-Boston-Scientific-announces-agreement-to-acquire-Penumbra,-Inc",
+    "category": "active_deal"
   },
   {
     "target": "Allfunds Group",
@@ -2657,7 +2608,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "EUR150M",
     "marketShare": "~30% EU fund dist",
-    "sourceUrl": "https://www.deutsche-boerse.com/dbg-en/media/news-stories/press-releases/Deutsche-B-rse-Group-and-Allfunds-Group-Sign-Agreement-on-Recommended-Acquisition-of-Allfunds-Group-4914918"
+    "sourceUrl": "https://www.deutsche-boerse.com/dbg-en/media/news-stories/press-releases/Deutsche-B-rse-Group-and-Allfunds-Group-Sign-Agreement-on-Recommended-Acquisition-of-Allfunds-Group-4914918",
+    "category": "active_deal"
   },
   {
     "target": "Teck Resources Ltd",
@@ -2718,7 +2670,8 @@ const DEALS = [
         "detail": "Korea Fair Trade Commission review. South Korea is a major met coal buyer  -  KFTC typically approves deals that secure supply. Expected alongside or shortly after China SAMR."
       }
     ],
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Arcosa Inc",
@@ -2767,7 +2720,8 @@ const DEALS = [
         "detail": "If DOJ issues second request, divestiture negotiations expected for facilities in overlapping geographic markets. Likely 5-15 facilities."
       }
     ],
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Getty Images",
@@ -2816,7 +2770,8 @@ const DEALS = [
         "detail": "CMA Phase 2 interim report (Feb 19 2026) found NO SLC in global creative/commercial stock content market  -  only potential SLC in the narrower UK editorial market. Final decision due June 14 2026. Most analysts expect approval with behavioral remedies (e.g. no bundling/tying of editorial and commercial content). Outright prohibition is unlikely given narrow concern. ~15% risk of remedies that could complicate integration; ~5% prohibition risk."
       }
     ],
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
     {
     "target": "Elementis plc",
@@ -2871,7 +2826,8 @@ const DEALS = [
         "detail": "Final court sanction  -  routine procedural step. Essentially certain to be granted."
       }
     ],
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "category": "active_deal"
   },
       {
     "target": "Commerzbank AG",
@@ -2932,7 +2888,8 @@ const DEALS = [
         "detail": "If offer proceeds, ECB must approve the merger of two significant eurozone banks. Systemic risk analysis, capital planning, and operational continuity requirements. Typically 12-18 month process."
       }
     ],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "active_deal"
   },
   {
     "target": "Grifols SA",
@@ -2987,7 +2944,8 @@ const DEALS = [
         "detail": "To squeeze out minorities, Brookfield needs 90% acceptance. Minority investor Primefin and other activist holders may resist at EUR13.67. Price bump may be required. Wide spread reflects this uncertainty."
       }
     ],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "active_deal"
   },
               {
     "target": "Electronic Arts",
@@ -3023,7 +2981,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "$2.35B / $3.08B",
     "marketShare": "~10% gaming",
-    "sourceUrl": "https://ir.ea.com/press-releases/press-release-details/2025/EA-Announces-Agreement-to-be-Acquired-by-PIF-Silver-Lake-and-Affinity-Partners-for-55-Billion/default.aspx"
+    "sourceUrl": "https://ir.ea.com/press-releases/press-release-details/2025/EA-Announces-Agreement-to-be-Acquired-by-PIF-Silver-Lake-and-Affinity-Partners-for-55-Billion/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Boralex",
@@ -3059,7 +3018,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "C$350M",
     "marketShare": "~12% CA renewables",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/03/25/3262194/0/en/Boralex-Enters-into-Definitive-Agreement-to-be-Acquired-by-Brookfield-alongside-La-Caisse-Supporting-its-Next-Phase-of-Growth-as-a-Standalone-Private-Company.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/03/25/3262194/0/en/Boralex-Enters-into-Definitive-Agreement-to-be-Acquired-by-Brookfield-alongside-La-Caisse-Supporting-its-Next-Phase-of-Growth-as-a-Standalone-Private-Company.html",
+    "category": "active_deal"
   },
   {
     "target": "National Storage Affiliates",
@@ -3095,7 +3055,8 @@ const DEALS = [
     "dealRisk": "high",
     "breakupFee": "$283M",
     "marketShare": "~15% self-storage",
-    "sourceUrl": "https://investors.publicstorage.com/news-events/press-releases/news-details/2026/Public-Storage-to-Acquire-National-Storage-Affiliates-Creating-Significant-Value-for-All-Stakeholders/default.aspx"
+    "sourceUrl": "https://investors.publicstorage.com/news-events/press-releases/news-details/2026/Public-Storage-to-Acquire-National-Storage-Affiliates-Creating-Significant-Value-for-All-Stakeholders/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "DigitalBridge",
@@ -3131,7 +3092,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "medium00M",
     "marketShare": "~8% digital infra",
-    "sourceUrl": "https://www.digitalbridge.com/news/2025-12-29-softbank-group-to-acquire-digitalbridge-for-4-billion-to-scale-next-gen-ai-infrastructure"
+    "sourceUrl": "https://www.digitalbridge.com/news/2025-12-29-softbank-group-to-acquire-digitalbridge-for-4-billion-to-scale-next-gen-ai-infrastructure",
+    "category": "active_deal"
   },
     {
     "target": "Kenvue Inc",
@@ -3149,7 +3111,7 @@ const DEALS = [
     "status": "pending",
     "closingProbability": 85,
     "description": "Kimberly-Clark to merge with Kenvue (J&J consumer health spinoff) creating a $48.7B consumer health giant. FTC second request review ongoing. | Breakup: $1.136B each (reciprocal). Combined: ~15% US consumer health (OTC/personal care).",
-    "comment": "",
+    "comment": "(2026-06-03) Dealreporter: China's merger review remains under simplified procedure as of this week — positive read-through for deal closure.",
     "dealSize": 48.7,
     "evEbitda": null,
     "dealCurrency": "USD",
@@ -3177,7 +3139,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "medium.136B each",
     "marketShare": "~15% consumer health",
-    "sourceUrl": "https://investors.kenvue.com/financial-news/news-details/2025/Kimberly-Clark-to-Acquire-Kenvue-Creating-a-32-Billion-Global-Health-and-Wellness-Leader/default.aspx"
+    "sourceUrl": "https://investors.kenvue.com/financial-news/news-details/2025/Kimberly-Clark-to-Acquire-Kenvue-Creating-a-32-Billion-Global-Health-and-Wellness-Leader/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Qorvo Inc",
@@ -3229,7 +3192,8 @@ const DEALS = [
     "dealRisk": "high",
     "breakupFee": "$298.7M each",
     "marketShare": "~50% mobile RF",
-    "sourceUrl": "https://investors.skyworksinc.com/news-releases/news-release-details/skyworks-and-qorvo-combine-create-22-billion-us-based-leader"
+    "sourceUrl": "https://investors.skyworksinc.com/news-releases/news-release-details/skyworks-and-qorvo-combine-create-22-billion-us-based-leader",
+    "category": "active_deal"
   },
     {
     "target": "Chart Industries",
@@ -3275,7 +3239,8 @@ const DEALS = [
     "dealRisk": "low",
     "breakupFee": "$413M / $620M",
     "marketShare": "LNG near-monopoly",
-    "sourceUrl": "https://investors.bakerhughes.com/news-releases/news-release-details/baker-hughes-acquire-chart-industries-accelerating-energy"
+    "sourceUrl": "https://investors.bakerhughes.com/news-releases/news-release-details/baker-hughes-acquire-chart-industries-accelerating-energy",
+    "category": "active_deal"
   },
     {
     "target": "Janus Henderson Group",
@@ -3315,7 +3280,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "$185M",
     "marketShare": "<2% AUM",
-    "sourceUrl": "https://ir.janushenderson.com/News--Events/news/news-details/2026/Trian-and-General-Catalyst-Agree-to-Increase-Merger-Consideration-to-52-00-Per-Share-in-Cash-for-Janus-Henderson-Group-plc-and-Have-Made-the-Only-Actionable-Proposal/default.aspx"
+    "sourceUrl": "https://ir.janushenderson.com/News--Events/news/news-details/2026/Trian-and-General-Catalyst-Agree-to-Increase-Merger-Consideration-to-52-00-Per-Share-in-Cash-for-Janus-Henderson-Group-plc-and-Have-Made-the-Only-Actionable-Proposal/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "UniFirst Corporation",
@@ -3361,7 +3327,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "medium66M",
     "marketShare": "~45% uniform rental",
-    "sourceUrl": "https://www.cintas.com/newsroom/details/news/2026/03/11/cintas-to-acquire-unifirst-in-5.5-billion-transaction-that-expands-service-capabilities-enhances-workday-solutions-and-advances-industry-innovation/"
+    "sourceUrl": "https://www.cintas.com/newsroom/details/news/2026/03/11/cintas-to-acquire-unifirst-in-5.5-billion-transaction-that-expands-service-capabilities-enhances-workday-solutions-and-advances-industry-innovation/",
+    "category": "active_deal"
   },
   {
     "target": "Veris Residential",
@@ -3401,7 +3368,8 @@ const DEALS = [
     "dealRisk": "low",
     "breakupFee": "~$68M",
     "marketShare": "N/A",
-    "sourceUrl": "https://investors.verisresidential.com/news-events/press-releases/detail/548/veris-residential-to-be-acquired-by-affinius-capital-led"
+    "sourceUrl": "https://investors.verisresidential.com/news-events/press-releases/detail/548/veris-residential-to-be-acquired-by-affinius-capital-led",
+    "category": "active_deal"
   },
     {
     "target": "AES Corporation",
@@ -3424,7 +3392,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "$428M / $642M",
     "marketShare": "~5% US power",
-    "sourceUrl": "https://www.aes.com/energy-insights/consortium-led-global-infrastructure-partners-and-eqt-agrees-acquire-aes"
+    "sourceUrl": "https://www.aes.com/energy-insights/consortium-led-global-infrastructure-partners-and-eqt-agrees-acquire-aes",
+    "category": "active_deal"
   },
   {
     "target": "Select Medical Holdings",
@@ -3446,7 +3415,8 @@ const DEALS = [
     "milestones": [],
     "dealRisk": "low",
     "breakupFee": "$78M",
-    "marketShare": "~15% specialty rehab"
+    "marketShare": "~15% specialty rehab",
+    "category": "active_deal"
   },
   {
     "target": "Caesars Entertainment Inc",
@@ -3467,7 +3437,9 @@ const DEALS = [
     "dealValue": "$18B (~$32/share)",
     "milestones": [],
     "dealRisk": "High",
-    "sourceUrl": "https://www.cnbc.com/2026/03/14/fertitta-caesars-talks-casino-acquisition.html"
+    "sourceUrl": "https://www.cnbc.com/2026/03/14/fertitta-caesars-talks-casino-acquisition.html",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target; Fertitta-led approaches per market chatter."
   },
   {
     "target": "JetBlue Airways Corp",
@@ -3477,18 +3449,20 @@ const DEALS = [
     "industry": "Airlines",
     "currentPrice": 6.8,
     "dealPrice": 0,
-    "dealTerms": "JetBlue reportedly exploring 3 potential combinations per JPM research. UAL-JBLU combination discussed as alternative to UAL-AAL deal. JetBlue's attractiveness as target depends on UAL-AAL outcome — if UAL-AAL materializes, JBLU prospects diminish; if UAL/AAL is a negotiating tactic, UAL may pivot to more palatable JBLU acquisition. Trump DOT signaled receptive to airline mergers.",
+    "dealTerms": "JetBlue reportedly exploring 3 potential combinations per sell-side research. UAL-JBLU combination discussed as alternative to UAL-AAL deal. JetBlue's attractiveness as target depends on UAL-AAL outcome — if UAL-AAL materializes, JBLU prospects diminish; if UAL/AAL is a negotiating tactic, UAL may pivot to more palatable JBLU acquisition. Trump DOT signaled receptive to airline mergers.",
     "spread": 0,
     "annualizedReturn": 0,
     "announced": "2026-04-15",
     "expectedClose": "TBD",
     "status": "Rumored",
     "closingProbability": 20,
-    "description": "JetBlue reportedly exploring 3 potential combinations per JPM research. UAL-JBLU combination discussed as alternative to UAL-AAL deal.",
+    "description": "JetBlue reportedly exploring 3 potential combinations per sell-side research. UAL-JBLU combination discussed as alternative to UAL-AAL deal.",
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "Very High",
-    "sourceUrl": "https://www.semafor.com/article/03/25/2026/jetblue-explores-potential-merger-partners"
+    "sourceUrl": "https://www.semafor.com/article/03/25/2026/jetblue-explores-potential-merger-partners",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Papa John's International",
@@ -3508,7 +3482,9 @@ const DEALS = [
     "description": "Qatari-backed Irth Capital bid $47/share (~50% premium). Earlier Apollo bid at $64 was withdrawn Nov 2025. TriArtisan consortium also rumored. CEO says focused on standalone plan.",
     "dealValue": "~$1.5B equity",
     "milestones": [],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Abivax SA",
@@ -3528,7 +3504,9 @@ const DEALS = [
     "description": "La Lettre reports Eli Lilly ready to offer €15B for Abivax. AstraZeneca also interested. CEO says terms will be better after Q2 data readout. Best-in-class UC drug candidate, multi-billion IBD market.",
     "dealValue": "~€15B (rumored)",
     "milestones": [],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "CRISPR Therapeutics",
@@ -3548,7 +3526,9 @@ const DEALS = [
     "description": "Betaville reports a US biopharma with $100-200B market cap has hired Skadden for potential CRSP takeover. Vertex Pharmaceuticals speculated as the buyer. Partners on Casgevy.",
     "dealValue": "TBD",
     "milestones": [],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Revolution Medicines",
@@ -3568,7 +3548,9 @@ const DEALS = [
     "description": "WSJ reported both AbbVie and Merck held advanced acquisition talks at ~$30B but both walked away. Key catalyst: Ph3 RASolute 302 second-line PDAC readout expected H1 2026.",
     "dealValue": "~$30B (earlier talks)",
     "milestones": [],
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
     {
     "target": "Equitable Holdings",
@@ -3610,7 +3592,8 @@ const DEALS = [
     "dealRisk": "medium",
     "breakupFee": "$475M each",
     "marketShare": "~12% US annuities",
-    "sourceUrl": "https://investors.corebridgefinancial.com/news/news-details/2026/Corebridge-Financial-and-Equitable-Holdings-Announce-Transformational-Merger/default.aspx"
+    "sourceUrl": "https://investors.corebridgefinancial.com/news/news-details/2026/Corebridge-Financial-and-Equitable-Holdings-Announce-Transformational-Merger/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Olaplex Holdings",
@@ -3646,7 +3629,9 @@ const DEALS = [
     "dealRisk": "low",
     "breakupFee": "$42M",
     "marketShare": "~5% pro haircare",
-    "sourceUrl": "https://ir.olaplex.com/news/detail/67/olaplex-a-leading-science-led-prestige-hair-care-brand"
+    "sourceUrl": "https://ir.olaplex.com/news/detail/67/olaplex-a-leading-science-led-prestige-hair-care-brand",
+    "category": "active_deal",
+    "comment": "(2026-06-03) HSR waiting period expires Friday 6/5 (approximate)."
   },
     {
     "target": "Kinetik Holdings",
@@ -3666,7 +3651,9 @@ const DEALS = [
     "description": "Western Midstream Partners approached Kinetik Holdings about a potential sale per FT report. Midstream consolidation play in Permian Basin.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Bill Holdings",
@@ -3686,7 +3673,9 @@ const DEALS = [
     "description": "Hellman & Friedman reportedly in talks to acquire Bill Holdings. Starboard Value and Barington Capital applying activist pressure. SMB payments/fintech platform.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target; H&F talks per Feb 2026 reports."
   },
   {
     "target": "CSX Corporation",
@@ -3706,7 +3695,9 @@ const DEALS = [
     "description": "CSX exploring rail industry consolidation. CEO open to mergers. Goldman Sachs advising. Bloomberg Feb 2026 report. Major Class I railroad.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "BlackLine",
@@ -3727,7 +3718,9 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://finance.yahoo.com/news/shareholder-activism-blackline-bl-change-042812635.html"
+    "sourceUrl": "https://finance.yahoo.com/news/shareholder-activism-blackline-bl-change-042812635.html",
+    "category": "strategic_review",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Qiagen",
@@ -3747,7 +3740,9 @@ const DEALS = [
     "description": "Qiagen exploring strategic options including potential sale. Multiple US buyers reportedly interested per Bloomberg Jan 2026. Molecular diagnostics and sample prep leader.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Organon",
@@ -3768,7 +3763,9 @@ const DEALS = [
     "dealSize": 11750,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260426881370/en/Sun-Pharma-signs-Definitive-Agreement-to-Acquire-Organon"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260426881370/en/Sun-Pharma-signs-Definitive-Agreement-to-Acquire-Organon",
+    "category": "active_deal",
+    "comment": "(2026-06-03) Preliminary proxy expected to be filed by today."
   },
   {
     "target": "Ascendis Pharma",
@@ -3789,7 +3786,9 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://www.tipranks.com/news/the-fly/ascendis-pharma-rumor-highlighted-in-betaville-blog-thefly"
+    "sourceUrl": "https://www.tipranks.com/news/the-fly/ascendis-pharma-rumor-highlighted-in-betaville-blog-thefly",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Marvell Technology",
@@ -3809,7 +3808,9 @@ const DEALS = [
     "description": "SoftBank weighed takeover of Marvell Technology for approximately $100B but talks fell apart on price per Bloomberg Nov 2025. Data infrastructure semiconductor leader.",
     "dealSize": 100,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Protagonist Therapeutics",
@@ -3829,7 +3830,9 @@ const DEALS = [
     "description": "Johnson & Johnson reportedly in talks to acquire Protagonist Therapeutics at approximately $75/share per Betaville Oct 2025. Peptide-based therapies for GI diseases.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Globalstar Inc",
@@ -3850,7 +3853,8 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "Low",
-    "sourceUrl": "https://www.aboutamazon.com/news/company-news/amazon-globalstar-apple"
+    "sourceUrl": "https://www.aboutamazon.com/news/company-news/amazon-globalstar-apple",
+    "category": "active_deal"
   },
   {
     "target": "Dominos Pizza Enterprises",
@@ -3870,7 +3874,9 @@ const DEALS = [
     "description": "Bain Capital in informal talks to acquire Dominos Pizza Enterprises per Australian Financial Review Oct 2025. Largest Dominos franchisee globally.",
     "dealSize": 0,
     "dealCurrency": "AUD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Jacobs Solutions",
@@ -3890,7 +3896,9 @@ const DEALS = [
     "description": "WSP Global approached Jacobs Solutions about a takeover, primarily stock-based consideration per reports Oct 2025. Global engineering and consulting firm.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "GitLab",
@@ -3910,7 +3918,9 @@ const DEALS = [
     "description": "Datadog reportedly exploring a bid for GitLab at $60+ per share per Reuters and StreetInsider Oct 2025. DevSecOps platform consolidation.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Canada Goose",
@@ -3930,7 +3940,9 @@ const DEALS = [
     "description": "Bain Capital accepting bids to take Canada Goose private at approximately $1.35B valuation per CNBC Aug 2025. Premium outerwear brand.",
     "dealSize": 1.35,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "PagerDuty",
@@ -3950,7 +3962,9 @@ const DEALS = [
     "description": "PagerDuty exploring a potential sale with Qatalyst Partners advising per Reuters Jul 2025. Leading digital operations management platform.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Lionsgate Entertainment",
@@ -3970,7 +3984,9 @@ const DEALS = [
     "description": "Apollo Global Management and Legendary Entertainment reportedly considering a takeover bid for Lionsgate per Bloomberg Jul 2025. Film and TV studio.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Genco Shipping",
@@ -3988,11 +4004,12 @@ const DEALS = [
     "status": "pending",
     "closingProbability": 25,
     "description": "Diana Shipping (DSX) running live hostile $23.50/share all-cash tender for Genco Shipping (GNK); offer expires June 2, 2026. Diana already owns ~14.4% of GNK. Board rejected May 15 and adopted poison pill; Diana launched proxy fight for 6 of Genco's board seats ahead of June 18 annual meeting and released investor presentation May 19. GNK currently trades above tender ($23.70 vs $23.50) — market expects bump or competing bid.",
-    "comment": "GNK trading above tender price (~$23.70 vs $23.50) signals market expects bump or that proxy fight forces engagement. Diana's 14.4% stake gives leverage but board defenses (poison pill + rejection) make hostile outright close unlikely. Inflection points: June 2 tender expiry, June 18 annual meeting.",
+    "comment": "(2026-06-03) Active M&A proposal — on pre-event list as proposal pending.\nGNK trading above tender price (~$23.70 vs $23.50) signals market expects bump or that proxy fight forces engagement. Diana's 14.4% stake gives leverage but board defenses (poison pill + rejection) make hostile outright close unlikely. Inflection points: June 2 tender expiry, June 18 annual meeting.",
     "dealSize": 1000,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/19/3297998/10065/en/Diana-Shipping-Inc-Releases-Investor-Presentation-Highlighting-Need-for-Change-at-Genco-Shipping-Trading.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/19/3297998/10065/en/Diana-Shipping-Inc-Releases-Investor-Presentation-Highlighting-Need-for-Change-at-Genco-Shipping-Trading.html",
+    "category": "active_deal"
   },
   {
     "target": "Whitestone REIT",
@@ -4013,7 +4030,8 @@ const DEALS = [
     "dealSize": 1700,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/09/3270730/7647/en/Whitestone-REIT-to-Be-Acquired-by-Ares-for-1-7-Billion.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/09/3270730/7647/en/Whitestone-REIT-to-Be-Acquired-by-Ares-for-1-7-Billion.html",
+    "category": "active_deal"
   },
   {
     "target": "MarineMax",
@@ -4033,7 +4051,9 @@ const DEALS = [
     "description": "Donerail Group bid $35/share for MarineMax in Feb 2026. Largest recreational boat and yacht retailer in the US.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) M&A proposal active; on pre-event list."
   },
   {
     "target": "E.W. Scripps",
@@ -4053,7 +4073,8 @@ const DEALS = [
     "description": "Sinclair Broadcast proposed $7/share for E.W. Scripps, rejected Dec 2025. TV broadcasting consolidation play.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored"
   },
   {
     "target": "Forward Air",
@@ -4073,7 +4094,9 @@ const DEALS = [
     "description": "Forward Air conducting strategic review since Jan 2025. PE bids received and process reportedly nearing conclusion. LTL and intermodal freight carrier.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "FMC Corporation",
@@ -4093,7 +4116,9 @@ const DEALS = [
     "description": "FMC Corporation board authorized exploration of strategic options including potential sale per Feb 2026 announcement. Agricultural chemicals and crop protection.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "Flex Ltd (Cloud & Power Infrastructure SpinCo)",
@@ -4110,7 +4135,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Flex announced May 5, 2026 plan to spin off its Cloud & Power Infrastructure segment into a new independent publicly-traded company (SpinCo) focused on power and thermal management for AI data centers and mission-critical applications. Tax-free distribution targeted Q1 2027. Revathi Advaithi to become SpinCo CEO; Michael Hartung to become Flex CEO post-spin.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/flex-announces-intention-to-spin-off-its-cloud-and-power-infrastructure-segment-into-a-new-independent-publicly-traded-company-302763151.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/flex-announces-intention-to-spin-off-its-cloud-and-power-infrastructure-segment-into-a-new-independent-publicly-traded-company-302763151.html",
+    "category": "active_deal"
   },
   {
     "target": "LKQ Corporation",
@@ -4130,7 +4156,9 @@ const DEALS = [
     "description": "LKQ Corporation initiated strategic review including potential sale per Jan 2026 announcement. Largest distributor of alternative auto parts in North America.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "Emerald Holding",
@@ -4151,7 +4179,9 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/09/3290929/0/en/Emerald-to-be-Acquired-by-Apollo-Funds.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/09/3290929/0/en/Emerald-to-be-Acquired-by-Apollo-Funds.html",
+    "category": "active_deal",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "Atkore",
@@ -4171,7 +4201,9 @@ const DEALS = [
     "description": "Atkore expanded strategic review to include full company sale or merger per Nov 2025. Electrical raceway and safety infrastructure manufacturer.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "Centerspace",
@@ -4191,7 +4223,9 @@ const DEALS = [
     "description": "Centerspace initiated review of strategic alternatives per Nov 2025. Multifamily apartment REIT focused on Mountain West and Northern Plains regions.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Strategic review underway per recent reports."
   },
   {
     "target": "Six Flags Entertainment",
@@ -4211,7 +4245,9 @@ const DEALS = [
     "description": "Jana Partners pushing Six Flags Entertainment to explore a sale per Mar 2026 reports. Recently merged Six Flags and Cedar Fair theme park operator.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company per recent reports."
   },
   {
     "target": "Alkami Technology",
@@ -4231,7 +4267,9 @@ const DEALS = [
     "description": "Alkami Technology exploring sale with financial adviser. Jana Partners activist pressure per Bloomberg Jan 2026. Digital banking platform for credit unions and banks.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company; Jana Partners active."
   },
   {
     "target": "Tripadvisor",
@@ -4251,7 +4289,9 @@ const DEALS = [
     "description": "Starboard Value pushing Tripadvisor for board shake-up and sale of TheFork restaurant booking business per Feb 2026 reports. Online travel platform.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company per recent reports."
   },
   {
     "target": "Integer Holdings",
@@ -4271,7 +4311,9 @@ const DEALS = [
     "description": "Irenic Capital Management pushing Integer Holdings to explore a sale, holding 3% stake per Dec 2025 reports. Medical device contract manufacturer.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company per recent reports."
   },
   {
     "target": "Novavax",
@@ -4291,7 +4333,9 @@ const DEALS = [
     "description": "Shah Capital Management holding 7.2% stake demanding strategic review of Novavax per Oct 2025. COVID-19 and influenza vaccine developer.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company per recent reports."
   },
   {
     "target": "Puig Brands SA",
@@ -4311,7 +4355,8 @@ const DEALS = [
     "description": "Bloomberg: Estee Lauder seeking financing for planned business combination with Puig to create transatlantic beauty giant rivaling L'Oreal. JPMorgan instructed to structure financing package per Spanish daily Expansion.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "High"
+    "dealRisk": "High",
+    "category": "rumored"
   },
     {
     "target": "Allied Gold Corp",
@@ -4327,7 +4372,8 @@ const DEALS = [
     "dealSize": 5.4,
     "dealCurrency": "CAD",
     "dealRisk": "medium",
-    "sourceUrl": "https://alliedgold.com/investor-relations/investor-news/news-details/2026/Allied-Gold-to-be-Acquired-by-Zijin-Gold-International-in-Friendly-All-Cash-Offer-Valued-at-C5-5-Billion/default.aspx"
+    "sourceUrl": "https://alliedgold.com/investor-relations/investor-news/news-details/2026/Allied-Gold-to-be-Acquired-by-Zijin-Gold-International-in-Friendly-All-Cash-Offer-Valued-at-C5-5-Billion/default.aspx",
+    "category": "active_deal"
   },
     {
     "target": "American Woodmark Corp",
@@ -4342,7 +4388,8 @@ const DEALS = [
     "dealTerms": "5.15 MBC shares per AMWD share",
     "dealSize": 1100,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Axalta Coating Systems Ltd",
@@ -4358,7 +4405,8 @@ const DEALS = [
     "dealSize": 5700,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Akzo Nobel to acquire Axalta Coating Systems in an all-stock deal at 0.6539 AKZOY per AXTA share (~$5.7B). Akzo Nobel Q1 2026 earnings confirmed merger is on track, hitting all filing milestones; EGM targeting mid-2026 for shareholder vote."
+    "description": "Akzo Nobel to acquire Axalta Coating Systems in an all-stock deal at 0.6539 AKZOY per AXTA share (~$5.7B). Akzo Nobel Q1 2026 earnings confirmed merger is on track, hitting all filing milestones; EGM targeting mid-2026 for shareholder vote.",
+    "category": "active_deal"
   },
   {
     "target": "Brighthouse Financial Inc",
@@ -4370,11 +4418,12 @@ const DEALS = [
     "expectedClose": "2026-08-01",
     "status": "pending",
     "closingProbability": 90,
-    "dealTerms": "$70.00 per share in cash; ~$4.1B all-cash. BHF stockholders approved Feb 12, 2026. Per JPM May 8 survey: definitive milestone May 8, 2026; expected close Aug 1, 2026. Pending antitrust clearance and insurance regulatory approvals.",
+    "dealTerms": "$70.00 per share in cash; ~$4.1B all-cash. BHF stockholders approved Feb 12, 2026. Per a May 8 risk-arb survey: definitive milestone May 8, 2026; expected close Aug 1, 2026. Pending antitrust clearance and insurance regulatory approvals.",
     "dealSize": 4100,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.brighthousefinancial.com/about-us/newsroom/brighthouse-financial-stockholders-approve-merger-with-aquarian-capital/"
+    "sourceUrl": "https://www.brighthousefinancial.com/about-us/newsroom/brighthouse-financial-stockholders-approve-merger-with-aquarian-capital/",
+    "category": "active_deal"
   },
   {
     "target": "Clear Channel Outdoor Holdings Inc",
@@ -4391,7 +4440,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Mubadala Capital and TWG Global to acquire Clear Channel Outdoor for $2.43/share cash ($6.2B EV). HSR cleared April 9, 2026. Special stockholder meeting May 12, 2026. CFIUS approval still pending. Closing expected end of Q3 2026 between late 2026 / early 2027.",
-    "sourceUrl": "https://investor.clearchannel.com/news/detail/560/clear-channel-outdoor-holdings-inc-agrees-to-be-acquired-by-mubadala-capital-in-partnership-with-twg-global-for-6-2-billion"
+    "sourceUrl": "https://investor.clearchannel.com/news/detail/560/clear-channel-outdoor-holdings-inc-agrees-to-be-acquired-by-mubadala-capital-in-partnership-with-twg-global-for-6-2-billion",
+    "category": "active_deal"
   },
     {
     "target": "Essential Utilities Inc",
@@ -4406,7 +4456,8 @@ const DEALS = [
     "dealTerms": "0.3050 AWK per WTRG share",
     "dealSize": 11.6,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "ECN Capital Corp",
@@ -4421,7 +4472,8 @@ const DEALS = [
     "dealTerms": "C$3.10 per share in cash",
     "dealSize": 0.9,
     "dealCurrency": "CAD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "category": "active_deal"
   },
           {
     "target": "IHS Holding Ltd",
@@ -4436,7 +4488,8 @@ const DEALS = [
     "dealTerms": "$8.50 per share in cash",
     "dealSize": 2800,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Kennedy-Wilson Holdings Inc",
@@ -4453,7 +4506,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Consortium led by Chairman/CEO William McMorrow and Fairfax Financial taking Kennedy-Wilson private at $10.90/share cash (~$1.5B). Debt tender for 2031 senior notes launched May 15, 2026 — strong close signal as debt refi machinery is now active.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260515580669/en/Kennedy-Wilson-Announces-Launch-of-Tender-Offer-for-Any-and-All-of-Its-Outstanding-5.000-Senior-Notes-Due-2031-and-Issuance-of-Notices-of-Redemption-for-its-4.750-Senior-Notes-Due-2029-and-its-4.750-Senior-Notes-Due-2030"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260515580669/en/Kennedy-Wilson-Announces-Launch-of-Tender-Offer-for-Any-and-All-of-Its-Outstanding-5.000-Senior-Notes-Due-2031-and-Issuance-of-Notices-of-Redemption-for-its-4.750-Senior-Notes-Due-2029-and-its-4.750-Senior-Notes-Due-2030",
+    "category": "active_deal"
   },
   {
     "target": "Liberty Broadband Corp",
@@ -4468,7 +4522,8 @@ const DEALS = [
     "dealTerms": "0.2360 CHTR per LBRDK share",
     "dealSize": 6300,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Masimo Corp",
@@ -4484,7 +4539,8 @@ const DEALS = [
     "dealSize": 9300,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/danaher-to-acquire-masimo-corporation-302689266.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/danaher-to-acquire-masimo-corporation-302689266.html",
+    "category": "active_deal"
   },
   {
     "target": "Mister Car Wash Inc",
@@ -4501,7 +4557,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Leonard Green to take Mister Car Wash private for $7/share cash (~$3.1B). Information statement waiting period expired May 14; expected close May 19, 2026.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/02/18/3240042/0/en/Mister-Car-Wash-to-Be-Taken-Private-by-Leonard-Green-Partners-for-7-00-Per-Share.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/02/18/3240042/0/en/Mister-Car-Wash-to-Be-Taken-Private-by-Leonard-Green-Partners-for-7-00-Per-Share.html",
+    "category": "active_deal"
   },
   {
     "target": "NCR Atleos Corp",
@@ -4517,7 +4574,8 @@ const DEALS = [
     "dealSize": 3200,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Brink's acquisition of NCR Atleos (NATL) progressing. Preliminary proxy filed; HSR refiled April 16, 2026. Closing now expected Q1 2027."
+    "description": "Brink's acquisition of NCR Atleos (NATL) progressing. Preliminary proxy filed; HSR refiled April 16, 2026. Closing now expected Q1 2027.",
+    "category": "active_deal"
   },
   {
     "target": "Northwestern Energy Group Inc",
@@ -4532,7 +4590,8 @@ const DEALS = [
     "dealTerms": "0.9800 BKH per NWE share",
     "dealSize": 4000,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "ProAssurance Corp",
@@ -4549,7 +4608,9 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "The Doctors Company to acquire ProAssurance for $25.00/share cash ($1.3B) — ~60% premium to March 18, 2025 close. Stockholder approval received. Insurance regulators in AL, DC, IL, MO, TX, VT have approved; CA and PA pending. Combined entity to have ~$12B assets. Company anticipates close no later than June 30, 2026.",
-    "sourceUrl": "https://investor.proassurance.com/news/news-details/2025/ProAssurance-Stockholders-Approve-Its-Proposed-Acquisition-by-The-Doctors-Company/default.aspx"
+    "sourceUrl": "https://investor.proassurance.com/news/news-details/2025/ProAssurance-Stockholders-Approve-Its-Proposed-Acquisition-by-The-Doctors-Company/default.aspx",
+    "category": "active_deal",
+    "comment": "(2026-06-03) Doctors Company merger received final approval from insurance regulators in Alabama, DC, Illinois, Missouri, Pennsylvania, Texas and Vermont; also Lloyd's of London (PRA Corporate Capital Ltd.) and Cayman Islands Monetary Authority (Inova Re, Eastern Re). California review remains pending. Expects to close by June 30, 2026."
   },
   {
     "target": "SkyWater Technology Inc",
@@ -4564,7 +4625,8 @@ const DEALS = [
     "dealTerms": "$15.00 cash + 0.4139 IONQ per share. SKYT shareholder vote PASSED May 8, 2026. FTC issued Second Request (April 30, 2026), extending antitrust review and pushing close into 2H/Q4 2026.",
     "dealSize": 1300,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "active_deal"
   },
   {
     "target": "Silicon Laboratories Inc",
@@ -4579,7 +4641,8 @@ const DEALS = [
     "dealTerms": "$231.00 per share in cash. HSR expires April 20. SLAB shareholder vote May 1, 2026.",
     "dealSize": 6800,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Shutterstock Inc",
@@ -4594,7 +4657,8 @@ const DEALS = [
     "dealTerms": "$9.50 cash + 9.17 GETY per share",
     "dealSize": 600,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Stellar Bancorp Inc",
@@ -4610,7 +4674,8 @@ const DEALS = [
     "dealSize": 1800,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "Prosperity Bancshares to acquire Stellar Bancorp for $11.36 cash plus 0.3803 PB per share. All regulatory approvals received. Special meeting of Stellar shareholders scheduled May 27, 2026. Merger expected to complete on or about July 1, 2026."
+    "description": "Prosperity Bancshares to acquire Stellar Bancorp for $11.36 cash plus 0.3803 PB per share. All regulatory approvals received. Special meeting of Stellar shareholders scheduled May 27, 2026. Merger expected to complete on or about July 1, 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Sun Country Airlines Holdings Inc",
@@ -4626,7 +4691,8 @@ const DEALS = [
     "dealSize": 900,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://newsroom.allegiantair.com/press-releases/press-release-details/2026/Allegiant-Announces-Future-Board-Composition-Following-Sun-Country-Acquisition/default.aspx"
+    "sourceUrl": "https://newsroom.allegiantair.com/press-releases/press-release-details/2026/Allegiant-Announces-Future-Board-Composition-Following-Sun-Country-Acquisition/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Thermon Group Holdings Inc",
@@ -4641,7 +4707,8 @@ const DEALS = [
     "dealTerms": "$10.00 cash + 0.6840 CECO per share",
     "dealSize": 1700,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "TXNM Energy Inc",
@@ -4656,7 +4723,8 @@ const DEALS = [
     "dealTerms": "$61.25 per share in cash",
     "dealSize": 6300,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
       {
     "target": "UniFirst Corp",
@@ -4672,7 +4740,8 @@ const DEALS = [
     "dealSize": 3600,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.cintas.com/newsroom/details/news/2026/03/11/cintas-to-acquire-unifirst-in-5.5-billion-transaction-that-expands-service-capabilities-enhances-workday-solutions-and-advances-industry-innovation/"
+    "sourceUrl": "https://www.cintas.com/newsroom/details/news/2026/03/11/cintas-to-acquire-unifirst-in-5.5-billion-transaction-that-expands-service-capabilities-enhances-workday-solutions-and-advances-industry-innovation/",
+    "category": "active_deal"
   },
   {
     "target": "Valaris Ltd",
@@ -4687,7 +4756,8 @@ const DEALS = [
     "dealTerms": "15.2350 RIG per VAL share. HSR expires April 9, 2026.",
     "dealSize": 7100,
     "dealCurrency": "USD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Veeco Instruments Inc",
@@ -4704,7 +4774,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Axcelis-Veeco $4.4B all-stock merger to create semiconductor equipment leader. Both shareholder bases approved Feb 6, 2026. China SAMR Phase II review remains the only material outstanding hurdle, with potential to be used as US-China trade negotiation leverage. Close expected H2 2026.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/axcelis-stockholders-approve-merger-with-veeco-302680838.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/axcelis-stockholders-approve-merger-with-veeco-302680838.html",
+    "category": "active_deal"
   },
   {
     "target": "Webster Financial Corp",
@@ -4720,7 +4791,8 @@ const DEALS = [
     "dealSize": 11,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://investors.websterbank.com/News--Events/news-releases/news-details/2026/Webster-Financial-Corporation-Enters-Into-Merger-Agreement-With-Banco-Santander-S-A--for-12-3-Billion/default.aspx"
+    "sourceUrl": "https://investors.websterbank.com/News--Events/news-releases/news-details/2026/Webster-Financial-Corporation-Enters-Into-Merger-Agreement-With-Banco-Santander-S-A--for-12-3-Billion/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "ZIM Integrated Shipping Services Ltd",
@@ -4738,7 +4810,8 @@ const DEALS = [
     "dealRisk": "high",
     "description": "Hapag-Lloyd to acquire ZIM at $35/share; ZIM holders approved 97% May 1, 2026. Major Israeli regulatory risk now in focus — Israeli Shipping & Ports Authority opposing on national security; Knesset Economic Affairs Committee flagging Qatari/Saudi sovereign fund stakes in Hapag-Lloyd; Israeli government holds Golden Share able to block the sale. Competing $37.50/share Sakal-led Israeli bid still on the table.",
     "otherBidders": "Skaal/Sakal Israeli investor group ($37.50/share competing bid)",
-    "sourceUrl": "https://www.timesofisrael.com/knesset-panel-flags-national-security-fears-over-zims-sale-to-german-shipping-rival/"
+    "sourceUrl": "https://www.timesofisrael.com/knesset-panel-flags-national-security-fears-over-zims-sale-to-german-shipping-rival/",
+    "category": "active_deal"
   },
   {
     "target": "McCormick & Company Inc",
@@ -4754,7 +4827,8 @@ const DEALS = [
     "dealSize": 44.8,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.unilever.com/news/press-and-media/press-releases/2026/unilever-announces-the-combination-of-unilever-foods-with-mccormick/"
+    "sourceUrl": "https://www.unilever.com/news/press-and-media/press-releases/2026/unilever-announces-the-combination-of-unilever-foods-with-mccormick/",
+    "category": "active_deal"
   },
   {
     "target": "Cyclerion Therapeutics Inc",
@@ -4770,7 +4844,8 @@ const DEALS = [
     "dealSize": 380,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260401287952/en/Cyclerion-Therapeutics-and-Korsana-Biosciences-Announce-Merger-Agreement"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260401287952/en/Cyclerion-Therapeutics-and-Korsana-Biosciences-Announce-Merger-Agreement",
+    "category": "active_deal"
   },
   {
     "target": "Affinity Bancshares Inc",
@@ -4785,7 +4860,8 @@ const DEALS = [
     "dealTerms": "$23.00 per share in cash",
     "dealSize": 140,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "category": "active_deal"
   },
     {
     "target": "Centessa Pharmaceuticals plc",
@@ -4801,7 +4877,8 @@ const DEALS = [
     "dealSize": 6300,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "Eli Lilly to acquire Centessa Pharmaceuticals for $38/share cash + CVR up to $9.00/share. Definitive proxy filed; shareholder vote scheduled June 12, 2026. HSR waiting period expires May 21, 2026. Close expected by Q3 2026."
+    "description": "Eli Lilly to acquire Centessa Pharmaceuticals for $38/share cash + CVR up to $9.00/share. Definitive proxy filed; shareholder vote scheduled June 12, 2026. HSR waiting period expires May 21, 2026. Close expected by Q3 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Universal Music Group NV",
@@ -4818,7 +4895,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Unsolicited non-binding $64B proposal from Bill Ackman's Pershing Square. UMG board confirmed receipt. Significant regulatory and shareholder hurdles. 78% premium to pre-announcement price.",
-    "sourceUrl": "https://www.cnbc.com/2026/04/07/umg-pershing-square-merger-bil-ackman-universal-music.html"
+    "sourceUrl": "https://www.cnbc.com/2026/04/07/umg-pershing-square-merger-bil-ackman-universal-music.html",
+    "category": "rumored"
   },
   {
     "target": "SBA Communications",
@@ -4838,7 +4916,9 @@ const DEALS = [
     "description": "KKR and Brookfield reportedly exploring a consortium bid for SBA Communications at ~$250/share, representing a ~20x AFFOPS multiple and ~$39B enterprise value. Press reports only; no deal confirmed.",
     "dealSize": 39000,
     "dealCurrency": "USD",
-    "dealRisk": "high"
+    "dealRisk": "high",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
     {
     "target": "Laurentian Bank of Canada",
@@ -4853,7 +4933,8 @@ const DEALS = [
     "dealTerms": "C$40.50 cash + 0.3564 Fairstone shares per LB share",
     "dealSize": 1.8,
     "dealCurrency": "CAD",
-    "dealRisk": "medium"
+    "dealRisk": "medium",
+    "category": "active_deal"
   },
   {
     "target": "Leggett & Platt Inc",
@@ -4869,7 +4950,9 @@ const DEALS = [
     "dealSize": 2500,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "sourceUrl": "https://www.stocktitan.net/sec-filings/LEG/425-leggett-platt-inc-business-combination-communication-3919e20951fd.html"
+    "sourceUrl": "https://www.stocktitan.net/sec-filings/LEG/425-leggett-platt-inc-business-combination-communication-3919e20951fd.html",
+    "category": "active_deal",
+    "comment": "(2026-06-03) HSR waiting period expires today (approximate); risk arb calendar event."
   },
   {
     "target": "SECURE Waste Infrastructure Corp",
@@ -4885,7 +4968,8 @@ const DEALS = [
     "dealSize": 6.4,
     "dealCurrency": "CAD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.gflenv.com/news"
+    "sourceUrl": "https://www.gflenv.com/news",
+    "category": "active_deal"
   },
   {
     "target": "Talkspace Inc",
@@ -4900,7 +4984,8 @@ const DEALS = [
     "dealTerms": "Definitive proxy filed; vote May 29; HSR filed, 30-day waiting period expires April 27; state filings in CA, WA, IL, OR; close expected Q3 2026.",
     "dealSize": 0,
     "dealCurrency": "USD",
-    "dealRisk": "low"
+    "dealRisk": "low",
+    "category": "active_deal"
   },
     {
     "target": "Commvault Systems Inc",
@@ -4916,7 +5001,9 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "High",
-    "sourceUrl": "https://www.tradingview.com/news/reuters.com,2026:newsml_L6N40T11X:0-commvault-explores-sale-after-takeover-interest-sources-say/"
+    "sourceUrl": "https://www.tradingview.com/news/reuters.com,2026:newsml_L6N40T11X:0-commvault-explores-sale-after-takeover-interest-sources-say/",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Intertek Group plc",
@@ -4933,7 +5020,8 @@ const DEALS = [
     "dealCurrency": "GBP",
     "dealRisk": "medium",
     "description": "EQT to acquire Intertek for £60/share cash (£9.2B equity, ~$14.3B EV). Board 'minded to recommend' EQT's fourth and final bid after shareholder pressure. Firm Rule 2.7 announcement expected ahead of June 11, 2026 PUSU deadline.",
-    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/intertek-group--itrk/statement-re-final-proposal-from-eqt/9565920"
+    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/intertek-group--itrk/statement-re-final-proposal-from-eqt/9565920",
+    "category": "active_deal"
   },
   {
     "target": "T-Mobile US Inc",
@@ -4950,7 +5038,9 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Bloomberg, WSJ and FT reported in late April 2026 that Deutsche Telekom (~53% TMUS stake) is exploring a holdco combination with T-Mobile US at an aggregate enterprise value of $260-400B. Plan involves a new HoldCo making stock bids for both DTE and TMUS. Major hurdles: German government / KfW hold ~28% of DTE and would need to approve dilution; CFIUS / FCC / EU regulatory approvals required. No formal process underway; preliminary press reporting only.",
-    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/deutsche-telekom-weighs-full-combination-115107414.html"
+    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/deutsche-telekom-weighs-full-combination-115107414.html",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Inhibrx Biosciences Inc",
@@ -4967,7 +5057,9 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Reuters reports Merck has takeover interest in Inhibrx Biosciences. Inhibrx is exploring a joint spinoff of INBRX-106 (anti-OX40L for autoimmune diseases) alongside a second oncology asset; combined value could exceed $9B if clinical trials succeed. No formal deal announced; early-stage press speculation.",
-    "sourceUrl": "https://www.benzinga.com/m-a/26/04/51979867/large-drugmakers-eye-inhibrx-cancer-drugs-valued-over-8-billion-stock-surges"
+    "sourceUrl": "https://www.benzinga.com/m-a/26/04/51979867/large-drugmakers-eye-inhibrx-cancer-drugs-valued-over-8-billion-stock-surges",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
     {
     "target": "TruBridge Inc",
@@ -4983,7 +5075,8 @@ const DEALS = [
     "dealSize": 557,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "IKS Health to acquire TruBridge (TBRG) for $26.25/share in cash (~$557M EV), announced April 23, 2026. Expected close Q3 2026. Healthcare IT / revenue cycle management."
+    "description": "IKS Health to acquire TruBridge (TBRG) for $26.25/share in cash (~$557M EV), announced April 23, 2026. Expected close Q3 2026. Healthcare IT / revenue cycle management.",
+    "category": "active_deal"
   },
   {
     "target": "Cumberland Pharma branded portfolio",
@@ -4999,7 +5092,8 @@ const DEALS = [
     "dealSize": 100,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Cumberland Pharmaceuticals (CPIX) agreed to sell its branded pharmaceutical portfolio to Apotex for $100M cash, announced April 23, 2026. Asset sale transaction."
+    "description": "Cumberland Pharmaceuticals (CPIX) agreed to sell its branded pharmaceutical portfolio to Apotex for $100M cash, announced April 23, 2026. Asset sale transaction.",
+    "category": "active_deal"
   },
   {
     "target": "Honeywell Warehouse & Workflow Solutions (carve-out)",
@@ -5015,7 +5109,9 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "American Industrial Partners to acquire Honeywell Warehouse & Workflow Solutions segment (~$935M revenue), carve-out announced April 23, 2026."
+    "description": "American Industrial Partners to acquire Honeywell Warehouse & Workflow Solutions segment (~$935M revenue), carve-out announced April 23, 2026.",
+    "category": "active_deal",
+    "comment": "(2026-06-03) Inaugural Honeywell Aerospace spin-off Investor Day held today."
   },
   {
     "target": "Onyx-Fire Protection (from Blackstone)",
@@ -5031,7 +5127,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "APi Group (APG) agreed to acquire Onyx-Fire Protection from Blackstone (~$190M revenue), announced April 23, 2026."
+    "description": "APi Group (APG) agreed to acquire Onyx-Fire Protection from Blackstone (~$190M revenue), announced April 23, 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Kashiv BioSciences",
@@ -5047,7 +5144,8 @@ const DEALS = [
     "dealSize": 750,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Amneal Pharmaceuticals (AMRX) to acquire Kashiv BioSciences for $750M upfront plus up to $350M earnout ($1.1B total), announced April 23, 2026. Expands biosimilars pipeline."
+    "description": "Amneal Pharmaceuticals (AMRX) to acquire Kashiv BioSciences for $750M upfront plus up to $350M earnout ($1.1B total), announced April 23, 2026. Expands biosimilars pipeline.",
+    "category": "active_deal"
   },
   {
     "target": "Helix Energy Solutions",
@@ -5063,7 +5161,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "medium",
-    "description": "Hornbeck Offshore and Helix Energy Solutions (HLX) announced an all-stock merger of equals on April 23, 2026. Hornbeck shareholders own 55%, Helix 45%. Combined company trades on NYSE as HOS. Expected close H2 2026."
+    "description": "Hornbeck Offshore and Helix Energy Solutions (HLX) announced an all-stock merger of equals on April 23, 2026. Hornbeck shareholders own 55%, Helix 45%. Combined company trades on NYSE as HOS. Expected close H2 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Electro-Sensors Inc",
@@ -5079,7 +5178,8 @@ const DEALS = [
     "dealSize": 28.6,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "steute Technologies agreed to acquire Electro-Sensors (ELSE) for $7.75/share cash (~$28.6M), ~75% premium, announced April 23, 2026."
+    "description": "steute Technologies agreed to acquire Electro-Sensors (ELSE) for $7.75/share cash (~$28.6M), ~75% premium, announced April 23, 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Gett UK",
@@ -5095,7 +5195,8 @@ const DEALS = [
     "dealSize": 55,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "Lyft (LYFT) agreed to acquire Gett UK ride-hailing business for $55M cash, announced April 22, 2026. Expands Lyft into the UK market."
+    "description": "Lyft (LYFT) agreed to acquire Gett UK ride-hailing business for $55M cash, announced April 22, 2026. Expands Lyft into the UK market.",
+    "category": "active_deal"
   },
   {
     "target": "Brava Energia",
@@ -5111,7 +5212,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "BRL",
     "dealRisk": "medium",
-    "description": "Ecopetrol (EC) launched a R$23.00/share tender offer for 51% controlling stake in Brava Energia (BRAV3 BZ), announced April 23, 2026. Brazilian upstream oil and gas consolidation."
+    "description": "Ecopetrol (EC) launched a R$23.00/share tender offer for 51% controlling stake in Brava Energia (BRAV3 BZ), announced April 23, 2026. Brazilian upstream oil and gas consolidation.",
+    "category": "active_deal"
   },
   {
     "target": "Teleflex Inc",
@@ -5127,7 +5229,9 @@ const DEALS = [
     "dealSize": 5500,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "CVC Capital Partners and GTCR rumored to be exploring a joint take-private of Teleflex (TFX) at ~$5.5B EV, per reports April 21-22, 2026. No formal offer confirmed."
+    "description": "CVC Capital Partners and GTCR rumored to be exploring a joint take-private of Teleflex (TFX) at ~$5.5B EV, per reports April 21-22, 2026. No formal offer confirmed.",
+    "category": "rumored",
+    "comment": "(2026-06-03) Press reports name as potential M&A target."
   },
   {
     "target": "Kakaku.com",
@@ -5143,7 +5247,8 @@ const DEALS = [
     "dealSize": 2950,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "EQT AB exploring takeover of Kakaku.com (2371 JP), Japanese price comparison platform, at ~$2.6-3.3B valuation, per reports April 23, 2026. No formal offer confirmed."
+    "description": "EQT AB exploring takeover of Kakaku.com (2371 JP), Japanese price comparison platform, at ~$2.6-3.3B valuation, per reports April 23, 2026. No formal offer confirmed.",
+    "category": "rumored"
   },
   {
     "target": "Rayonier Advanced Materials",
@@ -5159,7 +5264,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "RYAM announced formal strategic review on April 20, 2026, with CEO resignation and Morgan Stanley engaged as advisor. Outcome may include sale, merger, or other strategic transaction."
+    "description": "RYAM announced formal strategic review on April 20, 2026, with CEO resignation and Morgan Stanley engaged as advisor. Outcome may include sale, merger, or other strategic transaction.",
+    "category": "strategic_review"
   },
   {
     "target": "Progress Software Corp",
@@ -5175,7 +5281,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "Francisco Partners and Vista Equity Partners submitted a preliminary non-binding proposal to acquire Progress Software (PRGS) at $48/share. No formal agreement reached."
+    "description": "Francisco Partners and Vista Equity Partners submitted a preliminary non-binding proposal to acquire Progress Software (PRGS) at $48/share. No formal agreement reached.",
+    "category": "rumored"
   },
   {
     "target": "SFR Telco Unit (Altice France)",
@@ -5192,7 +5299,8 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "Regulatory - EU antitrust review required for French telecom consolidation",
     "description": "Bouygues Telecom, Free-iliad Group and Orange entered exclusive negotiations to acquire SFR's telecom unit from Altice France for €20.35bn. Altice France granted exclusivity until May 15, 2026. Ownership split: ~42% Bouygues, 31% Iliad, 27% Orange.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/17/3275949/0/en/Bouygues-Telecom-the-Free-iliad-Group-and-Orange-enter-exclusive-negotiations-with-the-Altice-France-group-for-the-acquisition-of-SFR.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/17/3275949/0/en/Bouygues-Telecom-the-Free-iliad-Group-and-Orange-enter-exclusive-negotiations-with-the-Altice-France-group-for-the-acquisition-of-SFR.html",
+    "category": "active_deal"
   },
   {
     "target": "Aleph Alpha",
@@ -5209,7 +5317,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Canadian foundation-model leader Cohere agreed to merge with German AI company Aleph Alpha (Apr 24, 2026) to create a transatlantic AI powerhouse. Combined entity valued at ~$20B, structured ~90% stock / 10% cash. Germany's Schwarz Group anchoring with €500M strategic investment. Aimed at countering US/Chinese AI dominance with a sovereign European/Canadian alternative. Subject to German FDI and EU competition review.",
-    "sourceUrl": "https://techcrunch.com/2026/04/24/cohere-acquires-merges-with-german-based-startup-to-create-a-transatlantic-ai-powerhouse/"
+    "sourceUrl": "https://techcrunch.com/2026/04/24/cohere-acquires-merges-with-german-based-startup-to-create-a-transatlantic-ai-powerhouse/",
+    "category": "active_deal"
   },
   {
     "target": "ARC Resources Ltd",
@@ -5226,7 +5335,8 @@ const DEALS = [
     "dealCurrency": "CAD",
     "dealRisk": "medium",
     "description": "Shell agreed to acquire ARC Resources for ~C$22B (incl debt) in a 75% stock / 25% cash deal announced April 27, 2026. Adds Montney shale gas and LNG-feed gas to Shell's portfolio. Subject to Investment Canada Act, Competition Bureau and shareholder approvals.",
-    "sourceUrl": "https://www.shell.com/news-and-insights/newsroom/news-and-media-releases/2026/shell-announces-agreement-to-acquire-canadian-energy-company-arc-resources.html"
+    "sourceUrl": "https://www.shell.com/news-and-insights/newsroom/news-and-media-releases/2026/shell-announces-agreement-to-acquire-canadian-energy-company-arc-resources.html",
+    "category": "active_deal"
   },
   {
     "target": "XOMA Royalty Corp",
@@ -5243,7 +5353,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Ligand Pharmaceuticals agreed to acquire XOMA Royalty for $39.00/share cash plus a non-tradeable CVR (~$739M) on April 27, 2026, consolidating biopharma royalty platforms. HSR and shareholder vote required.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/27/3281484/7281/en/Ligand-to-Acquire-XOMA-Royalty-Further-Accelerating-Profit-Growth-and-Strengthening-Ligand-s-Position-as-a-Leading-Biopharma-Royalty-Aggregator.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/27/3281484/7281/en/Ligand-to-Acquire-XOMA-Royalty-Further-Accelerating-Profit-Growth-and-Strengthening-Ligand-s-Position-as-a-Leading-Biopharma-Royalty-Aggregator.html",
+    "category": "active_deal"
   },
   {
     "target": "Forvia Interiors (carve-out)",
@@ -5260,7 +5371,8 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "medium",
     "description": "Apollo agreed to acquire Forvia's Interiors business in a €1.82B carve-out announced April 27, 2026, as Forvia continues post-Hella deleveraging. Subject to EU and French regulatory review and works council consultation.",
-    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/forvia-sell-interiors-business-group-053000278.html"
+    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/forvia-sell-interiors-business-group-053000278.html",
+    "category": "active_deal"
   },
   {
     "target": "Ajax Therapeutics",
@@ -5277,7 +5389,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Eli Lilly agreed to acquire privately-held Ajax Therapeutics for up to $2.3B (upfront plus development/regulatory milestones) on April 27, 2026. Adds AJ1-11095, a Type II JAK2 inhibitor for myeloproliferative neoplasms.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/lilly-to-acquire-ajax-therapeutics-to-advance-outcomes-for-patients-with-myelofibrosis-and-polycythemia-vera-302753832.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/lilly-to-acquire-ajax-therapeutics-to-advance-outcomes-for-patients-with-myelofibrosis-and-polycythemia-vera-302753832.html",
+    "category": "active_deal"
   },
   {
     "target": "European Lithium Ltd",
@@ -5294,7 +5407,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Critical Metals agreed to acquire European Lithium in an all-stock deal valued at ~$835M on April 27, 2026, consolidating ownership of the Wolfsberg lithium project in Austria. Subject to Australian (FIRB) and shareholder approvals.",
-    "sourceUrl": "https://criticalmetalscorp.com/news/critical-metals-to-acquire-european-lithium"
+    "sourceUrl": "https://criticalmetalscorp.com/news/critical-metals-to-acquire-european-lithium",
+    "category": "active_deal"
   },
   {
     "target": "Republic Wire Inc",
@@ -5311,7 +5425,8 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "low",
     "description": "Nexans agreed to acquire US-based Republic Wire for ~€680M plus earn-out on April 27, 2026. Strengthens Nexans' building-wire footprint in North America. HSR clearance required.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/nexans-to-acquire-republic-wire-establishing-a-strategic-platform-in-the-united-states-302754611.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/nexans-to-acquire-republic-wire-establishing-a-strategic-platform-in-the-united-states-302754611.html",
+    "category": "active_deal"
   },
   {
     "target": "TK Elevator (thyssenkrupp Elevator)",
@@ -5328,7 +5443,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Kone agreed to acquire TK Elevator from Advent/Cinven/RAG-Stiftung in a $34.4B combination announced April 29, 2026. Combined entity would lead the global elevator and escalator market alongside Otis and Schindler — extensive remedies expected from EU, UK, US, China antitrust regulators. High execution risk.",
-    "sourceUrl": "https://www.kone.com/en/news-and-insights/news/kone-to-acquire-tk-elevator.aspx"
+    "sourceUrl": "https://www.kone.com/en/news-and-insights/news/kone-to-acquire-tk-elevator.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Emalex Biosciences",
@@ -5345,7 +5461,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Teva agreed to acquire privately-held Emalex Biosciences for $700M upfront plus up to $200M in milestones on April 29, 2026. Adds ecopipam, a Phase 3-stage selective dopamine D1 antagonist for Tourette syndrome.",
-    "sourceUrl": "https://www.gurufocus.com/news/8826125/teva-teva-announces-acquisition-of-emalex-biosciences"
+    "sourceUrl": "https://www.gurufocus.com/news/8826125/teva-teva-announces-acquisition-of-emalex-biosciences",
+    "category": "active_deal"
   },
   {
     "target": "Jackson Supply",
@@ -5362,7 +5479,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Watsco (WSO) agreed to acquire HVAC distributor Jackson Supply (~$230M revenue) in a tuck-in deal announced April 28, 2026, expanding its presence in the US Southeast.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/28/3282489/0/en/watsco-to-acquire-jackson-supply-company.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/04/28/3282489/0/en/watsco-to-acquire-jackson-supply-company.html",
+    "category": "active_deal"
   },
   {
     "target": "Assertio Holdings",
@@ -5379,7 +5497,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Zydus Lifesciences topped Garda Capital's $18 + CVR tender for Assertio (ASRT) with a $23.50/share all-cash tender offer per SEC filing. Roughly 30% premium to Garda. Minimum tender + HSR conditions remain.",
-    "sourceUrl": "https://investor.assertiotx.com/news-releases/news-release-details/garda-launches-tender-offer-assertio"
+    "sourceUrl": "https://investor.assertiotx.com/news-releases/news-release-details/garda-launches-tender-offer-assertio",
+    "category": "active_deal"
   },
   {
     "target": "SiriusXM Holdings",
@@ -5396,7 +5515,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "iHeartMedia and SiriusXM are in preliminary stock-for-stock merger discussions per Bloomberg April 24, 2026, as both face structural pressure in traditional audio. Liberty Media's 80%+ stake in SIRI is the key gating item; significant antitrust scrutiny expected given combined audio-market concentration.",
-    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/siriusxm-iheartmedia-early-merger-talks-184820360.html"
+    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/siriusxm-iheartmedia-early-merger-talks-184820360.html",
+    "category": "rumored"
   },
   {
     "target": "Dynatrace Inc",
@@ -5413,7 +5533,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Starboard Value disclosed an activist stake in Dynatrace (DT) on April 28, 2026, pushing for cost discipline and a strategic review. Possible take-private or strategic-acquirer outcome.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260427067321/en/Starboard-Delivers-Letter-to-Dynatrace"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260427067321/en/Starboard-Delivers-Letter-to-Dynatrace",
+    "category": "rumored"
   },
   {
     "target": "Flowserve Corporation",
@@ -5430,7 +5551,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Starboard Value is building a stake in Flowserve (FLS) per Reuters April 28, 2026, with plans to engage management on capital allocation and strategic alternatives.",
-    "sourceUrl": "https://www.tipranks.com/news/the-fly/starboard-builds-position-in-flowserve"
+    "sourceUrl": "https://www.tipranks.com/news/the-fly/starboard-builds-position-in-flowserve",
+    "category": "rumored"
   },
   {
     "target": "Voya Financial",
@@ -5447,7 +5569,9 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "TCIM disclosed an activist position in Voya Financial (VOYA) in late April 2026, urging the board to explore a sale of the company or a separation of its asset management and retirement businesses. No formal acquirer yet.",
-    "sourceUrl": "https://www.gurufocus.com/news/8812883/voya-financial-voya-faces-pressure-from-activist-investors"
+    "sourceUrl": "https://www.gurufocus.com/news/8812883/voya-financial-voya-faces-pressure-from-activist-investors",
+    "category": "rumored",
+    "comment": "(2026-06-03) Activist pressure to sell company; TCIM letter to Board urging strategic review (6/1)."
   },
     {
     "target": "Manus AI (Butterfly Effect)",
@@ -5464,7 +5588,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "BLOCKED. Meta's $2B acquisition of Chinese AI agent startup Manus AI (Butterfly Effect) was formally blocked by China's National Development and Reform Commission (NDRC) on April 27, 2026, citing national-security and tech-sovereignty concerns. Parties terminated discussions.",
-    "sourceUrl": "https://www.npr.org/2026/04/27/g-s1-118892/china-blocks-meta-from-acquiring-ai-startup-manus"
+    "sourceUrl": "https://www.npr.org/2026/04/27/g-s1-118892/china-blocks-meta-from-acquiring-ai-startup-manus",
+    "category": "active_deal"
   },
   {
     "target": "BigIron",
@@ -5480,7 +5605,8 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "RB Global acquisition of BigIron (online auction platform for used industrial/agricultural equipment) received early FTC HSR termination on April 21, 2026, signaling no antitrust concerns. Closing expected imminently."
+    "description": "RB Global acquisition of BigIron (online auction platform for used industrial/agricultural equipment) received early FTC HSR termination on April 21, 2026, signaling no antitrust concerns. Closing expected imminently.",
+    "category": "active_deal"
   },
     {
     "target": "RUCKUS Networks (from Vistance)",
@@ -5497,7 +5623,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Belden Inc agreed to acquire RUCKUS Networks from Vistance, expanding Belden's enterprise networking offering. Announced April 30, 2026.",
-    "sourceUrl": "https://www.gurufocus.com/news/8831875/belden-bdc-acquires-ruckus-networks-for-185-billion"
+    "sourceUrl": "https://www.gurufocus.com/news/8831875/belden-bdc-acquires-ruckus-networks-for-185-billion",
+    "category": "active_deal"
   },
   {
     "target": "KalVista Pharmaceuticals",
@@ -5514,7 +5641,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Chiesi Farmaceutici to acquire KalVista for $27/share cash (~$1.9B, 41% premium) via tender offer launched May 13, 2026. KalVista filed Schedule 14D-9 recommending FOR; multiple prior bidders (Parties A/B/C/D) withdrew. Expected close Q3 2026.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260429263104/en/Chiesi-Group-to-Acquire-KalVista-Pharmaceuticals-Expanding-its-Global-Rare-Disease-Portfolio"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260429263104/en/Chiesi-Group-to-Acquire-KalVista-Pharmaceuticals-Expanding-its-Global-Rare-Disease-Portfolio",
+    "category": "active_deal"
   },
   {
     "target": "Inseego Corp",
@@ -5530,7 +5658,8 @@ const DEALS = [
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "description": "Nokia and Inseego (INSG) announced a strategic combination of Nokia's Fixed Wireless Access (FWA) business with Inseego, with Nokia taking a ~11% equity stake in INSG. Announced April 30, 2026."
+    "description": "Nokia and Inseego (INSG) announced a strategic combination of Nokia's Fixed Wireless Access (FWA) business with Inseego, with Nokia taking a ~11% equity stake in INSG. Announced April 30, 2026.",
+    "category": "active_deal"
   },
   {
     "target": "Equity Residential",
@@ -5547,7 +5676,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Bloomberg reported April 30, 2026 that AvalonBay (AVB) and Equity Residential (EQR) are in preliminary combination talks. Combined market cap ~$51bn. Would create the largest US apartment REIT.",
-    "sourceUrl": "https://www.gurufocus.com/news/8831575/avalonbay-communities-avb-and-equity-residential-eqr-explore-merger-talks"
+    "sourceUrl": "https://www.gurufocus.com/news/8831575/avalonbay-communities-avb-and-equity-residential-eqr-explore-merger-talks",
+    "category": "rumored"
   },
   {
     "target": "Driven Brands Holdings",
@@ -5564,7 +5694,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "ADW Capital Management launched a $18.00/share hostile bid for Driven Brands (DRVN), valuing the company at ~$3bn at a ~40% premium. Announced April 30, 2026.",
-    "sourceUrl": "https://www.gurufocus.com/news/8743621/driven-brands-drvn-sees-3-stock-increase-amid-sale-speculation"
+    "sourceUrl": "https://www.gurufocus.com/news/8743621/driven-brands-drvn-sees-3-stock-increase-amid-sale-speculation",
+    "category": "rumored"
   },
   {
     "target": "CAE Inc",
@@ -5581,7 +5712,8 @@ const DEALS = [
     "dealCurrency": "CAD",
     "dealRisk": "high",
     "description": "Reports indicate CAE Inc has launched a sale process, with Carlyle Group among interested parties. Announced April 30, 2026.",
-    "sourceUrl": "https://www.gurufocus.com/news/8820851/cae-inc-cae-gains-amid-takeover-speculation"
+    "sourceUrl": "https://www.gurufocus.com/news/8820851/cae-inc-cae-gains-amid-takeover-speculation",
+    "category": "rumored"
   },
   {
     "target": "Two Harbors Investment",
@@ -5604,7 +5736,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "otherBidders": "CrossCountry Mortgage ($12.00/share signed deal)",
-    "sourceUrl": "https://www.housingwire.com/articles/uwmc-two-harbors-bid-12-50/"
+    "sourceUrl": "https://www.housingwire.com/articles/uwmc-two-harbors-bid-12-50/",
+    "category": "active_deal"
   },
   {
     "target": "Esperion Therapeutics Inc",
@@ -5626,7 +5759,8 @@ const DEALS = [
     "dealSize": 1100,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/01/3285833/0/en/esperion-to-be-acquired-by-archimed.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/01/3285833/0/en/esperion-to-be-acquired-by-archimed.html",
+    "category": "active_deal"
   },
     {
     "target": "Catalyst Pharmaceuticals Inc",
@@ -5643,7 +5777,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Angelini Pharma (Italian pharma focused on Brain Health) to acquire Catalyst Pharmaceuticals for $31.50/share cash (~$4.1B). Marks Angelini's entry into the U.S. market. Catalyst is a rare disease pharma with FIRDAPSE, AGAMREE, and FYCOMPA. Approvals required: CPRX stockholders, regulatory. Expected close Q3 2026.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/07/3289628/0/en/angelini-pharma-to-acquire-catalyst-pharmaceuticals-for-4-1-billion-usd-3-5-billion-euros-entering-the-u-s-market-and-consolidating-its-leadership-in-brain-health-and-rare-disease.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/07/3289628/0/en/angelini-pharma-to-acquire-catalyst-pharmaceuticals-for-4-1-billion-usd-3-5-billion-euros-entering-the-u-s-market-and-consolidating-its-leadership-in-brain-health-and-rare-disease.html",
+    "category": "active_deal"
   },
   {
     "target": "Cross Country Healthcare Inc",
@@ -5660,7 +5795,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Knox Lane to acquire Cross Country Healthcare in an all-cash take-private transaction valued at $437M. CCRN to become privately held platform in Knox Lane portfolio. Approvals: CCRN stockholders, HSR, regulatory. Expected close Q3 2026.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260506144806/en/Cross-Country-Healthcare-to-be-Acquired-by-Knox-Lane-in-All-Cash-Transaction-Valued-at-$437-Million"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260506144806/en/Cross-Country-Healthcare-to-be-Acquired-by-Knox-Lane-in-All-Cash-Transaction-Valued-at-$437-Million",
+    "category": "active_deal"
   },
     {
     "target": "PathAI",
@@ -5677,7 +5813,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Roche to acquire AI pathology company PathAI for up to $1.05B ($750M upfront + $300M milestones). Strengthens Roche's Diagnostics division with AI-enabled pathology and companion diagnostics. Expected to close H2 2026.",
-    "sourceUrl": "https://www.roche.com/media/releases/med-cor-2026-05-07"
+    "sourceUrl": "https://www.roche.com/media/releases/med-cor-2026-05-07",
+    "category": "active_deal"
   },
   {
     "target": "Perfuse Therapeutics",
@@ -5694,7 +5831,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Bayer to acquire Perfuse Therapeutics for up to $2.45B ($300M upfront + milestones). Adds PER-001, a Phase II endothelin receptor antagonist for Glaucoma and Diabetic Retinopathy, to Bayer's ophthalmology pipeline.",
-    "sourceUrl": "https://www.bayer.com/media/en-us/bayer-to-acquire-perfuse-therapeutics-to-complement-ophthalmology-pipeline/"
+    "sourceUrl": "https://www.bayer.com/media/en-us/bayer-to-acquire-perfuse-therapeutics-to-complement-ophthalmology-pipeline/",
+    "category": "active_deal"
   },
   {
     "target": "Equiniti Group",
@@ -5711,7 +5849,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Bullish to acquire Equiniti from Siris Capital for $4.2B (debt + stock) to create the global transfer agent for tokenized securities. Combines Equiniti's SEC and FCA-regulated transfer agent business with Bullish's blockchain infrastructure. Expected close January 2027.",
-    "sourceUrl": "https://www.bullish.com/us/news-insights/bullish-to-acquire-equiniti-from-siris-in-4-2-billion-transaction-creating-the-global-transfer-agent-for-tokenized-securities"
+    "sourceUrl": "https://www.bullish.com/us/news-insights/bullish-to-acquire-equiniti-from-siris-in-4-2-billion-transaction-creating-the-global-transfer-agent-for-tokenized-securities",
+    "category": "active_deal"
   },
   {
     "target": "Global Business Travel Group",
@@ -5723,12 +5862,13 @@ const DEALS = [
     "expectedClose": "2026-09-30",
     "status": "pending",
     "closingProbability": 85,
-    "dealTerms": "$9.50 per share in cash. ~$6.3B equity value (~$4.9B per JPM survey). 60.2% premium to May 1 close. Holders of ~69% of shares (American Express, Expedia, Qatar Investment Authority, BlackRock) signed voting agreements. Backed by General Catalyst, Alpha Wave, Koch Equity Development. Debt financing by JPM, BofA, Citi, MUFG. HSR required; GBTG shareholder vote required.",
+    "dealTerms": "$9.50 per share in cash. ~$6.3B equity value (~$4.9B per risk-arb survey). 60.2% premium to May 1 close. Holders of ~69% of shares (American Express, Expedia, Qatar Investment Authority, BlackRock) signed voting agreements. Backed by General Catalyst, Alpha Wave, Koch Equity Development. Debt financing by JPM, BofA, Citi, MUFG. HSR required; GBTG shareholder vote required.",
     "dealSize": 6300,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Long Lake Management to acquire American Express Global Business Travel (GBTG) for $9.50/share in cash (~$6.3B). 60% premium. Major holders (~69%) signed voting support agreements. Backed by General Catalyst, Alpha Wave, Koch Equity. Expected close Sep 30, 2026.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260504231235/en/Long-Lake-Agrees-to-Acquire-American-Express-Global-Business-Travel-the-Worlds-Largest-Corporate-Travel-Platform-for-$6.3-Billion-With-Support-From-General-Catalyst-and-Alpha-Wave"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260504231235/en/Long-Lake-Agrees-to-Acquire-American-Express-Global-Business-Travel-the-Worlds-Largest-Corporate-Travel-Platform-for-$6.3-Billion-With-Support-From-General-Catalyst-and-Alpha-Wave",
+    "category": "active_deal"
   },
   {
     "target": "BMO Transportation Finance & Vendor Finance",
@@ -5745,7 +5885,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Stonepeak to acquire BMO's Transportation Finance and Vendor Finance businesses, a ~$10.6B (C$14.5B) portfolio. BMO retains 19.9% equity stake. Cash + earnout. Expected close Q4 fiscal 2026 subject to regulatory approvals.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/bmo-announces-strategic-sale-of-transportation-and-vendor-finance-businesses-302768712.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/bmo-announces-strategic-sale-of-transportation-and-vendor-finance-businesses-302768712.html",
+    "category": "active_deal"
   },
   {
     "target": "Symphony Health",
@@ -5762,7 +5903,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "HealthVerity to acquire Symphony Health from ICON plc (ICLR). Terms undisclosed. Combines clinical data capabilities with commercial healthcare analytics in a unified privacy-protected real-world data platform. Expected close May 2026.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/05/3287615/0/en/healthverity-to-acquire-symphony-health"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/05/3287615/0/en/healthverity-to-acquire-symphony-health",
+    "category": "active_deal"
   },
   {
     "target": "BuzzFeed Inc",
@@ -5779,7 +5921,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Byron Allen's Allen Family Digital to acquire ~52% majority stake in BuzzFeed (BZFD) for $120M ($3.00/share). Allen becomes Chairman & CEO; Jonah Peretti transitions to President of BuzzFeed AI. Funded with $20M cash + $100M 5-year promissory note. Expected close end of May 2026.",
-    "sourceUrl": "https://investors.buzzfeed.com/news-releases/news-release-details/buzzfeed-inc-announces-proposed-majority-stake-investment-byron"
+    "sourceUrl": "https://investors.buzzfeed.com/news-releases/news-release-details/buzzfeed-inc-announces-proposed-majority-stake-investment-byron",
+    "category": "active_deal"
   },
   {
     "target": "Beazer Homes USA",
@@ -5797,7 +5940,8 @@ const DEALS = [
     "dealRisk": "high",
     "description": "Dream Finders Homes' three takeover proposals for Beazer Homes ALL UNANIMOUSLY REJECTED by Beazer board May 11, 2026: $28.50 (Feb), $29.00 (Mar), and the public $25.75 (May 5). Beazer cites book value of $41.83/share. JPMorgan and Moelis advising Beazer. Status remains rumor with hostile dynamic.",
     "comment": "Hostile dynamic. Beazer cites book value ($41.83) vs public bid ($25.75) — large gap suggests no immediate path forward unless DFH dramatically raises. JPMorgan + Moelis advising Beazer. Watch for proxy fight or tender offer escalation.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260511230174/en/Beazer-Homes-Announces-Rejection-of-Unsolicited-Proposals-from-Dream-Finders-Homes"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260511230174/en/Beazer-Homes-Announces-Rejection-of-Unsolicited-Proposals-from-Dream-Finders-Homes",
+    "category": "rumored"
   },
   {
     "target": "North Memorial Health",
@@ -5814,7 +5958,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Sanford Health and North Memorial Health to combine in nonprofit hospital system merger. Sanford to invest $600M in Robbinsdale and Maple Grove hospitals. Bill Gassen continues as combined CEO; local Twin Cities leadership retained. Expected close later in 2026 subject to regulatory processes.",
-    "sourceUrl": "https://news.sanfordhealth.org/company/sanford-health-north-memorial-health-plan-to-combine/"
+    "sourceUrl": "https://news.sanfordhealth.org/company/sanford-health-north-memorial-health-plan-to-combine/",
+    "category": "active_deal"
   },
   {
     "target": "MacroGenics GMP Manufacturing Operations",
@@ -5831,7 +5976,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Bora Pharmaceuticals (TWSE: 6472) to acquire MacroGenics' GMP drug substance manufacturing operations for $122.5M upfront + up to $5M contingent. Includes Rockville and Frederick MD sites; ~140 employees transfer. Expected close Q3 2026.",
-    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/11/3292410/0/en/MacroGenics-to-Sell-GMP-Manufacturing-Operations-to-Bora-Pharmaceuticals.html"
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/11/3292410/0/en/MacroGenics-to-Sell-GMP-Manufacturing-Operations-to-Bora-Pharmaceuticals.html",
+    "category": "active_deal"
   },
   {
     "target": "GoPro Inc",
@@ -5848,7 +5994,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "GoPro Board of Directors announced May 11, 2026 a review of strategic alternatives including a potential sale or merger. CEO Nicholas Woodman cited 'significant unrealized value' in GoPro's technology, IP, and brand. Q1 2026 revenue $99M (down 26% YoY). Speculative buyers cited in press include Meta and Garmin.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/gopro-board-of-directors-announces-review-of-strategic-alternatives-302768658.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/gopro-board-of-directors-announces-review-of-strategic-alternatives-302768658.html",
+    "category": "rumored"
   },
   {
     "target": "Midera Food Processing (MIDD spin-off)",
@@ -5865,7 +6012,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Middleby Corporation (MIDD) spinning off its Food Processing segment as standalone public company Midera Food Processing (Nasdaq: MFP). Tax-free distribution to MIDD shareholders expected July 6, 2026 (1-for-1 ratio). Midera generated >$850M 2025 net sales with ~20% adj EBITDA margins.",
-    "sourceUrl": "https://investors.middleby.com/news-releases/news-release-details/middleby-announces-intent-separate-food-processing-business"
+    "sourceUrl": "https://investors.middleby.com/news-releases/news-release-details/middleby-announces-intent-separate-food-processing-business",
+    "category": "active_deal"
   },
   {
     "target": "Wendy's Company",
@@ -5882,7 +6030,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Financial Times reported May 12, 2026 that Nelson Peltz's Trian is sounding out investors (including Middle Eastern partners) to fund a take-private bid for Wendy's. Peltz holds ~16.24% of WEN and has called the stock undervalued. No formal proposal. Status: rumor.",
-    "sourceUrl": "https://www.theglobeandmail.com/business/international-business/us-business/article-peltzs-trian-reportedly-explores-funding-to-take-wendys-private/"
+    "sourceUrl": "https://www.theglobeandmail.com/business/international-business/us-business/article-peltzs-trian-reportedly-explores-funding-to-take-wendys-private/",
+    "category": "rumored"
   },
   {
     "target": "FedEx Freight (FDX spin-off)",
@@ -5899,7 +6048,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "FedEx board approved tax-free spin-off of FedEx Freight on May 13, 2026. FDXF begins trading on NYSE June 1, 2026 via 1-for-2 distribution to FDX holders of record May 15. FedEx retains 19.9%. FDXF pre-spin cash dividend to parent: $4.1B.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260512056825/en/FedEx-Board-of-Directors-Approves-Spin-off-of-FedEx-Freight"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260512056825/en/FedEx-Board-of-Directors-Approves-Spin-off-of-FedEx-Freight",
+    "category": "active_deal"
   },
   {
     "target": "eBay Inc",
@@ -5916,7 +6066,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "After eBay's board rejected GameStop's $125/share (~$56B) bid on May 12, Ryan Cohen pledged May 13-14 to take the offer directly to eBay shareholders — escalating into a potential hostile fight. Funding gap and governance hurdles remain substantial.",
-    "sourceUrl": "https://www.cnbc.com/2026/05/12/ebay-rejects-gamestops-takeover-ryan-cohen.html"
+    "sourceUrl": "https://www.cnbc.com/2026/05/12/ebay-rejects-gamestops-takeover-ryan-cohen.html",
+    "category": "rumored"
   },
   {
     "target": "Gamma Communications plc",
@@ -5933,7 +6084,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Gamma Communications (GAMA.L) confirmed preliminary takeover talks with three bidders: Providence Equity, Epiris, and an Oakley Capital/Giacom consortium. Reported ~£1B / ~$1.34B. UK PUSU deadline 12 June 2026. Multi-bidder situation raises competing-offer odds.",
-    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/gamma-communications--gama/response-to-speculation/9571629"
+    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/gamma-communications--gama/response-to-speculation/9571629",
+    "category": "rumored"
   },
   {
     "target": "Robocath",
@@ -5950,7 +6102,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Stereotaxis to acquire France-based Robocath for up to $45M ($20M upfront + $25M milestones). Combines Stereotaxis magnetic navigation with Robocath's R-One+ mechanical robotic system for endovascular procedures. Expected close mid-2026.",
-    "sourceUrl": "https://ir.stereotaxis.com/news-releases/news-release-details/stereotaxis-announces-definitive-agreement-acquire-robocath/"
+    "sourceUrl": "https://ir.stereotaxis.com/news-releases/news-release-details/stereotaxis-announces-definitive-agreement-acquire-robocath/",
+    "category": "active_deal"
   },
   {
     "target": "ARKO Petroleum Corp",
@@ -5967,7 +6120,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Blackstone Inc. disclosed a 21.1% activist stake in ARKO Petroleum via Schedule 13D filing May 12, 2026. Position signals potential push for strategic alternatives. No formal offer or transaction announced.",
-    "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=ARKO+Petroleum&type=SC+13D&dateb=&owner=include&count=40"
+    "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=ARKO+Petroleum&type=SC+13D&dateb=&owner=include&count=40",
+    "category": "rumored"
   },
   {
     "target": "Orla Mining Ltd",
@@ -5984,7 +6138,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Equinox Gold to combine with Orla Mining in a ~$5.1B cash-and-stock deal to create North America's new senior gold producer (~1.1M oz annual production, $18.5B implied market cap). Existing Equinox holders own ~67%; Orla ~33%. Vote July 2026; close Q3 2026.",
-    "sourceUrl": "https://orlamining.com/news/equinox-gold-and-orla-mining-combine-to-create-north-americas-new-senior-gold-producer/"
+    "sourceUrl": "https://orlamining.com/news/equinox-gold-and-orla-mining-combine-to-create-north-americas-new-senior-gold-producer/",
+    "category": "active_deal"
   },
   {
     "target": "Alegeus Technologies",
@@ -6001,7 +6156,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "UnitedHealth/Optum to acquire Alegeus Technologies, a SaaS consumer-directed healthcare benefits administration platform serving 26M+ members and processing $6B+ in annual payments. Terms undisclosed; close expected H2 2026.",
-    "sourceUrl": "https://www.beckerspayer.com/m-and-a/unitedhealth-to-buy-benefits-administration-platform-alegeus/"
+    "sourceUrl": "https://www.beckerspayer.com/m-and-a/unitedhealth-to-buy-benefits-administration-platform-alegeus/",
+    "category": "active_deal"
   },
   {
     "target": "National Taxi LLC",
@@ -6018,7 +6174,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Dubai Taxi Company to acquire National Taxi LLC for AED 1.45B (~$395M) cash, expanding into Abu Dhabi. Adds 2,700 vehicles to fleet; debt-funded. Closes early Q3 2026 subject to RTA/ITC approvals.",
-    "sourceUrl": "https://www.zawya.com/en/business/transport-and-logistics/dubai-taxi-company-to-acquire-national-taxi-for-3948mln-fuq9uwhj"
+    "sourceUrl": "https://www.zawya.com/en/business/transport-and-logistics/dubai-taxi-company-to-acquire-national-taxi-for-3948mln-fuq9uwhj",
+    "category": "active_deal"
   },
   {
     "target": "Salem Media Group Inc",
@@ -6035,7 +6192,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "WaterStone, a Christian foundation, to take Salem Media Group private for $1.00/share cash (~250% premium). WaterStone already holds 49.5% voting interest via preferred stock. Unanimous board approval. Expected close August 2026.",
-    "sourceUrl": "https://investor.salemmedia.com/news-events/press-releases/detail/924/salem-media-to-be-acquired-by-waterstone-in-major-growth"
+    "sourceUrl": "https://investor.salemmedia.com/news-events/press-releases/detail/924/salem-media-to-be-acquired-by-waterstone-in-major-growth",
+    "category": "active_deal"
   },
   {
     "target": "Dominion Energy Inc",
@@ -6056,7 +6214,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "NextEra Energy (NEE) to acquire Dominion Energy (D) in $66.8B definitive all-stock deal: 0.8138 NEE + $0.40 cash per D share (~$76.38, 24% premium). Creates world's largest regulated electric utility (~10M customers across FL/VA/NC/SC, 110 GW generation). Close 12-18 months pending HSR, FERC, NRC, state PUC approvals.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260517952728/en/NextEra-Energy-and-Dominion-Energy-to-Combine-Creating-the-Worlds-Largest-Regulated-Electric-Utility-Business-and-North-Americas-Premier-Energy-Infrastructure-Platform-Benefiting-Customers"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260517952728/en/NextEra-Energy-and-Dominion-Energy-to-Combine-Creating-the-Worlds-Largest-Regulated-Electric-Utility-Business-and-North-Americas-Premier-Energy-Infrastructure-Platform-Benefiting-Customers",
+    "category": "active_deal"
   },
   {
     "target": "LiveRamp Holdings Inc",
@@ -6073,7 +6232,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Publicis Groupe to acquire LiveRamp (RAMP) for $38.50/share cash ($2.546B equity / $2.167B EV; $379M net cash). 29.8% premium. Combines Publicis CoreAI with LiveRamp's data collaboration network. HSR by June 15, CFIUS by June 30. Close before year-end 2026.",
-    "sourceUrl": "https://www.publicisgroupe.com/en/news/press-releases/publicis-to-acquire-liveramp-to-accelerate-data-co-creation-for-smarter-agents"
+    "sourceUrl": "https://www.publicisgroupe.com/en/news/press-releases/publicis-to-acquire-liveramp-to-accelerate-data-co-creation-for-smarter-agents",
+    "category": "active_deal"
   },
   {
     "target": "Tate & Lyle plc",
@@ -6090,7 +6250,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Ingredion made conditional possible offer for Tate & Lyle worth up to 615p/share (595p cash + 20p dividends) — ~£2.7B / $3.7B (64% premium). Would create ~$10B global ingredient powerhouse. PUSU deadline 11 June 2026 under UK Takeover Code.",
-    "sourceUrl": "https://www.tateandlyle.com/news/statement-regarding-possible-offer-tate-lyle"
+    "sourceUrl": "https://www.tateandlyle.com/news/statement-regarding-possible-offer-tate-lyle",
+    "category": "rumored"
   },
   {
     "target": "OFB Bancshares Inc (One Florida Bank)",
@@ -6107,7 +6268,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Hancock Whitney (HWC) to acquire OFB Bancshares, parent of One Florida Bank, for $377.6M all-cash. Adds 6-office Orlando franchise, $2.1B assets. 40% cost saves; immediately accretive. Close Q3 2026.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260515375369/en/Hancock-Whitney-to-Acquire-One-Florida-Bank"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260515375369/en/Hancock-Whitney-to-Acquire-One-Florida-Bank",
+    "category": "active_deal"
   },
   {
     "target": "World Freight Company",
@@ -6124,7 +6286,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Brookfield Asset Management to acquire World Freight Company from EQT and PAI Partners for ~$1.2B EV. WFC is one of the world's largest general sales and service agents (GSSA) for global air freight, serving 300+ airlines and 16,000+ forwarders. Close expected end of 2026.",
-    "sourceUrl": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company"
+    "sourceUrl": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "category": "active_deal"
   },
   {
     "target": "RUCKUS Networks",
@@ -6141,7 +6304,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Belden (BDC) to acquire RUCKUS Networks from Vistance Networks (formerly CommScope CCS) for ~$1.85B all-cash (~13x 2026 EBITDA). Adds enterprise Wi-Fi, switching, AI cloud networking platform with 48,000+ customers. Close H2 2026.",
-    "sourceUrl": "https://investor.belden.com/news/news-details/2026/Belden-to-Acquire-RUCKUS-Networks-from-Vistance-Networks-Accelerating-its-Transformation-into-a-Full-Stack-Networking-Solutions-Provider/default.aspx"
+    "sourceUrl": "https://investor.belden.com/news/news-details/2026/Belden-to-Acquire-RUCKUS-Networks-from-Vistance-Networks-Accelerating-its-Transformation-into-a-Full-Stack-Networking-Solutions-Provider/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Chevron Asia-Pacific Refining & Retail Assets",
@@ -6158,7 +6322,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "ENEOS Holdings to acquire Chevron's Asia-Pacific refining and retail assets for $2.17B all-cash — Chevron's 50% Singapore SRC stake plus retail/lubricants ops across Malaysia, Indonesia, Philippines, Australia, Vietnam. Targets growing 50% overseas sales mix by FY2030-31. Close 2027.",
-    "sourceUrl": "https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/051426-eneos-to-acquire-chevron-downstream-assets-across-southeast-asia-australia"
+    "sourceUrl": "https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/051426-eneos-to-acquire-chevron-downstream-assets-across-southeast-asia-australia",
+    "category": "active_deal"
   },
   {
     "target": "Octave Intelligence plc (Hexagon spin-off)",
@@ -6175,7 +6340,8 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "low",
     "description": "Hexagon AB to spin off Octave Intelligence plc — a pure-play software/SaaS company (Asset Lifecycle Intelligence, Safety/Infrastructure/Geospatial, ETQ, Bricsys). ~EUR 1.45B revenue, ~31% EBIT margin. Record date May 22, 2026; dual-listing on Nasdaq Stockholm and Nasdaq NY expected late Q2 2026.",
-    "sourceUrl": "https://hexagon.com/company/newsroom/press-releases/2026/hexagon-proposes-distribution-and-listing-of-octave-intelligence-plc-and-provides-update-on-planned-spin-off"
+    "sourceUrl": "https://hexagon.com/company/newsroom/press-releases/2026/hexagon-proposes-distribution-and-listing-of-octave-intelligence-plc-and-provides-update-on-planned-spin-off",
+    "category": "active_deal"
   },
   {
     "target": "The Magnum Ice Cream Company",
@@ -6192,7 +6358,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Blackstone and CD&R reported by Reuters to be separately exploring bids for The Magnum Ice Cream Company (MICC) — Unilever's recently-demerged ice cream business. Tax-free demerger restrictions for 2 years likely make near-term deal unlikely. PE firms awaiting summer sales results.",
-    "sourceUrl": "https://www.cnbc.com/2026/05/15/magnum-ice-cream-takeover-report-blackstone-cdr.html"
+    "sourceUrl": "https://www.cnbc.com/2026/05/15/magnum-ice-cream-takeover-report-blackstone-cdr.html",
+    "category": "rumored"
   },
   {
     "target": "PSB Holdings Inc",
@@ -6214,7 +6381,8 @@ const DEALS = [
     "dealSize": 202.9,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/bank-first-corporation-signs-agreement-to-acquire-psb-holdings-inc-302776812.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/bank-first-corporation-signs-agreement-to-acquire-psb-holdings-inc-302776812.html",
+    "category": "active_deal"
   },
   {
     "target": "InMed Pharmaceuticals Inc",
@@ -6232,7 +6400,8 @@ const DEALS = [
     "dealRisk": "medium",
     "description": "InMed Pharmaceuticals to merge with Mentari Therapeutics in all-stock reverse merger; InMed shareholders retain ~1.51% of combined entity. Concurrent $290M PIPE expected to fund operations through 2028. Combined company to focus on migraine prevention with anti-PACAP mAb (MT-001) and CGRP/PACAP bispecific (MT-002). Both boards approved; close H2 2026.",
     "comment": "Reverse merger + PIPE recapitalizes INM as Mentari migraine play. INM holders dilute to ~1.5% but may receive CVRs from legacy program monetization. Pre-announcement INM closed $0.68; pre-market spiked to $1.60 on news.",
-    "sourceUrl": "https://www.prnewswire.com/news-releases/inmed-pharmaceuticals--mentari-therapeutics-announce-merger-to-advance-migraine-prevention-therapies-302776112.html"
+    "sourceUrl": "https://www.prnewswire.com/news-releases/inmed-pharmaceuticals--mentari-therapeutics-announce-merger-to-advance-migraine-prevention-therapies-302776112.html",
+    "category": "active_deal"
   },
   {
     "target": "The Fortegra Group Inc",
@@ -6249,7 +6418,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "DB Insurance (Korea) to acquire Fortegra from Tiptree for $1.65B cash. Final NY regulatory condition removed via May 22 amendment; close locked in for May 29, 2026. Tiptree retains ~$1.12B gross proceeds.",
-    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001393726/000139372626000031/tipt-20260522.htm"
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001393726/000139372626000031/tipt-20260522.htm",
+    "category": "active_deal"
   },
   {
     "target": "BVNK",
@@ -6266,7 +6436,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Mastercard to acquire London-based stablecoin infrastructure firm BVNK for up to $1.8B ($1.5B + $300M earnout). Connects Mastercard fiat rails with on-chain payments. Largest stablecoin deal on record.",
-    "sourceUrl": "https://investor.mastercard.com/investor-news/investor-news-details/2026/Mastercard-to-Acquire-BVNK-to-Connect-On-Chain-Payments-and-Fiat-Rails/default.aspx"
+    "sourceUrl": "https://investor.mastercard.com/investor-news/investor-news-details/2026/Mastercard-to-Acquire-BVNK-to-Connect-On-Chain-Payments-and-Fiat-Rails/default.aspx",
+    "category": "active_deal"
   },
   {
     "target": "Caliber Resource Partners",
@@ -6283,7 +6454,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "NextEra Energy to acquire Caliber Resource Partners for $1.3B and form NEQ Operating JV with Quantum Capital to manage onshore U.S. shale assets. Boosts NextEra's natural gas supply chain post-Dominion.",
-    "sourceUrl": "https://www.reuters.com/business/energy/nextera-energy-buy-caliber-resource-partners-set-up-shale-jv-2026-05-20/"
+    "sourceUrl": "https://www.reuters.com/business/energy/nextera-energy-buy-caliber-resource-partners-set-up-shale-jv-2026-05-20/",
+    "category": "active_deal"
   },
     {
     "target": "Everest Compañía de Seguros Generales Colombia",
@@ -6300,7 +6472,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "AIG to acquire Everest Group's Colombian insurance subsidiary (100% equity). Terms undisclosed. Builds on Oct 2025 retail renewal rights deal; expands AIG's Latin America commercial insurance footprint. Expected close early 2027.",
-    "sourceUrl": "https://www.businesswire.com/news/home/20260518909166/en/AIG-Announces-Agreement-to-Acquire-Everests-Insurance-Operations-in-Colombia"
+    "sourceUrl": "https://www.businesswire.com/news/home/20260518909166/en/AIG-Announces-Agreement-to-Acquire-Everests-Insurance-Operations-in-Colombia",
+    "category": "active_deal"
   },
   {
     "target": "Delivery Hero SE",
@@ -6317,7 +6490,8 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "high",
     "description": "Uber's initial €33/share takeover of Delivery Hero was rebuffed; board now weighing a ~€38/share sweetened bid valuing DHER at >€10B per Bloomberg May 25. Uber already holds 19.5% + 5.6% in options. Strategic push to challenge DoorDash outside US.",
-    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-25/delivery-hero-jumps-as-investors-bet-on-sweetened-takeover-offer"
+    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-25/delivery-hero-jumps-as-investors-bet-on-sweetened-takeover-offer",
+    "category": "rumored"
   },
   {
     "target": "Lantheus Holdings Inc",
@@ -6334,7 +6508,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Lantheus (LNTH) considering ~$7B takeover offer from CapVest-backed Curium Pharma. Combination would consolidate diagnostic + therapeutic nuclear medicine. Early stage; rumored.",
-    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-22/lantheus-is-said-to-weigh-sale-following-offer-from-curium"
+    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-22/lantheus-is-said-to-weigh-sale-following-offer-from-curium",
+    "category": "rumored"
   },
   {
     "target": "Ørsted US Onshore Renewables Portfolio",
@@ -6351,7 +6526,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Ørsted exploring sale of US onshore renewables portfolio (wind/solar/batteries) for >$1B per Bloomberg. Part of broader farm-down strategy; mirrors CIP's $1.7B Europe onshore purchase. Early stage; no buyer named.",
-    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-22/orsted-said-to-mull-over-1-billion-sale-of-us-renewable-assets"
+    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-05-22/orsted-said-to-mull-over-1-billion-sale-of-us-renewable-assets",
+    "category": "rumored"
   },
   {
     "target": "Bank Danamon Indonesia",
@@ -6368,7 +6544,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "MUFG (already ~94% holder) exploring take-private of Bank Danamon's ~6% public float per Bloomberg. Cleanup of Indonesian subsidiary; price and timing TBD.",
-    "sourceUrl": "https://www.bloomberg.com/"
+    "sourceUrl": "https://www.bloomberg.com/",
+    "category": "rumored"
   },
   {
     "target": "Empower Semiconductor Inc",
@@ -6385,7 +6562,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Analog Devices to acquire Empower Semiconductor for $1.5B cash. Adds silicon-based integrated voltage regulators (IVRs) for AI/data-center power delivery to ADI's portfolio. Close expected H2 2026.",
-    "sourceUrl": "https://www.analog.com/en/newsroom/press-releases/2026/5-19-2026-adi-to-acquire-empower-semiconductor.html"
+    "sourceUrl": "https://www.analog.com/en/newsroom/press-releases/2026/5-19-2026-adi-to-acquire-empower-semiconductor.html",
+    "category": "active_deal"
   },
   {
     "target": "InnocsAI",
@@ -6402,7 +6580,8 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Liminatus Pharma to acquire AI biotech InnocsAI for ~$320M. Adds AI-driven drug discovery to Liminatus's immuno-oncology platform. Terms and close timing pending further disclosure.",
-    "sourceUrl": "https://www.businesswire.com/"
+    "sourceUrl": "https://www.businesswire.com/",
+    "category": "active_deal"
   },
   {
     "target": "Starz Entertainment Corp",
@@ -6419,7 +6598,118 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Byron Allen reiterates intent to buy 100% of Starz despite the Starz board's poison-pill defense. No firm price; rumor stage. Same buyer recently took control of BuzzFeed.",
-    "sourceUrl": "https://www.bloomberg.com/"
+    "sourceUrl": "https://www.bloomberg.com/",
+    "category": "rumored"
+  },
+  {
+    "target": "MGM Resorts International",
+    "targetTicker": "MGM",
+    "acquirer": "People Incorporated (IAC) - unsolicited proposal",
+    "geo": "USA",
+    "industry": "Gaming / Hospitality",
+    "announced": "2026-06-01",
+    "expectedClose": null,
+    "status": "rumored",
+    "category": "rumored",
+    "closingProbability": null,
+    "currentPrice": null,
+    "dealPrice": 48.3,
+    "spread": null,
+    "annualizedReturn": null,
+    "dealTerms": "Unsolicited proposal from People Incorporated (IAC) to acquire MGM shares not already owned for $48.30/share cash. 10.6% premium to last close; 24.1% premium to 30-day VWAP. IAC owns 26.1%. MGM Board confirmed receipt and is reviewing. Not a definitive agreement.",
+    "dealSize": 14000,
+    "dealCurrency": "USD",
+    "dealRisk": "high",
+    "description": "Unsolicited IAC proposal for MGM at $48.30 cash. Board reviewing.",
+    "comment": "Mgmt didn't comment on whether IAC proposal impacts share repurchase ability. Comfortable with 4.5x lease-adj leverage (could go to 5.5x for strategic deal). CZR/Fertitta viewed neutral/slightly positive competitively."
+  },
+  {
+    "target": "Playtika Holding Corp",
+    "targetTicker": "PLTK",
+    "acquirer": "(Strategic review)",
+    "geo": "USA",
+    "industry": "Gaming / Software",
+    "announced": "2026-06-03",
+    "expectedClose": null,
+    "status": "strategic review",
+    "category": "strategic_review",
+    "closingProbability": null,
+    "currentPrice": null,
+    "dealPrice": null,
+    "spread": null,
+    "annualizedReturn": null,
+    "dealTerms": "Strategic review underway per recent reports.",
+    "dealSize": null,
+    "dealCurrency": "USD",
+    "dealRisk": "high",
+    "description": "Playtika listed on strategic-review pre-event list.",
+    "comment": "Strategic review underway per recent reports."
+  },
+  {
+    "target": "Avantor Inc",
+    "targetTicker": "AVTR",
+    "acquirer": "(Activist pressure)",
+    "geo": "USA",
+    "industry": "Life Sciences / Lab Distribution",
+    "announced": "2026-06-03",
+    "expectedClose": null,
+    "status": "activist",
+    "category": "activist_target",
+    "closingProbability": null,
+    "currentPrice": null,
+    "dealPrice": null,
+    "spread": null,
+    "annualizedReturn": null,
+    "dealTerms": "Activist pressure to sell company per recent reports (re-added to tracker after earlier audit removal \u2014 no active deal, but on activist-pressure pre-event list).",
+    "dealSize": null,
+    "dealCurrency": "USD",
+    "dealRisk": "high",
+    "description": "Engine Capital activist push for sale at $17-19/share. Ingersoll Rand reportedly tried to acquire AVTR in 2023. Listed as activist-pressure target.",
+    "comment": "On activist-pressure pre-event list. No active deal terms; rumor/activist-tracker only."
+  },
+  {
+    "target": "Brown-Forman Corporation",
+    "targetTicker": "BF/B",
+    "acquirer": "(Press-report target)",
+    "geo": "USA",
+    "industry": "Beverages / Spirits",
+    "announced": "2026-06-03",
+    "expectedClose": null,
+    "status": "rumored",
+    "category": "ma_target_press",
+    "closingProbability": null,
+    "currentPrice": null,
+    "dealPrice": null,
+    "spread": null,
+    "annualizedReturn": null,
+    "dealTerms": "Press reports identify Brown-Forman as a potential M&A target. No active deal terms.",
+    "dealSize": null,
+    "dealCurrency": "USD",
+    "dealRisk": "high",
+    "description": "Brown-Forman listed on press-report-level M&A target pre-event list.",
+    "comment": "Press reports name as potential M&A target \u2014 no active deal."
+  },
+  {
+    "target": "American International Group, Inc.",
+    "targetTicker": "AIG",
+    "acquirer": "(Press-report target)",
+    "geo": "USA",
+    "industry": "Insurance",
+    "announced": "2026-06-03",
+    "expectedClose": null,
+    "status": "rumored",
+    "category": "ma_target_press",
+    "closingProbability": null,
+    "currentPrice": null,
+    "dealPrice": null,
+    "spread": null,
+    "annualizedReturn": null,
+    "dealTerms": "Press reports identify AIG as a potential M&A target. No active deal terms.",
+    "dealSize": null,
+    "dealCurrency": "USD",
+    "dealRisk": "high",
+    "description": "AIG listed on press-report-level M&A target pre-event list.",
+    "comment": "Press reports name as potential M&A target \u2014 no active deal."
   }
 ];
 
@@ -7072,6 +7362,138 @@ loadDeals();
       new MutationObserver(checkScroll).observe(tw,{childList:true,subtree:true});
     }
   });
+<script>
+
+// === Category section rendering (added by restructure_v2.py) ===
+(function(){
+  var CATEGORY_SECTIONS = [
+    {key: "rumored",          title: "Rumored / In Talks",          blurb: "Deal rumors and unconfirmed bidder approaches. Press/banker reports; no definitive agreement yet."},
+    {key: "ma_target_press",  title: "M&A Targets — Press Reports", blurb: "Companies repeatedly named in press reports as potential M&A targets, without an active deal."},
+    {key: "strategic_review", title: "Strategic Reviews",           blurb: "Companies that have publicly announced a review of strategic alternatives (incl. potential sale)."},
+    {key: "activist_target",  title: "Activist Pressure to Sell",   blurb: "Companies under public activist pressure pushing for a sale or breakup."},
+  ];
+
+  // Wait for allDeals to be defined, then hook in.
+  function start(){
+    if (typeof window.allDeals === "undefined") { setTimeout(start, 200); return; }
+    var BASE_RENDER = window.renderDeals;
+    if (!BASE_RENDER) { setTimeout(start, 200); return; }
+
+    window.renderDeals = function(){
+      BASE_RENDER();
+      hideNonActiveRows();
+      renderCategorySections();
+    };
+
+    // Kick the first render.
+    try { window.renderDeals(); } catch(e){ console.warn(e); }
+  }
+
+  function hideNonActiveRows(){
+    var body = document.getElementById("dealsBody");
+    if (!body || !window.allDeals) return;
+    var catByTicker = {};
+    window.allDeals.forEach(function(d){
+      catByTicker[(d.targetTicker||"").toUpperCase()] = d.category || "active_deal";
+    });
+    var hidden = 0;
+    Array.prototype.forEach.call(body.querySelectorAll("tr"), function(tr){
+      var t = (tr.textContent||"");
+      // Tickers in catByTicker that appear in parens in row text: "(TMUS)"
+      var hide = false;
+      for (var k in catByTicker) {
+        if (!k) continue;
+        if (catByTicker[k] !== "active_deal" && t.indexOf("(" + k + ")") !== -1) {
+          hide = true; break;
+        }
+      }
+      tr.style.display = hide ? "none" : "";
+      if (hide) hidden++;
+    });
+    var countEl = document.getElementById("dealCountNum");
+    if (countEl) {
+      var visible = body.querySelectorAll("tr").length - hidden;
+      countEl.textContent = visible;
+    }
+  }
+
+  function renderCategorySections(){
+    var host = document.getElementById("categorySections");
+    if (!host) {
+      host = document.createElement("div");
+      host.id = "categorySections";
+      host.className = "category-sections";
+      var anchor = document.getElementById("tableWrap");
+      if (anchor && anchor.parentNode) {
+        anchor.parentNode.insertBefore(host, anchor.nextSibling);
+      } else {
+        document.body.appendChild(host);
+      }
+    }
+    host.innerHTML = "";
+    if (!window.allDeals) return;
+    CATEGORY_SECTIONS.forEach(function(sec){
+      var rows = window.allDeals.filter(function(d){ return d.category === sec.key; });
+      if (!rows.length) return;
+      var sectionEl = document.createElement("section");
+      sectionEl.className = "cat-section cat-" + sec.key;
+      var header = '<div class="cat-head">' +
+        '<h3 class="cat-title">' + escapeHTML(sec.title) + ' <span class="cat-count">' + rows.length + '</span></h3>' +
+        '<div class="cat-blurb">' + escapeHTML(sec.blurb) + '</div>' +
+      '</div>';
+      var tableRows = rows.map(function(d){
+        var ticker = d.targetTicker || "";
+        var target = d.target || "";
+        var acquirer = d.acquirer || "—";
+        var status  = d.status || "—";
+        var detail = d.dealTerms || d.description || "—";
+        var comment = d.comment || "";
+        var statusClass = (status||"").toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+        return '<tr data-ticker="' + escapeAttr(ticker) + '" style="cursor:pointer">' +
+          '<td><strong>' + escapeHTML(ticker) + '</strong><br><span style="font-size:11px;color:var(--text-dim)">' + escapeHTML(target) + '</span></td>' +
+          '<td>' + escapeHTML(acquirer) + '</td>' +
+          '<td><span class="cat-status cat-status-' + statusClass + '">' + escapeHTML(status) + '</span></td>' +
+          '<td>' + escapeHTML(detail.length > 240 ? detail.slice(0,240) + "…" : detail) + '</td>' +
+          '<td class="cat-comment">' + escapeHTML(comment) + '</td>' +
+        '</tr>';
+      }).join("");
+      sectionEl.innerHTML = header +
+        '<div class="cat-table-wrap"><table class="cat-table"><thead><tr>' +
+          '<th style="width:18%">Target</th>' +
+          '<th style="width:22%">Pursuer / Status</th>' +
+          '<th style="width:10%">Status</th>' +
+          '<th style="width:30%">Detail</th>' +
+          '<th style="width:20%">Latest Note</th>' +
+        '</tr></thead><tbody>' + tableRows + '</tbody></table></div>';
+      host.appendChild(sectionEl);
+    });
+    // Click-through to existing modal:
+    host.addEventListener("click", function(e){
+      var tr = e.target.closest && e.target.closest("tr[data-ticker]");
+      if (!tr) return;
+      var tk = tr.getAttribute("data-ticker");
+      var d = window.allDeals.find(function(x){ return (x.targetTicker||"") === tk; });
+      if (d && typeof window.openModal === "function") window.openModal(d);
+    });
+  }
+
+  function escapeHTML(s){
+    return String(s||"").replace(/[&<>"']/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];
+    });
+  }
+  function escapeAttr(s){
+    return escapeHTML(s).replace(/"/g, "&quot;");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
+
+</script>
 </body>
 
 <script>
