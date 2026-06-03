@@ -1466,27 +1466,13 @@
 
     .news-tabs{display:flex;gap:.5rem;margin-bottom:12px}.news-tabs button{padding:6px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s}.news-tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary)}.news-tabs button:hover:not(.active){background:var(--surface2)}
     </style>
-<style id="category-sections-css">
-.category-sections{margin:24px 0 40px;display:flex;flex-direction:column;gap:18px}
-.cat-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;box-shadow:0 1px 2px rgba(15,32,68,.04)}
-.cat-section .cat-head{border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:10px}
-.cat-section .cat-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.1px;color:var(--navy);margin:0 0 4px;display:flex;align-items:baseline;gap:8px}
-.cat-section .cat-count{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--surface3);padding:2px 8px;border-radius:10px;font-weight:600}
-.cat-section .cat-blurb{font-size:11px;color:var(--text-dim);font-family:var(--mono);text-transform:uppercase;letter-spacing:.4px}
-.cat-table-wrap{overflow-x:auto}
-.cat-table{width:100%;border-collapse:collapse;font-size:12px}
-.cat-table th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);font-family:'Bebas Neue',sans-serif;letter-spacing:.6px;color:var(--navy);background:var(--surface2);font-size:11px}
-.cat-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
-.cat-table tr:hover td{background:var(--surface2)}
-.cat-table .cat-comment{color:var(--blue);font-style:italic;max-width:340px}
-.cat-status{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:.4px;white-space:nowrap}
-.cat-status-rumored,.cat-status-rumor{background:var(--amber-lt);color:var(--amber);border:1px solid var(--amber)}
-.cat-status-activist{background:var(--red-lt);color:var(--red);border:1px solid var(--red)}
-.cat-status-strategic-review{background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue)}
-.cat-rumored{border-left:3px solid var(--amber)}
-.cat-ma_target_press{border-left:3px solid var(--brand)}
-.cat-strategic_review{border-left:3px solid var(--blue)}
-.cat-activist_target{border-left:3px solid var(--red)}
+<style id="category-pill-css">
+.cat-pill{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.4px;margin-left:6px;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+.cat-pill-rumored{background:var(--amber-lt);color:var(--amber);border:1px solid var(--amber)}
+.cat-pill-strategic_review{background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue)}
+.cat-pill-activist_target{background:var(--red-lt);color:var(--red);border:1px solid var(--red)}
+.cat-pill-ma_target_press{background:#FFEDD5;color:var(--brand);border:1px solid var(--brand)}
+.cat-pill-active_deal{display:none}
 </style>
 </head>
 <body>
@@ -3560,7 +3546,7 @@ const DEALS = [
     "industry": "Insurance / Asset Management",
     "currentPrice": 37.59,
     "dealPrice": 37.59,
-    "dealTerms": "1 EQH = 1.55516 CRBG shares (all-stock merger, no premium). Nippon Life (22.9% CRBG) signed voting agreement to support merger. Preliminary proxy / S-4 filed. Year-end 2026 close target. Extensive regulatory list: HSR, AZ/CO/MO/NY/TX insurance regulators, EQH client consent (75% of advisory fees), Form A filings.",
+    "dealTerms": "1 EQH = 1.55516 CRBG shares (all-stock merger, no premium). Nippon Life (22.9% CRBG) signed voting agreement to support merger. Preliminary proxy / S-4 filed. Year-end 2026 close target. Extensive regulatory approvals: HSR, AZ/CO/MO/NY/TX insurance regulators, EQH client consent (75% of advisory fees), Form A filings.",
     "spread": 0,
     "annualizedReturn": 0,
     "announced": "2026-03-26",
@@ -4004,7 +3990,7 @@ const DEALS = [
     "status": "pending",
     "closingProbability": 25,
     "description": "Diana Shipping (DSX) running live hostile $23.50/share all-cash tender for Genco Shipping (GNK); offer expires June 2, 2026. Diana already owns ~14.4% of GNK. Board rejected May 15 and adopted poison pill; Diana launched proxy fight for 6 of Genco's board seats ahead of June 18 annual meeting and released investor presentation May 19. GNK currently trades above tender ($23.70 vs $23.50) — market expects bump or competing bid.",
-    "comment": "(2026-06-03) Active M&A proposal — on pre-event list as proposal pending.\nGNK trading above tender price (~$23.70 vs $23.50) signals market expects bump or that proxy fight forces engagement. Diana's 14.4% stake gives leverage but board defenses (poison pill + rejection) make hostile outright close unlikely. Inflection points: June 2 tender expiry, June 18 annual meeting.",
+    "comment": "(2026-06-03) Active M&A proposal — as an active proposal.\nGNK trading above tender price (~$23.70 vs $23.50) signals market expects bump or that proxy fight forces engagement. Diana's 14.4% stake gives leverage but board defenses (poison pill + rejection) make hostile outright close unlikely. Inflection points: June 2 tender expiry, June 18 annual meeting.",
     "dealSize": 1000,
     "dealCurrency": "USD",
     "dealRisk": "high",
@@ -4053,7 +4039,7 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "high",
     "category": "rumored",
-    "comment": "(2026-06-03) M&A proposal active; on pre-event list."
+    "comment": "(2026-06-03) M&A proposal active; in the active queue."
   },
   {
     "target": "E.W. Scripps",
@@ -6642,7 +6628,7 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "Playtika listed on strategic-review pre-event list.",
+    "description": "Playtika has initiated a strategic review.",
     "comment": "Strategic review underway per recent reports."
   },
   {
@@ -6660,12 +6646,12 @@ const DEALS = [
     "dealPrice": null,
     "spread": null,
     "annualizedReturn": null,
-    "dealTerms": "Activist pressure to sell company per recent reports (re-added to tracker after earlier audit removal \u2014 no active deal, but on activist-pressure pre-event list).",
+    "dealTerms": "Activist pressure to sell company per recent reports (re-added to tracker after earlier audit removal \u2014 no active deal, but on activist-pressure watch queue).",
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "Engine Capital activist push for sale at $17-19/share. Ingersoll Rand reportedly tried to acquire AVTR in 2023. Listed as activist-pressure target.",
-    "comment": "On activist-pressure pre-event list. No active deal terms; rumor/activist-tracker only."
+    "comment": "On activist-pressure watch queue. No active deal terms; rumor/activist-tracker only."
   },
   {
     "target": "Brown-Forman Corporation",
@@ -6686,7 +6672,7 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "Brown-Forman listed on press-report-level M&A target pre-event list.",
+    "description": "Brown-Forman named in press reports as a potential M&A target.",
     "comment": "Press reports name as potential M&A target \u2014 no active deal."
   },
   {
@@ -6708,7 +6694,7 @@ const DEALS = [
     "dealSize": null,
     "dealCurrency": "USD",
     "dealRisk": "high",
-    "description": "AIG listed on press-report-level M&A target pre-event list.",
+    "description": "AIG named in press reports as a potential M&A target.",
     "comment": "Press reports name as potential M&A target \u2014 no active deal."
   }
 ];
@@ -7364,132 +7350,68 @@ loadDeals();
   });
 <script>
 
-// === Category section rendering (added by restructure_v2.py) ===
+// === Single-table category pills (replaces sub-section rendering) ===
 (function(){
-  var CATEGORY_SECTIONS = [
-    {key: "rumored",          title: "Rumored / In Talks",          blurb: "Deal rumors and unconfirmed bidder approaches. Press/banker reports; no definitive agreement yet."},
-    {key: "ma_target_press",  title: "M&A Targets — Press Reports", blurb: "Companies repeatedly named in press reports as potential M&A targets, without an active deal."},
-    {key: "strategic_review", title: "Strategic Reviews",           blurb: "Companies that have publicly announced a review of strategic alternatives (incl. potential sale)."},
-    {key: "activist_target",  title: "Activist Pressure to Sell",   blurb: "Companies under public activist pressure pushing for a sale or breakup."},
-  ];
-
-  // Wait for allDeals to be defined, then hook in.
-  function start(){
-    if (typeof window.allDeals === "undefined") { setTimeout(start, 200); return; }
+  function decorate(){
+    if (typeof window.allDeals === "undefined") { setTimeout(decorate, 200); return; }
     var BASE_RENDER = window.renderDeals;
-    if (!BASE_RENDER) { setTimeout(start, 200); return; }
+    if (!BASE_RENDER) { setTimeout(decorate, 200); return; }
+
+    // Remove the (now defunct) categorySections host if a stale render created it
+    var stale = document.getElementById("categorySections");
+    if (stale) stale.remove();
 
     window.renderDeals = function(){
+      // Patch the base filter so search ALSO matches category
       BASE_RENDER();
-      hideNonActiveRows();
-      renderCategorySections();
+      var body = document.getElementById("dealsBody");
+      if (!body || !window.allDeals) return;
+
+      // Unhide any rows that earlier injection may have hidden
+      Array.prototype.forEach.call(body.querySelectorAll("tr"), function(tr){
+        tr.style.display = "";
+      });
+
+      // Build ticker->category map
+      var catByTicker = {};
+      window.allDeals.forEach(function(d){
+        catByTicker[(d.targetTicker||"").toUpperCase()] = d.category || "active_deal";
+      });
+
+      // Add category pill to each row's status cell (col index 9)
+      Array.prototype.forEach.call(body.querySelectorAll("tr"), function(tr){
+        if (tr.querySelector(".cat-pill")) return; // idempotent
+        var t = (tr.textContent||"");
+        var matchedTicker = null;
+        for (var k in catByTicker) {
+          if (k && t.indexOf("(" + k + ")") !== -1) { matchedTicker = k; break; }
+        }
+        if (!matchedTicker) return;
+        var cat = catByTicker[matchedTicker];
+        if (!cat || cat === "active_deal") return;
+        var statusCell = tr.children[9];
+        if (!statusCell) return;
+        var pill = document.createElement("span");
+        pill.className = "cat-pill cat-pill-" + cat;
+        pill.textContent = cat.replace(/_/g, " ");
+        pill.title = "Category: " + cat.replace(/_/g, " ");
+        statusCell.appendChild(pill);
+      });
+
+      // Re-count visible rows for the chip
+      var visible = body.querySelectorAll("tr").length;
+      var countEl = document.getElementById("dealCountNum");
+      if (countEl) countEl.textContent = visible;
     };
 
-    // Kick the first render.
+    // Initial kick
     try { window.renderDeals(); } catch(e){ console.warn(e); }
   }
 
-  function hideNonActiveRows(){
-    var body = document.getElementById("dealsBody");
-    if (!body || !window.allDeals) return;
-    var catByTicker = {};
-    window.allDeals.forEach(function(d){
-      catByTicker[(d.targetTicker||"").toUpperCase()] = d.category || "active_deal";
-    });
-    var hidden = 0;
-    Array.prototype.forEach.call(body.querySelectorAll("tr"), function(tr){
-      var t = (tr.textContent||"");
-      // Tickers in catByTicker that appear in parens in row text: "(TMUS)"
-      var hide = false;
-      for (var k in catByTicker) {
-        if (!k) continue;
-        if (catByTicker[k] !== "active_deal" && t.indexOf("(" + k + ")") !== -1) {
-          hide = true; break;
-        }
-      }
-      tr.style.display = hide ? "none" : "";
-      if (hide) hidden++;
-    });
-    var countEl = document.getElementById("dealCountNum");
-    if (countEl) {
-      var visible = body.querySelectorAll("tr").length - hidden;
-      countEl.textContent = visible;
-    }
-  }
-
-  function renderCategorySections(){
-    var host = document.getElementById("categorySections");
-    if (!host) {
-      host = document.createElement("div");
-      host.id = "categorySections";
-      host.className = "category-sections";
-      var anchor = document.getElementById("tableWrap");
-      if (anchor && anchor.parentNode) {
-        anchor.parentNode.insertBefore(host, anchor.nextSibling);
-      } else {
-        document.body.appendChild(host);
-      }
-    }
-    host.innerHTML = "";
-    if (!window.allDeals) return;
-    CATEGORY_SECTIONS.forEach(function(sec){
-      var rows = window.allDeals.filter(function(d){ return d.category === sec.key; });
-      if (!rows.length) return;
-      var sectionEl = document.createElement("section");
-      sectionEl.className = "cat-section cat-" + sec.key;
-      var header = '<div class="cat-head">' +
-        '<h3 class="cat-title">' + escapeHTML(sec.title) + ' <span class="cat-count">' + rows.length + '</span></h3>' +
-        '<div class="cat-blurb">' + escapeHTML(sec.blurb) + '</div>' +
-      '</div>';
-      var tableRows = rows.map(function(d){
-        var ticker = d.targetTicker || "";
-        var target = d.target || "";
-        var acquirer = d.acquirer || "—";
-        var status  = d.status || "—";
-        var detail = d.dealTerms || d.description || "—";
-        var comment = d.comment || "";
-        var statusClass = (status||"").toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
-        return '<tr data-ticker="' + escapeAttr(ticker) + '" style="cursor:pointer">' +
-          '<td><strong>' + escapeHTML(ticker) + '</strong><br><span style="font-size:11px;color:var(--text-dim)">' + escapeHTML(target) + '</span></td>' +
-          '<td>' + escapeHTML(acquirer) + '</td>' +
-          '<td><span class="cat-status cat-status-' + statusClass + '">' + escapeHTML(status) + '</span></td>' +
-          '<td>' + escapeHTML(detail.length > 240 ? detail.slice(0,240) + "…" : detail) + '</td>' +
-          '<td class="cat-comment">' + escapeHTML(comment) + '</td>' +
-        '</tr>';
-      }).join("");
-      sectionEl.innerHTML = header +
-        '<div class="cat-table-wrap"><table class="cat-table"><thead><tr>' +
-          '<th style="width:18%">Target</th>' +
-          '<th style="width:22%">Pursuer / Status</th>' +
-          '<th style="width:10%">Status</th>' +
-          '<th style="width:30%">Detail</th>' +
-          '<th style="width:20%">Latest Note</th>' +
-        '</tr></thead><tbody>' + tableRows + '</tbody></table></div>';
-      host.appendChild(sectionEl);
-    });
-    // Click-through to existing modal:
-    host.addEventListener("click", function(e){
-      var tr = e.target.closest && e.target.closest("tr[data-ticker]");
-      if (!tr) return;
-      var tk = tr.getAttribute("data-ticker");
-      var d = window.allDeals.find(function(x){ return (x.targetTicker||"") === tk; });
-      if (d && typeof window.openModal === "function") window.openModal(d);
-    });
-  }
-
-  function escapeHTML(s){
-    return String(s||"").replace(/[&<>"']/g, function(c){
-      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c];
-    });
-  }
-  function escapeAttr(s){
-    return escapeHTML(s).replace(/"/g, "&quot;");
-  }
-
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
+    document.addEventListener("DOMContentLoaded", decorate);
   } else {
-    start();
+    decorate();
   }
 })();
 
