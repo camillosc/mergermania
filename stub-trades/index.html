@@ -395,7 +395,8 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
         <th class="num">Shrs Out (M)</th>
         <th class="num">Stake Value</th>
         <th class="num">Stake / sh</th>
-        <th class="num">Cash / sh</th>
+        <th class="num">Net Cash / sh</th>
+        <th class="num">RemainCo / sh</th>
         <th class="num">Tax Burden</th>
         <th class="num">After-Tax SOTP</th>
         <th class="num" data-sort="discount">Disc / Prem</th>
@@ -405,7 +406,7 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
     <tbody>
 
       <!-- 1. SATS / SpaceX (SPCX) -->
-      <tr class="row-discount" data-discount="55">
+      <tr class="row-discount" data-discount="9">
         <td>
           <div class="ticker">SATS</div>
           <div class="ticker-sub">EchoStar Corp.</div>
@@ -414,65 +415,79 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
         </td>
         <td class="target-cell">
           <div class="target-name">SpaceX (NASDAQ: SPCX)</div>
-          <div class="target-stake">~52M SpaceX shares (~2.7% f/d) &middot; received $11.1B in SpaceX stock per Sep'25 + Nov'25 amended spectrum-sale agreements (issued at $212/sh) &middot; <strong>SPCX IPO'd today 6/12/26 at $135, opened $150, last $169.70 (+25.7%)</strong></div>
+          <div class="target-stake">
+            Up to <strong>51.89M SpaceX Class A shares</strong> ($11B contract, $212/sh issue px) per Amended &amp; Restated License Purchase Agreement (Nov 5 2025) &middot;
+            <strong>SATS does not yet hold the shares</strong> — closing tied to Spectrum Acquisition Closing on/about <strong>Nov 30 2027</strong> &middot;
+            Spectrum Transfer Closing H1 2026 &middot;
+            SPCX IPO'd today 6/12/26 at $135, last <strong>$169.70</strong>
+          </div>
         </td>
         <td class="num price-cell">
           <div class="price-val">$112.73</div>
           <div class="price-sub">+540% LTM</div>
         </td>
-        <td class="num">219.8</td>
+        <td class="num">289.8</td>
         <td class="num sotp-cell">
-          <div class="sotp-val">Sensitivity</div>
-          <div class="sotp-line"><strong>+$7.5 / sh</strong></div>
-          <div class="sotp-line">per $100B of SpaceX valuation</div>
+          <div class="sotp-val">$8.81B</div>
+          <div class="sotp-line">51.89M × $169.70 (SPCX live)</div>
+          <div class="sotp-line tax">vs $11.00B contract basis</div>
+          <div class="sotp-line tax">(underwater $2.19B)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$60.00</div>
-          <div class="sotp-line">@ $800B (last secondary)</div>
-          <div class="sotp-line">$132.75 @ $1.77T (IPO mark)</div>
-          <div class="sotp-line">$166.50 @ $2.22T (SPCX live)</div>
+          <div class="sotp-val">$30.40</div>
+          <div class="sotp-line">SpaceX value / SATS share</div>
+          <div class="sotp-line">(at SPCX $169.70)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val cash">+$85.00</div>
-          <div class="sotp-line">base ops floor</div>
-          <div class="sotp-line">(Hughes + Boost + spectrum)</div>
+          <div class="sotp-val tax">$(78.42)</div>
+          <div class="sotp-line">$1.5B cash − $24.3B debt</div>
+          <div class="sotp-line">(Q1'26 10-Q: $6.2B curr + $18.0B LT)</div>
+          <div class="sotp-line">post-deal: ~$(50)/sh ($9.8B Seller Notes extinguished at closing)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val tax">~$5.4B</div>
-          <div class="sotp-line tax">($24.39/sh)</div>
-          <div class="sotp-line">21% × ($36.6B − $11.1B)</div>
-          <div class="sotp-line">at $2.22T SPCX mark</div>
+          <div class="sotp-val cash">$85.00</div>
+          <div class="sotp-line">Hughes + Boost + spectrum</div>
+          <div class="sotp-line">(user-provided base ops floor)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$145</div>
-          <div class="sotp-line">@ $800B secondary</div>
-          <div class="sotp-val" style="margin-top:4px;">$218</div>
-          <div class="sotp-line">@ $1.77T IPO mark</div>
-          <div class="sotp-val" style="margin-top:4px;">$251</div>
-          <div class="sotp-line">@ $2.22T SPCX live</div>
+          <div class="sotp-val">$0</div>
+          <div class="sotp-line">SPCX $169.70 &lt; $212 basis</div>
+          <div class="sotp-line">→ paper loss, no tax burden</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$115.40</div>
+          <div class="sotp-line">$85 RemainCo + $30.40 stake @ SPCX live</div>
+          <div class="sotp-line">(ex-net-debt; if levered: ~$37)</div>
         </td>
         <td class="discount-cell">
-          <div class="discount-val discount">−22%</div>
-          <div class="discount-label">@ $800B SpaceX</div>
-          <div class="discount-val discount" style="margin-top:6px;">−48%</div>
-          <div class="discount-label">@ IPO $1.77T</div>
-          <div class="discount-val discount" style="margin-top:6px;">−55%</div>
-          <div class="discount-label">@ SPCX live $2.22T</div>
+          <div class="discount-val tight">−2.3%</div>
+          <div class="discount-label">SATS @ $112.73 vs $115.40 SOTP</div>
+          <div class="discount-val tight" style="margin-top:6px;">~fair</div>
+          <div class="discount-label">on SEC-derived math</div>
         </td>
         <td class="note-cell">
-          <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:4px;padding:7px 9px;margin-bottom:6px;font-family:var(--mono);">
-            <div style="font-size:10px;font-weight:700;color:var(--brand);letter-spacing:0.6px;text-transform:uppercase;margin-bottom:3px;">SPCX direct vs SATS arb</div>
+          <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:4px;padding:7px 9px;margin-bottom:6px;font-family:var(--mono);">
+            <div style="font-size:10px;font-weight:700;color:var(--red);letter-spacing:0.6px;text-transform:uppercase;margin-bottom:3px;">FRAMEWORK RECONCILIATION ⚠</div>
             <div style="font-size:10.5px;color:var(--text);line-height:1.5;">
-              SPCX @ <strong>$169.70</strong> → $1 buys $1.00 of SpaceX exposure.<br>
-              SATS @ $112.73, of which <strong>$27.73 = "SpaceX premium"</strong> (over $85 base ops).<br>
-              For that $27.73 you get <strong>$166.50/sh</strong> of SpaceX look-through value.<br>
-              → <strong style="color:var(--green);">83% discount</strong> &middot; <strong style="color:var(--green);">~6.0x leverage</strong> to SpaceX per dollar via SATS.
+              <strong>SEC math (verified):</strong> 51.89M SpaceX shares ÷ 289.8M SATS = <strong>$30.40/SATS sh</strong> @ SPCX $169.70.<br>
+              <strong>User framework:</strong> $7.5/sh per $100B SpaceX → at $2.22T = <strong>$166.50/sh</strong>.<br>
+              <strong>Gap: ~5.5×.</strong> User framework appears to assume a larger effective stake (or different SpaceX share count) than the SEC-disclosed 51.89M / $212-issue contract. Page uses SEC-verified math primarily.
             </div>
           </div>
-          <strong>Framework:</strong> $85/sh base value for Hughes + Boost + retained spectrum; SpaceX exposure scales at <strong>~$7.5/sh per $100B of SpaceX valuation</strong> (≈52M SpaceX shares / 219.8M SATS shares × spot SpaceX share price). SATS positioned as <strong>Starlink partner</strong> in the spectrum-for-SpaceX-equity deal — strategic role in direct-to-cell consumer wireless. SPCX (Space Exploration Technologies) IPO'd on Nasdaq today 6/12/26 at $135, ran to <strong>$169.70</strong> — implies ~$2.22T market cap on the public mark.
-          <br><a href="https://fortune.com/2026/06/04/echostar-stock-elon-musk-spacex-spectrum-bankruptcy-to-best-shareholder-return-fortune-500/" target="_blank" rel="noopener">Fortune: $11.1B stock, ~52M shares</a> &middot;
-          <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank" rel="noopener">CNBC: SPCX live updates</a> &middot;
-          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000049/tmb-20251106xex99.htm" target="_blank" rel="noopener">SATS 8-K Nov'25 amendment</a>
+          <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:4px;padding:7px 9px;margin-bottom:6px;font-family:var(--mono);">
+            <div style="font-size:10px;font-weight:700;color:var(--brand);letter-spacing:0.6px;text-transform:uppercase;margin-bottom:3px;">SPCX direct vs SATS arb (SEC math)</div>
+            <div style="font-size:10.5px;color:var(--text);line-height:1.5;">
+              SPCX @ $169.70 → $1 buys $1.00 of SpaceX exposure.<br>
+              SATS @ $112.73, of which $27.73 = "SpaceX premium" (over $85 base ops).<br>
+              For that $27.73 you get <strong>$30.40/sh</strong> of SpaceX look-through.<br>
+              → <strong style="color:var(--green);">~9% discount</strong> &middot; <strong style="color:var(--green);">~1.10× leverage</strong> via SATS.<br>
+              (User framework would give 83% / 6.0× if $7.5/$100B holds.)
+            </div>
+          </div>
+          <strong>Verified facts (SATS Q1'26 10-Q):</strong> Up to ~$11B in SpaceX Class A at $212/sh = <strong>51.89M shares</strong>. Closing pending; spectrum-acquisition closing <strong>~Nov 30 2027</strong>. Deal extinguishes $9.821B of Seller Notes (10¾, 6¾, 3⅞ conv). SATS Class A 158.47M + Class B 131.35M = <strong>289.8M shares</strong> (cover page, Apr 30 2026). Strategic angle: Starlink Direct-to-Cell partner via Boost Mobile.
+          <br><a href="https://www.sec.gov/Archives/edgar/data/0001415404/000110465926058150/sats-20260331x10q.htm" target="_blank" rel="noopener">SATS 10-Q Q1'26 (SpaceX footnote)</a> &middot;
+          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000049/0001415404-25-000049-index.htm" target="_blank" rel="noopener">8-K Nov'25 amendment</a> &middot;
+          <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank" rel="noopener">CNBC: SPCX live</a>
         </td>
       </tr>
 
@@ -502,8 +517,14 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">MGM / IAC share</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line cash">+$14.92</div>
+          <div class="sotp-val cash">$14.92</div>
           <div class="sotp-line cash">$1.11B cash, no parent debt</div>
+          <div class="sotp-line">(Q1'26 10-Q)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val cash">$22.00</div>
+          <div class="sotp-line">Dotdash Meredith + Care +</div>
+          <div class="sotp-line">Vimeo + 84% Angi (est. ~$1.6B)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val tax">$0.22B</div>
@@ -511,8 +532,9 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">21% × ($3.27B − $2.2B basis est.)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$55.80</div>
-          <div class="sotp-line">+ Dotdash Meredith, Care, Vimeo, Angi stake</div>
+          <div class="sotp-val">$74.84</div>
+          <div class="sotp-line">$40.95 MGM (after-tax) +</div>
+          <div class="sotp-line">$14.92 cash + $22 RemainCo (est)</div>
         </td>
         <td class="discount-cell">
           <div class="discount-val discount">−24.0%</div>
@@ -550,8 +572,14 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">LYV / LLYV share</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line tax">−$12.45</div>
+          <div class="sotp-val tax">$(12.45)</div>
           <div class="sotp-line">$524M cash − $1.67B debt</div>
+          <div class="sotp-line">(Q1'26 10-Q)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$0</div>
+          <div class="sotp-line">pure-play LYV holdco</div>
+          <div class="sotp-line">(no other op-cos post split-off)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val tax">$2.37B</div>
@@ -560,8 +588,9 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val">$92.00</div>
-          <div class="sotp-line">After-tax look-through</div>
-          <div class="sotp-line">(pre-tax: $117.78 / sh)</div>
+          <div class="sotp-line">$130.23 stake − $25.79 tax</div>
+          <div class="sotp-line">− $12.45 net debt + $0 RemainCo</div>
+          <div class="sotp-line">(pre-tax: $117.78)</div>
         </td>
         <td class="discount-cell">
           <div class="discount-val discount">−17.1%</div>
@@ -601,8 +630,15 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">ARM / SFTBY ADR</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line tax">−$4.39</div>
-          <div class="sotp-line">~$50B net debt</div>
+          <div class="sotp-val tax">$(4.39)</div>
+          <div class="sotp-line">~$50B parent net debt</div>
+          <div class="sotp-line">(FY25 J-GAAP statements)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$10-15</div>
+          <div class="sotp-line">Vision Fund + OpenAI ($25B</div>
+          <div class="sotp-line">primary) + T-Mobile residual</div>
+          <div class="sotp-line">(highly est., wide bracket)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val tax">$96.6B</div>
@@ -611,6 +647,8 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val">$26.09</div>
+          <div class="sotp-line">$30.48 ARM − $4.39 net debt</div>
+          <div class="sotp-line">+ $0 RemainCo (excl Vision Fund)</div>
           <div class="sotp-line">Pre-tax: ARM alone &gt; SFTBY mcap</div>
         </td>
         <td class="discount-cell">
@@ -649,8 +687,15 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">on ordinary share basis</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line cash">+$6.49</div>
-          <div class="sotp-line">~$15B parent cash</div>
+          <div class="sotp-val cash">$6.49</div>
+          <div class="sotp-line cash">~$15B parent net cash</div>
+          <div class="sotp-line">(FY25 results booklet)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$3-5</div>
+          <div class="sotp-line">iFood, Delivery Hero,</div>
+          <div class="sotp-line">Stack Overflow, etc.</div>
+          <div class="sotp-line">(per Prosus NAV disclosure)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val tax">$23.0B</div>
@@ -700,16 +745,24 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">implied LBRDA value</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-line">≈0</div>
+          <div class="sotp-val">$0</div>
           <div class="sotp-line">net of GCI spin-off</div>
+          <div class="sotp-line">(consolidated at deal close)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-line">N/A</div>
-          <div class="sotp-line">stock-for-stock</div>
+          <div class="sotp-val">~$0</div>
+          <div class="sotp-line">GCI to spin pre-close</div>
+          <div class="sotp-line">(ex-CHTR essentially nothing)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$0</div>
+          <div class="sotp-line">stock-for-stock merger</div>
+          <div class="sotp-line">(no realized gain at close)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val">$33.76</div>
-          <div class="sotp-line">deal value</div>
+          <div class="sotp-line">0.236 CHTR × $143.04</div>
+          <div class="sotp-line">+ GCI spin (sep value)</div>
         </td>
         <td class="discount-cell">
           <div class="discount-val tight">−0.7%</div>
@@ -748,8 +801,15 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">portfolio / BRK.B share</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line cash">+$161</div>
+          <div class="sotp-val cash">$161</div>
           <div class="sotp-line cash">$347.7B cash &amp; T-bills</div>
+          <div class="sotp-line">(net of minor parent debt)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$202</div>
+          <div class="sotp-line">BNSF + GEICO + BHE +</div>
+          <div class="sotp-line">Marmon + Pilot + ~80 op-cos</div>
+          <div class="sotp-line">(implied by mkt − stake − cash)</div>
         </td>
         <td class="num sotp-cell">
           <div class="sotp-val tax">~$39B</div>
@@ -757,8 +817,10 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
           <div class="sotp-line">DTL on portfolio gains</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$265</div>
-          <div class="sotp-line">portfolio + cash, after-DTL</div>
+          <div class="sotp-val">$485</div>
+          <div class="sotp-line">$104 portfolio (after-DTL) +</div>
+          <div class="sotp-line">$161 cash + $202 RemainCo</div>
+          <div class="sotp-line">(SOTP ≈ market — fair)</div>
         </td>
         <td class="discount-cell">
           <div class="discount-val premium">+46%</div>
