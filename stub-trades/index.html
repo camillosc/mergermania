@@ -369,9 +369,9 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
       <div class="stat-sub">LBRDA→CHTR signed</div>
     </div>
     <div class="stat-card s-brand">
-      <div class="stat-label">Private-Stake Holder</div>
+      <div class="stat-label">SPCX-Linked</div>
       <div class="stat-value brand">1</div>
-      <div class="stat-sub">SATS owns ~2.7% SpaceX</div>
+      <div class="stat-sub">SATS @ −22% to base case</div>
     </div>
   </div>
 
@@ -404,16 +404,17 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
     </thead>
     <tbody>
 
-      <!-- 1. SATS / SpaceX -->
-      <tr class="row-discount" data-discount="88">
+      <!-- 1. SATS / SpaceX (SPCX) -->
+      <tr class="row-discount" data-discount="55">
         <td>
           <div class="ticker">SATS</div>
           <div class="ticker-sub">EchoStar Corp.</div>
-          <span class="tag tag-private">PRIVATE STAKE</span>
+          <span class="tag tag-public">SPCX NOW LIVE</span>
+          <span class="tag tag-ipo">STARLINK PARTNER</span>
         </td>
         <td class="target-cell">
-          <div class="target-name">SpaceX</div>
-          <div class="target-stake">~52M SpaceX shares (Barron's est.) &middot; ~2.7% fully-diluted &middot; received $11.1B in SpaceX stock per Sep'25 + Nov'25 amended spectrum-sale agreements (priced at $212/sh at issue)</div>
+          <div class="target-name">SpaceX (NASDAQ: SPCX)</div>
+          <div class="target-stake">~52M SpaceX shares (~2.7% f/d) &middot; received $11.1B in SpaceX stock per Sep'25 + Nov'25 amended spectrum-sale agreements (issued at $212/sh) &middot; <strong>SPCX IPO'd today 6/12/26 at $135, opened $150, last $169.70 (+25.7%)</strong></div>
         </td>
         <td class="num price-cell">
           <div class="price-val">$112.73</div>
@@ -421,39 +422,47 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
         </td>
         <td class="num">219.8</td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$21.9B</div>
-          <div class="sotp-line">52M × $421/sh</div>
-          <div class="sotp-line">@ $800B Dec'25 tender</div>
+          <div class="sotp-val">Sensitivity</div>
+          <div class="sotp-line"><strong>+$7.5 / sh</strong></div>
+          <div class="sotp-line">per $100B of SpaceX valuation</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">$99.59</div>
-          <div class="sotp-line">SpaceX value / SATS share</div>
+          <div class="sotp-val">$60.00</div>
+          <div class="sotp-line">@ $800B (last secondary)</div>
+          <div class="sotp-line">$132.75 @ $1.77T (IPO mark)</div>
+          <div class="sotp-line">$166.50 @ $2.22T (SPCX live)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val sotp-line tax">−$104.82</div>
-          <div class="sotp-line">$1.5B cash − $24.6B debt</div>
+          <div class="sotp-val cash">+$85.00</div>
+          <div class="sotp-line">base ops floor</div>
+          <div class="sotp-line">(Hughes + Boost + spectrum)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-line tax">($2.27B)</div>
-          <div class="sotp-line">21% × ($21.9B − $11.1B basis)</div>
+          <div class="sotp-line">est. via DTL</div>
+          <div class="sotp-line">in 10-K footnote</div>
+          <div class="sotp-line">(not yet marked)</div>
         </td>
         <td class="num sotp-cell">
-          <div class="sotp-val">−$15.55</div>
-          <div class="sotp-line">after-tax stake − net debt</div>
-          <div class="sotp-line">(+ core Hughes / Boost / spectrum)</div>
+          <div class="sotp-val">$145</div>
+          <div class="sotp-line">@ $800B secondary</div>
+          <div class="sotp-val" style="margin-top:4px;">$218</div>
+          <div class="sotp-line">@ $1.77T IPO mark</div>
+          <div class="sotp-val" style="margin-top:4px;">$251</div>
+          <div class="sotp-line">@ $2.22T SPCX live</div>
         </td>
         <td class="discount-cell">
-          <div class="discount-val tight">~88%</div>
-          <div class="discount-label">SpaceX stake / parent mkt cap</div>
-          <div class="discount-val tight" style="margin-top:6px;">$118</div>
-          <div class="discount-label">implied core-ops / sh (mkt − stake)</div>
+          <div class="discount-val discount">−22%</div>
+          <div class="discount-label">@ $800B SpaceX</div>
+          <div class="discount-val discount" style="margin-top:6px;">−48%</div>
+          <div class="discount-label">@ IPO $1.77T</div>
+          <div class="discount-val discount" style="margin-top:6px;">−55%</div>
+          <div class="discount-label">@ SPCX live $2.22T</div>
         </td>
         <td class="note-cell">
-          Basis = $11.1B (Sep'25 + Nov'25 amended agreement, $212/sh issue price). Marked here at last confirmed secondary: Dec'25 tender at <strong>$421/sh implying $800B SpaceX valuation</strong>. The $1.77T IPO target reported in roadshow press is forward-looking and not used here. SATS' $24.6B parent debt makes the look-through dominated by leverage; the embedded option is core Hughes Network + Boost Mobile + remaining spectrum.
+          <strong>Framework:</strong> $85/sh base value for Hughes + Boost + retained spectrum; SpaceX exposure scales at <strong>~$7.5/sh per $100B of SpaceX valuation</strong> (≈52M SpaceX shares / 219.8M SATS shares × spot SpaceX share price). SATS positioned as <strong>Starlink partner</strong> in the spectrum-for-SpaceX-equity deal — strategic role in direct-to-cell consumer wireless. SPCX (Space Exploration Technologies) IPO'd on Nasdaq today 6/12/26 at $135, ran to ~$170 — implies ~$2.22T market cap on the public mark.
           <br><a href="https://fortune.com/2026/06/04/echostar-stock-elon-musk-spacex-spectrum-bankruptcy-to-best-shareholder-return-fortune-500/" target="_blank" rel="noopener">Fortune: $11.1B stock, ~52M shares</a> &middot;
-          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000041/tmb-20250907xex99d1.htm" target="_blank" rel="noopener">SATS 8-K Sep'25</a> &middot;
-          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000049/tmb-20251106xex99.htm" target="_blank" rel="noopener">SATS 8-K Nov'25 amendment</a> &middot;
-          <a href="https://fortune.com/2025/12/13/spacex-ipo-plan-2026-secondary-offering-insider-share-sale-800-billion-valuation/" target="_blank" rel="noopener">Fortune: $800B Dec'25 tender</a>
+          <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank" rel="noopener">CNBC: SPCX live updates</a> &middot;
+          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000049/tmb-20251106xex99.htm" target="_blank" rel="noopener">SATS 8-K Nov'25 amendment</a>
         </td>
       </tr>
 
@@ -755,7 +764,7 @@ td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
 
   <div class="methodology">
     <h3>METHODOLOGY &amp; CAVEATS</h3>
-    <p><strong>Stake valuation.</strong> Public stakes marked at last close. Private stakes (SpaceX) marked to <strong>last confirmed secondary-market tender — Dec 2025 at $421/sh, implying ~$800B valuation</strong>. Forward-looking IPO targets ($1.5T-$1.77T per roadshow press) are <em>not</em> used as the basis; they are noted in the catalyst column as upside scenarios only. Per-share allocations use latest 10-Q/10-K share counts.</p>
+    <p><strong>Stake valuation.</strong> Public stakes marked at last close. <strong>SpaceX is now publicly traded under SPCX (NASDAQ)</strong> as of 6/12/26 — IPO at $135/sh, opened $150, currently ~$170 (~$2.22T mkt cap). For SATS, three scenarios are shown side-by-side: (a) last confirmed Dec 2025 secondary tender at $421/sh (~$800B), (b) IPO pricing at $1.77T, (c) current SPCX live mark. Per-share allocations use latest 10-Q/10-K share counts.</p>
     <p><strong>Tax burden.</strong> Computed as (mark − basis) × statutory corporate rate, assuming a hypothetical immediate-sale scenario. US parents use 21% federal rate. SoftBank uses 30.62% Japan effective corporate rate. Prosus uses 25.8% Netherlands. <em>In practice these deferred tax liabilities are rarely realized at parent level — long-tail DTLs are routinely permanent items. After-tax discount is therefore conservative; pre-tax discount is the relevant figure for most realistic outcomes (in-kind distribution, exchange, holding indefinitely).</em></p>
     <p><strong>Holdco friction.</strong> Even after netting tax, Malone-style holdcos and dual-class trackers historically trade at structural discounts of 10-20% due to: control overhang, lack of catalysts, dual-class governance, and tracker-share share-class complexity. The <strong>catalyst column</strong> identifies known triggers that have historically narrowed these gaps (forced split-offs, take-privates, spin-offs, mergers).</p>
     <p><strong>Look-through ≠ liquidation.</strong> The numbers shown are mark-to-market exposures, not realizable prices. A 30% NAV discount on a holdco is not free money — it's compensation for governance, tax overhang, and timing risk.</p>
