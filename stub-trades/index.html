@@ -172,12 +172,17 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     <div class="stat-card s-amber">
       <div class="stat-label">Implied SOTP / sh</div>
       <div class="stat-value amber">$188.68</div>
-      <div class="stat-sub">After-tax; matches Barron's $185-$190</div>
+      <div class="stat-sub">After-tax; CernBasher $185.91; Barron's $185-$190</div>
     </div>
     <div class="stat-card s-red">
       <div class="stat-label">SATS vs SOTP</div>
-      <div class="stat-value red">−39.5%</div>
-      <div class="stat-sub">discount to NAV</div>
+      <div class="stat-value red">−38.6%</div>
+      <div class="stat-sub">discount to NAV (CernBasher math)</div>
+    </div>
+    <div class="stat-card s-green">
+      <div class="stat-label">Effective SPCX via SATS</div>
+      <div class="stat-value green">$99</div>
+      <div class="stat-sub">vs SPCX direct $160.95 → 38.5% disc</div>
     </div>
   </div>
 
@@ -207,6 +212,11 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
       <div class="analyst-src">Oppenheimer — T. Horan</div>
       <div class="analyst-target">Strategic</div>
       <div class="analyst-detail">"SpaceX could acquire Boost or all of SATS"</div>
+    </div>
+    <div class="analyst-card">
+      <div class="analyst-src">@CernBasher (X) — 4-step SOTP</div>
+      <div class="analyst-target">$185.91 / sh</div>
+      <div class="analyst-detail">$53.37B total ÷ 287.1M sh; conservative (0 ops, $6.5B spectrum)</div>
     </div>
     <div class="analyst-card">
       <div class="analyst-src">Page model (SEC + prospectus)</div>
@@ -290,12 +300,32 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
         <div class="kpi">
           <div class="kpi-label">SOTP / sh</div>
           <div class="kpi-val amber">$188.68</div>
-          <div class="kpi-sub">After-tax stake + RemainCo</div>
+          <div class="kpi-sub">CernBasher $185.91 · Barron's $185-$190</div>
         </div>
         <div class="kpi">
           <div class="kpi-label">SATS @ $114.08 vs SOTP</div>
-          <div class="kpi-val red">−39.5%</div>
-          <div class="kpi-sub">discount to NAV</div>
+          <div class="kpi-val red">−38.6%</div>
+          <div class="kpi-sub">discount to NAV (CernBasher)</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Net debt (today, incl. off-B/S)</div>
+          <div class="kpi-val red">$(27.74)B</div>
+          <div class="kpi-sub">$24.25B B/S + $5B off-B/S (CernBasher)</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">AT&amp;T cash incoming</div>
+          <div class="kpi-val green">+$22.65B</div>
+          <div class="kpi-sub">Separate spectrum sale; pre-2027</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Pro forma net cash (post deals)</div>
+          <div class="kpi-val green">+$4.74B</div>
+          <div class="kpi-sub">Flips from net debt to net cash</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Effective SPCX via SATS</div>
+          <div class="kpi-val brand">$99 / sh</div>
+          <div class="kpi-sub">vs SPCX $160.95 → 38.5% discount</div>
         </div>
       </div>
 
@@ -309,21 +339,48 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
         </div>
       </div>
 
-      <h3 class="section-h">SOTP build (per SATS FD share, at SPCX $160.95)</h3>
+      <h3 class="section-h">SOTP — @CernBasher 4-step framework ($B totals)</h3>
+      <p class="body-text">Conservative bottom-up build with explicit balance-sheet bridge through both pending deals (AT&amp;T spectrum sale + SpaceX spectrum-for-equity). Assigns <strong>zero value to ongoing operations</strong> (Hughes + Boost + Sling/DISH) — only marks remaining spectrum at $6.5B. The page's $85 RemainCo framework is more aggressive; both converge on a similar per-share NAV.</p>
       <table class="sotp-build">
         <thead>
-          <tr><th>Component</th><th>$/sh</th><th class="note">Note</th></tr>
+          <tr><th>Step</th><th>$B</th><th class="note">Source / Note</th></tr>
         </thead>
         <tbody>
-          <tr><td class="label">SpaceX stake — gross (262M × $160.95 ÷ 343.6M)</td><td>$122.73</td><td class="note">Per SpaceX IPO prospectus stake disclosure</td></tr>
-          <tr><td class="label">Less: tax provision (21% × $31.2B gain over basis)</td><td>$(19.06)</td><td class="note">Conservative; DTLs often permanent in practice</td></tr>
-          <tr><td class="label">Stake — after-tax</td><td>$103.68</td><td class="note"></td></tr>
-          <tr><td class="label">RemainCo (Hughes + Boost + Sling/DISH + spectrum)</td><td>$85.00</td><td class="note">User-provided base ops floor</td></tr>
-          <tr class="total"><td>SOTP / sh</td><td>$188.68</td><td class="note">Barron's range: $185 – $190 ✓</td></tr>
-          <tr><td class="label">SATS @ $114.08</td><td>$(74.60)</td><td class="note">Market trades at −39.5% to NAV</td></tr>
-          <tr><td class="label">Plus catalyst: AT&amp;T spectrum sale</td><td>add ~$23B cash incoming</td><td class="note">Materially deleverages parent post-close</td></tr>
+          <tr><td class="label"><strong>Step 1 — Current B/S (3/31/26)</strong></td><td></td><td class="note"></td></tr>
+          <tr><td class="label">Cash &amp; marketable securities</td><td>+$1.516</td><td class="note">Q1'26 10-Q</td></tr>
+          <tr><td class="label">Current debt / finance lease</td><td>$(6.237)</td><td class="note">Q1'26 10-Q balance sheet</td></tr>
+          <tr><td class="label">LT debt / finance lease</td><td>$(18.015)</td><td class="note">Q1'26 10-Q balance sheet</td></tr>
+          <tr><td class="label">Off-balance-sheet liabilities (est.)</td><td>$(5.000)</td><td class="note">Auction 113 max payment ~$2.9B + other</td></tr>
+          <tr class="total"><td>Net debt (today)</td><td>$(27.736)</td><td class="note">Includes off-B/S estimate</td></tr>
+
+          <tr><td class="label"><strong>Step 2 — Pro forma both deals close</strong></td><td></td><td class="note"></td></tr>
+          <tr><td class="label">Less: AT&amp;T cash proceeds</td><td>+$22.650</td><td class="note">Separate AT&amp;T spectrum sale</td></tr>
+          <tr><td class="label">Less: Seller Notes paid via SpaceX deal</td><td>+$9.821</td><td class="note">10¾, 6¾, 3⅞ conv extinguished at close</td></tr>
+          <tr class="total"><td>Pro forma net cash</td><td>+$4.735</td><td class="note">Flips from net debt → net cash</td></tr>
+
+          <tr><td class="label"><strong>Step 3 — Add stake + spectrum</strong></td><td></td><td class="note"></td></tr>
+          <tr><td class="label">SpaceX stake (261.8M × $160.95)</td><td>+$42.137</td><td class="note">Per SpaceX IPO prospectus</td></tr>
+          <tr><td class="label">Remaining spectrum residual</td><td>+$6.500</td><td class="note">Spectrum not in AT&amp;T or SpaceX deals</td></tr>
+          <tr><td class="label">Operating businesses (Hughes/Boost/DISH/Sling)</td><td>$0</td><td class="note">CernBasher assumes zero (conservative)</td></tr>
+          <tr class="total"><td>EchoStar total value</td><td>$53.372</td><td class="note">÷ 287.1M sh = $185.91 / sh</td></tr>
+
+          <tr><td class="label"><strong>Step 4 — Discount</strong></td><td></td><td class="note"></td></tr>
+          <tr><td class="label">SATS market cap @ $114.08</td><td>$32.750</td><td class="note">287.1M sh × $114.08</td></tr>
+          <tr class="total"><td>Dollar discount</td><td>$(20.622)</td><td class="note"><strong>38.6% discount to NAV</strong></td></tr>
+          <tr><td class="label">Effective SPCX price via SATS</td><td>$99 / sh</td><td class="note">vs SPCX direct $160.95 → 38.5% disc</td></tr>
         </tbody>
       </table>
+
+      <div class="callout callout-amber">
+        <div class="callout-title">Framework reconciliation: CernBasher vs Page model</div>
+        <div class="callout-body">
+          Both arrive at <strong>~$186-$189/sh NAV → ~38-40% discount</strong>:<br>
+          <strong>CernBasher:</strong> $53.37B ÷ 287.1M = $185.91/sh (ops valued at $0, spectrum $6.5B, pro forma B/S)<br>
+          <strong>Page model:</strong> $188.68/sh (after-tax stake $103.68 + $85 RemainCo, FD shares 343.6M)<br>
+          <strong>Barron's:</strong> $185-$190/sh (after-tax provision, current SPCX mark)<br>
+          Convergence is unusual for stub-trade analyses — three independent frameworks all land in $185-$190. Difference: CernBasher zeros operations and explicitly steps through the pro forma B/S; page model gives $85/sh of ops credit but is similarly conservative on tax. AT&amp;T proceeds ($22.65B) are the under-discussed value lever — they take net debt from $(27.7)B to net cash of +$4.7B.
+        </div>
+      </div>
 
       <h3 class="section-h">Bull vs bear (per Barron's)</h3>
       <div class="case-grid">
@@ -365,6 +422,7 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
         <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000041/tmb-20250907xex99d1.htm" target="_blank" rel="noopener">SATS 8-K Sept 7 2025</a> &middot;
         <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000141540425000049/tmb-20251106xex99.htm" target="_blank" rel="noopener">SATS 8-K Nov 6 2025 (amended)</a> &middot;
         <strong>Barron's: "EchoStar Is Falling as SpaceX Surges. Why the Stock Looks Cheap" (Andrew Bary, June 12, 2026)</strong> &middot;
+        <strong>@CernBasher (X/Twitter) — 4-step SOTP framework with explicit pro forma B/S</strong> &middot;
         TD Cowen (Greg Williams, May 2026, $155 NAV, Buy) &middot;
         Oppenheimer (Tim Horan, "could acquire Boost or all of SATS") &middot;
         <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank" rel="noopener">CNBC: SPCX live updates</a>
@@ -380,6 +438,7 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     <p><strong>Tax burden.</strong> Computed as 21% × (mark − $11B contract basis). At SPCX $160.95 vs $41.98 post-split basis, the stake is materially above basis → meaningful tax provision (~$6.55B / $19.06 per FD share). Conservative; SATS has flexibility on timing of recognition and the DTL may not crystallize for years.</p>
     <p><strong>RemainCo = user-provided.</strong> $85/sh for Hughes Network + Boost Mobile + DISH/Sling TV + retained spectrum is a point estimate. TD Cowen's May 2026 $155 NAV implicitly embedded a similar (perhaps slightly different) RemainCo value before SPCX traded.</p>
     <p><strong>Closing timing.</strong> SATS does not yet hold SpaceX equity; Spectrum Acquisition Closing on/about Nov 30, 2027. Until then, the stake is a contractual right contingent on FCC + DOJ approvals.</p>
+    <p><strong>Three-framework triangulation.</strong> The page surfaces three independent NAV estimates that all converge in the $185-$190/sh range: Barron's (after-tax, current SPCX mark), @CernBasher (4-step bottom-up with explicit pro forma B/S, zero ops value, $6.5B spectrum residual), and the page model ($85 RemainCo + after-tax stake, FD shares). CernBasher adds rigor on (a) off-balance-sheet liabilities ($5B est, includes Auction 113 max payment risk ~$2.9B), and (b) the AT&amp;T $22.65B cash proceeds which mechanically flip the parent from net debt to net cash. The differences in assumption (ops at $0 vs ops at $85/sh) are smaller than the discount: SATS still trades −38.6% below the most conservative framework's NAV.</p>
     <div class="disclaimer">Not investment advice. Data refreshed daily from SEC filings, SpaceX prospectus, Yahoo Finance, and analyst commentary. Verify against primary filings before trading.</div>
   </div>
 
