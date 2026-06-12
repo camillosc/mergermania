@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- noindex -->
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="googlebot" content="noindex,nofollow"/>
+<title>MergerAnalyst — Stub Trades / Look-Through Value</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #F4F6F9;
+  --surface:   #FFFFFF;
+  --surface2:  #F8FAFC;
+  --surface3:  #F1F4F8;
+  --border:    #E2E8F0;
+  --border2:   #CBD5E1;
+  --brand:     #C84B11;
+  --brand2:    #A83A09;
+  --navy:      #0F2044;
+  --navy2:     #1A3260;
+  --blue:      #1A5FAB;
+  --blue-lt:   #EBF3FC;
+  --green:     #0D6B3E;
+  --green-lt:  #EDFAF3;
+  --amber:     #92521C;
+  --amber-lt:  #FFF8F0;
+  --red:       #B91C1C;
+  --red-lt:    #FEF2F2;
+  --text:      #1A2333;
+  --text-mid:  #475569;
+  --text-dim:  #8898AA;
+  --sans:      'DM Sans', system-ui, sans-serif;
+  --mono:      'JetBrains Mono', monospace;
+  --shadow-sm: 0 1px 2px rgba(15,32,68,.06), 0 1px 3px rgba(15,32,68,.04);
+  --shadow:    0 2px 8px rgba(15,32,68,.08), 0 1px 3px rgba(15,32,68,.05);
+  --shadow-lg: 0 8px 32px rgba(15,32,68,.14), 0 2px 8px rgba(15,32,68,.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrapper { max-width: 1820px; margin: 0 auto; padding: 0 24px 48px; }
+
+/* HEADER */
+header { background: var(--navy); border-bottom: 3px solid var(--brand); }
+.header-inner {
+  max-width: 1820px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 18px; gap: 24px; flex-wrap: wrap;
+}
+.logo { display: flex; flex-direction: column; gap: 5px; }
+.logo-wordmark {
+  font-family: var(--sans);
+  font-size: 28px; font-weight: 700;
+  color: #fff; letter-spacing: -0.8px; line-height: 1;
+}
+.logo-wordmark .word-analyst { color: #FF8C5A; }
+.logo-tagline {
+  font-size: 10.5px; font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  font-family: var(--mono);
+}
+.header-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.live-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px; padding: 5px 13px;
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.85); letter-spacing: 0.5px;
+  font-family: var(--mono);
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4ADE80; animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 5px #4ADE80;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.last-updated {
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  font-family: var(--mono); letter-spacing: 0.3px;
+}
+
+/* SUB-HEADER */
+.subhead {
+  background: linear-gradient(180deg, #F8FAFC 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.subhead-inner {
+  max-width: 1820px; margin: 0 auto; padding: 18px 24px;
+}
+.subhead h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; letter-spacing: 1.2px;
+  color: var(--navy); line-height: 1; margin-bottom: 6px;
+}
+.subhead .kicker {
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 600;
+  color: var(--brand); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.subhead p {
+  font-size: 13px; color: var(--text-mid);
+  max-width: 920px; line-height: 1.6;
+}
+.subhead p strong { color: var(--navy); font-weight: 600; }
+
+/* STATS BAR */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin: 16px 0;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--navy);
+  border-radius: 6px; padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-card.s-green  { border-top-color: var(--green); }
+.stat-card.s-amber  { border-top-color: var(--amber); }
+.stat-card.s-brand  { border-top-color: var(--brand); }
+.stat-card.s-blue   { border-top-color: var(--blue); }
+.stat-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 6px;
+  font-family: var(--mono);
+}
+.stat-value {
+  font-size: 24px; font-weight: 700;
+  color: var(--navy);
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px; line-height: 1;
+}
+.stat-value.green { color: var(--green); }
+.stat-value.brand { color: var(--brand); }
+.stat-sub {
+  margin-top: 4px; font-size: 10.5px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+/* SOURCE BAR */
+.source-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px;
+  background: var(--amber-lt);
+  border: 1px solid #F0C89A;
+  border-radius: 6px; margin-bottom: 14px;
+  font-size: 11px; color: var(--amber);
+  flex-wrap: wrap; font-family: var(--mono);
+}
+.source-bar strong { color: var(--amber); font-weight: 700; }
+
+/* TABLE */
+.table-wrap {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); box-shadow: var(--shadow);
+}
+table {
+  width: 100%; border-collapse: collapse;
+  min-width: 1500px; table-layout: auto;
+}
+thead tr { background: var(--navy); }
+thead th {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--navy);
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.9px; text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap; cursor: pointer; user-select: none;
+  transition: color 0.12s;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--mono);
+}
+thead th:last-child { border-right: none; }
+thead th:hover { color: #fff; }
+thead th.num { text-align: right; }
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+  animation: rowIn 0.25s ease both;
+}
+@keyframes rowIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+tbody tr:hover { background: #EEF4FB !important; }
+tbody tr:nth-child(even) { background: var(--surface2); }
+tbody tr.row-discount td:first-child { border-left: 3px solid var(--green); }
+tbody tr.row-premium  td:first-child { border-left: 3px solid var(--amber); }
+tbody tr.row-arb      td:first-child { border-left: 3px solid var(--blue); }
+
+td {
+  padding: 9px 10px;
+  vertical-align: top;
+  font-size: 11.5px; line-height: 1.55;
+  border-right: 1px solid var(--border);
+  color: var(--text);
+}
+td:last-child { border-right: none; }
+td.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
+
+.ticker {
+  font-family: var(--mono);
+  font-weight: 700; font-size: 13px;
+  color: var(--navy); letter-spacing: 0.4px;
+}
+.ticker-sub {
+  font-size: 10.5px; color: var(--text-mid);
+  margin-top: 2px;
+}
+.target-cell { min-width: 200px; max-width: 280px; }
+.target-name {
+  font-weight: 600; color: var(--navy);
+  font-size: 12px;
+}
+.target-stake {
+  font-size: 10.5px; color: var(--text-mid);
+  margin-top: 3px; line-height: 1.5;
+}
+.note-cell {
+  min-width: 240px; max-width: 320px;
+  font-size: 10.5px; color: var(--text-mid);
+  line-height: 1.55;
+  white-space: normal;
+}
+.note-cell a {
+  color: var(--blue); text-decoration: none;
+  border-bottom: 1px dotted var(--blue);
+}
+.note-cell a:hover { color: var(--navy); border-bottom-style: solid; }
+
+.discount-cell {
+  text-align: right; min-width: 110px;
+  font-family: var(--mono);
+}
+.discount-val { font-size: 16px; font-weight: 700; }
+.discount-val.discount { color: var(--green); }
+.discount-val.premium  { color: var(--amber); }
+.discount-val.tight    { color: var(--blue); }
+.discount-label {
+  font-size: 9.5px; font-weight: 500;
+  color: var(--text-dim); letter-spacing: 0.4px;
+  text-transform: uppercase; margin-top: 2px;
+}
+
+.price-cell { font-family: var(--mono); }
+.price-val { font-size: 13px; font-weight: 700; color: var(--navy); }
+.price-sub {
+  font-size: 9.5px; color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.sotp-cell { min-width: 130px; font-family: var(--mono); }
+.sotp-val { font-size: 13px; font-weight: 700; color: var(--navy); }
+.sotp-line {
+  font-size: 10.5px; color: var(--text-mid);
+  margin-top: 2px;
+}
+.sotp-line.tax { color: var(--red); }
+.sotp-line.cash { color: var(--green); }
+
+.tag {
+  display: inline-block;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 9.5px; font-weight: 600;
+  color: var(--text-mid);
+  font-family: var(--mono); letter-spacing: 0.4px;
+  margin-right: 4px; margin-bottom: 3px;
+}
+.tag.tag-private { background: #FDF2F8; border-color: #F9A8D4; color: #BE185D; }
+.tag.tag-public  { background: var(--blue-lt); border-color: #BBDAF5; color: var(--blue); }
+.tag.tag-merger  { background: var(--green-lt); border-color: #A7DFC4; color: var(--green); }
+.tag.tag-ipo     { background: #FFF7ED; border-color: #FED7AA; color: var(--brand); }
+
+/* FOOTER */
+.methodology {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.methodology h3 {
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 700;
+  color: var(--navy); letter-spacing: 1.2px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.methodology p {
+  font-size: 11.5px; color: var(--text-mid);
+  line-height: 1.65; margin-bottom: 8px;
+}
+.methodology p strong { color: var(--navy); }
+.methodology .disclaimer {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 10.5px; color: var(--text-dim);
+  font-style: italic;
+}
+
+.back-link {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 600;
+  color: var(--blue); letter-spacing: 0.5px;
+  text-transform: uppercase; text-decoration: none;
+  margin-top: 8px;
+}
+.back-link:hover { color: var(--navy); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-wordmark">Merger<span class="word-analyst">Analyst</span></div>
+      <div class="logo-tagline">SPECIAL SITUATIONS / STUB TRADES</div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><span class="live-dot"></span>LIVE PRICES</div>
+      <div class="last-updated" id="lastUpdated">Updated <span id="updateTime"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="subhead">
+  <div class="subhead-inner">
+    <div class="kicker">RESEARCH — LOOK-THROUGH VALUE PLAYS</div>
+    <h1>STUB TRADES &amp; CONGLOMERATE DISCOUNTS</h1>
+    <p>Public parents holding material stakes in other companies — public or private — where the look-through value of the stake, combined with parent cash and other assets, implies a different per-share value than the market is currently paying. Classic special-situations territory: holding company discount, deferred tax overhang, and catalysts that crystallize value. <strong>All figures sourced from latest 10-Q/10-K filings, 13D/13G/13F disclosures, and reported secondary-market valuations for private positions.</strong></p>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <div class="stats-bar">
+    <div class="stat-card s-green">
+      <div class="stat-label">Discount Plays</div>
+      <div class="stat-value green">5</div>
+      <div class="stat-sub">Trading below look-through</div>
+    </div>
+    <div class="stat-card s-amber">
+      <div class="stat-label">Premium / Fair</div>
+      <div class="stat-value">2</div>
+      <div class="stat-sub">At/above look-through</div>
+    </div>
+    <div class="stat-card s-blue">
+      <div class="stat-label">Pending Merger Arb</div>
+      <div class="stat-value">1</div>
+      <div class="stat-sub">LBRDA→CHTR signed</div>
+    </div>
+    <div class="stat-card s-brand">
+      <div class="stat-label">Pre-IPO Exposure</div>
+      <div class="stat-value brand">1</div>
+      <div class="stat-sub">SATS → SpaceX</div>
+    </div>
+  </div>
+
+  <div class="source-bar">
+    <strong>SOURCES:</strong>
+    SEC EDGAR (10-Q / 10-K / 13D / 13F) &nbsp;&middot;&nbsp;
+    Yahoo Finance (live quotes) &nbsp;&middot;&nbsp;
+    Bloomberg / Reuters / WSJ (private valuations) &nbsp;&middot;&nbsp;
+    Company IR &nbsp;&middot;&nbsp;
+    <strong>METHODOLOGY:</strong>
+    Public stakes marked to current market price. Private stakes marked to most recent reported secondary or primary round. Tax = 21% US fed corporate rate × (mark − basis); SoftBank uses 30.62% Japan rate.
+  </div>
+
+  <div class="table-wrap">
+  <table id="stubTable">
+    <thead>
+      <tr>
+        <th>Parent</th>
+        <th>Target / Stake</th>
+        <th class="num">Parent Px</th>
+        <th class="num">Shrs Out (M)</th>
+        <th class="num">Stake Value</th>
+        <th class="num">Stake / sh</th>
+        <th class="num">Cash / sh</th>
+        <th class="num">Tax Burden</th>
+        <th class="num">After-Tax SOTP</th>
+        <th class="num" data-sort="discount">Disc / Prem</th>
+        <th>Catalyst / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 1. SATS / SpaceX -->
+      <tr class="row-discount" data-discount="46.5">
+        <td>
+          <div class="ticker">SATS</div>
+          <div class="ticker-sub">EchoStar Corp.</div>
+          <span class="tag tag-private">PRIVATE</span>
+          <span class="tag tag-ipo">IPO IMMINENT</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">SpaceX</div>
+          <div class="target-stake">~2.1% fully-diluted &middot; received $8.5B equity stake in Sep 2025 spectrum sale at $400B valuation</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$112.01</div>
+          <div class="price-sub">+543% LTM</div>
+        </td>
+        <td class="num">219.8</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$37.2B</div>
+          <div class="sotp-line">@ $1.77T IPO</div>
+          <div class="sotp-line">($16.8B @ $800B secondary)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$169.13</div>
+          <div class="sotp-line">IPO scenario</div>
+          <div class="sotp-line">($76.43 secondary)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line tax">−$104.82</div>
+          <div class="sotp-line">$1.5B cash − $24.6B debt</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($6.0B)</div>
+          <div class="sotp-line">21% × ($37.2B − $8.5B)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$36.89</div>
+          <div class="sotp-line">IPO scenario, ex-core ops</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val premium">−204%</div>
+          <div class="discount-label">Secondary case</div>
+          <div class="discount-val discount" style="margin-top:6px;">+204% to IPO</div>
+          <div class="discount-label">Asymmetric optionality</div>
+        </td>
+        <td class="note-cell">
+          SpaceX IPO scheduled <strong>today (Jun 12, 2026)</strong> at $1.77T / $135 per share — implies SATS stake ≈ $37B vs SATS' $24.6B parent mkt cap. Massive debt overhang ($24.6B) makes net of leverage thin, but core wireless / spectrum / Hughes business is the embedded option.
+          <br><a href="https://www.cnbc.com/2026/06/03/spacex-ipo-stock-price-roadshow-musk.html" target="_blank" rel="noopener">CNBC: $1.77T target</a> &middot;
+          <a href="https://www.sec.gov/Archives/edgar/data/0001415404/000110465926058150/sats-20260331x10q.htm" target="_blank" rel="noopener">SATS 10-Q Q1'26</a>
+        </td>
+      </tr>
+
+      <!-- 2. IAC / MGM -->
+      <tr class="row-discount" data-discount="24.4">
+        <td>
+          <div class="ticker">IAC</div>
+          <div class="ticker-sub">IAC Inc.</div>
+          <span class="tag tag-public">PUBLIC TARGET</span>
+          <span class="tag tag-merger">GOING-PRIVATE BID</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">MGM Resorts (NYSE: MGM)</div>
+          <div class="target-stake">66.8M shares &middot; 26.1% of MGM &middot; initial $1B stake Aug 2020, steadily added at $30-40/sh</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$42.24</div>
+          <div class="price-sub">IAC Inc.</div>
+        </td>
+        <td class="num">74.4</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$3.27B</div>
+          <div class="sotp-line">66.8M × $48.96</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$43.97</div>
+          <div class="sotp-line">MGM / IAC share</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line cash">+$14.92</div>
+          <div class="sotp-line cash">$1.11B cash, no parent debt</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($0.22B)</div>
+          <div class="sotp-line">21% × ($3.27B − $2.2B basis est.)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$55.87</div>
+          <div class="sotp-line">+ Dotdash Meredith, Care, Vimeo, Angi stake</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val discount">−24.4%</div>
+          <div class="discount-label">vs after-tax SOTP</div>
+        </td>
+        <td class="note-cell">
+          <strong>IAC submitted $48.30/sh non-binding take-private of MGM on Jun 1, 2026.</strong> If accepted, IAC ends up with cash + remaining op-cos. Look-through cleanly catalyzed. Ex-MGM, IAC also owns Dotdash Meredith, Care.com, Vimeo, and a stake in Angi.
+          <br><a href="https://www.stocktitan.net/sec-filings/MGM/schedule-13d-a-mgm-resorts-international-amended-major-shareholder-re-14c4594baabc.html" target="_blank" rel="noopener">13D/A: 66.8M sh, 26.1%</a> &middot;
+          <a href="https://www.sec.gov/Archives/edgar/data/0001800227/000162828026029798/iaci-20260331.htm" target="_blank" rel="noopener">IAC 10-Q Q1'26</a>
+        </td>
+      </tr>
+
+      <!-- 3. LLYVA / LYV -->
+      <tr class="row-discount" data-discount="16.3">
+        <td>
+          <div class="ticker">LLYVA</div>
+          <div class="ticker-sub">Liberty Live Holdings</div>
+          <span class="tag tag-public">PUBLIC</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">Live Nation (NYSE: LYV)</div>
+          <div class="target-stake">69.65M shares &middot; 29.7% of LYV &middot; legacy Ticketmaster spinoff basis (~$10/sh)</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$97.84</div>
+          <div class="price-sub">LLYVK $101.69</div>
+        </td>
+        <td class="num">91.9</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$12.00B</div>
+          <div class="sotp-line">69.65M × $172.26</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$130.46</div>
+          <div class="sotp-line">LYV / LLYV share</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line tax">−$12.45</div>
+          <div class="sotp-line">$524M cash − $1.67B debt</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($2.37B)</div>
+          <div class="sotp-line">21% × ($12.0B − $0.7B basis)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$116.85</div>
+          <div class="sotp-line">Pre-tax: $117.95 / sh</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val discount">−16.3%</div>
+          <div class="discount-label">vs pre-tax SOTP</div>
+          <div class="discount-val premium" style="margin-top:6px;">−16.3% &rarr; closer</div>
+          <div class="discount-label">to after-tax look</div>
+        </td>
+        <td class="note-cell">
+          Split-off from Liberty Media Dec 15, 2025 — now a pure-play LYV holdco. Has variable forward contracts on 10.5M LYV shares + $400M margin loan facility (undrawn). Persistent ~15-20% discount is typical Malone-vehicle holdco friction.
+          <br><a href="https://www.stocktitan.net/sec-filings/LYV/schedule-13d-live-nation-entertainment-inc-sec-filing-d7017404823f.html" target="_blank" rel="noopener">13D: 29.7% of LYV</a> &middot;
+          <a href="https://www.libertyliveholdings.com/investors/sec-filings/all-sec-filings/content/0001104659-26-057082/tmb-20260331x10q.htm" target="_blank" rel="noopener">LLYVA 10-Q</a>
+        </td>
+      </tr>
+
+      <!-- 4. SFTBY / ARM -->
+      <tr class="row-discount" data-discount="16.0">
+        <td>
+          <div class="ticker">SFTBY</div>
+          <div class="ticker-sub">SoftBank Group (ADR)</div>
+          <span class="tag tag-public">PUBLIC</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">Arm Holdings (NASDAQ: ARM)</div>
+          <div class="target-stake">~923M shares &middot; 90.6% of ARM &middot; basis $32B from 2016 LBO</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$21.84</div>
+          <div class="price-sub">ADR (½ ord.)</div>
+        </td>
+        <td class="num">11,400</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$347.4B</div>
+          <div class="sotp-line">923M × $376.41</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$30.48</div>
+          <div class="sotp-line">ARM / SFTBY ADR</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line tax">−$4.39</div>
+          <div class="sotp-line">~$50B net debt</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($96.6B)</div>
+          <div class="sotp-line">30.62% Japan corp × $315B gain</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$26.09</div>
+          <div class="sotp-line">Pre-tax: ARM alone &gt; SFTBY mcap</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val discount">−16.0%</div>
+          <div class="discount-label">vs pre-tax stake-only</div>
+        </td>
+        <td class="note-cell">
+          ARM alone ($347B) exceeds SoftBank ADR market cap (~$249B). Excluded: Vision Fund (TikTok, OpenAI ~$30B-cost, hundreds of others), $25B OpenAI primary commit, T-Mobile residual. After-tax discount evaporates if Arm liquidated, but Japan corp DTL has been carried for years.
+          <br><a href="https://www.cnbc.com/quotes/9984.T-JP" target="_blank" rel="noopener">SoftBank 9984.T</a> &middot;
+          <a href="https://en.wikipedia.org/wiki/Arm_Holdings" target="_blank" rel="noopener">ARM ownership history</a>
+        </td>
+      </tr>
+
+      <!-- 5. PROSY / Tencent -->
+      <tr class="row-discount" data-discount="28.0">
+        <td>
+          <div class="ticker">PROSY</div>
+          <div class="ticker-sub">Prosus N.V. (ADR)</div>
+          <span class="tag tag-public">PUBLIC</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">Tencent (HKG: 700 / TCEHY)</div>
+          <div class="target-stake">~23.0% of Tencent &middot; reduced from 29% via ongoing buyback-funded sales since 2022</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$9.06</div>
+          <div class="price-sub">ADR</div>
+        </td>
+        <td class="num">2,310</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$124B</div>
+          <div class="sotp-line">23% × ~$540B Tencent mcap</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">~$53.77</div>
+          <div class="sotp-line">on ordinary share basis</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line cash">+$6.49</div>
+          <div class="sotp-line">~$15B parent cash</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($23B)</div>
+          <div class="sotp-line">25.8% NL corp on $89B gain</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">28% NAV disc</div>
+          <div class="sotp-line">Prosus published</div>
+          <div class="sotp-line">Naspers: 36% disc</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val discount">−28%</div>
+          <div class="discount-label">Prosus published NAV</div>
+          <div class="discount-val discount" style="margin-top:6px;">−36%</div>
+          <div class="discount-label">Naspers (NPSNY)</div>
+        </td>
+        <td class="note-cell">
+          Long-running double-discount: Naspers trades at a discount to Prosus which trades at a discount to its Tencent stake. The buyback program (funded by Tencent sales) is the primary catalyst that has narrowed the gap from 50%+ pre-2022. Discount widened modestly in 2025-26.
+          <br><a href="https://www.prosus.com/investors/investing-in-prosus/net-asset-value" target="_blank" rel="noopener">Prosus NAV page</a> &middot;
+          <a href="https://en.wikipedia.org/wiki/Prosus" target="_blank" rel="noopener">Prosus / Naspers structure</a>
+        </td>
+      </tr>
+
+      <!-- 6. LBRDA / CHTR -->
+      <tr class="row-arb" data-discount="0.6">
+        <td>
+          <div class="ticker">LBRDA</div>
+          <div class="ticker-sub">Liberty Broadband</div>
+          <span class="tag tag-merger">SIGNED MERGER</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">Charter Comms (NASDAQ: CHTR)</div>
+          <div class="target-stake">~26% of CHTR; 0.236 CHTR/LBRDA fixed exchange ratio per Nov '24 merger</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$33.51</div>
+          <div class="price-sub">CHTR $142.80</div>
+        </td>
+        <td class="num">144.0</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$33.70</div>
+          <div class="sotp-line">0.236 × $142.80</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$33.70</div>
+          <div class="sotp-line">implied LBRDA value</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line">≈0</div>
+          <div class="sotp-line">net of GCI spin-off</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line">N/A</div>
+          <div class="sotp-line">stock-for-stock</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$33.70</div>
+          <div class="sotp-line">deal value</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val tight">−0.6%</div>
+          <div class="discount-label">merger spread</div>
+        </td>
+        <td class="note-cell">
+          Now a pure merger-arb play: Charter buying Liberty Broadband at 0.236 CHTR per LBRDA share. Closing accelerated to coincide with Charter/Cox merger — expected mid-2026 to mid-2027. GCI subsidiary to be spun off pre-close.
+          <br><a href="https://www.businesswire.com/news/home/20250515925029/en/Liberty-Broadband-Provides-Update-Regarding-Pending-Acquisition-by-Charter" target="_blank" rel="noopener">May'25 update</a> &middot;
+          <a href="https://www.libertybroadband.com/investors/news-events/press-releases/detail/326/charter-and-liberty-broadband-stockholders-approve-charter" target="_blank" rel="noopener">Shareholder vote PR</a>
+        </td>
+      </tr>
+
+      <!-- 7. BRK.B / Portfolio -->
+      <tr class="row-premium" data-discount="-41.7">
+        <td>
+          <div class="ticker">BRK.B</div>
+          <div class="ticker-sub">Berkshire Hathaway</div>
+          <span class="tag tag-public">CONGLOMERATE</span>
+        </td>
+        <td class="target-cell">
+          <div class="target-name">Equity portfolio + $347B cash</div>
+          <div class="target-stake">AAPL 22%, AXP 17%, KO 12%, BAC 10%, CVX 7% of $263B 13F as of Q1'26</div>
+        </td>
+        <td class="num price-cell">
+          <div class="price-val">$485.60</div>
+          <div class="price-sub">Class B</div>
+        </td>
+        <td class="num">2,157</td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$263.1B</div>
+          <div class="sotp-line">Q1'26 13F</div>
+          <div class="sotp-line">(was $274B Q4'25)</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$122</div>
+          <div class="sotp-line">portfolio / BRK.B share</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val sotp-line cash">+$161</div>
+          <div class="sotp-line cash">$347.7B cash &amp; T-bills</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-line tax">($18)</div>
+          <div class="sotp-line">DTL on portfolio gains</div>
+        </td>
+        <td class="num sotp-cell">
+          <div class="sotp-val">$265</div>
+          <div class="sotp-line">portfolio + cash, after-DTL</div>
+        </td>
+        <td class="discount-cell">
+          <div class="discount-val premium">+46%</div>
+          <div class="discount-label">price above stub</div>
+          <div class="discount-val tight" style="margin-top:6px;">$221 implied</div>
+          <div class="discount-label">op-co value / sh</div>
+        </td>
+        <td class="note-cell">
+          Not a classic look-through discount — BRK trades <em>above</em> portfolio+cash, with the remainder being the operating businesses (BNSF, GEICO, BHE, Marmon, BNSF, etc.). At ~$221/sh implied for op-cos and ~$50B+ in operating pre-tax earnings, op-co P/E ≈ 12-13x — historically reasonable.
+          <br><a href="https://www.sec.gov/Archives/edgar/data/0001067983/000119312526202243/brka-20260331.htm" target="_blank" rel="noopener">BRK 10-Q Q1'26</a> &middot;
+          <a href="https://seekingalpha.com/article/4905557-tracking-berkshire-hathaway-portfolio-q1-2026-update" target="_blank" rel="noopener">Q1'26 13F summary</a>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+
+  <div class="methodology">
+    <h3>METHODOLOGY &amp; CAVEATS</h3>
+    <p><strong>Stake valuation.</strong> Public stakes marked at last close. Private stakes (SpaceX) marked to most recent reported secondary tender — $800B current, $1.77T at the June 12, 2026 IPO target. Per-share allocations use latest 10-Q/10-K share counts.</p>
+    <p><strong>Tax burden.</strong> Computed as (mark − basis) × statutory corporate rate, assuming a hypothetical immediate-sale scenario. US parents use 21% federal rate. SoftBank uses 30.62% Japan effective corporate rate. Prosus uses 25.8% Netherlands. <em>In practice these deferred tax liabilities are rarely realized at parent level — long-tail DTLs are routinely permanent items. After-tax discount is therefore conservative; pre-tax discount is the relevant figure for most realistic outcomes (in-kind distribution, exchange, holding indefinitely).</em></p>
+    <p><strong>Holdco friction.</strong> Even after netting tax, Malone-style holdcos and dual-class trackers historically trade at structural discounts of 10-20% due to: control overhang, lack of catalysts, dual-class governance, and tracker-share share-class complexity. The <strong>catalyst column</strong> identifies known triggers that have historically narrowed these gaps (forced split-offs, take-privates, spin-offs, mergers).</p>
+    <p><strong>Look-through ≠ liquidation.</strong> The numbers shown are mark-to-market exposures, not realizable prices. A 30% NAV discount on a holdco is not free money — it's compensation for governance, tax overhang, and timing risk.</p>
+    <div class="disclaimer">Not investment advice. Source data refreshed daily from SEC filings &amp; Yahoo Finance. Tax basis estimates are author's reconstruction from public disclosures and historical filings. Verify before trading.</div>
+  </div>
+
+  <a href="https://mergeranalyst.com/" class="back-link">&laquo; MergerAnalyst home (M&amp;A deals)</a>
+
+</div>
+
+<script>
+  // Set update timestamp
+  const now = new Date();
+  document.getElementById('updateTime').textContent =
+    now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+    ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' UTC';
+
+  // Sortable columns: clicking discount col sorts
+  let sortAsc = false;
+  document.querySelectorAll('th').forEach((th, idx) => {
+    th.addEventListener('click', () => {
+      const tbody = document.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aVal = parseFloat(a.dataset.discount ?? '0');
+        const bVal = parseFloat(b.dataset.discount ?? '0');
+        return sortAsc ? aVal - bVal : bVal - aVal;
+      });
+      sortAsc = !sortAsc;
+      rows.forEach(r => tbody.appendChild(r));
+    });
+  });
+</script>
+
+</body>
+</html>
