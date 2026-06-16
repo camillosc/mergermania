@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="robots" content="noindex,nofollow"/>
 <meta name="googlebot" content="noindex,nofollow"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>MergerAnalyst — Stub Trades: SATS / SPCX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -141,6 +144,14 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
 .price-banner.cached .pb-label{color:#FEF3C7}
 @media(max-width:700px){.price-banner{gap:10px;padding:9px 12px}.price-banner .pb-label{border-right:none;padding-right:0}.price-banner .pb-ts{margin-left:0;width:100%}}
 .framework-snapshot-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:0.7px;background:var(--surface3);color:var(--text-dim);border:1px solid var(--border2);border-radius:3px;padding:2px 7px;margin-left:8px;font-family:var(--mono);text-transform:uppercase;vertical-align:middle}
+.refresh-btn{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.4px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.20);border-radius:5px;padding:5px 11px;cursor:pointer;transition:background-color .15s}
+.refresh-btn:hover{background:rgba(255,255,255,0.18)}
+.refresh-btn:disabled{opacity:0.55;cursor:not-allowed}
+.refresh-btn.spinning{color:#FF8C5A}
+.fetch-err{background:#FEF2F2;border:1px solid #FCA5A5;color:var(--red);font-family:var(--mono);font-size:11px;padding:8px 12px;border-radius:5px;margin:0 0 12px;display:none}
+.fetch-err.show{display:block}
+.loading-px{opacity:0.45;font-style:italic}
+
 </style>
 </head>
 <body>
@@ -153,7 +164,8 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     </div>
     <div class="header-right">
       <div class="live-badge"><span class="live-dot" id="liveDot"></span><span id="liveBadgeText">LIVE PRICES</span></div>
-      <div class="last-updated">Updated <span id="updateTime"></span></div>
+      <button id="refreshBtn" type="button" class="refresh-btn" title="Force refresh quote">&#x21bb; Refresh</button>
+      <div class="last-updated">Quote @ <span id="updateTime">—</span></div>
     </div>
   </div>
 </header>
@@ -171,13 +183,13 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   <div class="stats-bar">
     <div class="stat-card s-brand">
       <div class="stat-label">SATS <span class="live-pill" id="satsLivePill">LIVE</span></div>
-      <div class="stat-value brand" id="satsLastClose">$114.08</div>
-      <div class="stat-sub" id="satsLastSub">Day 1 of SPCX close (Barron's)</div>
+      <div class="stat-value brand loading-px" id="satsLastClose">loading…</div>
+      <div class="stat-sub" id="satsLastSub">via Yahoo Finance proxy</div>
     </div>
     <div class="stat-card s-blue">
       <div class="stat-label">SPCX <span class="live-pill" id="spcxLivePill">LIVE</span></div>
-      <div class="stat-value" id="spcxLastClose">$160.95</div>
-      <div class="stat-sub" id="spcxLastSub">IPO $135 (6/11/26) → Day 1 close $160.95</div>
+      <div class="stat-value loading-px" id="spcxLastClose">loading…</div>
+      <div class="stat-sub" id="spcxLastSub">via Yahoo Finance proxy</div>
     </div>
     <div class="stat-card s-green">
       <div class="stat-label">SpaceX Stake (Prospectus)</div>
@@ -202,10 +214,11 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   </div>
   <div id="priceBanner" class="price-banner">
     <span class="pb-label">LIVE QUOTES</span>
-    <span class="pb-row"><span class="pb-tick">SPCX</span> <span class="pb-px" id="bannerSpcx">—</span> <span class="pb-chg" id="bannerSpcxChg"></span></span>
-    <span class="pb-row"><span class="pb-tick">SATS</span> <span class="pb-px" id="bannerSats">—</span> <span class="pb-chg" id="bannerSatsChg"></span></span>
-    <span class="pb-ts">Refreshed <span id="bannerTs">—</span> · auto-refresh 60s · <span id="bannerSrc">Yahoo Finance</span></span>
+    <span class="pb-row"><span class="pb-tick">SPCX</span> <span class="pb-px loading-px" id="bannerSpcx">loading…</span> <span class="pb-chg" id="bannerSpcxChg"></span></span>
+    <span class="pb-row"><span class="pb-tick">SATS</span> <span class="pb-px loading-px" id="bannerSats">loading…</span> <span class="pb-chg" id="bannerSatsChg"></span></span>
+    <span class="pb-ts">As of <span id="bannerTs">—</span> · auto-refresh 60s · src <span id="bannerSrc">Yahoo via proxy</span></span>
   </div>
+  <div id="fetchErr" class="fetch-err"></div>
 
   <div class="source-bar">
     <strong>SOURCES:</strong>
@@ -524,8 +537,12 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   const SPCX_SNAPSHOT     = 160.95;
   const SATS_SNAPSHOT     = 114.08;
   const REFRESH_MS        = 60_000;
-  const CACHE_KEY         = 'mergeranalyst_stub_quotes_v1';
+  const CACHE_KEY         = 'mergeranalyst_stub_quotes_v2';
   const SYMBOLS           = ['SPCX', 'SATS'];
+  // Cloudflare Worker proxy — Yahoo Finance doesn't set CORS, so direct browser fetch fails.
+  // Worker fetches Yahoo server-side and returns CORS-friendly JSON.
+  const QUOTE_PROXY       = 'https://mergeranalyst-quote.camillosc2.workers.dev/quote';
+  const BUILD_VERSION     = 'v3-worker-' + (new Date().toISOString().slice(0,16).replace(/[:T-]/g,''));
 
   // ===== Header timestamp =====
   function setHeaderTs() {
@@ -536,42 +553,50 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   }
   setHeaderTs();
 
-  // ===== Live quote fetch (Yahoo Finance spark, multi-endpoint fallback) =====
-  // Mirrors the main mergeranalyst.com deal-spread page pattern: query1 → query2.
+  // ===== Live quote fetch via Cloudflare Worker proxy =====
+  // Direct Yahoo Finance fetch FAILS in browser due to missing Access-Control-Allow-Origin.
+  // The Worker fetches Yahoo server-side and returns proper CORS headers.
+  // Worker source: see Camillosc/mergermania repo (quote-worker.js).
+  let lastFetchErr = null;
   async function fetchYahooQuote(symbols) {
     const sym = symbols.join(',');
-    const urls = [
-      `https://query1.finance.yahoo.com/v8/finance/spark?symbols=${encodeURIComponent(sym)}&range=1d&interval=1d`,
-      `https://query2.finance.yahoo.com/v8/finance/spark?symbols=${encodeURIComponent(sym)}&range=1d&interval=1d`
-    ];
-    for (const url of urls) {
-      try {
-        const res = await fetch(url, { headers: { Accept: 'application/json' } });
-        if (!res.ok) continue;
-        const data = await res.json();
-        // Yahoo currently returns either {SYM:{close:[..], chartPreviousClose:...}} OR
-        // {spark:{result:[{symbol,response:[{meta:{regularMarketPrice}}]}]}}. Handle both.
-        const out = {};
-        if (data && data.spark && Array.isArray(data.spark.result)) {
-          for (const r of data.spark.result) {
-            const px  = r?.response?.[0]?.meta?.regularMarketPrice;
-            const pc  = r?.response?.[0]?.meta?.chartPreviousClose ?? r?.response?.[0]?.meta?.previousClose;
-            if (px) out[r.symbol] = { price: +px, prev: pc ? +pc : null };
-          }
-        } else if (data && typeof data === 'object') {
-          for (const s of symbols) {
-            const node = data[s];
-            if (node && Array.isArray(node.close) && node.close.length) {
-              const px = node.close[node.close.length - 1];
-              const pc = node.chartPreviousClose ?? node.previousClose ?? null;
-              if (px) out[s] = { price: +px, prev: pc ? +pc : null };
-            }
-          }
+    const url = `${QUOTE_PROXY}?symbols=${encodeURIComponent(sym)}&_t=${Date.now()}`;
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        cache: 'no-store'
+      });
+      if (!res.ok) {
+        lastFetchErr = `Proxy HTTP ${res.status}`;
+        console.error('[stub-trades] quote proxy non-OK:', res.status);
+        return null;
+      }
+      const data = await res.json();
+      if (!data || !data.quotes) {
+        lastFetchErr = 'Proxy returned no quotes object';
+        console.error('[stub-trades] proxy malformed:', data);
+        return null;
+      }
+      const out = {};
+      for (const s of symbols) {
+        const q = data.quotes[s];
+        if (q && typeof q.price === 'number') {
+          out[s] = { price: +q.price, prev: q.prev != null ? +q.prev : null, ts: q.ts || null, source: q.source || 'proxy' };
         }
-        if (Object.keys(out).length === symbols.length) return out;
-      } catch (e) { /* try next */ }
+      }
+      if (Object.keys(out).length === symbols.length) {
+        lastFetchErr = null;
+        return out;
+      }
+      lastFetchErr = `Missing symbols in proxy response: errors=${(data.errors||[]).join(',') || '(none reported)'}`;
+      console.error('[stub-trades] partial proxy result:', data);
+      return null;
+    } catch (e) {
+      lastFetchErr = `Network error: ${e.message || e}`;
+      console.error('[stub-trades] proxy fetch failed:', e);
+      return null;
     }
-    return null;
   }
 
   function readCache() {
@@ -632,7 +657,10 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
                                  : null;
     const arbLeverage        = premium > 0 ? afterTaxPerShareFD / premium : null;
 
-    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = val; el.classList.remove('loading-px'); }
+    };
 
     // Top stat cards
     set('satsLastClose', fmtMoney(sats));
@@ -739,26 +767,45 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     set('lpTs', tsText);
   }
 
+  function showErr(msg) {
+    const el = document.getElementById('fetchErr');
+    if (!el) return;
+    if (msg) {
+      el.textContent = `⚠ Live quote fetch failed: ${msg}. Displaying last cached value if available; pricing may be stale. Try the ↻ Refresh button or reload the page.`;
+      el.classList.add('show');
+    } else {
+      el.classList.remove('show');
+      el.textContent = '';
+    }
+  }
+
   async function refresh() {
+    const btn = document.getElementById('refreshBtn');
+    if (btn) { btn.disabled = true; btn.classList.add('spinning'); btn.textContent = '⟳ Fetching…'; }
+
     let quotes = await fetchYahooQuote(SYMBOLS);
     let cached = false, cachedAge = null;
     if (quotes && quotes.SPCX && quotes.SATS) {
       writeCache(quotes);
+      showErr(null);
     } else {
       const c = readCache();
       if (c && c.quotes && c.quotes.SPCX && c.quotes.SATS) {
         quotes = c.quotes; cached = true;
         const mins = Math.round((Date.now() - c.ts) / 60000);
         cachedAge = mins < 60 ? `${mins}m ago` : `${(mins/60).toFixed(1)}h ago`;
+        showErr(`${lastFetchErr || 'unknown'} — using cached value from ${cachedAge}`);
       } else {
-        // Last-resort: use snapshot values so the page is never broken
         quotes = { SPCX: { price: SPCX_SNAPSHOT, prev: null }, SATS: { price: SATS_SNAPSHOT, prev: null } };
-        cached = true; cachedAge = 'snapshot 6/12/26';
+        cached = true; cachedAge = 'no cache — fallback snapshot 6/12/26';
+        showErr(`${lastFetchErr || 'unknown'} — no cache available, displaying frozen 6/12/26 snapshot`);
       }
     }
     window.__quotes = quotes;
     recompute(quotes.SPCX.price, quotes.SATS.price, { cached, cachedAge });
     setHeaderTs();
+
+    if (btn) { btn.disabled = false; btn.classList.remove('spinning'); btn.textContent = '↻ Refresh'; }
 
     // Update the chart's last sotp datapoint to live
     try {
@@ -829,12 +876,22 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     ]},options:ax('$ per SPCX share')
   });
 
-  // Render snapshot values immediately so the page isn't blank for the fetch round-trip
-  recompute(SPCX_SNAPSHOT, SATS_SNAPSHOT, { cached: true, cachedAge: 'pre-fetch snapshot' });
+  // Wire manual refresh button
+  const _btn = document.getElementById('refreshBtn');
+  if (_btn) _btn.addEventListener('click', () => refresh());
+
+  // Don't pre-render with stale snapshot — stat cards show "loading…" until the
+  // first fetch resolves. This prevents the user from ever seeing a stale price
+  // labeled as live.
 
   // Kick off live + schedule refresh
   refresh();
   setInterval(refresh, REFRESH_MS);
+
+  // Re-fetch when tab regains focus (covers the "I came back after lunch" case)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refresh();
+  });
 </script>
 
 </body>
