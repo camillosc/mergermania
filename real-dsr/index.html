@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MergerAnalyst — Real DSR: The Hidden Household Debt Burden</title>
+<meta name="description" content="The Fed's published Household Debt Service Ratio (FRED TDSP) misses three categories: private credit, margin debt, and BNPL. Live calculation showing the gap."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#FBFBFC; --surface3:#F4F6F9;
+  --border:#E2E8F0; --border2:#CBD5E1;
+  --brand:#C84B11; --brand2:#A83A09;
+  --navy:#0F2044; --navy2:#1A3260;
+  --blue:#1A5FAB; --blue-lt:#EBF3FC;
+  --green:#0D6B3E; --green-lt:#EDFAF3;
+  --amber:#92521C; --amber-lt:#FFF8F0;
+  --red:#B91C1C; --red-lt:#FEF2F2;
+  --text:#1A2333; --text-mid:#475569; --text-dim:#8898AA;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'EB Garamond', Garamond, Georgia, serif;
+  --shadow-sm:0 1px 2px rgba(15,32,68,.06),0 1px 3px rgba(15,32,68,.04);
+  --shadow:0 2px 8px rgba(15,32,68,.08),0 1px 3px rgba(15,32,68,.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrapper{max-width:1180px;margin:0 auto;padding:0 24px 56px}
+
+header{background:var(--navy);border-bottom:3px solid var(--brand)}
+.header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px 24px 18px;gap:24px;flex-wrap:wrap}
+.logo{display:flex;flex-direction:column;gap:5px}
+.logo a{text-decoration:none}
+.logo-wordmark{font-family:var(--sans);font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.8px;line-height:1}
+.logo-wordmark .word-analyst{color:#FF8C5A}
+.logo-tagline{font-size:10.5px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:1.5px;text-transform:uppercase;font-family:var(--mono)}
+.header-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.live-badge{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:5px 13px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.5px;font-family:var(--mono)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 2s ease-in-out infinite;box-shadow:0 0 5px #4ADE80}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.refresh-btn{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.4px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.20);border-radius:5px;padding:5px 11px;cursor:pointer}
+.refresh-btn:hover{background:rgba(255,255,255,0.18)}
+.refresh-btn:disabled{opacity:0.55;cursor:not-allowed}
+.refresh-btn.spinning{color:#FF8C5A}
+.last-updated{font-size:11px;color:rgba(255,255,255,0.55);font-family:var(--mono)}
+
+.subhead{background:linear-gradient(180deg,#F8FAFC 0%,#FFFFFF 100%);border-bottom:1px solid var(--border)}
+.subhead-inner{max-width:1180px;margin:0 auto;padding:24px 24px 22px}
+.subhead .kicker{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--brand);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.subhead h1{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:1.2px;color:var(--navy);line-height:1;margin-bottom:10px}
+.subhead .lede{font-family:var(--serif);font-size:18px;line-height:1.5;color:var(--text);max-width:880px}
+.subhead .lede strong{color:var(--navy);font-weight:600}
+@media(max-width:600px){.subhead h1{font-size:34px}.subhead .lede{font-size:16px}}
+
+.price-banner{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:linear-gradient(90deg,#0F2044 0%,#1A3260 100%);color:#fff;border-radius:8px;padding:13px 20px;margin:18px 0 22px;box-shadow:var(--shadow);font-family:var(--mono)}
+.price-banner .pb-label{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#FF8C5A;border-right:1px solid rgba(255,255,255,0.22);padding-right:16px}
+.price-banner .pb-row{display:flex;align-items:baseline;gap:7px}
+.price-banner .pb-tick{font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);letter-spacing:0.5px}
+.price-banner .pb-px{font-size:16px;font-weight:700;color:#fff;letter-spacing:0.3px;font-variant-numeric:tabular-nums}
+.price-banner .pb-ts{margin-left:auto;font-size:10.5px;color:rgba(255,255,255,0.55);letter-spacing:0.3px}
+@media(max-width:780px){.price-banner{gap:10px;padding:11px 14px}.price-banner .pb-label{border-right:none;padding-right:0}.price-banner .pb-ts{margin-left:0;width:100%}}
+
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px;margin:8px 0 22px}
+@media(max-width:780px){.hero-grid{grid-template-columns:1fr}}
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.hero-card.real{border-top:4px solid var(--brand)}
+.hero-card.official{border-top:4px solid var(--navy)}
+.hero-card.gap{border-top:4px solid var(--amber)}
+.hero-label{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:1.1px;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px}
+.hero-val{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;letter-spacing:1px;color:var(--navy)}
+.hero-card.real .hero-val{color:var(--brand)}
+.hero-card.gap .hero-val{color:var(--amber)}
+.hero-sub{margin-top:6px;font-size:11.5px;color:var(--text-mid);font-family:var(--mono)}
+.live-pill{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:0.7px;background:#DCFCE7;color:var(--green);border:1px solid #A7DFC4;border-radius:3px;padding:1px 5px;margin-left:6px;vertical-align:middle;font-family:var(--mono)}
+.live-pill.snap{background:#FEF3C7;color:var(--amber);border-color:#F0C89A}
+
+.section-h{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--navy);letter-spacing:1.3px;text-transform:uppercase;margin:32px 0 10px}
+.section-h .sh-num{color:var(--brand);margin-right:8px}
+
+.method-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 22px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.method-card h3{font-family:var(--sans);font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:-0.2px}
+.method-card .frame{font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--text);margin-bottom:14px}
+.method-card .frame em{color:var(--text-mid);font-style:italic}
+.math-tbl{width:100%;border-collapse:collapse;margin:10px 0 6px;font-family:var(--mono);font-size:12.5px}
+.math-tbl td{padding:6px 10px;border-bottom:1px dotted var(--border)}
+.math-tbl td.label{color:var(--text-mid);text-align:left}
+.math-tbl td.val{color:var(--navy);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.math-tbl tr.result td{padding-top:9px;border-top:1px solid var(--navy);border-bottom:none;color:var(--brand);font-weight:700;font-size:13.5px}
+.method-source{font-family:var(--mono);font-size:10.5px;color:var(--text-dim);margin-top:8px;letter-spacing:0.2px;line-height:1.5}
+.method-source a{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue)}
+.method-source a:hover{color:var(--navy);border-bottom-style:solid}
+
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+.chart-card h3{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--navy);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
+.chart-card .sub{font-size:11px;color:var(--text-dim);font-family:var(--mono);margin-bottom:12px;line-height:1.5}
+.chart-canvas-wrap{position:relative;height:360px}
+@media(max-width:780px){.chart-canvas-wrap{height:280px}}
+
+.citations{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px 22px;margin-top:28px}
+.citations h3{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--navy);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px}
+.citations ol{list-style:decimal;padding-left:24px;font-family:var(--serif);font-size:15px;color:var(--text);line-height:1.55}
+.citations ol li{margin-bottom:9px}
+.citations a{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue)}
+.citations a:hover{color:var(--navy);border-bottom-style:solid}
+
+.disclaimer{margin-top:22px;padding:14px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;font-family:var(--serif);font-size:14px;color:var(--text-mid);line-height:1.5;font-style:italic}
+.back-link{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--blue);letter-spacing:0.6px;text-transform:uppercase;text-decoration:none;margin-top:18px}
+.back-link:hover{color:var(--navy)}
+
+.fetch-err{background:#FEF2F2;border:1px solid #FCA5A5;color:var(--red);font-family:var(--mono);font-size:11.5px;padding:9px 14px;border-radius:5px;margin:0 0 14px;display:none}
+.fetch-err.show{display:block}
+.loading-px{opacity:0.45;font-style:italic}
+
+.companion-banner{background:linear-gradient(180deg,#FFF8F0 0%,#FFFFFF 100%);border:1px solid #F0C89A;border-radius:8px;padding:18px 22px;margin:30px 0 14px}
+.companion-banner .kicker{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--amber);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.companion-banner h2{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:1px;color:var(--navy);line-height:1;margin-bottom:6px}
+.companion-banner p{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--text);max-width:850px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <a href="/"><div class="logo-wordmark">Merger<span class="word-analyst">Analyst</span></div></a>
+      <div class="logo-tagline">SYSTEMIC CREDIT / REAL DSR</div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><span class="live-dot"></span><span>LIVE DATA</span></div>
+      <button id="refreshBtn" type="button" class="refresh-btn" title="Force refresh data">&#x21bb; Refresh</button>
+      <div class="last-updated">Updated <span id="updateTime">—</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="subhead">
+  <div class="subhead-inner">
+    <div class="kicker">SHADOW DEBT / FED Z.1 BLIND SPOTS</div>
+    <h1>THE REAL HOUSEHOLD DSR</h1>
+    <p class="lede">The Fed's published Household Debt Service Ratio (FRED <strong>TDSP</strong>) is built from bank balance sheets and public-securities data. <strong>It misses three categories</strong>&nbsp;— margin debt, BNPL, and the private-credit web that ultimately funds non-bank consumer paper. Add them back and the picture changes.</p>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <div id="fetchErr" class="fetch-err"></div>
+
+  <div class="price-banner" id="priceBanner">
+    <div class="pb-label">LIVE FEED</div>
+    <div class="pb-row"><span class="pb-tick">Official DSR</span><span class="pb-px" id="strip-tdsp">—</span></div>
+    <div class="pb-row"><span class="pb-tick">Margin Debt</span><span class="pb-px" id="strip-margin">—</span></div>
+    <div class="pb-row"><span class="pb-tick">BNPL OS</span><span class="pb-px" id="strip-bnpl">—</span></div>
+    <div class="pb-row"><span class="pb-tick">PC AUM</span><span class="pb-px" id="strip-pc">—</span></div>
+    <div class="pb-row"><span class="pb-tick">SOFR</span><span class="pb-px" id="strip-sofr">—</span></div>
+    <div class="pb-ts" id="bannerTs">—</div>
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-card real">
+      <div class="hero-label">Real Household DSR <span class="live-pill" id="realPill">LIVE</span></div>
+      <div class="hero-val loading-px" id="heroReal">—</div>
+      <div class="hero-sub">Official + margin add-back + BNPL add-back</div>
+    </div>
+    <div class="hero-card official">
+      <div class="hero-label">Official DSR (FRED TDSP)</div>
+      <div class="hero-val loading-px" id="heroOfficial">—</div>
+      <div class="hero-sub" id="heroOfficialAsOf">latest Fed print</div>
+    </div>
+    <div class="hero-card gap">
+      <div class="hero-label">Gap</div>
+      <div class="hero-val loading-px" id="heroGap">—</div>
+      <div class="hero-sub" id="heroGapSub">what the official series misses</div>
+    </div>
+  </div>
+
+  <div class="method-card" style="border-left:3px solid var(--brand)">
+    <h3>Why these three?</h3>
+    <p class="frame">Per Pozsar, Adrian, Ashcraft &amp; Boesky (2010), the post-1980 shift from a bank-intermediated to a market-intermediated credit system created a "shadow" footprint that the official statistics do not yet fully measure. The Board discontinued the Financial Obligations Ratio in 2023 citing data quality — the surviving DSR (TDSP) is built from mortgage and consumer-credit flows on bank books. <strong>Three categories of household-linked credit sit outside that frame:</strong> securities-collateralized margin loans (treated as asset-backed, not consumer credit), BNPL receivables (largely off bank balance sheets and outside the major bureaus), and the private-credit complex that increasingly funds non-bank consumer paper (BNPL forward-flow programs, fintech ABS, and direct lending to consumer-facing platforms).</p>
+    <p class="frame" style="margin-bottom:0">The implication is not that the Fed is wrong — it's that the official series has a <em>specific scope</em>, and that scope has shrunk relative to the actual debt-service surface every year since roughly 2019.</p>
+  </div>
+
+  <div class="section-h"><span class="sh-num">01</span> Margin debt impact on household DSR</div>
+  <div class="method-card">
+    <h3>FINRA-reported margin debt, valued at retail broker rates</h3>
+    <p class="frame">Margin loans are recorded in the Fed's Z.1 financial accounts as a household liability (security credit), but they are excluded from the DSR because they're <em>asset-backed</em> — the methodology treats them as a portfolio-allocation choice, not a debt-service obligation. That logic breaks down when prices fall: margin calls then translate the synthetic exposure directly into a liquidity demand. Adding them back at the prevailing broker-call rate (<strong>SOFR + ~600bps</strong> retail blend) is the simplest correction.</p>
+    <table class="math-tbl">
+      <tr><td class="label">FINRA margin debt outstanding</td><td class="val" id="mathMarginDebt">—</td></tr>
+      <tr><td class="label">× Effective broker rate <span style="color:var(--text-dim)">(SOFR <span id="mathSofr">—</span> + 600bps)</span></td><td class="val" id="mathMarginRate">—</td></tr>
+      <tr><td class="label">= Implied annual interest cost</td><td class="val" id="mathMarginInterest">—</td></tr>
+      <tr><td class="label">÷ Disposable personal income (FRED DSPI, SAAR)</td><td class="val" id="mathDspi">—</td></tr>
+      <tr class="result"><td>= Add-back to DSR</td><td id="mathMarginAddback">—</td></tr>
+    </table>
+    <div class="method-source">Source: <a href="https://www.finra.org/rules-guidance/key-topics/margin-accounts/margin-statistics" target="_blank" rel="noopener">FINRA Margin Statistics</a> ($1.30T, Apr 2026 record). DSPI via <a href="https://fred.stlouisfed.org/series/DSPI" target="_blank" rel="noopener">FRED DSPI</a>. SOFR via <a href="https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.json" target="_blank" rel="noopener">NY Fed Markets API</a>.</div>
+  </div>
+
+  <div class="section-h"><span class="sh-num">02</span> BNPL impact on household DSR</div>
+  <div class="method-card">
+    <h3>Aggregate BNPL receivables, blended-rate service cost</h3>
+    <p class="frame">The Pay-in-4 product is the dominant BNPL form, charges 0% nominal interest, and turns over in 6 weeks — so outstanding balances are small relative to the ~$200B annual GMV. But the consumer's effective service cost is not zero: it is the weighted average of late-fee revenue and charge-offs on the interest-free book (per the <a href="https://files.consumerfinance.gov/f/documents/cfpb_bnpl-market-report_2025-12.pdf" target="_blank" rel="noopener">CFPB BNPL Market Report</a>, Dec 2025), plus the ~25–30% installment APRs on Affirm-style longer-duration loans. Blending those gives <strong>~17% effective annual service cost</strong> applied to estimated aggregate outstanding receivables. Critically, almost none of this hits the Fed's primary data feeds: most BNPL providers do not furnish to the major credit bureaus, and their receivables sit on issuer or securitization balance sheets, not bank books.</p>
+    <table class="math-tbl">
+      <tr><td class="label">Estimated BNPL outstanding receivables</td><td class="val" id="mathBnplOs">—</td></tr>
+      <tr><td class="label">× Blended effective service rate</td><td class="val" id="mathBnplRate">—</td></tr>
+      <tr><td class="label">= Implied annual service cost</td><td class="val" id="mathBnplCost">—</td></tr>
+      <tr><td class="label">÷ Disposable personal income (SAAR)</td><td class="val" id="mathDspi2">—</td></tr>
+      <tr class="result"><td>= Add-back to DSR</td><td id="mathBnplAddback">—</td></tr>
+    </table>
+    <div class="method-source">Source: <a href="https://files.consumerfinance.gov/f/documents/cfpb_bnpl-market-report_2025-12.pdf" target="_blank" rel="noopener">CFPB BNPL Market Report (Dec 2025)</a> for product mix &amp; charge-off data; Affirm 10-Q FY2025, Klarna and Block/Afterpay public disclosures for receivables aggregation. The Oct '25 Klarna–Nelnet forward-flow (up to $26B of Pay-in-4 receivables) is the key cross-check anchor.</div>
+  </div>
+
+  <div class="method-card" style="background:linear-gradient(180deg,#F8FAFC 0%,#FFFFFF 100%);border-top:3px solid var(--brand)">
+    <h3>Real DSR — sum</h3>
+    <table class="math-tbl">
+      <tr><td class="label">Official DSR (TDSP)</td><td class="val" id="sumOfficial">—</td></tr>
+      <tr><td class="label">+ Margin add-back</td><td class="val" id="sumMargin">—</td></tr>
+      <tr><td class="label">+ BNPL add-back</td><td class="val" id="sumBnpl">—</td></tr>
+      <tr class="result"><td>= Real DSR</td><td id="sumReal">—</td></tr>
+    </table>
+    <p class="frame" style="margin-top:14px;font-size:14.5px"><em>Numbers update live from the data strip above. The chart below applies the same per-quarter math against historical TDSP and an interpolated margin/BNPL series — see "method notes" in the citations panel.</em></p>
+  </div>
+
+  <div class="section-h">Time series — official vs reconstructed real DSR</div>
+  <div class="chart-card">
+    <h3>Real DSR vs Official DSR, 2010–present</h3>
+    <div class="sub">Stacked: official TDSP (FRED, quarterly) + margin add-back + BNPL add-back. Margin debt and BNPL outstanding interpolated from FINRA monthly stats and CFPB / issuer disclosures.</div>
+    <div class="chart-canvas-wrap"><canvas id="dsrChart"></canvas></div>
+  </div>
+
+  <div class="companion-banner">
+    <div class="kicker">COMPANION SECTION — CORPORATE COVERAGE</div>
+    <h2>PRIVATE CREDIT &amp; THE SHADOW INTEREST BURDEN</h2>
+    <p>Private credit doesn't directly touch the household DSR — it touches the <em>corporate</em> coverage analogue. But it is the same shadow-banking phenomenon, and it deserves a parallel adjustment for anyone using Fed Z.1 aggregate interest-coverage ratios as a systemic indicator.</p>
+  </div>
+
+  <div class="method-card">
+    <h3>Private credit add-on to corporate interest aggregate</h3>
+    <p class="frame">Private credit AUM (per <a href="https://www.preqin.com/global-report" target="_blank" rel="noopener">Preqin Global Report 2026</a>) is <strong>$2.28T as of YE 2025</strong>, projected to reach $4.5T by 2030. The book is overwhelmingly floating-rate at SOFR + 500–700bps, with maturities concentrated in middle-market direct loans, BDC portfolios, and securitized fund formats. None of this shows up in the public-bond interest aggregates that Z.1 captures for nonfinancial corporates, yet it is genuine interest expense on the corporate balance sheets that owe it. Adding it back gives a meaningfully different read on "shadow corporate coverage."</p>
+    <table class="math-tbl">
+      <tr><td class="label">Private credit AUM (Preqin)</td><td class="val" id="mathPcAum">—</td></tr>
+      <tr><td class="label">× Effective rate <span style="color:var(--text-dim)">(SOFR + 600bps)</span></td><td class="val" id="mathPcRate">—</td></tr>
+      <tr class="result"><td>= Implied annual interest cost</td><td id="mathPcInterest">—</td></tr>
+    </table>
+    <p class="frame" style="margin-top:14px;font-size:14.5px"><em>Reference: US nonfinancial corporate public-bond interest expense (Z.1 aggregate) sits around $700–800B annually. The private-credit add-on of <span id="pcAddPct">—</span>% on top is the size of the shadow-corporate coverage gap the published series omits.</em></p>
+    <div class="method-source">Source: <a href="https://www.preqin.com/global-report" target="_blank" rel="noopener">Preqin Global Report 2026</a>; <a href="https://www.financialresearch.gov/briefs/files/OFRBrief-26-02-measuring-counterparty-exposures-private-credit.pdf" target="_blank" rel="noopener">OFR Brief 26-02</a> for cross-check on counterparty exposure framing.</div>
+  </div>
+
+  <div class="citations">
+    <h3>Citations &amp; method notes</h3>
+    <ol>
+      <li>Pozsar, Z., Adrian, T., Ashcraft, A. B., &amp; Boesky, H. (2010). <em>Shadow Banking</em>. Federal Reserve Bank of New York Staff Report No. 458. <a href="https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr458.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>Adrian, T., Ashcraft, A. B., &amp; Cetorelli, N. (2013). <em>Shadow Bank Monitoring</em>. Federal Reserve Bank of New York Staff Report No. 638. <a href="https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr638.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>Drehmann, M., Juselius, M., &amp; Quincy, S. (2024). <em>Aggregate debt servicing and the limit on private credit</em>. BIS Working Paper No. 1235. <a href="https://www.bis.org/publ/work1235.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>BIS. <em>DSR methodology documentation</em>. <a href="https://www.bis.org/statistics/dsr/dsr_doc.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>Consumer Financial Protection Bureau. <em>BNPL Market Report</em>, December 2025. <a href="https://files.consumerfinance.gov/f/documents/cfpb_bnpl-market-report_2025-12.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>FINRA. <em>Margin Statistics</em>. <a href="https://www.finra.org/rules-guidance/key-topics/margin-accounts/margin-statistics" target="_blank" rel="noopener">Page</a></li>
+      <li>Federal Reserve Board. <em>Financial Accounts of the United States (Z.1)</em>, 2026 Q1. <a href="https://www.federalreserve.gov/releases/z1/" target="_blank" rel="noopener">Page</a></li>
+      <li>FRED series — <a href="https://fred.stlouisfed.org/series/TDSP" target="_blank" rel="noopener">TDSP</a>, <a href="https://fred.stlouisfed.org/series/DSPI" target="_blank" rel="noopener">DSPI</a>, <a href="https://fred.stlouisfed.org/series/FODSP" target="_blank" rel="noopener">FODSP (discontinued 2023)</a>, <a href="https://fred.stlouisfed.org/series/FDHBPIN" target="_blank" rel="noopener">FDHBPIN</a>, <a href="https://fred.stlouisfed.org/series/SOFR" target="_blank" rel="noopener">SOFR</a>.</li>
+      <li>Preqin. <em>Global Report 2026 — Private Debt</em>. <a href="https://www.preqin.com/global-report" target="_blank" rel="noopener">Page</a>.</li>
+      <li>Office of Financial Research. <em>Brief 26-02: Measuring Counterparty Exposures to Private Credit</em>, March 2026. <a href="https://www.financialresearch.gov/briefs/files/OFRBrief-26-02-measuring-counterparty-exposures-private-credit.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>Affirm Holdings 10-Q FY2025; Klarna–Nelnet forward-flow announcement (Oct 2025); Block/Afterpay disclosures; PayPal Pay Later receivables. Aggregation methodology described in source notes above.</li>
+    </ol>
+    <p style="font-family:var(--serif);font-size:14px;color:var(--text-mid);margin-top:14px;font-style:italic">Method note on the historical chart: margin debt is linearly interpolated between FINRA's monthly anchor points; BNPL outstanding is linearly interpolated from issuer-disclosure anchors back to 2019Q1. Both add-backs use the <em>current</em> blended-rate assumption applied to the historical outstanding level — they do not back-cast SOFR. For a series-rate-aware reconstruction, see future iteration.</p>
+  </div>
+
+  <div class="disclaimer">
+    This page is research commentary. It is not a forecast, regulatory analysis, or investment advice. The "real DSR" construct is intended as a directional adjustment to the official series, not a published economic indicator. Numbers update from public sources; methodology is fully disclosed above so readers can re-run with their own assumptions.
+  </div>
+
+  <a class="back-link" href="/">&larr; Back to MergerAnalyst</a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const API = 'https://mergeranalyst-dsr.camillosc2.workers.dev/api/dsr-data';
+  const REFRESH_MS = 10 * 60 * 1000;
+
+  function $(id){ return document.getElementById(id); }
+  function set(id, txt){ const el = $(id); if (el) el.textContent = txt; }
+  function fmtPct(v, dp){ if (v == null || !Number.isFinite(v)) return '—'; return (v).toFixed(dp == null ? 2 : dp) + '%'; }
+  function fmtPp(v, dp){ if (v == null || !Number.isFinite(v)) return '—'; const s = v >= 0 ? '+' : ''; return s + v.toFixed(dp == null ? 2 : dp) + 'pp'; }
+  function fmtBn(v){ if (v == null || !Number.isFinite(v)) return '—'; if (Math.abs(v) >= 1000) return '$' + (v/1000).toFixed(2) + 'T'; return '$' + v.toFixed(1) + 'B'; }
+  function fmtTn(v){ if (v == null || !Number.isFinite(v)) return '—'; return '$' + v.toFixed(2) + 'T'; }
+
+  function setHeaderTs(d){
+    const t = d ? new Date(d) : new Date();
+    set('updateTime',
+      t.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + ' ' +
+      t.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false}) + ' UTC');
+  }
+
+  let lastErr = null;
+  async function fetchData(){
+    const url = API + '?_t=' + Date.now();
+    try {
+      const r = await fetch(url, { method:'GET', headers:{ Accept:'application/json' }, cache:'no-store' });
+      if (!r.ok){ lastErr = 'HTTP ' + r.status; return null; }
+      const d = await r.json();
+      if (!d || !d.derived || !d.derived.real_dsr_pct){ lastErr = 'malformed payload'; return null; }
+      lastErr = null;
+      return d;
+    } catch(e){
+      lastErr = 'Network: ' + (e.message || e);
+      return null;
+    }
+  }
+
+  function showErr(msg){
+    const el = $('fetchErr');
+    if (!el) return;
+    if (msg){ el.textContent = '⚠ Live fetch failed: ' + msg + '. Showing last cached values.'; el.classList.add('show'); }
+    else { el.textContent = ''; el.classList.remove('show'); }
+  }
+
+  function render(d){
+    if (!d) return;
+    const der = d.derived;
+    const sn  = d.snapshots;
+    const ser = d.series;
+
+    set('heroReal', fmtPct(der.real_dsr_pct, 2));
+    set('heroOfficial', fmtPct(der.official_dsr_pct, 2));
+    set('heroOfficialAsOf', 'TDSP as of ' + (ser.TDSP && ser.TDSP.d ? ser.TDSP.d : '—') + ' · ' + (ser.TDSP.source||''));
+    set('heroGap', fmtPp(der.gap_pp, 2));
+    set('heroGapSub', 'margin +' + der.margin_addback_pp.toFixed(2) + 'pp · BNPL +' + der.bnpl_addback_pp.toFixed(2) + 'pp');
+
+    const realPill = $('realPill');
+    if (realPill){
+      const isLive = (ser.TDSP && ser.TDSP.source === 'FRED live') && (ser.SOFR && ser.SOFR.source === 'NY Fed Markets API');
+      realPill.textContent = isLive ? 'LIVE' : 'SNAPSHOT';
+      realPill.classList.toggle('snap', !isLive);
+    }
+
+    set('strip-tdsp', fmtPct(der.official_dsr_pct, 2));
+    set('strip-margin', fmtBn(sn.margin_debt.value_usd_bn));
+    set('strip-bnpl', fmtBn(sn.bnpl_outstanding.value_usd_bn));
+    set('strip-pc', fmtTn(sn.private_credit_aum.value_usd_tn));
+    set('strip-sofr', der.sofr_pct.toFixed(2) + '%');
+
+    set('mathMarginDebt', fmtBn(sn.margin_debt.value_usd_bn));
+    set('mathSofr', der.sofr_pct.toFixed(2) + '%');
+    set('mathMarginRate', der.margin_rate_pct.toFixed(2) + '%');
+    set('mathMarginInterest', fmtBn(der.margin_annual_interest_bn));
+    set('mathDspi', fmtBn(der.dspi_q_bn));
+    set('mathMarginAddback', '+' + der.margin_addback_pp.toFixed(3) + 'pp');
+
+    set('mathBnplOs', fmtBn(sn.bnpl_outstanding.value_usd_bn));
+    set('mathBnplRate', der.bnpl_rate_pct.toFixed(0) + '%');
+    set('mathBnplCost', fmtBn(der.bnpl_annual_service_bn));
+    set('mathDspi2', fmtBn(der.dspi_q_bn));
+    set('mathBnplAddback', '+' + der.bnpl_addback_pp.toFixed(3) + 'pp');
+
+    set('sumOfficial', der.official_dsr_pct.toFixed(2) + '%');
+    set('sumMargin', '+' + der.margin_addback_pp.toFixed(3) + 'pp');
+    set('sumBnpl', '+' + der.bnpl_addback_pp.toFixed(3) + 'pp');
+    set('sumReal', der.real_dsr_pct.toFixed(2) + '%');
+
+    set('mathPcAum', fmtTn(sn.private_credit_aum.value_usd_tn));
+    set('mathPcRate', der.pc_rate_pct.toFixed(2) + '%');
+    set('mathPcInterest', fmtBn(der.pc_annual_interest_bn));
+    const refCorpInterest = 750;
+    const pcAddPct = (der.pc_annual_interest_bn / refCorpInterest) * 100;
+    set('pcAddPct', pcAddPct.toFixed(0));
+
+    setHeaderTs(d.fetchedAtIso);
+    set('bannerTs', new Date(d.fetchedAtIso).toLocaleString('en-US',{
+      month:'short', day:'numeric', year:'numeric',
+      hour:'2-digit', minute:'2-digit', hour12:false
+    }) + ' UTC');
+
+    drawChart(d.chart);
+  }
+
+  let chart = null;
+  function drawChart(cs){
+    if (!cs || !cs.labels || !cs.labels.length) return;
+    const ctx = document.getElementById('dsrChart');
+    if (!ctx) return;
+    if (chart){ chart.destroy(); chart = null; }
+    chart = new Chart(ctx, {
+      type:'line',
+      data:{
+        labels: cs.labels,
+        datasets:[
+          { label:'Official DSR (TDSP)', data: cs.official,
+            borderColor:'#0F2044', backgroundColor:'rgba(15,32,68,0.10)',
+            borderWidth:2, tension:0.15, pointRadius:0, pointHoverRadius:4, fill:true, stack:'real', order:3 },
+          { label:'+ Margin add-back', data: cs.margin_addback,
+            borderColor:'#C84B11', backgroundColor:'rgba(200,75,17,0.30)',
+            borderWidth:1, tension:0.15, pointRadius:0, pointHoverRadius:3, fill:true, stack:'real', order:2 },
+          { label:'+ BNPL add-back', data: cs.bnpl_addback,
+            borderColor:'#92521C', backgroundColor:'rgba(146,82,28,0.35)',
+            borderWidth:1, tension:0.15, pointRadius:0, pointHoverRadius:3, fill:true, stack:'real', order:1 }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        interaction:{ mode:'index', intersect:false },
+        plugins:{
+          legend:{ display:true, position:'top', labels:{ boxWidth:12, font:{ family:'JetBrains Mono', size:11 }, color:'#475569' } },
+          tooltip:{
+            mode:'index', intersect:false,
+            titleFont:{ family:'JetBrains Mono', size:11 }, bodyFont:{ family:'JetBrains Mono', size:11 },
+            callbacks:{
+              label: ctx => {
+                const v = ctx.parsed.y;
+                return ctx.dataset.label + ': ' + (v == null ? '—' : v.toFixed(2) + 'pp');
+              },
+              footer: items => {
+                const total = items.reduce((a,b)=>a+(b.parsed.y||0),0);
+                return 'Real DSR: ' + total.toFixed(2) + '%';
+              }
+            }
+          }
+        },
+        scales:{
+          x:{ type:'category', ticks:{ font:{ family:'JetBrains Mono', size:9 }, color:'#8898AA', maxTicksLimit:10, autoSkip:true,
+              callback: function(v,i){ const lbl = this.getLabelForValue(v); return lbl && lbl.slice(0,7); } },
+              grid:{ color:'#F1F4F8' } },
+          y:{ stacked:true,
+              title:{ display:true, text:'% of disposable personal income', font:{ family:'JetBrains Mono', size:10 }, color:'#8898AA' },
+              ticks:{ font:{ family:'JetBrains Mono', size:10 }, color:'#475569', callback:v=>v.toFixed(1)+'%' },
+              grid:{ color:'#F1F4F8' } }
+        }
+      }
+    });
+  }
+
+  async function refresh(){
+    const btn = $('refreshBtn');
+    if (btn){ btn.disabled = true; btn.classList.add('spinning'); btn.textContent = '⟳ Fetching…'; }
+    const d = await fetchData();
+    if (d){
+      window.__dsr = d;
+      showErr(null);
+      render(d);
+    } else {
+      showErr(lastErr || 'unknown');
+    }
+    if (btn){ btn.disabled = false; btn.classList.remove('spinning'); btn.textContent = '↻ Refresh'; }
+  }
+
+  setHeaderTs();
+  refresh();
+  setInterval(refresh, REFRESH_MS);
+
+  const btn = $('refreshBtn');
+  if (btn) btn.addEventListener('click', refresh);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refresh();
+  });
+})();
+</script>
+</body>
+</html>
