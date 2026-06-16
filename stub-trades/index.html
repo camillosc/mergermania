@@ -185,19 +185,19 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
       <div class="stat-sub" id="stakeStatSub">~2% of SpaceX; <span id="stakeStatMark">$42.2B</span> mark @ live SPCX</div>
     </div>
     <div class="stat-card s-amber">
-      <div class="stat-label">Implied SOTP / sh</div>
-      <div class="stat-value amber" id="sotpStat">$188.68</div>
-      <div class="stat-sub">Page model, live; CernBasher $185.91 · Barron's $185-$190 (snapshot 6/12/26)</div>
+      <div class="stat-label">Stub SOTP / sh <span class="live-pill">LIVE</span></div>
+      <div class="stat-value amber" id="sotpStat">$226</div>
+      <div class="stat-sub">Live; Barron's $245 · CernBasher $185.91 (both snap 6/12/26)</div>
     </div>
     <div class="stat-card s-red">
       <div class="stat-label">SATS vs SOTP</div>
-      <div class="stat-value red" id="discountStat">−39.5%</div>
-      <div class="stat-sub" id="discountStatSub">discount to NAV (page model, live)</div>
+      <div class="stat-value red" id="discountStat">−49.5%</div>
+      <div class="stat-sub" id="discountStatSub">discount to live SOTP</div>
     </div>
     <div class="stat-card s-green">
       <div class="stat-label">Effective SPCX via SATS</div>
-      <div class="stat-value green" id="effSpcxStat">$97</div>
-      <div class="stat-sub" id="effSpcxStatSub">vs SPCX direct <span id="effSpcxStatSpcx">$160.95</span> → live discount</div>
+      <div class="stat-value green" id="effSpcxStat">$92</div>
+      <div class="stat-sub" id="effSpcxStatSub">vs SPCX direct <span id="effSpcxStatSpcx">$161.11</span> → live discount</div>
     </div>
   </div>
   <div id="priceBanner" class="price-banner">
@@ -221,8 +221,8 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   <div class="analyst-strip">
     <div class="analyst-card">
       <div class="analyst-src">Barron's NAV <span class="framework-snapshot-tag">snap 6/12/26</span></div>
-      <div class="analyst-target">$185 – $190</div>
-      <div class="analyst-detail">After-tax; SPCX mark $160.95 at print</div>
+      <div class="analyst-target">$245 / sh</div>
+      <div class="analyst-detail">After-tax NAV; post-IPO update at print</div>
     </div>
     <div class="analyst-card">
       <div class="analyst-src">TD Cowen — G. Williams <span class="framework-snapshot-tag">May 2026</span></div>
@@ -240,9 +240,9 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
       <div class="analyst-detail">$53.37B ÷ 287.1M sh @ SPCX $160.95 (conservative: 0 ops, $6.5B spectrum)</div>
     </div>
     <div class="analyst-card" style="border-left-color:var(--green)">
-      <div class="analyst-src" style="color:var(--green)">Page model <span class="live-pill" id="pageModelPill">LIVE</span></div>
-      <div class="analyst-target" id="pageModelSotp">$188.68 SOTP</div>
-      <div class="analyst-detail">$85 RemainCo + after-tax stake @ live SPCX <span id="pageModelSpcx">$160.95</span></div>
+      <div class="analyst-src" style="color:var(--green)">Stub SOTP <span class="live-pill" id="pageModelPill">LIVE</span></div>
+      <div class="analyst-target" id="pageModelSotp">$226 SOTP</div>
+      <div class="analyst-detail">262M SPCX ÷ 290M SATS + $38 ops + $41 spectrum, net debt $0 @ live SPCX <span id="pageModelSpcx">$161.11</span></div>
     </div>
   </div>
 
@@ -282,6 +282,8 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
         </div>
       </div>
 
+      <h3 class="section-h" style="margin-top:0">Tax-adjusted FD view (alternative, FD 343.6M, after-tax) <span class="framework-snapshot-tag">FD basis</span></h3>
+      <p class="body-text" style="font-size:11.5px">A more conservative cross-check on fully-diluted 343.6M share count with explicit 21% tax on the SpaceX stake gain. Differs from the live SOTP above (which uses 290M diluted, $0 net debt via cash-debt wash) in two ways: (1) FD share count is higher, (2) tax is broken out separately rather than embedded in the net-cash line.</p>
       <div class="kpi-grid">
         <div class="kpi">
           <div class="kpi-label">Stake (Prospectus)</div>
@@ -392,25 +394,56 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
         </tbody>
       </table>
 
-      <div class="callout callout-green">
-        <div class="callout-title">Live page-model SOTP <span class="live-pill" id="livePanelPill">LIVE</span></div>
-        <div class="callout-body" id="livePanelBody">
-          At live SPCX <strong><span id="lpSpcx">$160.95</span></strong> and live SATS <strong><span id="lpSats">$114.08</span></strong>:
-          stake mark <span id="lpStakeB">$42.2B</span> · after-tax look-through <strong><span id="lpAfterTax">$103.68</span></strong>/sh ·
-          SOTP <strong><span id="lpSotp">$188.68</span></strong>/sh · SATS at <strong><span id="lpDiscount">−39.5%</span></strong> to NAV ·
-          effective SPCX via SATS <strong><span id="lpEffSpcx">$97</span></strong>/sh.
-          <span style="display:block;margin-top:6px;color:var(--text-dim);font-size:10.5px">Auto-refreshes every 60s · last fetch <span id="lpTs">—</span> · source <span id="lpSrc">Yahoo Finance</span></span>
+      <div class="callout callout-green" id="sotpLivePanel">
+        <div class="callout-title">Stub SOTP — Live <span class="live-pill" id="livePanelPill">LIVE</span></div>
+        <div class="callout-body">
+          <div style="font-family:var(--mono);font-size:13px;line-height:1.7;margin-bottom:10px">
+            Live SATS <strong><span id="lpSats">$114.08</span></strong> · Live SPCX <strong><span id="lpSpcx">$161.11</span></strong> · SOTP intrinsic <strong><span id="lpSotp">$226</span>/sh</strong> · Discount <strong><span id="lpDiscount">−49.5%</span></strong>
+          </div>
+          <table class="sotp-build" style="margin-top:6px">
+            <thead><tr><th>Component</th><th>$ / sh</th><th class="note">Build</th></tr></thead>
+            <tbody>
+              <tr><td class="label">SpaceX equity look-through</td><td id="lpStake">$147</td><td class="note">262M SPCX × live SPCX ÷ 290M SATS diluted</td></tr>
+              <tr><td class="label">Operating businesses (Hughes / Boost / Sling-DISH)</td><td>$38</td><td class="note">$11B ÷ 290M diluted</td></tr>
+              <tr><td class="label">Residual spectrum (held at cost)</td><td>$41</td><td class="note">$12B ÷ 290M — upside if monetized in market</td></tr>
+              <tr><td class="label">Net cash from deals (post-tax)</td><td>+$90</td><td class="note">$22B AT&amp;T + $9B SpaceX − $5B tax = $26B ÷ 290M</td></tr>
+              <tr><td class="label">Existing debt</td><td>−$90</td><td class="note">$26B ÷ 290M — fully cleansed by deal cash</td></tr>
+              <tr class="total"><td>SOTP intrinsic <span class="live-pill">LIVE</span></td><td id="lpSotpRow">$226</td><td class="note">Sum (net debt contribution = $0)</td></tr>
+              <tr><td class="label">Implied discount vs spot SATS</td><td id="lpDiscRow">−49.5%</td><td class="note">(spot − SOTP) ÷ SOTP</td></tr>
+              <tr><td class="label">Effective SPCX via SATS</td><td id="lpEffSpcx">$92</td><td class="note">live SPCX × (spot SATS ÷ SOTP)</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;color:var(--text-dim);font-size:10.5px;font-family:var(--mono)">Auto-refresh every 60s · last fetch <span id="lpTs">—</span> · source <span id="lpSrc">Yahoo Finance</span></div>
         </div>
       </div>
+
+      <div class="callout callout-brand" id="buyThresholdCallout">
+        <div class="callout-title" id="buyTitle">Buy below: $130 / sh</div>
+        <div class="callout-body" id="buyBody">
+          Spot SATS <strong><span id="btSats">$114.08</span></strong> — <span id="btStatus" style="color:var(--green);font-weight:700">BELOW THRESHOLD · ACTIVE BUY ZONE</span>.
+          Downside reference <strong>$100 / sh</strong> · Upside reference <strong>$235 / sh</strong> · SOTP intrinsic <strong><span id="btSotp">$226</span> / sh</strong> (live).
+          <div style="margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--text-mid)">
+            Range: $100 ── <span style="color:var(--green);font-weight:700">$130 buy</span> ── <strong style="color:var(--navy)">spot <span id="btSatsRange">$114.08</span></strong> ── live SOTP <span id="btSotpRange">$226</span> ── $235
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-h">Key dates — when the value crystallizes</h3>
+      <table class="sotp-build" style="font-size:12px">
+        <thead><tr><th>Date</th><th>Event</th><th class="note">Impact</th></tr></thead>
+        <tbody>
+          <tr><td class="label" style="font-weight:600">June 2026</td><td style="text-align:left;font-family:var(--sans)">AT&amp;T spectrum deal closes</td><td class="note">$22B cash in — covers majority of debt extinguishment ahead of SpaceX closing</td></tr>
+          <tr><td class="label" style="font-weight:600">November 2027</td><td style="text-align:left;font-family:var(--sans)">SpaceX spectrum deal closes</td><td class="note">$9B cash + 262M SPCX shares delivered; SATS' Seller Notes ($9.821B) extinguished</td></tr>
+        </tbody>
+      </table>
 
       <div class="callout callout-amber">
         <div class="callout-title">Framework reconciliation: three independent NAVs</div>
         <div class="callout-body">
-          The three frameworks all landed in <strong>$185-$190/sh</strong> at the 6/12/26 SPCX day-1 close — unusually tight convergence for a stub trade:<br>
-          <strong>CernBasher (snapshot 6/12/26):</strong> $53.37B ÷ 287.1M = $185.91/sh (ops $0, spectrum $6.5B, pro forma B/S — at SPCX $160.95)<br>
-          <strong>Page model (LIVE):</strong> recomputes every 60s in the Live SOTP panel above and the KPI grid; uses $85 RemainCo + after-tax stake on FD 343.6M shares<br>
-          <strong>Barron's (snapshot 6/12/26):</strong> $185-$190/sh (after-tax, current SPCX mark $160.95 at print)<br>
-          CernBasher zeros operations and explicitly steps through the pro forma B/S; page model gives $85/sh of ops credit but is similarly conservative on tax. AT&amp;T proceeds ($22.65B) are the under-discussed value lever — they take net debt from $(27.7)B to net cash of +$4.7B. As SPCX moves post-snapshot, only the page-model line updates; the other two stay frozen so the reader can see how SPCX drift changes the live picture.
+          <strong>Stub SOTP (LIVE):</strong> recomputes every 60s in the Live panel above; uses 262M SPCX × live SPCX ÷ 290M diluted + $38 ops + $41 residual spectrum + $0 net debt (deal cash washes debt). At SPCX $161.11 anchor → ~$226-228/sh.<br>
+          <strong>Barron's NAV (snapshot 6/12/26):</strong> $245/sh — after-tax NAV, post-IPO update at print.<br>
+          <strong>CernBasher 4-step (snapshot 6/12/26):</strong> $53.37B ÷ 287.1M = $185.91/sh — most conservative; ops valued at $0, spectrum $6.5B, full pro forma B/S at SPCX $160.95.<br>
+          As SPCX drifts post-snapshot, only the Stub SOTP line updates; the other two stay frozen so the reader can see how SPCX move changes the live picture against fixed reference NAVs. The discount-narrowing thesis depends on <strong>monetization events</strong> — meaningful closing of the discount is unlikely without the November 2027 SpaceX share delivery (or earlier disposition / strategic transaction). Pre-IPO holders rotating into direct SPCX is a known overhang on Day 1 and persists until the discount compresses.
         </div>
       </div>
 
@@ -564,19 +597,35 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
   function fmtB(v, dp = 2) { return (v < 0 ? '-$' : '$') + Math.abs(v).toFixed(dp) + 'B'; }
   function fmtPct(v, dp = 1) { return (v > 0 ? '+' : '') + v.toFixed(dp) + '%'; }
 
+  // Stub SOTP framework constants (290M diluted basis)
+  const STUB_SATS_DIL_M   = 290;
+  const STUB_OPS_PER_SH   = 38;
+  const STUB_SPEC_PER_SH  = 41;
+  const STUB_NET_CASH_PS  = 90;     // post-tax, $26B net / 290M
+  const STUB_DEBT_PS      = 90;     // $26B / 290M — fully cleansed by net cash
+  const STUB_BUY_BELOW    = 130;
+  const STUB_DOWNSIDE     = 100;
+  const STUB_UPSIDE       = 235;
+
   function recompute(spcx, sats, opts) {
     opts = opts || {};
+    // --- Tax-adjusted FD view (alt) ---
     const stakeValueB        = SPACEX_SHARES_M * spcx / 1000;          // $B
-    const stakePerShareFD    = stakeValueB * 1000 / SATS_FD_M;         // $/sh
+    const stakePerShareFD    = stakeValueB * 1000 / SATS_FD_M;         // $/sh on 343.6M
     const gainB              = stakeValueB - CONTRACT_BASIS_B;
     const taxB               = Math.max(0, TAX_RATE * gainB);
     const taxPerShareFD      = taxB * 1000 / SATS_FD_M;
     const afterTaxPerShareFD = stakePerShareFD - taxPerShareFD;
     const sotpPerShareFD     = REMAINCO_PER_SH + afterTaxPerShareFD;
-    const discountPct        = (sats - sotpPerShareFD) / sotpPerShareFD * 100;
-    const effSpcxViaSats     = spcx * sats / sotpPerShareFD;
+    const fdDiscountPct      = (sats - sotpPerShareFD) / sotpPerShareFD * 100;
 
-    // SATS premium decomposition (callout)
+    // --- Stub SOTP (primary, 290M diluted, $0 net debt) ---
+    const stubStakePerSh     = SPACEX_SHARES_M * spcx / STUB_SATS_DIL_M;
+    const stubSotp           = stubStakePerSh + STUB_OPS_PER_SH + STUB_SPEC_PER_SH; // net debt = 0
+    const discountPct        = (sats - stubSotp) / stubSotp * 100;
+    const effSpcxViaSats     = spcx * sats / stubSotp;
+
+    // FD-view brand callout decomposition
     const premium            = sats - REMAINCO_PER_SH;
     const arbDiscPct         = afterTaxPerShareFD > 0
                                  ? (1 - premium / afterTaxPerShareFD) * 100
@@ -589,9 +638,9 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     set('satsLastClose', fmtMoney(sats));
     set('spcxLastClose', fmtMoney(spcx));
     set('stakeStatMark', fmtB(stakeValueB, 1));
-    set('sotpStat', fmtMoney(sotpPerShareFD));
+    set('sotpStat', fmtMoney(stubSotp, 0));
     set('discountStat', fmtPct(discountPct));
-    set('discountStatSub', `${discountPct < 0 ? 'discount' : 'premium'} to NAV (page model, live)`);
+    set('discountStatSub', `${discountPct < 0 ? 'discount' : 'premium'} to live SOTP`);
     set('effSpcxStat', fmtMoney(effSpcxViaSats, 0));
     set('effSpcxStatSpcx', fmtMoney(spcx));
 
@@ -611,11 +660,11 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
       if (el) { el.textContent = `${chg>=0?'+':''}${fmtMoney(chg,2)} (${fmtPct(pct)})`; el.className = 'pb-chg' + (chg<0?' down':''); }
     }
 
-    // Analyst strip — page model card
-    set('pageModelSotp', fmtMoney(sotpPerShareFD) + ' SOTP');
+    // Analyst strip — Stub SOTP card (live)
+    set('pageModelSotp', fmtMoney(stubSotp, 0) + ' SOTP');
     set('pageModelSpcx', fmtMoney(spcx));
 
-    // KPI grid
+    // KPI grid — Tax-adjusted FD view (alt)
     set('kpiStakeValue', fmtB(stakeValueB, 1));
     set('kpiStakeValueSub', `262M × ${fmtMoney(spcx)} SPCX (live)`);
     set('kpiStakePerSh', fmtMoney(stakePerShareFD));
@@ -624,18 +673,16 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     set('kpiAfterTax', fmtMoney(afterTaxPerShareFD));
     set('kpiAfterTaxSub', `(${fmtMoney(stakePerShareFD)} − ${fmtMoney(taxPerShareFD)} tax)`);
     set('kpiSotp', fmtMoney(sotpPerShareFD));
-    set('kpiDiscountLabel', `SATS @ ${fmtMoney(sats)} vs SOTP `);
-    // re-add the live pill (innerHTML for span)
     const kdl = document.getElementById('kpiDiscountLabel');
-    if (kdl) kdl.innerHTML = `SATS @ ${fmtMoney(sats)} vs SOTP <span class="live-pill">LIVE</span>`;
-    set('kpiDiscount', fmtPct(discountPct));
-    set('kpiEffSpcx', fmtMoney(effSpcxViaSats, 0) + ' / sh');
+    if (kdl) kdl.innerHTML = `SATS @ ${fmtMoney(sats)} vs FD SOTP <span class="live-pill">LIVE</span>`;
+    set('kpiDiscount', fmtPct(fdDiscountPct));
+    set('kpiEffSpcx', fmtMoney(spcx * sats / sotpPerShareFD, 0) + ' / sh');
     set('kpiEffSpcxLiveRef', fmtMoney(spcx));
 
-    // Header tag
-    set('headerDiscTag', `${fmtPct(discountPct)} TO NAV`);
+    // Header tag — use primary Stub SOTP discount
+    set('headerDiscTag', `${fmtPct(discountPct)} TO SOTP`);
 
-    // Brand callout — SPCX direct vs SATS arb
+    // Brand callout — SPCX direct vs SATS arb (FD/tax basis — keeps existing math intact)
     set('arbSpcx', fmtMoney(spcx));
     set('arbSats', fmtMoney(sats));
     set('arbPremium', fmtMoney(premium));
@@ -644,14 +691,32 @@ header{background:var(--navy);border-bottom:3px solid var(--brand)}
     set('arbDiscount', arbDiscPct !== null ? `~${Math.abs(arbDiscPct).toFixed(0)}%` : 'n/a');
     set('arbLeverage', arbLeverage !== null ? `~${arbLeverage.toFixed(1)}×` : 'n/a');
 
-    // Live SOTP panel
+    // Live Stub SOTP panel
     set('lpSpcx', fmtMoney(spcx));
     set('lpSats', fmtMoney(sats));
-    set('lpStakeB', fmtB(stakeValueB, 1));
-    set('lpAfterTax', fmtMoney(afterTaxPerShareFD));
-    set('lpSotp', fmtMoney(sotpPerShareFD));
+    set('lpStake', fmtMoney(stubStakePerSh, 0));
+    set('lpSotp', fmtMoney(stubSotp, 0));
+    set('lpSotpRow', fmtMoney(stubSotp, 0));
     set('lpDiscount', fmtPct(discountPct));
+    set('lpDiscRow', fmtPct(discountPct));
     set('lpEffSpcx', fmtMoney(effSpcxViaSats, 0));
+
+    // Buy threshold callout
+    const isBuy = sats < STUB_BUY_BELOW;
+    set('btSats', fmtMoney(sats));
+    set('btSatsRange', fmtMoney(sats));
+    set('btSotp', fmtMoney(stubSotp, 0));
+    set('btSotpRange', fmtMoney(stubSotp, 0));
+    const btStatus = document.getElementById('btStatus');
+    if (btStatus) {
+      btStatus.textContent = isBuy ? 'BELOW THRESHOLD · ACTIVE BUY ZONE' : 'ABOVE THRESHOLD · MONITOR';
+      btStatus.style.color = isBuy ? 'var(--green)' : 'var(--text-mid)';
+    }
+    const btCallout = document.getElementById('buyThresholdCallout');
+    if (btCallout) {
+      btCallout.classList.remove('callout-brand','callout-green','callout-amber');
+      btCallout.classList.add(isBuy ? 'callout-green' : 'callout-amber');
+    }
 
     // Live-pill state
     const pills = document.querySelectorAll('.live-pill');
