@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Merger-Arb Portfolio — MergerAnalyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f6f5f2; color: #111; font-family: "EB Garamond","Garamond","Times New Roman",serif; font-size: 16px; line-height: 1.5; }
+  a { color: #1a5490; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header { padding: 22px 28px 12px; background: #ffffff; border-bottom: 1px solid #ddd; }
+  header h1 { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.2px; }
+  header .sub { margin-top: 4px; font-size: 15px; color: #666; font-style: italic; }
+  header nav { margin-top: 10px; font-size: 14px; }
+  header nav a { margin-right: 14px; color: #555; }
+  main { max-width: 1300px; margin: 22px auto 60px; padding: 0 24px; }
+  h2 { font-size: 20px; font-weight: 600; margin: 30px 0 12px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .kpi { background: #fff; padding: 14px 16px; border-radius: 6px; border: 1px solid #e0e0e0; }
+  .kpi .label { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #777; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .kpi .value { font-size: 26px; font-weight: 500; margin-top: 4px; letter-spacing: -0.3px; }
+  .kpi .sub { font-size: 12px; color: #666; font-style: italic; margin-top: 2px; }
+  .value.pos { color: #2a6a2a; }
+  .value.neg { color: #9a2a2a; }
+  .value.neutral { color: #222; }
+  table.positions { width: 100%; border-collapse: collapse; background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; border: 1px solid #ddd; }
+  table.positions th { background: #eef1f5; color: #111; text-align: left; padding: 8px 10px; font-weight: 600; border-bottom: 2px solid #ccc; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+  table.positions td { padding: 9px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table.positions td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.positions td.pos-pnl { color: #2a6a2a; font-weight: 500; }
+  table.positions td.neg-pnl { color: #9a2a2a; font-weight: 500; }
+  table.positions tr:hover td { background: #f9fafc; }
+  table.positions .ticker { font-weight: 600; }
+  table.positions .target { color: #333; }
+  table.positions .acquirer { color: #666; font-size: 12px; font-style: italic; }
+  .footnote { margin-top: 30px; padding: 14px 18px; background: #fff; border: 1px solid #eee; border-radius: 6px; font-size: 13px; color: #555; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .footnote h3 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #888; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .footnote ul { margin: 6px 0; padding-left: 20px; }
+  .footnote li { margin: 3px 0; }
+  .as-of { font-size: 12px; color: #888; font-style: italic; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Model Merger-Arb Portfolio</h1>
+  <div class="sub">Risk-adjusted picks. Frozen positions launched 2026-07-13, tracked daily.</div>
+  <nav>
+    <a href="/">&larr; MergerAnalyst home</a>
+    <a href="/portfolio.html">Portfolio</a>
+  </nav>
+</header>
+<main>
+  <div class="as-of" id="asOf">Loading&hellip;</div>
+  <div class="kpi-row" id="kpis"></div>
+  <h2>Positions</h2>
+  <div style="overflow-x:auto;">
+    <table class="positions">
+      <thead>
+        <tr>
+          <th>#</th><th>Ticker</th><th>Target &middot; Acquirer</th>
+          <th class="num">Weight</th>
+          <th class="num">Entry $</th><th class="num">Current $</th><th class="num">Deal $</th>
+          <th class="num">Shares</th><th class="num">Cost</th><th class="num">Value</th>
+          <th class="num">P&amp;L $</th><th class="num">P&amp;L %</th>
+          <th class="num">Spread now</th><th class="num">Prob</th><th class="num">Close</th>
+        </tr>
+      </thead>
+      <tbody id="posBody"></tbody>
+      <tfoot><tr id="totalsRow" style="background:#f2f4f8; font-weight:600;"></tr></tfoot>
+    </table>
+  </div>
+  <div class="footnote">
+    <h3>Portfolio design</h3>
+    <ul>
+      <li><strong>Inception:</strong> 2026-07-13. <strong>Starting notional:</strong> $1,000,000.</li>
+      <li><strong>Universe:</strong> pending public-target deals with <em>expectedClose</em> &le; 12 months and <em>closingProbability</em> &ge; 75%.</li>
+      <li><strong>Spread filter:</strong> 0.1%&ndash;25%. Anything wider is treated as a broken-deal signal that a simple screen cannot reliably price.</li>
+      <li><strong>Expected return:</strong> E[R] = p &middot; spread + (1 &minus; p) &middot; (&minus;15%). The 15% assumed downside is the average public-to-public deal break historically.</li>
+      <li><strong>Ranking:</strong> Sharpe-like score, E[R] &divide; standard deviation of the two-outcome distribution.</li>
+      <li><strong>Weighting:</strong> proportional to E[R] &times; closingProbability (favoring high-conviction, positive-expectancy positions). Individual weights capped at 15%, floored at 3%.</li>
+      <li><strong>Currency:</strong> USD. Foreign-listed tickers (e.g. RFX.L) use local price; no FX conversion.</li>
+      <li><strong>Refresh:</strong> current prices refreshed daily via the 7 AM ET deal-scan pipeline. Position entry prices are frozen at inception.</li>
+      <li><strong>Model portfolio for illustration only</strong> &mdash; not investment advice, not a real trade book.</li>
+    </ul>
+  </div>
+</main>
+<script>
+const PORTFOLIO = {"name": "Model Merger-Arb Portfolio", "inception": "2026-07-17", "startingNotional": 1000000, "strategy": "Risk-adjusted merger arb. Universe: pending deals within 12 months, closingProbability ≥ 75%, spread 0.1%–25%. Expected return = p×spread + (1−p)×(−15%). Ranking: E[R]/σ. Weighting: proportional to E[R]×p, capped 15% / floored 3%.", "weighting": "Risk-adjusted; weight ∝ E[R] × close probability; caps 15% / floors 3%", "downsideAssumption": -0.15, "positions": [{"ticker": "PEN", "target": "Penumbra Inc", "acquirer": "Boston Scientific", "entryDate": "2026-07-17", "entryPrice": 318.585, "dealPrice": 374, "shares": 470.83196, "allocation": 150000.0, "weight": 0.15, "expectedClose": "2026-H2", "closingProbability": 91, "daysToCloseAtEntry": 167, "spreadAtEntry": 0.173941, "annualizedReturnAtEntry": 0.41978, "expectedReturnAtEntry": 0.14478631000000003, "sharpeAtEntry": 1.5617791854887062}, {"ticker": "WBD", "target": "Warner Bros. Discovery", "acquirer": "Paramount Skydance", "entryDate": "2026-07-17", "entryPrice": 26.865, "dealPrice": 31, "shares": 5583.47292, "allocation": 150000.0, "weight": 0.15, "expectedClose": "2026-Q3", "closingProbability": 90, "daysToCloseAtEntry": 75, "spreadAtEntry": 0.153918, "annualizedReturnAtEntry": 1.007171, "expectedReturnAtEntry": 0.12352620000000002, "sharpeAtEntry": 1.3548193920728622}, {"ticker": "KVUE", "target": "Kenvue Inc", "acquirer": "Kimberly-Clark", "entryDate": "2026-07-17", "entryPrice": 18.885, "dealPrice": 21.01, "shares": 7942.811755, "allocation": 150000.0, "weight": 0.15, "expectedClose": "2026-H2", "closingProbability": 85, "daysToCloseAtEntry": 167, "spreadAtEntry": 0.112523, "annualizedReturnAtEntry": 0.262451, "expectedReturnAtEntry": 0.07314454999999999, "sharpeAtEntry": 0.7802962530535682}, {"ticker": "UNF", "target": "UniFirst Corporation", "acquirer": "Cintas Corporation", "entryDate": "2026-07-17", "entryPrice": 289.2, "dealPrice": 310, "shares": 518.422722, "allocation": 149927.85, "weight": 0.149928, "expectedClose": "2026-H2", "closingProbability": 88, "daysToCloseAtEntry": 167, "spreadAtEntry": 0.071922, "annualizedReturnAtEntry": 0.163928, "expectedReturnAtEntry": 0.04529136, "sharpeAtEntry": 0.6280338396916159}, {"ticker": "ROKU", "target": "Roku Inc", "acquirer": "Fox Corporation (FOXA / FOX)", "entryDate": "2026-07-17", "entryPrice": 144.37, "dealPrice": 160.0, "shares": 1038.997022, "allocation": 150000.0, "weight": 0.15, "expectedClose": "2027-H1", "closingProbability": 80, "daysToCloseAtEntry": 348, "spreadAtEntry": 0.108264, "annualizedReturnAtEntry": 0.113843, "expectedReturnAtEntry": 0.05661120000000001, "sharpeAtEntry": 0.5479973980113373}, {"ticker": "PERF", "target": "Perfect Corp.", "acquirer": "ProjectNY (Cayman vehicle controlled by founder/CEO Alice H. Chang)", "entryDate": "2026-07-17", "entryPrice": 1.92, "dealPrice": 2.0, "shares": 39792.568745, "allocation": 76401.73, "weight": 0.076402, "expectedClose": "2026-Q4", "closingProbability": 90, "daysToCloseAtEntry": 167, "spreadAtEntry": 0.041667, "annualizedReturnAtEntry": 0.093323, "expectedReturnAtEntry": 0.022500300000000004, "sharpeAtEntry": 0.39130888468020064}, {"ticker": "HUN", "target": "Huntsman Corporation", "acquirer": "Olin Corporation (OLN) — merger of equals, NewCo \"OlinHuntsman\"", "entryDate": "2026-07-17", "entryPrice": 11.8002, "dealPrice": 12.92, "shares": 8065.001545, "allocation": 95168.63, "weight": 0.095169, "expectedClose": "2027-H1", "closingProbability": 75, "daysToCloseAtEntry": 348, "spreadAtEntry": 0.094897, "annualizedReturnAtEntry": 0.099756, "expectedReturnAtEntry": 0.033672749999999994, "sharpeAtEntry": 0.31753710787563705}, {"ticker": "TCBK", "target": "TriCo Bancshares", "acquirer": "First Hawaiian, Inc. (NASDAQ: FHB)", "entryDate": "2026-07-17", "entryPrice": 60.54, "dealPrice": 63.12, "shares": 730.191906, "allocation": 44205.82, "weight": 0.044206, "expectedClose": "2026-Q4", "closingProbability": 85, "daysToCloseAtEntry": 167, "spreadAtEntry": 0.042616, "annualizedReturnAtEntry": 0.095503, "expectedReturnAtEntry": 0.013723599999999999, "sharpeAtEntry": 0.19953569548912647}, {"ticker": "DBRG", "target": "DigitalBridge", "acquirer": "SoftBank Group", "entryDate": "2026-07-17", "entryPrice": 15.77, "dealPrice": 16, "shares": 2174.760161, "allocation": 34295.97, "weight": 0.034296, "expectedClose": "2026-Q3", "closingProbability": 95, "daysToCloseAtEntry": 75, "spreadAtEntry": 0.014585, "annualizedReturnAtEntry": 0.073008, "expectedReturnAtEntry": 0.006355749999999993, "sharpeAtEntry": 0.17718614096640894}]};
+const CURRENT_PRICES = {"PEN": 318.5849914550781, "WBD": 26.864999771118164, "KVUE": 18.885000228881836, "UNF": 289.20001220703125, "ROKU": 144.3699951171875, "PERF": 1.9199999570846558, "HUN": 11.800200462341309, "TCBK": 60.540000915527344, "DBRG": 15.770000457763672};
+const PRICE_SNAPSHOT_ISO = "2026-07-17 18:13";
+
+function fmtMoney(x, d=0) { if (x===null||x===undefined||isNaN(x)) return "—"; return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:d,minimumFractionDigits:d}).format(x); }
+function fmtPct(x, d=2) { if (x===null||x===undefined||isNaN(x)) return "—"; return (x*100).toFixed(d)+'%'; }
+function fmtNum(x, d=2) { if (x===null||x===undefined||isNaN(x)) return "—"; return Number(x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function render() {
+  document.getElementById('asOf').textContent = 'Prices as of ' + PRICE_SNAPSHOT_ISO + ' UTC. Portfolio inception ' + PORTFOLIO.inception + '.';
+  let totalCost=0, totalValue=0;
+  const rows = PORTFOLIO.positions.map((p,idx) => {
+    const curr = CURRENT_PRICES[p.ticker] ?? null;
+    const cost = p.allocation;
+    const value = curr !== null ? curr * p.shares : cost;
+    const pnl = value - cost;
+    const pnlPct = pnl / cost;
+    const spreadNow = curr !== null ? (p.dealPrice - curr) / curr : null;
+    totalCost += cost; totalValue += value;
+    const pnlClass = pnl >= 0 ? 'pos-pnl' : 'neg-pnl';
+    return '<tr>' +
+      '<td>'+(idx+1)+'</td>' +
+      '<td class="ticker">'+p.ticker+'</td>' +
+      '<td><div class="target">'+(p.target||'')+'</div><div class="acquirer">'+(p.acquirer||'')+'</div></td>' +
+      '<td class="num">'+fmtPct(p.weight, 1)+'</td>' +
+      '<td class="num">'+fmtNum(p.entryPrice)+'</td>' +
+      '<td class="num">'+(curr !== null ? fmtNum(curr) : "—")+'</td>' +
+      '<td class="num">'+fmtNum(p.dealPrice)+'</td>' +
+      '<td class="num">'+fmtNum(p.shares, 0)+'</td>' +
+      '<td class="num">'+fmtMoney(cost)+'</td>' +
+      '<td class="num">'+fmtMoney(value)+'</td>' +
+      '<td class="num '+pnlClass+'">'+fmtMoney(pnl)+'</td>' +
+      '<td class="num '+pnlClass+'">'+fmtPct(pnlPct)+'</td>' +
+      '<td class="num">'+(spreadNow !== null ? fmtPct(spreadNow) : "—")+'</td>' +
+      '<td class="num">'+(p.closingProbability||"—")+'%</td>' +
+      '<td class="num">'+(p.expectedClose||"—")+'</td>' +
+      '</tr>';
+  }).join('');
+  document.getElementById('posBody').innerHTML = rows;
+  const totalPnL = totalValue - totalCost;
+  const totalPnLPct = totalPnL / totalCost;
+  const totalClass = totalPnL >= 0 ? 'pos-pnl' : 'neg-pnl';
+  document.getElementById('totalsRow').innerHTML =
+    '<td colspan="8" style="text-align:right;">Total</td>' +
+    '<td class="num">'+fmtMoney(totalCost)+'</td>' +
+    '<td class="num">'+fmtMoney(totalValue)+'</td>' +
+    '<td class="num '+totalClass+'">'+fmtMoney(totalPnL)+'</td>' +
+    '<td class="num '+totalClass+'">'+fmtPct(totalPnLPct)+'</td>' +
+    '<td></td><td></td><td></td>';
+  const inceptionDate = new Date(PORTFOLIO.inception);
+  const now = new Date();
+  const days = Math.max(1, Math.round((now - inceptionDate) / 86400000));
+  const cagr = totalCost > 0 ? Math.pow(totalValue / totalCost, 365 / days) - 1 : 0;
+  const kpis = [
+    { label:'Notional', value:fmtMoney(totalCost), sub:'at inception' },
+    { label:'Current Value', value:fmtMoney(totalValue), sub:'mark to market' },
+    { label:'Total P&L', value:fmtMoney(totalPnL), sub:fmtPct(totalPnLPct)+' return', cls: totalPnL >= 0 ? 'pos':'neg' },
+    { label:'Days Live', value:days.toString(), sub:'since 2026-07-13' },
+    { label:'Annualized', value:fmtPct(cagr, 1), sub:'compounded', cls: cagr >= 0 ? 'pos':'neg' },
+    { label:'Positions', value:PORTFOLIO.positions.length.toString(), sub:'risk-weighted' },
+  ];
+  document.getElementById('kpis').innerHTML = kpis.map(k =>
+    '<div class="kpi"><div class="label">'+k.label+'</div><div class="value '+(k.cls||'neutral')+'">'+k.value+'</div><div class="sub">'+k.sub+'</div></div>'
+  ).join('');
+}
+render();
+</script>
+</body>
+</html>
