@@ -9112,7 +9112,7 @@ function renderDeals() {
       '<td data-col="2" style="white-space:nowrap">'+dtBadge+'</td>'+
       '<td data-col="3" class="deal-size-cell">'+sizeStr+ebitdaStr+'</td>'+
       '<td data-col="4" class="price-cell"><div class="current-price">'+fp(d.currentPrice,d.geo)+'</div><div class="deal-price">Deal: '+(d.dealPrice?fp(d.dealPrice,d.geo):esc((d.dealTerms||" - ").slice(0,40)))+'</div></td>'+
-      '<td data-col="5" class="spread-cell"><div class="spread-val '+sC+'" title="'+esc(d.spreadCalc||"")+'">'+(sp>=0?"+":"")+sp.toFixed(2)+'%</div></td>'+
+      '<td data-col="5" class="spread-cell"><div class="spread-val '+sC+'" title="'+esc(d.spreadCalc||"")+'">'+(sp==null?' - ':(sp>=0?"+":"")+sp.toFixed(2)+'%')+'</div></td>'+
       '<td data-col="6" class="ann-cell"><div class="ann-val '+aC+'" title="'+esc(d.spreadCalc?"Annualized = spread × 365 / days_to_close":"")+'">'+(an==null?" - ":(an>0?"+":"")+an.toFixed(1)+"%")+'</div></td>'+
       '<td data-col="7" class="date-cell"><div class="date-label">Announced</div><div>'+fd(d.announced)+'</div>'+(ageStr?'<div class="deal-age">'+ageStr+'</div>':'')+'</td>'+
       '<td data-col="8" class="date-cell"><div class="date-label">Exp. Close</div><div>'+(d.expectedClose||" - ")+'</div><div class="days-badge '+dC+'">'+dL+'</div>'+progressHTML+'</td>'+
