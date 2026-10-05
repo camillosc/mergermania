@@ -9582,10 +9582,10 @@ function updateStats(){
   countUp(document.getElementById("stat-risk"), d.filter(x=>x.dealRisk==="high"||x.status==="at-risk").length, "", 0);
   const evEl = document.getElementById("stat-total-ev-val");
   if(evEl && totalEV > 0) {
-    const isTrillions = totalEV >= 1000;
-    const val = isTrillions ? totalEV/1000 : totalEV;
+    const isTrillions = totalEV >= 1000000;
+    const val = isTrillions ? totalEV/1000000 : totalEV/1000;
     const suffix = isTrillions ? "tn" : "bn";
-    const dec = isTrillions ? 1 : 0;
+    const dec = 1;
     const fakeEl = { textContent: "" };
     Object.defineProperty(fakeEl, "textContent", {
       set(v) { evEl.textContent = "$" + v; },
