@@ -1191,22 +1191,6 @@
   .modal-risk-badge.med  { background: var(--amber-lt); color: var(--amber); border: 1px solid #F0C89A; }
   .modal-risk-badge.high { background: var(--red-lt);   color: var(--red);   border: 1px solid #FCA5A5; }
 
-  /* -- EXPORT BUTTON ------------------------------------------------- */
-  .btn-export {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    color: var(--text-mid);
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.12s;
-    white-space: nowrap;
-  }
-  .btn-export:hover { border-color: var(--green); color: var(--green); background: var(--green-lt); }
-
   /* -- COLUMN TOGGLE PANEL ------------------------------------------- */
   .col-toggle-bar {
     display: flex;
@@ -1455,7 +1439,7 @@
 
   @media print {
     html, body { background:var(--surface) !important; color: #000 !important; font-size: 10px; }
-    .controls, #backToTop, .btn-primary, .btn-secondary, .btn-export { display: none !important; }
+    .controls, #backToTop, .btn-primary, .btn-secondary { display: none !important; }
     .table-wrap { box-shadow: none; border: 1px solid #ccc; }
     thead tr { background: var(--navy) !important; print-color-adjust: exact; }
     tbody tr:hover { background: transparent !important; }
@@ -1507,7 +1491,6 @@
     <input class="search-box" type="text" id="searchInput" placeholder="Search target, acquirer, sector, suitors..." oninput="applyFilters()">
     <div class="deal-count-chip" id="dealCountChip"><span id="dealCountNum"> - </span> deals</div>
     <div class="spacer"></div>
-    <button class="btn-export" onclick="exportCSV()" title="Export visible deals to CSV">v CSV</button>
     <button class="btn-secondary" id="priceBtn" onclick="fetchLivePrices()">(*) Live Prices</button>
     <button class="btn-primary" id="refreshBtn" onclick="loadDeals()">(cycle) Refresh</button>
     <span id="priceStatus"></span>
@@ -9794,36 +9777,6 @@ function updateStats(){
     if(!lbl){ lbl=document.createElement("div"); lbl.className="stat-sublabel"; lbl.style.cssText="font-size:10px;color:var(--green);font-family:var(--mono);margin-top:3px;font-weight:600"; totalCard.appendChild(lbl); }
     lbl.textContent = "* "+topOpps.length+" top opp"+(topOpps.length>1?"s":"");
   }
-}
-
-function exportCSV(){
-  let deals=[...allDeals];
-  const srch=((document.getElementById("searchInput")||{}).value||"").toLowerCase();
-  if(currentFilter==="USA") deals=deals.filter(d=>d.geo==="USA");
-  else if(currentFilter==="EU") deals=deals.filter(d=>d.geo==="EU");
-  else if(currentFilter==="high-spread") deals=deals.filter(d=>(d.spread||0)>5);
-  else if(currentFilter==="closing-soon") deals=deals.filter(d=>{const t=dtc(d.expectedClose);return t!==null&&t<180;});
-  else if(currentFilter==="megadeal") deals=deals.filter(d=>(d.dealSize||0)>=10);
-  else if(currentFilter==="contested") deals=deals.filter(d=>d.otherBidders&&d.otherBidders!==" - "&&!d.otherBidders.toLowerCase().includes("none"));
-  else if(currentFilter==="top-opp") deals=deals.filter(d=>(d.closingProbability||0)>=85&&(+d.annualizedReturn||0)>=10&&d.dealRisk!=='high'&&(+d.spread||0)>0);
-  if(srch) deals=deals.filter(d=>[d.target,d.acquirer,d.industry,d.targetTicker,d.description,d.comment,d.otherBidders].some(v=>(v||"").toLowerCase().includes(srch)));
-  const cols=["Target","Ticker","Acquirer","Geo","Industry","Deal Type","Deal Size (bn)","EV/EBITDA (x)","Currency","Current Price","Deal Price","Spread %","Ann. Return %","Announced","Exp. Close","Status","Deal Risk","Break Fee","Mkt Share","Close Probability %","Description","Commentary","Other Suitors / Bidders"];
-  const rows=deals.map(d=>{
-    const dt=getDealType(d.dealTerms||"");
-    return [
-      d.target,d.targetTicker,d.acquirer,d.geo,d.industry,
-      dt.label,
-      d.dealSize||"",d.evEbitda||"",d.dealCurrency||"USD",
-      d.currentPrice||"",d.dealPrice||"",d.spread||"",d.annualizedReturn||"",
-      d.announced,d.expectedClose,d.status,d.dealRisk,d.breakupFee||"",d.marketShare||"",d.closingProbability||"",
-      d.description||"",d.comment||"",d.otherBidders||""
-    ].map(v=>'"'+(String(v||"").replace(/"/g,'""'))+'"').join(",");
-  });
-  const csv=[cols.map(c=>'"'+c+'"').join(","),...rows].join("\n");
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
-  a.download="mergeranalyst_"+new Date().toISOString().slice(0,10)+".csv";
-  a.click();
 }
 
 // Deal type classifier
