@@ -11038,7 +11038,7 @@ function renderDeals() {
       '<td data-col="1"><div class="geo-badge '+(d.geo==="USA"?"geo-usa":"geo-eu")+'">'+(d.geo==="USA"?"US USA":"EU EU")+'</div><div class="industry-tag">'+esc(d.industry||" - ")+'</div></td>'+
       '<td data-col="2" style="white-space:nowrap">'+dtBadge+'</td>'+
       '<td data-col="3" class="deal-size-cell">'+sizeStr+ebitdaStr+'</td>'+
-      '<td data-col="4" class="price-cell"><div class="current-price">'+fp(d.currentPrice,d.geo)+'</div><div class="deal-price">Deal: '+(d.dealPrice?fp(d.dealPrice,d.geo):esc((d.dealTerms||" - ").slice(0,40)))+'</div></td>'+
+      '<td data-col="4" class="price-cell"><div class="current-price">'+fp(d.currentPrice,d)+'</div><div class="deal-price">Deal: '+(d.dealPrice?fp(d.dealPrice,d):esc((d.dealTerms||" - ").slice(0,40)))+'</div></td>'+
       '<td data-col="5" class="spread-cell"><div class="spread-val '+sC+'" title="'+esc(d.spreadCalc||"")+'">'+(sp==null?' - ':(sp>=0?"+":"")+sp.toFixed(2)+'%')+'</div></td>'+
       '<td data-col="6" class="ann-cell"><div class="ann-val '+aC+'" title="'+esc(d.spreadCalc?"Annualized = spread × 365 / days_to_close":"")+'">'+(an==null?" - ":(an>0?"+":"")+an.toFixed(1)+"%")+'</div></td>'+
       '<td data-col="7" class="date-cell"><div class="date-label">Announced</div><div>'+fd(d.announced)+'</div>'+(ageStr?'<div class="deal-age">'+ageStr+'</div>':'')+'</td>'+
@@ -11070,8 +11070,8 @@ function openModal(d){
     riskEl.className="modal-risk-badge "+(d.dealRisk==="low"?"low":d.dealRisk==="high"?"high":"med");
     riskEl.style.display="";
   } else if(riskEl){ riskEl.style.display="none"; }
-  document.getElementById("m-price").textContent=fp(d.currentPrice,d.geo);
-  document.getElementById("m-terms").textContent=d.dealTerms||(d.dealPrice?fp(d.dealPrice,d.geo):" - ");
+  document.getElementById("m-price").textContent=fp(d.currentPrice,d);
+  document.getElementById("m-terms").textContent=d.dealTerms||(d.dealPrice?fp(d.dealPrice,d):" - ");
   const sp=+d.spread||0;
   document.getElementById("m-spread").textContent=(sp>=0?"+":"")+sp.toFixed(2)+"%";
   document.getElementById("m-spread").title = d.spreadCalc || "";
@@ -11333,7 +11333,19 @@ function dtc(s){
   return Math.ceil((d-new Date())/86400000);
 }
 function fd(s){if(!s)return" - ";const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
-function fp(p,geo){if(!p)return" - ";const n=+p;if(isNaN(n)||n===0)return" - ";return(geo==="EU"?"EUR":"$")+n.toFixed(2);}
+const CUR_SYM={USD:"$",CAD:"C$",AUD:"A$",EUR:"€",GBP:"£",CHF:"CHF ",SEK:"SEK ",NOK:"NOK ",DKK:"DKK ",JPY:"¥",HKD:"HK$",BRL:"R$",NZD:"NZ$",SGD:"S$",ILS:"₪",INR:"₹",ZAR:"R"};
+const SFX_CUR={L:"GBp",TO:"CAD",V:"CAD",CN:"CAD",NE:"CAD",AX:"AUD",DE:"EUR",F:"EUR",PA:"EUR",AS:"EUR",BR:"EUR",MI:"EUR",MC:"EUR",LS:"EUR",HE:"EUR",IR:"EUR",VI:"EUR",ST:"SEK",OL:"NOK",CO:"DKK",SW:"CHF",T:"JPY",HK:"HKD",SA:"BRL",NZ:"NZD",SI:"SGD",TA:"ILS",JO:"ZAc"};
+// Listing currency of a row's prices: explicit priceCurrency, else inferred from the quote symbol's exchange suffix, else USD.
+function priceCur(d){
+  if(!d||typeof d!=="object")return d==="EU"?"EUR":"USD";
+  if(d.priceCurrency)return d.priceCurrency;
+  const m=(d.quoteSymbol||quoteSym(d.targetTicker)||"").match(/\.([A-Z]+)$/);
+  return (m&&SFX_CUR[m[1]])||"USD";
+}
+function fp(p,d){if(!p)return" - ";const n=+p;if(isNaN(n)||n===0)return" - ";const c=priceCur(d);
+  if(c==="GBp")return n.toFixed(n>=100?1:2)+"p";
+  if(c==="ZAc")return n.toFixed(0)+"c";
+  return (CUR_SYM[c]||(c+" "))+n.toFixed(2);}
 function rc(r){return r==="low"?"var(--green)":r==="high"?"var(--red)":"var(--amber)";}
 function esc(s){const d=document.createElement("div");d.textContent=String(s||"");return d.innerHTML;}
 
