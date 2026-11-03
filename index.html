@@ -2527,7 +2527,7 @@ const DEALS = [
     "dealTerms": "Recommended cash acquisition announced 1 September 2026 under which DNO ASA acquires the entire issued and to be issued ordinary share capital of Capricorn Energy plc. Capricorn shareholders receive $4.224 per share in cash from the DNO acquisition vehicle plus an expected special dividend of approximately $0.99 per share to be paid by Capricorn, for aggregate value of $5.214 per share, equivalent to approximately 384 pence and to an aggregate equity value of approximately $396 million (~£292 million). The terms represent a premium of approximately 45% to the 266 pence closing price on 10 March 2026, the last business day before the start of the offer period. The transaction gives DNO its first entry into the Egyptian upstream. The Capricorn board recommends the DNO terms in preference to a competing proposal previously received from Genel Energy plc. Completion is subject to Capricorn shareholder approval, Egyptian and UK regulatory consents and customary conditions.",
     "announced": "2026-09-01",
     "expectedClose": "2027-Q1",
-    "status": "pending",
+    "status": "terminated",
     "category": "active_deal",
     "closingProbability": 75,
     "dealSize": 292,
@@ -2535,13 +2535,14 @@ const DEALS = [
     "dealRisk": "medium",
     "otherBidders": "Genel Energy plc had a competing proposal for Capricorn which the Capricorn board has now declined in favour of the DNO terms. A revised Genel proposal is the main identifiable source of upside and of timetable risk.",
     "description": "DNO ASA has agreed a recommended cash acquisition of Capricorn Energy plc at $5.214 per share in aggregate ($4.224 cash plus an expected ~$0.99 special dividend), equivalent to ~384 pence and ~$396mn / ~£292mn of equity value, a ~45% premium to the 266p unaffected close of 10 March 2026. The deal marks DNO's entry into Egyptian upstream and displaces a competing proposal from Genel Energy.",
-    "comment": "(2026-09-01) New row. DNO ASA announced a recommended cash acquisition of Capricorn Energy at aggregate value of $5.214 per share - $4.224 in cash from the bidder plus an expected special dividend of ~$0.99 per share paid by Capricorn - equal to ~384p and ~$396mn / ~£292mn of equity value, a ~45% premium to the 266p unaffected close of 10 March. Two features make this row unlike a plain UK scheme. First, roughly 19% of the headline consideration is a Capricorn-funded special dividend rather than bidder cash, so the value actually delivered depends on Capricorn's own balance sheet at completion and on the timing of the dividend relative to the effective date - a shareholder modelling the return should treat the $4.224 as the firm component and the $0.99 as conditional. Second, this is a contested situation: the board has recommended DNO in preference to a competing proposal from Genel Energy, which leaves room for Genel to return. Closing probability set at 75% rather than the 90% typical of a recommended UK scheme, reflecting both the contested backdrop and Egyptian regulatory consent. Triple-source verified: DNO ASA issuer announcement published via GlobeNewswire, Bloomberg, and independent energy trade coverage.",
+    "comment": "[2026-11-02 spread review] DNO offer superseded: on 25 Sep 2026 Capricorn's board withdrew its recommendation in favour of Genel Energy's increased offer (US$5.74); on 28 Sep DNO said it would not raise its US$5.214 offer and the DNO court/general meetings were adjourned indefinitely. See the Genel row.\n(2026-09-01) New row. DNO ASA announced a recommended cash acquisition of Capricorn Energy at aggregate value of $5.214 per share - $4.224 in cash from the bidder plus an expected special dividend of ~$0.99 per share paid by Capricorn - equal to ~384p and ~$396mn / ~£292mn of equity value, a ~45% premium to the 266p unaffected close of 10 March. Two features make this row unlike a plain UK scheme. First, roughly 19% of the headline consideration is a Capricorn-funded special dividend rather than bidder cash, so the value actually delivered depends on Capricorn's own balance sheet at completion and on the timing of the dividend relative to the effective date - a shareholder modelling the return should treat the $4.224 as the firm component and the $0.99 as conditional. Second, this is a contested situation: the board has recommended DNO in preference to a competing proposal from Genel Energy, which leaves room for Genel to return. Closing probability set at 75% rather than the 90% typical of a recommended UK scheme, reflecting both the contested backdrop and Egyptian regulatory consent. Triple-source verified: DNO ASA issuer announcement published via GlobeNewswire, Bloomberg, and independent energy trade coverage.",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/09/01/3353805/0/en/recommended-cash-acquisition-of-capricorn-energy-plc.html",
     "currentPrice": 427.0,
-    "spread": -10.0703,
-    "annualizedReturn": -27.6364,
+    "spread": null,
+    "annualizedReturn": null,
     "daysToClose": 133,
-    "spreadCalc": "Spread = (dealPrice - currentPrice) / currentPrice × 100. Live price pulled from Yahoo Finance."
+    "spreadCalc": "Spread = (dealPrice - currentPrice) / currentPrice × 100. Live price pulled from Yahoo Finance.",
+    "spreadNote": "Not calculated: DNO offer superseded by Genel Energy (see Genel row)."
   },
   {
     "target": "Kelvion Holding GmbH",
@@ -4117,23 +4118,35 @@ const DEALS = [
     "geo": "USA",
     "industry": "Satellite Communications / Aerospace & Defense",
     "announced": "2026-06-29",
-    "expectedClose": "2027-mid",
+    "expectedClose": "2027-07-31",
     "status": "pending",
     "closingProbability": 75,
-    "currentPrice": 48.44,
-    "dealPrice": 54.0,
-    "spread": 11.4781,
+    "currentPrice": 43.74,
+    "dealPrice": 47.828,
+    "spread": 9.35,
     "dealTerms": "$54.00 per share for all outstanding Iridium common stock in a cash-and-stock transaction, implying an enterprise value of approximately $8.0 billion. Iridium operates a 66-satellite L-band constellation serving roughly 2.55 million subscribers and reported about $871 million of 2025 revenue. The combination is positioned to create a vertically integrated space company spanning launch, satellite manufacturing and a global communications network. Closing is expected around mid-2027, subject to Iridium shareholder approval, regulatory clearances and customary closing conditions.",
     "dealSize": 8000,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Rocket Lab Corporation (Nasdaq: RKLB) to acquire Iridium Communications (Nasdaq: IRDM) for $54.00 per share in cash and stock, an enterprise value of ~$8.0 billion. Adds Iridium's 66-satellite L-band network (~2.55M subscribers, ~$871M 2025 revenue) to Rocket Lab's launch and manufacturing platform. Expected to close mid-2027 subject to shareholder and regulatory approvals.",
-    "comment": "(2026-09-24) Iridium special meeting approved the Rocket Lab merger — 99.6% of votes cast in favor, ~81.0% of outstanding shares. Deal remains on track for mid-2027 close subject to regulatory clearance. (2026-09-22) Rocket Lab ATM equity raise of ~$1.94B completed, largely satisfying the financing condition. Deal funding path materially derisked ahead of expected mid-2027 close. (2026-06-30) Added: definitive agreement announced June 29 — Rocket Lab to acquire Iridium at $54.00 per share in cash and stock, ~$8.0B enterprise value. Adds a 66-satellite L-band constellation (~2.55M subscribers). Expected close mid-2027 subject to shareholder + regulatory approvals. Verified via Iridium 8-K/Form 425 (SEC) and PR Newswire issuer release, Seeking Alpha, and StockTitan.",
-    "annualizedReturn": 15.6325,
-    "spreadCalc": "$54.00 per share in cash and stock. Live spread not computed this run.",
+    "comment": "[2026-11-02 spread review] Review: Terms clarified: $27 cash plus collared RKLB stock (0.24-0.40 ratio band, $67.50-$112.50 collar), not a flat $54. Merger agreement dated June 28, 2026. End Date June 28, 2027, with automatic extensions to Sept 28, 2027 and Dec 28, 2027 for regulatory approvals. Three disclosure lawsuits filed in NY state court.\n(2026-09-24) Iridium special meeting approved the Rocket Lab merger — 99.6% of votes cast in favor, ~81.0% of outstanding shares. Deal remains on track for mid-2027 close subject to regulatory clearance. (2026-09-22) Rocket Lab ATM equity raise of ~$1.94B completed, largely satisfying the financing condition. Deal funding path materially derisked ahead of expected mid-2027 close. (2026-06-30) Added: definitive agreement announced June 29 — Rocket Lab to acquire Iridium at $54.00 per share in cash and stock, ~$8.0B enterprise value. Adds a 66-satellite L-band constellation (~2.55M subscribers). Expected close mid-2027 subject to shareholder + regulatory approvals. Verified via Iridium 8-K/Form 425 (SEC) and PR Newswire issuer release, Seeking Alpha, and StockTitan.",
+    "annualizedReturn": 12.6,
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 47.828 USD = 27 cash + collared RKLB stock leg (fixed 27 between ratios 0.24-0.4; RKLB 52.07). Target price 43.74 USD (IRDM). Gross spread = (value - price)/price = 9.35%. Annualized = spread x 365 / 271 days to 2027-07-31 = 12.6%. Holders get $27.00 cash plus RKLB stock under a collar. The stock leg is worth a fixed $27.00 (ratio = 27/RKLB VWAP, rounded to 4 dp) only while the RKLB VWAP is between $67.50 and $112.50. At or below $67.50 the ratio fixes at 0.4000, so value = 27 + 0.40 x RKLB. At or above $112.50 it fixes at 0.2400, so value = 27 + 0.24 x RKLB. fixedValue 54 holds only inside the collar; downstream should check the RKLB price against the collar bounds. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001418819/000110465926078482/tm2619278d1_ex99-1.htm",
     "category": "active_deal",
-    "daysToClose": 268
+    "daysToClose": 271,
+    "quoteSymbol": "IRDM",
+    "priceCurrency": "USD",
+    "liveTerms": {
+      "cash": 27,
+      "acq": "RKLB",
+      "collar": {
+        "lo": 0.24,
+        "hi": 0.4,
+        "value": 27
+      }
+    },
+    "spreadNote": "8-K of 2026-09-24: 'The Mergers are expected to close in mid-2027, subject to ... required regulatory approvals.'"
   },
   {
     "target": "AMS (Alexander Mann Solutions)",
@@ -4143,7 +4156,7 @@ const DEALS = [
     "industry": "Talent & Organizational Consulting (Recruitment Process Outsourcing)",
     "announced": "2026-06-29",
     "expectedClose": "2026-10",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "currentPrice": null,
     "dealPrice": null,
@@ -4153,11 +4166,12 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Korn Ferry (NYSE: KFY) to acquire OMERS Private Equity-backed AMS for ~£850 million (~$1.1 billion) in cash and stock (~£659M cash + ~£191M KFY stock). AMS runs ~$650M fee revenue / ~$100M adjusted EBITDA. Creates a global talent and organizational consulting leader; close targeted October 2026.",
-    "comment": "(2026-06-30) Added: definitive agreement announced June 29 — Korn Ferry to acquire AMS from OMERS Private Equity for ~£850M (~$1.1B) in cash and stock (~£659M cash + ~£191M KFY stock). Closing targeted October 2026. Verified via Korn Ferry 8-K (SEC) and issuer press release, Law360/Yahoo Finance, and TipRanks/StockTitan.",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-09-01: Korn Ferry 8-K Item 2.01 reports completion of the acquisition of Auxey Holdco Limited (AMS). Review: Deal completed 2026-09-01, earlier than the October 2026 target.\n(2026-06-30) Added: definitive agreement announced June 29 — Korn Ferry to acquire AMS from OMERS Private Equity for ~£850M (~$1.1B) in cash and stock (~£659M cash + ~£191M KFY stock). Closing targeted October 2026. Verified via Korn Ferry 8-K (SEC) and issuer press release, Law360/Yahoo Finance, and TipRanks/StockTitan.",
     "annualizedReturn": null,
     "spreadCalc": "Private target; no public-market spread.",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0000056679/000119312526286757/d102657dex991.htm",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-09-01: Korn Ferry 8-K Item 2.01 reports completion of the acquisition of Auxey Holdco Limited (AMS)."
   },
   {
     "target": "Kayne Anderson Real Estate",
@@ -4177,11 +4191,12 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Bridgepoint Group plc (LSE: BPT) to acquire Kayne Anderson Real Estate for an upfront enterprise value of ~$1.39 billion (~$759M cash + ~189M new Bridgepoint shares). Adds ~$22B of US real estate AUM, expanding Bridgepoint's platform to ~$117B AUM. Closing expected end-2026 subject to shareholder, regulatory and fund-consent approvals.",
-    "comment": "(2026-06-30) Added: agreement announced June 29 — Bridgepoint to acquire Kayne Anderson Real Estate at ~$1.39B upfront enterprise value (~$759M cash + ~189M new Bridgepoint shares); ~$22B real estate AUM added. Close expected end-2026 subject to shareholder, regulatory and fund consents. Verified via Bridgepoint issuer release, Investing.com, and RTTNews/Connect CRE.",
+    "comment": "[2026-11-02 spread review] Review: Input source is investing.com (news), not a primary source. I could not retrieve the Bridgepoint RNS. No completion announcement found.\n(2026-06-30) Added: agreement announced June 29 — Bridgepoint to acquire Kayne Anderson Real Estate at ~$1.39B upfront enterprise value (~$759M cash + ~189M new Bridgepoint shares); ~$22B real estate AUM added. Close expected end-2026 subject to shareholder, regulatory and fund consents. Verified via Bridgepoint issuer release, Investing.com, and RTTNews/Connect CRE.",
     "annualizedReturn": null,
     "spreadCalc": "Private target; no public-market spread.",
-    "sourceUrl": "https://www.investing.com/news/stock-market-news/bridgepoint-to-acquire-kayne-anderson-real-estate-for-139-billion-93CH-4764302",
-    "category": "active_deal"
+    "sourceUrl": "https://www.bridgepointgroup.com/investor-relations",
+    "category": "active_deal",
+    "spreadNote": "Not calculable: Private target (Kayne Anderson Real Estate platform); aggregate consideration only"
   },
   {
     "target": "Theravance Biopharma, Inc.",
@@ -4215,23 +4230,26 @@ const DEALS = [
     "geo": "USA",
     "industry": "Semiconductors / Edge AI Compute & Connectivity",
     "announced": "2026-06-25",
-    "expectedClose": "2027-H1",
+    "expectedClose": "2027-07-31",
     "status": "pending",
     "closingProbability": 82,
-    "currentPrice": 119.73,
-    "dealPrice": 123.0,
-    "spread": 2.7311,
+    "currentPrice": 117.41,
+    "dealPrice": 123,
+    "spread": 4.76,
     "dealTerms": "Amended merger agreement announced 1 October 2026 (originally announced 25 June 2026) under which onsemi acquires Synaptics for $123.00 per share in cash, aggregate value approximately $5.7 billion. The amendment follows an unsolicited competing proposal received from a third party; the Synaptics Board concluded that the onsemi transaction as amended continues to be in the best interests of Synaptics shareholders. Financing: cash on hand plus fully committed debt financing from Morgan Stanley. Prior terms were an all-stock exchange at a fixed 1.350 ratio implying ~$7 billion EV. Expected to close by mid-2027, subject to Synaptics stockholder approval, regulatory clearances and customary conditions.",
     "dealSize": 5700,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "onsemi (Nasdaq: ON) to acquire Synaptics (Nasdaq: SYNA) at $123.00 per share in cash for ~$5.7bn aggregate value under an amended merger agreement announced 1 October 2026, following an unsolicited competing third-party proposal that the Synaptics Board declined. Original 25 June 2026 agreement was an all-stock deal at a fixed 1.350 exchange ratio implying ~$7bn EV. Financing: cash on hand plus Morgan Stanley-committed debt. Targeted mid-2027 close.",
-    "comment": "(2026-10-01) Amendment: onsemi raised to $123 cash per share (~$5.7B aggregate), moving from the original all-stock exchange, after an unsolicited third-party proposal. Morgan Stanley committed debt plus cash on hand. Synaptics Board reaffirmed support for onsemi's amended offer. Closing timetable held at mid-2027. Converts the deal into a hard cash spread and compresses risk materially. Triple-source verified: SEC 8-K + DEFA14A, TradingView, Wells Fargo note. | (2026-06-27) Added: onsemi and Synaptics announced June 25 a definitive all-stock merger at a fixed 1.350 exchange ratio (~19% premium, ~$7B enterprise value), targeting a mid-2027 close subject to Synaptics stockholder and regulatory approvals. Verified against the joint issuer press release (SEC Form 8-K/425), Reuters and Yahoo Finance coverage, and StockTitan/GuruFocus aggregation.",
+    "comment": "[2026-11-02 spread review] Review: Terms confirmed at $123 cash. Note the amendment moved from all-stock to cash at a lower aggregate value after an unsolicited third-party proposal. End Date June 25, 2027, with up to three automatic 3-month extensions to March 25, 2028 (antitrust or FDI only). Antitrust filings are required in China, Hungary, Japan, South Korea, Taiwan and the US. The Synaptics termination fee is $235M; the onsemi\n(2026-10-01) Amendment: onsemi raised to $123 cash per share (~$5.7B aggregate), moving from the original all-stock exchange, after an unsolicited third-party proposal. Morgan Stanley committed debt plus cash on hand. Synaptics Board reaffirmed support for onsemi's amended offer. Closing timetable held at mid-2027. Converts the deal into a hard cash spread and compresses risk materially. Triple-source verified: SEC 8-K + DEFA14A, TradingView, Wells Fargo note. | (2026-06-27) Added: onsemi and Synaptics announced June 25 a definitive all-stock merger at a fixed 1.350 exchange ratio (~19% premium, ~$7B enterprise value), targeting a mid-2027 close subject to Synaptics stockholder and regulatory approvals. Verified against the joint issuer press release (SEC Form 8-K/425), Reuters and Yahoo Finance coverage, and StockTitan/GuruFocus aggregation.",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/817720/000114036126026434/ef20076748_ex99-1.htm",
     "category": "active_deal",
-    "annualizedReturn": 5.192,
-    "daysToClose": 192,
-    "spreadCalc": "Spread = (dealPrice - currentPrice) / currentPrice × 100. Live price pulled from Yahoo Finance."
+    "annualizedReturn": 6.4,
+    "daysToClose": 271,
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 123 USD = 123 per share. Target price 117.41 USD (SYNA). Gross spread = (value - price)/price = 4.76%. Annualized = spread x 365 / 271 days to 2027-07-31 = 6.4%. All cash, $123.00 per share, under the A&R Merger Agreement of Oct 1, 2026. This replaced the original 1.350 ON-share all-stock exchange, which was worth about $7B in aggregate versus about $5.7B now. No financing condition. Special meeting Nov 17, 2026. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "quoteSymbol": "SYNA",
+    "priceCurrency": "USD",
+    "spreadNote": "Oct 1, 2026 joint press release: 'still expected to close by mid-2027.'"
   },
   {
     "target": "Topaz Labs, L.L.C.",
@@ -4241,7 +4259,7 @@ const DEALS = [
     "industry": "AI Software / Video & Image Enhancement (Creative Tools)",
     "announced": "2026-06-25",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "currentPrice": null,
     "dealPrice": null,
@@ -4251,9 +4269,10 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Adobe (Nasdaq: ADBE) to acquire Topaz Labs, a privately held AI video and image enhancement company, to bolster its Firefly and Creative Cloud creative AI portfolio. Financial terms undisclosed. Topaz's on-device Neurostream models will be integrated across Adobe's creative tools while remaining available as standalone offerings. Targeted H2 2026 close subject to regulatory approvals.",
-    "comment": "(2026-06-26) Added: Adobe announced June 25 a definitive agreement to acquire AI image and video enhancement company Topaz Labs; financial terms undisclosed, close targeted H2 2026 subject to regulatory clearances and customary conditions. Verified against Adobe's issuer newsroom release, BusinessWire/Morningstar coverage and StockTitan aggregation.",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-09-23: Adobe blog announced completion of the Topaz Labs acquisition (corroborated by multiple trade outlets). Review: Adobe's 10-Q discloses a price of about $340M (the input said terms were undisclosed). Completed 2026-09-23.\n(2026-06-26) Added: Adobe announced June 25 a definitive agreement to acquire AI image and video enhancement company Topaz Labs; financial terms undisclosed, close targeted H2 2026 subject to regulatory clearances and customary conditions. Verified against Adobe's issuer newsroom release, BusinessWire/Morningstar coverage and StockTitan aggregation.",
     "sourceUrl": "https://news.adobe.com/news/2026/06/adobe-to-acquire-topaz-labs",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-09-23: Adobe blog announced completion of the Topaz Labs acquisition (corroborated by multiple trade outlets)."
   },
   {
     "target": "Passage Bio, Inc.",
@@ -4265,7 +4284,7 @@ const DEALS = [
     "expectedClose": "2026-H2",
     "status": "pending",
     "closingProbability": 75,
-    "currentPrice": null,
+    "currentPrice": 3.32,
     "dealPrice": null,
     "spread": null,
     "dealTerms": "All-stock reverse merger. Pre-merger Passage Bio shareholders expected to own approximately 7% and pre-merger Remix stockholders approximately 93% of the combined company (subject to adjustment based on Passage Bio net cash). The combined company will operate as Remix Therapeutics and trade on Nasdaq under 'RMTX', advancing Remix's lead program REM-422, an oral mRNA degrader targeting MYB. A concurrent oversubscribed private placement of approximately $100 million, led by Decheng Capital, is expected to close immediately prior to the merger and fund operations into 2028. Passage Bio shareholders of record at closing will receive a non-transferable contingent value right tied to Passage's out-licensed pediatric gene therapy assets. Unanimously approved by both boards; expected to close in Q4 2026, subject to stockholder approvals, an effective Form S-4 and customary conditions.",
@@ -4273,9 +4292,13 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Passage Bio (Nasdaq: PASG) and clinical-stage Remix Therapeutics to combine in an all-stock reverse merger; the combined company will operate as Remix Therapeutics and trade as 'RMTX', advancing Remix's RNA-processing pipeline led by oral mRNA degrader REM-422. Passage holders to own ~7% plus a CVR on legacy gene-therapy assets; Remix holders ~93%, supported by a concurrent ~$100M private placement. Targeted Q4 2026 close.",
-    "comment": "(2026-06-26) Added: Passage Bio and Remix announced a definitive all-stock reverse merger June 24; combined company to trade as 'RMTX' with Passage holders owning ~7% plus a CVR, alongside a ~$100M concurrent private placement. Close targeted Q4 2026 subject to stockholder approvals and an effective S-4. Verified against the GlobeNewswire issuer release and SEC Form 8-K/425, Endpoints News and BioPharma Dive coverage.",
+    "comment": "[2026-11-02 spread review] Review: Input source is GlobeNewswire; replaced with the primary 424B3 proxy/prospectus (S-4 effective Oct 9, 2026).\n(2026-06-26) Added: Passage Bio and Remix announced a definitive all-stock reverse merger June 24; combined company to trade as 'RMTX' with Passage holders owning ~7% plus a CVR, alongside a ~$100M concurrent private placement. Close targeted Q4 2026 subject to stockholder approvals and an effective S-4. Verified against the GlobeNewswire issuer release and SEC Form 8-K/425, Endpoints News and BioPharma Dive coverage.",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/06/24/3317152/0/en/passage-bio-and-remix-therapeutics-announce-merger-agreement.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "quoteSymbol": "PASG",
+    "priceCurrency": "USD",
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Reverse merger: listed target Passage Bio survives and holders retain shares (about 7% ownership) plus CVR; no per-share consideration"
   },
   {
     "target": "Ramsdens Holdings plc",
@@ -4284,22 +4307,26 @@ const DEALS = [
     "geo": "United Kingdom",
     "industry": "Specialty Finance / Pawnbroking & Retail",
     "announced": "2026-06-23",
-    "expectedClose": "2026-H2",
+    "expectedClose": "2026-12-31",
     "status": "pending",
     "closingProbability": 85,
-    "currentPrice": 633.0,
-    "dealPrice": 600,
-    "spread": -5.2133,
+    "currentPrice": 630,
+    "dealPrice": 675,
+    "spread": 7.14,
     "dealTerms": "Recommended all-cash acquisition by scheme of arrangement under Part 26 of the U.K. Companies Act. FirstCash, through U.K. subsidiary Chess Bidco Limited, to pay 600 pence per Ramsdens share, plus an interim cash dividend of up to 9 pence per share payable October 9, 2026. Total equity value approximately GBP 206 million (approximately $273 million USD at June 22, 2026 FX). Adds 174 U.K. pawn locations, complementing FirstCash's existing H&T platform for a combined U.K. network of nearly 470 stores. Unanimously approved by both boards; subject to Ramsdens shareholder approval and U.K. regulatory approvals; expected to close by the end of 2026.",
     "dealSize": 273,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "FirstCash Holdings (Nasdaq: FCFS) to acquire U.K. pawnbroking and retail operator Ramsdens Holdings plc via a recommended all-cash scheme of arrangement at 600 pence per share (plus up to 9p interim dividend), valuing Ramsdens at ~GBP 206M (~$273M). Adds 174 stores to FirstCash's U.K. footprint alongside H&T. Targeted close by end of 2026, subject to Ramsdens shareholder and U.K. regulatory approvals.",
-    "comment": "(2026-06-26) Added: FirstCash announced June 23 a recommended all-cash acquisition of U.K. pawnbroker Ramsdens at 600p per share plus an up-to-9p interim dividend (~GBP 206M / ~$273M) via scheme of arrangement; close targeted by year-end 2026 subject to Ramsdens shareholder and U.K. regulatory approval. Verified against the FirstCash SEC Form 8-K issuer release, the Reuters/RNS regulatory announcement and GuruFocus/QuiverQuant aggregation.",
+    "comment": "[2026-11-02 spread review] Review: Price was raised from 600p to 675p cash on Jul 16, 2026 (684p including the 9p dividends); the input still shows 600p. Equity value is about £229M.\n(2026-06-26) Added: FirstCash announced June 23 a recommended all-cash acquisition of U.K. pawnbroker Ramsdens at 600p per share plus an up-to-9p interim dividend (~GBP 206M / ~$273M) via scheme of arrangement; close targeted by year-end 2026 subject to Ramsdens shareholder and U.K. regulatory approval. Verified against the FirstCash SEC Form 8-K issuer release, the Reuters/RNS regulatory announcement and GuruFocus/QuiverQuant aggregation.",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/840489/000110465926076623/tm2618455d1_ex99-1.htm",
     "category": "active_deal",
-    "annualizedReturn": -190.2844,
-    "daysToClose": 10
+    "annualizedReturn": 44.2,
+    "daysToClose": 59,
+    "quoteSymbol": "RFX.L",
+    "priceCurrency": "GBp",
+    "spreadCalc": "As of 2026-11-02 17:40 UTC. Deal value 675 GBp = 675 per share. Target price 630 GBp (RFX.L). Gross spread = (value - price)/price = 7.14%. Annualized = spread x 365 / 59 days to 2026-12-31 = 44.2%. Revised offer of Jul 16, 2026: 675p cash from Bidco, plus permitted dividends of 9p (6p interim + 3p special) paid Oct 9, 2026, for 684p in total. The dividends are already paid and the shares trade ex-dividend, so the remaining consideration is 675p. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "spreadNote": "FirstCash Oct 22, 2026 release: 'continues to target for the transaction to close by the end of 2026, pending receipt of the required anti-trust approval'"
   },
   {
     "target": "Fathom Holdings Inc.",
@@ -4309,7 +4336,7 @@ const DEALS = [
     "industry": "Real Estate Brokerage / Homeowner Financial Services (PropTech)",
     "announced": "2026-06-17",
     "expectedClose": "2026-Q4",
-    "status": "pending",
+    "status": "terminated",
     "closingProbability": 70,
     "currentPrice": null,
     "dealPrice": null,
@@ -4319,9 +4346,12 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Bed Bath & Beyond, Inc. (NYSE: BBBY) to acquire Fathom Holdings (Nasdaq: FTHM), a real-estate brokerage and homeowner financial-services platform spanning brokerage, mortgage, title and insurance, in an all-stock merger at a 0.2236 exchange ratio (~$53.38M equity value). The deal folds Fathom's services into Bed Bath & Beyond's homeownership strategy. Targeted H2 2026 close, subject to Fathom stockholder approval, an effective Form S-4, NYSE listing and regulatory conditions.",
-    "comment": "(2026-06-22) Added: all-stock merger announced June 17 per Fathom issuer release and SEC Form 8-K / Form 425; Fathom holders to receive 0.2236 BBBY shares each (~$53.38M equity value). Close targeted H2 2026 subject to Fathom stockholder approval, an effective S-4, NYSE listing, debt payoffs and customary conditions. Verified against the issuer 8-K/425 filings, HousingWire and Retail Dive coverage, and TipRanks/StockTitan aggregation.",
+    "comment": "[2026-11-02 spread review] Status terminated: 2026-10-05: Fathom 8-K Item 1.02 reports that a Termination Agreement with NXH (formerly Bed Bath & Beyond) ended the merger agreement, with no termination fee payable by either side. Review: The acquirer has been renamed Neighborhood Intelligence, Inc. (NXH), formerly Bed Bath & Beyond, Inc. The deal is terminated, not pending. FTHM also received a Nasdaq bid-price deficiency notice on Aug 21, 2026.\n(2026-06-22) Added: all-stock merger announced June 17 per Fathom issuer release and SEC Form 8-K / Form 425; Fathom holders to receive 0.2236 BBBY shares each (~$53.38M equity value). Close targeted H2 2026 subject to Fathom stockholder approval, an effective S-4, NYSE listing, debt payoffs and customary conditions. Verified against the issuer 8-K/425 filings, HousingWire and Retail Dive coverage, and TipRanks/StockTitan aggregation.",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001753162/000162828026043724/fthm-bbbpressreleasexgatew.htm",
-    "category": "active_deal"
+    "category": "active_deal",
+    "quoteSymbol": "FTHM",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal terminated. 2026-10-05: Fathom 8-K Item 1.02 reports that a Termination Agreement with NXH (formerly Bed Bath & Beyond) ended the merger agreement, with no termination fee payable by either side."
   },
   {
     "target": "Nuvalent, Inc.",
@@ -4397,23 +4427,31 @@ const DEALS = [
     "geo": "USA",
     "industry": "Chemicals / Industrial",
     "announced": "2026-06-16",
-    "expectedClose": "2027-H1",
+    "expectedClose": "2027-03-31",
     "status": "pending",
     "closingProbability": 88,
-    "currentPrice": 8.84,
-    "dealPrice": 12.92,
-    "spread": 46.1538,
+    "currentPrice": 9.95,
+    "dealPrice": 9.9389,
+    "spread": -0.11,
     "dealTerms": "All-stock merger of equals. Huntsman shareholders receive 0.5476 Olin shares per HUN share. Exchange ratio struck at-the-market using 30-day VWAPs measured as of close June 12, 2026. At close, Olin shareholders own ~54.5%, Huntsman shareholders own ~45.5% of the combined company. Pro-forma 2025 revenue ~$12.5B; >$400M run-rate cost synergies + integration benefits targeted. Olin CEO Ken Lane to be CEO; Peter Huntsman non-executive Chairman. Combined company headquartered in Clayton, MO, with operational presence in Salt Lake City and The Woodlands. Definitive Agreement and Plan of Merger dated June 15, 2026. Subject to dual shareholder approvals, HSR + international antitrust, customary closing conditions.",
     "dealSize": 12500,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Olin (OLN) and Huntsman (HUN) announced an all-stock merger of equals creating OlinHuntsman, a >$12B revenue North American chemicals leader. 0.5476 OLN per HUN share. At-the-market exchange ratio set on 30-day VWAPs through June 12. Combined company targets >$400M run-rate cost synergies. HUN trading slightly above implied value post-announcement, reflecting market skepticism on terms / optionality for a competing bid.",
-    "comment": "(2026-10-09) Status label corrected to pending: shareholder approval obtained but the transaction has not closed (no closing 8-K or Form 25 on EDGAR as of 9 October).\n(2026-09-14) Regulatory update. Olin and Huntsman announced on 11 September 2026 that the waiting period under the US Hart-Scott-Rodino Antitrust Improvements Act in connection with the pending merger of equals has expired, satisfying one of the principal closing conditions. With both shareholder votes certified as carried on 25 August and the US antitrust gate now cleared, the remaining path is non-US regulatory clearances and procedural steps; the parties continue to guide to completion in the first half of 2027. Closing probability raised from 82 to 88 - domestic antitrust was the single largest identifiable risk in a combination of two overlapping North American chemicals producers, and its expiry without a second request removes the scenario that would have mattered most. The long-dated timetable, not deal risk, is now what the spread is mostly compensating. Triple-source verified: joint issuer release carried on PR Newswire and the Huntsman investor newsroom, independent chemicals trade coverage, and aggregator confirmation.\n(2026-08-27) Status moves from pending to approved. With both shareholder votes now certified as carried on August 25, the equity-holder condition is satisfied and the remaining path to completion is regulatory and procedural rather than a question of investor support. The closing probability is left unchanged at 82 deliberately: a shareholder vote that clears with roughly 97% and 99% of votes cast was never the binding constraint on this transaction, so clearing it removes very little of the actual risk. What still governs the 2027 first-half target is antitrust and foreign-investment review across multiple jurisdictions for a vertically integrated chlor-alkali and polyurethanes combination, plus the mechanics of the direct merger structure the parties elected. The practical implication for a spread position is that the remaining discount should now be read almost entirely as regulatory-timing compensation, not deal-certainty compensation, and it will decay slowly rather than step in. Confirmed against the issuer's own media release reporting the vote results, and independent chemicals and industrial trade coverage from separate outlets reporting the same tallies.\n(2026-08-26) Both shareholder bases approved on August 25. Preliminary results put Olin at roughly 97% of votes cast in favour, representing about 81% of shares outstanding, and Huntsman at roughly 99% of votes cast, representing about 75% of shares outstanding. That margin removes the largest remaining non-regulatory condition and also settles the structural question, since the approvals were for consummation through a direct merger of the two companies. Probability moves to 82 from 75. What is left is antitrust, and that is now the binding constraint on the first-half-2027 timetable rather than anything shareholder-facing; the mid-August disclosure suits were the routine pre-vote pattern and did not delay the meetings. For a chlor-alkali and polyurethanes combination the review turns on overlap analysis within specific chlorine, caustic and epoxy chains rather than on aggregate size, so the useful watch items from here are second-request timing and any divestiture commentary, not the headline value. Confirmed against the parties' joint release issued August 25, the corresponding issuer newsroom posting, and independent aggregator and chemicals trade coverage of the vote results.\n(2026-08-25) The dual special meetings are held today. Olin's Form S-4 for the share issuance was declared effective and the joint proxy statement/prospectus was mailed on July 13, 2026, so both shareholder bases vote on the combination proposals today, August 25. A clean result on both sides removes the largest remaining non-regulatory condition and would leave antitrust clearance as the binding constraint on the first-half-2027 timetable; the disclosure suits filed in mid-August are the routine pre-vote pattern and are not, on the record so far, a credible source of delay. Watch for the Item 5.07 8-Ks reporting the vote results, which should follow within four business days. Status left at pending until results are filed.\n(2026-08-18) Both parties filed Item 8.01 8-Ks on August 17-18, 2026 disclosing that complaints have been filed challenging the merger disclosures — the routine pre-vote suit pattern that typically resolves through supplemental disclosure rather than delay. The dual special meetings remain set for August 25, 2026 on a July 9 record date, the Form S-4 has been effective since July 13, and the exchange ratio is unchanged at 0.5476 Olin shares per Huntsman share. Nothing here moves the closing timetable; the H1 2027 target still reflects the antitrust and multi-jurisdiction clearance runway, not the vote. Sourced to the Huntsman and Olin 8-Ks filed with the SEC.\n(2026-07-14) Huntsman filed its definitive merger proxy (DEFM14A) on July 13, 2026. Special meetings of both Huntsman stockholders and Olin shareholders are set for August 25, 2026 on a July 9, 2026 record date, and Olin's Form S-4 registration for the share issuance has been amended. Exchange ratio unchanged at 0.5476 Olin shares per Huntsman share. The dual-vote calendar is now fixed, which removes timing ambiguity but leaves the merger-of-equals economics as the central vote risk.\n(2026-06-16) Announced via simultaneous press release + Form 425 + Form 8-K filings from both issuers. Exchange ratio = 0.5476 OLN per HUN. Implied per-HUN value at current OLN price: 0.5476 × $23.59 = $12.92, vs HUN trading $13.22 = -2.25% spread (HUN trading above implied). Both stocks dropped on announcement (HUN -16.8%, OLN -6.8% intraday) — market reaction skeptical on merger-of-equals economics. Termination fees, financing details, and S-4 to be disclosed in subsequent filings. Close expected 1H 2027 subject to dual shareholder votes + HSR + international antitrust.",
-    "annualizedReturn": 87.7404,
-    "spreadCalc": "0.5476 × OLN $23.59 = $12.92 implied; (12.92 − 13.22) / 13.22 = -2.25%",
+    "comment": "[2026-11-02 spread review] Review: The input dealPrice of 12.92 is an implied value, not a fixed price; value floats with OLN. Close guidance has narrowed from H1 2027 to Q1 2027.\n(2026-10-09) Status label corrected to pending: shareholder approval obtained but the transaction has not closed (no closing 8-K or Form 25 on EDGAR as of 9 October).\n(2026-09-14) Regulatory update. Olin and Huntsman announced on 11 September 2026 that the waiting period under the US Hart-Scott-Rodino Antitrust Improvements Act in connection with the pending merger of equals has expired, satisfying one of the principal closing conditions. With both shareholder votes certified as carried on 25 August and the US antitrust gate now cleared, the remaining path is non-US regulatory clearances and procedural steps; the parties continue to guide to completion in the first half of 2027. Closing probability raised from 82 to 88 - domestic antitrust was the single largest identifiable risk in a combination of two overlapping North American chemicals producers, and its expiry without a second request removes the scenario that would have mattered most. The long-dated timetable, not deal risk, is now what the spread is mostly compensating. Triple-source verified: joint issuer release carried on PR Newswire and the Huntsman investor newsroom, independent chemicals trade coverage, and aggregator confirmation.\n(2026-08-27) Status moves from pending to approved. With both shareholder votes now certified as carried on August 25, the equity-holder condition is satisfied and the remaining path to completion is regulatory and procedural rather than a question of investor support. The closing probability is left unchanged at 82 deliberately: a shareholder vote that clears with roughly 97% and 99% of votes cast was never the binding constraint on this transaction, so clearing it removes very little of the actual risk. What still governs the 2027 first-half target is antitrust and foreign-investment review across multiple jurisdictions for a vertically integrated chlor-alkali and polyurethanes combination, plus the mechanics of the direct merger structure the parties elected. The practical implication for a spread position is that the remaining discount should now be read almost entirely as regulatory-timing compensation, not deal-certainty compensation, and it will decay slowly rather than step in. Confirmed against the issuer's own media release reporting the vote results, and independent chemicals and industrial trade coverage from separate outlets reporting the same tallies.\n(2026-08-26) Both shareholder bases approved on August 25. Preliminary results put Olin at roughly 97% of votes cast in favour, representing about 81% of shares outstanding, and Huntsman at roughly 99% of votes cast, representing about 75% of shares outstanding. That margin removes the largest remaining non-regulatory condition and also settles the structural question, since the approvals were for consummation through a direct merger of the two companies. Probability moves to 82 from 75. What is left is antitrust, and that is now the binding constraint on the first-half-2027 timetable rather than anything shareholder-facing; the mid-August disclosure suits were the routine pre-vote pattern and did not delay the meetings. For a chlor-alkali and polyurethanes combination the review turns on overlap analysis within specific chlorine, caustic and epoxy chains rather than on aggregate size, so the useful watch items from here are second-request timing and any divestiture commentary, not the headline value. Confirmed against the parties' joint release issued August 25, the corresponding issuer newsroom posting, and independent aggregator and chemicals trade coverage of the vote results.\n(2026-08-25) The dual special meetings are held today. Olin's Form S-4 for the share issuance was declared effective and the joint proxy statement/prospectus was mailed on July 13, 2026, so both shareholder bases vote on the combination proposals today, August 25. A clean result on both sides removes the largest remaining non-regulatory condition and would leave antitrust clearance as the binding constraint on the first-half-2027 timetable; the disclosure suits filed in mid-August are the routine pre-vote pattern and are not, on the record so far, a credible source of delay. Watch for the Item 5.07 8-Ks reporting the vote results, which should follow within four business days. Status left at pending until results are filed.\n(2026-08-18) Both parties filed Item 8.01 8-Ks on August 17-18, 2026 disclosing that complaints have been filed challenging the merger disclosures — the routine pre-vote suit pattern that typically resolves through supplemental disclosure rather than delay. The dual special meetings remain set for August 25, 2026 on a July 9 record date, the Form S-4 has been effective since July 13, and the exchange ratio is unchanged at 0.5476 Olin shares per Huntsman share. Nothing here moves the closing timetable; the H1 2027 target still reflects the antitrust and multi-jurisdiction clearance runway, not the vote. Sourced to the Huntsman and Olin 8-Ks filed with the SEC.\n(2026-07-14) Huntsman filed its definitive merger proxy (DEFM14A) on July 13, 2026. Special meetings of both Huntsman stockholders and Olin shareholders are set for August 25, 2026 on a July 9, 2026 record date, and Olin's Form S-4 registration for the share issuance has been amended. Exchange ratio unchanged at 0.5476 Olin shares per Huntsman share. The dual-vote calendar is now fixed, which removes timing ambiguity but leaves the merger-of-equals economics as the central vote risk.\n(2026-06-16) Announced via simultaneous press release + Form 425 + Form 8-K filings from both issuers. Exchange ratio = 0.5476 OLN per HUN. Implied per-HUN value at current OLN price: 0.5476 × $23.59 = $12.92, vs HUN trading $13.22 = -2.25% spread (HUN trading above implied). Both stocks dropped on announcement (HUN -16.8%, OLN -6.8% intraday) — market reaction skeptical on merger-of-equals economics. Termination fees, financing details, and S-4 to be disclosed in subsequent filings. Close expected 1H 2027 subject to dual shareholder votes + HSR + international antitrust.",
+    "annualizedReturn": -0.3,
+    "spreadCalc": "As of 2026-11-02 21:02 UTC. Deal value 9.9389 USD = 0 cash + 0.5476 x OLN 18.15. Target price 9.95 USD (HUN). Gross spread = (value - price)/price = -0.11%. Annualized = spread x 365 / 149 days to 2027-03-31 = -0.3%. All stock: fixed 0.5476 Olin shares per HUN share, cash in lieu of fractional shares, no collar. The combined company will trade as NYSE: OHN. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.huntsman.com/news/media-releases/detail/626/olin-and-huntsman-announce-transformative-merger-of-equals",
     "category": "active_deal",
-    "daysToClose": 192
+    "daysToClose": 149,
+    "quoteSymbol": "HUN",
+    "priceCurrency": "USD",
+    "liveTerms": {
+      "cash": 0,
+      "ratio": 0.5476,
+      "acq": "OLN"
+    },
+    "spreadNote": "Huntsman Q3 2026 release (Nov 2, 2026): 'we now expect to close in the first quarter of 2027'"
   },
   {
     "target": "Open Lending Corporation",
@@ -4448,7 +4486,7 @@ const DEALS = [
     "industry": "Drug Discovery & Development Software / Life Sciences",
     "announced": "2026-06-16",
     "expectedClose": "2026-Q4",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "currentPrice": 18.5,
     "dealPrice": 18.5,
@@ -4458,12 +4496,15 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Altaris, LLC to acquire Simulations Plus (Nasdaq: SLP) in an all-cash take-private at $18.50/share, ~$375M equity value. 26% premium to 60-day VWAP. Board unanimous; SLP becomes wholly-owned by Altaris affiliate post-merger. Targeted Q4 2026 close.",
-    "comment": "(2026-08-27) Calendar item, not a status change: the special meeting to adopt the merger agreement convenes virtually at 5:00 p.m. Eastern today, per the definitive proxy and the supplemental proxy materials on file. A vote in favour would satisfy the shareholder condition on the $18.50 cash merger and shift the remaining path to regulatory clearance and customary conditions. Two things make the outcome close to a formality rather than a live question. The buyer's equity and debt are committed with no financing contingency, so there is no funding narrative for an opposing holder to organise around, and the board recommendation has been unanimous throughout with no competing proposal surfacing during the interval since signing in mid-June. The item to watch is not the vote itself but the turnout and the margin, since a thin margin would be the first sign that the roughly 26% premium to the 60-day volume-weighted average price is being contested by holders who marked their basis higher. Result should be reported on a current report shortly after the meeting.\n(2026-06-16) Definitive merger agreement announced; $18.50 cash per share; ~$375M equity value; ~26% premium to 60-day VWAP. Altaris committed equity + debt — no financing contingency. Targeted Q4 2026 close subject to SLP stockholder approval + regulatory. Spread at $18.20 = 1.65%; ~152 days to close → ~3.96% annualized.",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-10-06: 8-K Item 2.01 says the merger with the Altaris affiliate was completed; Nasdaq delisting (Item 3.01); Form 15-12G filed 2026-10-16. Review: Status: CLOSED around 2026-10-06 (8-K Items 2.01/3.01/5.01, Form 15 filed 2026-10-16). Total value per the completion 8-K was ~$376.8M (input says ~$375M).\n(2026-08-27) Calendar item, not a status change: the special meeting to adopt the merger agreement convenes virtually at 5:00 p.m. Eastern today, per the definitive proxy and the supplemental proxy materials on file. A vote in favour would satisfy the shareholder condition on the $18.50 cash merger and shift the remaining path to regulatory clearance and customary conditions. Two things make the outcome close to a formality rather than a live question. The buyer's equity and debt are committed with no financing contingency, so there is no funding narrative for an opposing holder to organise around, and the board recommendation has been unanimous throughout with no competing proposal surfacing during the interval since signing in mid-June. The item to watch is not the vote itself but the turnout and the margin, since a thin margin would be the first sign that the roughly 26% premium to the 60-day volume-weighted average price is being contested by holders who marked their basis higher. Result should be reported on a current report shortly after the meeting.\n(2026-06-16) Definitive merger agreement announced; $18.50 cash per share; ~$375M equity value; ~26% premium to 60-day VWAP. Altaris committed equity + debt — no financing contingency. Targeted Q4 2026 close subject to SLP stockholder approval + regulatory. Spread at $18.20 = 1.65%; ~152 days to close → ~3.96% annualized.",
     "annualizedReturn": 0.0,
     "spreadCalc": "$18.50 cash; (18.50 − 18.20) / 18.20 = 1.65%",
     "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001023459/000102345926000020/pressreleasewithrespecttot.htm",
     "category": "active_deal",
-    "daysToClose": 41
+    "daysToClose": 41,
+    "quoteSymbol": "SLP",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. 2026-10-06: 8-K Item 2.01 says the merger with the Altaris affiliate was completed; Nasdaq delisting (Item 3.01); Form 15-12G filed 2026-10-16."
   },
   {
     "target": "Payoneer Global Inc",
@@ -4472,23 +4513,26 @@ const DEALS = [
     "geo": "USA / Canada",
     "industry": "Payments / Cross-border Financial Infrastructure",
     "announced": "2026-06-15",
-    "expectedClose": "2027-Q2",
+    "expectedClose": "2027-07-31",
     "status": "pending",
     "closingProbability": 78,
-    "currentPrice": 7.15,
+    "currentPrice": 7.16,
     "dealPrice": 7.4,
-    "spread": 3.4965,
+    "spread": 3.35,
     "dealTerms": "$7.40 cash per share. Total equity value ~$2.75B. Definitive merger agreement signed June 12, 2026. ~10% premium to last sale, ~44% premium to June 8, 2026 undisturbed date. Unanimously approved by both boards. Subject to Payoneer shareholder vote, customary regulatory approvals (HSR + international), and other closing conditions. Targeted close mid-2027.",
     "dealSize": 2750,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Nuvei to acquire Payoneer for $7.40 cash per share, $2.75B equity. Strategic combination of cross-border payments platforms: Payoneer's SMB/digital marketplace footprint joins Nuvei's enterprise payments platform. Phil Fayer (Nuvei) continues as Chairman/CEO of combined.",
-    "comment": "(2026-06-15) Definitive merger agreement signed June 12; announced June 15. Boards unanimously approved. Path: Payoneer SH vote + HSR + international regulatory. Targeted mid-2027 close.",
-    "annualizedReturn": 5.7488,
-    "spreadCalc": "$7.40 cash; (7.40 − 7.03) / 7.03 = 5.26%",
+    "comment": "[2026-11-02 spread review] Review: The acquirer entity is Neon Maple Parent Inc. (Nuvei). Shareholder approval has already been obtained (2026-09-14).\n(2026-06-15) Definitive merger agreement signed June 12; announced June 15. Boards unanimously approved. Path: Payoneer SH vote + HSR + international regulatory. Targeted mid-2027 close.",
+    "annualizedReturn": 4.5,
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 7.4 USD = 7.4 per share. Target price 7.16 USD (PAYO). Gross spread = (value - price)/price = 3.35%. Annualized = spread x 365 / 271 days to 2027-07-31 = 4.5%. All-cash $7.40 per share from Neon Maple Parent Inc. (Nuvei, privately held). Stockholders approved the deal 2026-09-14. Two disclosure lawsuits filed in NY state court (Aug 2026), routine. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.nuvei.com/posts/nuvei-to-acquire-payoneer-for-2-75-billion-creating-a-leading-global-platform-for-local-and-cross-border-commerce",
     "category": "active_deal",
-    "daysToClose": 222
+    "daysToClose": 271,
+    "quoteSymbol": "PAYO",
+    "priceCurrency": "USD",
+    "spreadNote": "DEFM14A (2026-08-11): parties 'currently expect to complete the Merger in mid-2027'. The Outside Date extends automatically to 2027-09-12 if any regulatory approvals are still outstanding."
   },
   {
     "target": "Roku Inc",
@@ -4497,23 +4541,31 @@ const DEALS = [
     "geo": "USA",
     "industry": "Streaming / Connected TV Platform",
     "announced": "2026-06-15",
-    "expectedClose": "2027-H1",
+    "expectedClose": "2027-06-30",
     "status": "pending",
     "closingProbability": 80,
-    "currentPrice": 153.41,
-    "dealPrice": 160.0,
-    "spread": 4.2957,
+    "currentPrice": 155.52,
+    "dealPrice": 156.8333,
+    "spread": 0.84,
     "dealTerms": "$96.00 cash + 0.9693 FOX Class A shares per ROKU Class A and Class B share. Implied $160.00 per share based on $66.03 FOX Class A 10-day VWAP as of June 10, 2026. ~$22B enterprise value. Stock consideration represents $64.00 per ROKU share at reference price. Pro-forma ownership: existing FOX shareholders ~73%, Roku shareholders ~27% of combined company. Unanimously approved by both boards. ~$400M targeted run-rate cost synergies.",
     "dealSize": 22000,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Fox to acquire Roku in $22B cash-and-stock combination announced June 15, 2026. $96 cash + 0.9693 FOX-A per ROKU share = $160 implied. Combines Fox's sports/news/entertainment + Tubi with Roku's connected TV platform, The Roku Channel, and direct relationship with 100M+ global streaming households. Combined company creates a vertically integrated streaming/content/advertising platform. Targeting $400M run-rate synergies; close 1H 2027.",
-    "comment": "(2026-10-15) Stockholders of both Roku and Fox approved the merger at special meetings held October 14, 2026 (Roku: ~85% of outstanding shares voted in favor per preliminary tally; Fox Class B: 99.9% of votes cast). Closing still guided to 1H 2027, pending HSR expiration (DOJ second request outstanding since September) and customary conditions. Confirmed via Roku Form 8-K, Variety/Deadline coverage and TipRanks.\n(2026-10-08) Roku special meeting scheduled for 14 October 2026. DOJ issued a second request on 8 September. Companies still expect closing in the first half of 2027.\n(2026-06-15) Termination fee $866M (Roku to Fox); reverse termination fee $1.24B (Fox to Roku). Termination outside date June 14, 2027, extendable to Dec 14, 2027 then March 14, 2028. Anthony Wood + affiliated trusts (Roku majority voting power) signed voting agreement in favor. HSR filing within 15 business days; conf agreement dated March 13, 2026 — suggests sale process began ~Q1 2026. (2026-06-15) Announced June 15, 2026 via simultaneous Fox + Roku press releases and SEC 8-K + Form 425 filings. Stock collar/protection mechanism if any — TBD pending S-4 filing. Antitrust risk concentrated in connected-TV advertising overlap (Tubi + Roku CTV inventory).",
-    "annualizedReturn": 8.1663,
-    "spreadCalc": "$96.00 cash + 0.9693 × FOX $54.64 = $148.96; (148.96 − 142.03) / 142.03 = 4.88%",
+    "comment": "[2026-11-02 spread review] Review: Merger agreement is dated June 14, 2026. Roku stockholders approved on 2026-10-14 (81.5% of outstanding). DOJ Second Request is pending, so there is antitrust timing risk.\n(2026-10-15) Stockholders of both Roku and Fox approved the merger at special meetings held October 14, 2026 (Roku: ~85% of outstanding shares voted in favor per preliminary tally; Fox Class B: 99.9% of votes cast). Closing still guided to 1H 2027, pending HSR expiration (DOJ second request outstanding since September) and customary conditions. Confirmed via Roku Form 8-K, Variety/Deadline coverage and TipRanks.\n(2026-10-08) Roku special meeting scheduled for 14 October 2026. DOJ issued a second request on 8 September. Companies still expect closing in the first half of 2027.\n(2026-06-15) Termination fee $866M (Roku to Fox); reverse termination fee $1.24B (Fox to Roku). Termination outside date June 14, 2027, extendable to Dec 14, 2027 then March 14, 2028. Anthony Wood + affiliated trusts (Roku majority voting power) signed voting agreement in favor. HSR filing within 15 business days; conf agreement dated March 13, 2026 — suggests sale process began ~Q1 2026. (2026-06-15) Announced June 15, 2026 via simultaneous Fox + Roku press releases and SEC 8-K + Form 425 filings. Stock collar/protection mechanism if any — TBD pending S-4 filing. Antitrust risk concentrated in connected-TV advertising overlap (Tubi + Roku CTV inventory).",
+    "annualizedReturn": 1.3,
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 156.833 USD = 96 cash + 0.9693 x FOXA 62.76. Target price 155.52 USD (ROKU). Gross spread = (value - price)/price = 0.84%. Annualized = spread x 365 / 240 days to 2027-06-30 = 1.3%. $96.00 cash + 0.9693 FOX Class A (FOXA) per ROKU Class A/B share. Fixed exchange ratio, no collar. Cash paid in lieu of fractional shares. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.foxcorporation.com/news/corp-press-releases/2026/fox-corporation-to-acquire-roku-inc/",
     "category": "active_deal",
-    "daysToClose": 192
+    "daysToClose": 240,
+    "quoteSymbol": "ROKU",
+    "priceCurrency": "USD",
+    "liveTerms": {
+      "cash": 96,
+      "ratio": 0.9693,
+      "acq": "FOXA"
+    },
+    "spreadNote": "Roku 8-K 2026-09-09: DOJ issued a Second Request on 2026-09-08; Roku expects the Mergers to close 'by the first half of calendar year 2027'."
   },
   {
     "target": "Eaton Mobility Group (Vehicle & eMobility carve-out)",
@@ -4530,9 +4582,12 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Dana Incorporated agreed to combine with Eaton's Mobility business (vehicle and eMobility segments) in a ~$5.1B Reverse Morris Trust transaction, creating a global powertrain systems supplier with >$10B enterprise value. Eaton shareholders take majority ownership (at least 50.1%); the combined company remains Dana Incorporated, listed on the NYSE under DAN.",
-    "comment": "(2026-06-11) Definitive Reverse Morris Trust agreement announced; ~$5.1B; Eaton shareholders at least 50.1% / Dana ~49.9%; ~$1.1B cash distribution to Eaton; close expected Q1 2027. Added in 2026-06-14 scan.",
+    "comment": "[2026-11-02 spread review] Review: The target is not ETN equity; ETN holders are not bought out. The RMT is structured as an exchange offer (split-off) by Eaton.\n(2026-06-11) Definitive Reverse Morris Trust agreement announced; ~$5.1B; Eaton shareholders at least 50.1% / Dana ~49.9%; ~$1.1B cash distribution to Eaton; close expected Q1 2027. Added in 2026-06-14 scan.",
     "sourceUrl": "https://www.dana.com/newsroom/press-releases/dana-incorporated-announces-agreement-to-combine-with-eatons-mobility-business-strengthens-danas-position-as-a-leading-global-powertrain-systems-provider/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Carve-out/RMT of a division of public parent Eaton (ETN); separation via exchange offer. No per-share deal price for a listed target."
   },
   {
     "target": "NCS Multistage Holdings Inc",
@@ -4542,20 +4597,23 @@ const DEALS = [
     "industry": "Oilfield Services / Completions",
     "announced": "2026-06-01",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "dealTerms": "Stock-and-cash merger. NCS Multistage stockholders receive, on a blended basis, the equivalent of 0.463 Weatherford shares per NCS share, with up to 19.99% of total equity consideration payable in cash. Election options: 0.554 Weatherford shares, or 0.239 Weatherford shares plus cash equal to 0.137 shares. At least $15M annual run-rate cost synergies targeted within 18 months; expected to be immediately accretive to adjusted free cash flow per share. Both boards and NCS's controlling stockholder approved; close expected H2 2026, subject to regulatory and customary conditions.",
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Weatherford International agreed to acquire NCS Multistage in a stock-and-cash deal (blended 0.463 Weatherford shares per NCS share), expanding Weatherford's completions portfolio and unconventional-resource exposure.",
-    "comment": "(2026-06-01) Definitive stock-and-cash agreement announced; blended 0.463 WFRD shares per NCS share, up to 19.99% cash; close expected H2 2026. Added in 2026-06-14 scan (not captured by prior runs).",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-09-01: 8-K Item 2.01 completion with Weatherford; Form 25-NSE; Form 15 filed 2026-09-11. Review: Status: CLOSED 2026-09-01. Exact ratios are 0.5537 shares, or 0.2392 shares + cash equal to 0.1371 shares (input rounded to 0.554/0.239/0.137). The merger agreement is dated May 31, 2026.\n(2026-06-01) Definitive stock-and-cash agreement announced; blended 0.463 WFRD shares per NCS share, up to 19.99% cash; close expected H2 2026. Added in 2026-06-14 scan (not captured by prior runs).",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/06/01/3304202/0/en/weatherford-announces-definitive-agreement-to-acquire-ncs-multistage-expanding-completions-portfolio-and-unconventional-resource-exposure.html",
     "category": "active_deal",
     "dealPrice": 57.39,
     "currentPrice": 53.35,
     "spread": 7.5726,
     "annualizedReturn": 276.4011,
-    "daysToClose": 10
+    "daysToClose": 10,
+    "quoteSymbol": "NCSM",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. 2026-09-01: 8-K Item 2.01 completion with Weatherford; Form 25-NSE; Form 15 filed 2026-09-11."
   },
   {
     "target": "Kiavi, Inc.",
@@ -4565,16 +4623,17 @@ const DEALS = [
     "industry": "Fintech / Real Estate Lending",
     "announced": "2026-06-10",
     "expectedClose": "2026-11-30",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "dealTerms": "All-cash transaction with total purchase price of ~$717M; cash consideration to Kiavi equityholders ~$532.4M (subject to customary adjustments). Figure acquires Kiavi's technology and operating platform; a Sixth Street / Figure joint venture acquires Kiavi's balance-sheet assets. Funded in part by a $600M 364-day bridge facility from Bank of America and Barclays. Outside date November 30, 2026; $25M termination fee under specified regulatory-licensing and asset-sale conditions.",
     "dealSize": 717,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Figure Technology Solutions agreed to acquire Kiavi, a non-bank lender to residential real-estate investors with >$30B funded loans, for ~$717M total. Adds >$7B annual first-lien volume to the Figure Connect marketplace. A Sixth Street/Figure JV takes Kiavi's balance-sheet assets.",
-    "comment": "(2026-06-10) Definitive cash merger announced; ~$717M total, ~$532.4M cash to equityholders; $600M bridge from BofA/Barclays; outside date Nov 30, 2026.",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-09-01: Figure 8-K Item 2.01 says the acquisition of Kiavi, Inc. was completed via merger with Project Mason Merger Sub. Review: Status: CLOSED 2026-09-01.\n(2026-06-10) Definitive cash merger announced; ~$717M total, ~$532.4M cash to equityholders; $600M bridge from BofA/Barclays; outside date Nov 30, 2026.",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/06/10/3309592/0/en/figure-enters-into-agreement-to-acquire-kiavi-bolstering-blockchain-native-marketplace.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-09-01: Figure 8-K Item 2.01 says the acquisition of Kiavi, Inc. was completed via merger with Project Mason Merger Sub."
   },
   {
     "target": "Taylor Morrison Home Corporation",
@@ -4584,17 +4643,20 @@ const DEALS = [
     "industry": "Homebuilding / Real Estate",
     "announced": "2026-05-31",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 88,
     "dealTerms": "$72.50 per share in cash; total equity value ~$6.8B, enterprise value ~$8.5B. 24% premium to the $58.50 May 29, 2026 close. All-cash take-private; Taylor Morrison continues under existing leadership (CEO Sheryl Palmer). Subject to shareholder and regulatory approvals; expected to close H2 2026.",
     "dealSize": 8500,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Berkshire Hathaway agreed to acquire homebuilder Taylor Morrison for $72.50/share in cash (~$6.8B equity / ~$8.5B EV), a 24% premium. Taylor Morrison operates 350+ communities across 21 markets and will be taken private under current leadership.",
-    "comment": "(2026-06-15) Preliminary proxy filed; HSR filed June 4, 2026. Background disclosure: Sep-Nov 2025 TMHC engaged with Party A culminating in unsolicited $71.00 offer (90% cash/10% stock) Nov 11 2025 — board rejected Dec 16 citing insufficient value. Berkshire NDA signed May 27, written $72.50 cash offer May 30, 3.25% termination fee, board approved May 31. (2026-05-31) Definitive all-cash agreement at $72.50/share; ~$8.5B EV; 24% premium; close expected H2 2026.",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-24: 8-K Item 2.01 says each TMHC share was converted into $72.50 cash; Form 25-NSE delisting. Review: Status: CLOSED around 2026-07-24 (stockholder approval 8-K 5.07 filed 2026-07-22; Form 15 filed 2026-08-04). The exact effective date is taken from the 8-K and Form 25 filing date.\n(2026-06-15) Preliminary proxy filed; HSR filed June 4, 2026. Background disclosure: Sep-Nov 2025 TMHC engaged with Party A culminating in unsolicited $71.00 offer (90% cash/10% stock) Nov 11 2025 — board rejected Dec 16 citing insufficient value. Berkshire NDA signed May 27, written $72.50 cash offer May 30, 3.25% termination fee, board approved May 31. (2026-05-31) Definitive all-cash agreement at $72.50/share; ~$8.5B EV; 24% premium; close expected H2 2026.",
     "sourceUrl": "https://newsroom.taylormorrison.com/2026-05-31-Berkshire-Hathaway-to-Acquire-Taylor-Morrison-Home-Corporation-for-8-5-Billion",
     "category": "active_deal",
-    "dealPrice": 72.5
+    "dealPrice": 72.5,
+    "quoteSymbol": "TMHC",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. 2026-07-24: 8-K Item 2.01 says each TMHC share was converted into $72.50 cash; Form 25-NSE delisting."
   },
   {
     "target": "NSI Industries",
@@ -4604,16 +4666,17 @@ const DEALS = [
     "industry": "Electrical Products / Components",
     "announced": "2026-06-09",
     "expectedClose": "TBD",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "$3.0B all-cash acquisition of all issued and outstanding capital stock of NSI Industries. Announced June 9, 2026.",
     "dealSize": 3000,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Hubbell agreed to acquire NSI Industries, a maker of electrical connectors and components, for $3.0B in cash, expanding Hubbell's electrical solutions portfolio.",
-    "comment": "(2026-06-09) Definitive agreement; $3.0B all-cash for NSI Industries.",
+    "comment": "[2026-11-02 spread review] Status approved: Hubbell 10-Q for Q3 2026 (filed 2026-10-28) says the acquisition closed June 9, 2026. Review: Status: CLOSED 2026-06-09 (signed and closed at the same time). The deal was not pending.\n(2026-06-09) Definitive agreement; $3.0B all-cash for NSI Industries.",
     "sourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000048898&type=8-K",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. Hubbell 10-Q for Q3 2026 (filed 2026-10-28) says the acquisition closed June 9, 2026."
   },
   {
     "target": "Sachem Capital Corp",
@@ -4623,21 +4686,24 @@ const DEALS = [
     "industry": "REIT / Industrial Real Estate",
     "announced": "2026-05-18",
     "expectedClose": "2026-12-31",
-    "status": "pending",
+    "status": "at-risk",
     "closingProbability": 75,
-    "currentPrice": 0.9,
+    "currentPrice": 0.81,
     "dealPrice": 2.0,
-    "spread": 122.2222,
-    "annualizedReturn": 512.7714,
+    "spread": null,
+    "annualizedReturn": null,
     "dealTerms": "Strategic combination: IRG contributes 98 industrial properties (~$2.9B GAV) to SACH for OP units representing 94.1% of pro-forma equity; legacy SACH common implied at $2.00/share (~90% premium to 30-day VWAP); pro-forma IRG 94.1% / SACH 5.9% on fully diluted basis; combined enterprise value ~$3.4B; combined entity to operate as IRG Realty Trust (IRGT). Unanimous SACH board approval. SACH shareholder vote required. Close expected end-2026.",
     "dealSize": 3400,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Sachem Capital and Industrial Realty Group to combine into IRG Realty Trust (IRGT), a top-10 public industrial REIT with ~$3.4B EV. IRG contributes 98 industrial assets (~$2.9B GAV) for 94.1% of pro-forma equity via OP units; SACH common implied at $2.00 (~90% premium to 30-day VWAP, $1.03 May 15 close). SACH transitions from subscale mortgage REIT to scaled industrial REIT. SACH shareholder vote required.",
-    "comment": "Implied $2.00 SACH valuation derived from pro-forma 5.9% legacy stake of ~$3.4B EV combined entity. Large dilution overhang; investigation announced by shareholder rights firms.",
+    "comment": "[2026-11-02 spread review] Status at-risk: On 2026-07-27, 17 investors in IRG Master Holdings sued in LA Superior Court (Case 26STCV23391) to enjoin closing until a related arbitration ends (Q2 10-Q). As of 2026-11-02 no merger proxy has been filed; the Oct 22, 2026 annual meeting covered only directors, auditor and say-on-pay. Review: The input treats $2.00 as a deal price; it is not payable to holders. The input omits the injunction lawsuit and the April 30, 2027 outside date (extendable 45 days by IRG for the arbitration). No proxy has been filed, so the end-2026 guidance looks unlikely; the conservative date uses the outside date.\nImplied $2.00 SACH valuation derived from pro-forma 5.9% legacy stake of ~$3.4B EV combined entity. Large dilution overhang; investigation announced by shareholder rights firms.",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/18/3296422/0/en/Sachem-Capital-Corp-and-Industrial-Realty-Group-Announce-Strategic-Combination-to-Create-IRG-Realty-Trust-a-Top-10-Public-Industrial-REIT.html",
     "category": "active_deal",
-    "daysToClose": 87
+    "daysToClose": 87,
+    "quoteSymbol": "SACH",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculable: Reverse-merger style contribution where the listed company (SACH) survives; no per-share consideration to SACH holders ($2.00 is a deemed value, not a payout)"
   },
   {
     "target": "MiRus LLC (TAVR-Structural Heart NewCo)",
@@ -4650,14 +4716,16 @@ const DEALS = [
     "status": "pending",
     "closingProbability": 65,
     "spread": null,
-    "spreadNote": "Target is private — no public spread.",
+    "spreadNote": "Not calculable: Private target; equity stake plus milestone-contingent option, no public shares",
     "dealTerms": "$1.5B cash for ~34% MiRus equity stake (closed May 15, 2026), plus exclusive call option to acquire 100% of MiRus TAVR-Structural Heart NewCo for up to $3.0B additional cash contingent on clinical/regulatory milestones for the SIEGEL Balloon-Expandable TAVR system. Total potential consideration up to $4.5B. Investment expected immaterial to BSX 2026 adjusted EPS.",
     "dealSize": 4500,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Boston Scientific invests $1.5B for ~34% of MiRus LLC and takes exclusive option to acquire MiRus's TAVR-Structural Heart NewCo for up to $3.0B in milestone payments — total potential $4.5B. SIEGEL TAVR is the first nickel-free balloon-expandable TAVR valve, built on proprietary rhenium alloy.",
     "sourceUrl": "https://news.bostonscientific.com/2026-05-18-Boston-Scientific-announces-strategic-investment-in-MiRus-LLC",
-    "category": "active_deal"
+    "category": "active_deal",
+    "annualizedReturn": null,
+    "comment": "[2026-11-02 spread review] Review: The stake is about 33.75% (not 34%). Total cash paid is $1.6B including the earlier $100M. The option has not been exercised."
   },
   {
     "target": "Omnisys Ltd",
@@ -6354,13 +6422,13 @@ const DEALS = [
     "acquirer": "Fertitta Entertainment (Tilman Fertitta)",
     "geo": "US",
     "industry": "Gaming/Hospitality",
-    "currentPrice": 29.65,
+    "currentPrice": 28.99,
     "dealPrice": 31,
     "dealTerms": "Definitive all-cash agreement for Fertitta Entertainment to acquire Caesars Entertainment for $31.00 per share in cash, a transaction valued at approximately $17.6 billion including the assumption of approximately $11.9 billion of Caesars debt. The consideration represents an approximately 49% premium to Caesars' unaffected closing price as of February 25, 2026. The Caesars board approved the transaction and recommends shareholders adopt the merger agreement. Closing is subject to Caesars shareholder approval and required gaming and antitrust regulatory approvals.",
-    "spread": 4.5531,
-    "annualizedReturn": 6.2011,
+    "spread": 6.93,
+    "annualizedReturn": 6.5,
     "announced": "2026-05-28",
-    "expectedClose": "2027",
+    "expectedClose": "2027-11-27",
     "status": "pending",
     "closingProbability": 80,
     "description": "Fertitta Entertainment (controlled by Tilman Fertitta) to acquire Caesars Entertainment (Nasdaq: CZR) for $31.00 per share in cash in a transaction valued at approximately $17.6 billion including assumed debt, a ~49% premium to the unaffected price. Board-approved; subject to Caesars shareholder vote and gaming/antitrust regulatory approvals.",
@@ -6369,8 +6437,12 @@ const DEALS = [
     "dealRisk": "medium",
     "sourceUrl": "https://newsroom.caesars.com/press-releases/press-release-details/2026/Caesars-Entertainment-Enters-Into-Agreement-to-Be-Acquired-by-Fertitta-Entertainment/default.aspx",
     "category": "active_deal",
-    "comment": "(2026-10-08) Caesars stockholders approved the merger on 22 September (~65% of outstanding shares voted for). FTC second request issued 14 September remains outstanding.\n(2026-09-14) FTC issued Second Request on Fertitta merger review, extending timing. Deal expected to close mid-to-late 2027 pending regulatory clearance. (2026-06-27) Status updated rumored to pending: Caesars announced May 28 a signed definitive agreement to be acquired by Fertitta Entertainment for $31.00 per share in cash (~$17.6B incl. assumed debt; ~49% premium). Subject to shareholder and gaming/antitrust approvals. Verified against the Caesars issuer press release and SEC Form 8-K, Las Vegas Review-Journal/Reuters coverage and StockTitan aggregation.\n(2026-06-03) Press reports name as potential M&A target; Fertitta-led approaches per market chatter.",
-    "daysToClose": 268
+    "comment": "[2026-11-02 spread review] Review: The merger agreement is dated May 27, 2026; the buyer entity is Fertitta Gaming Holdco, LLC. The input omits the ticking fee. Company filings give no close window (the input's '2027' is not in primary docs). The end date is May 27, 2027, extending automatically to Aug 27, 2027 and then Nov 27, 2027 if only HSR or gaming approvals are outstanding; the conservative date uses the final extended end d\n(2026-10-08) Caesars stockholders approved the merger on 22 September (~65% of outstanding shares voted for). FTC second request issued 14 September remains outstanding.\n(2026-09-14) FTC issued Second Request on Fertitta merger review, extending timing. Deal expected to close mid-to-late 2027 pending regulatory clearance. (2026-06-27) Status updated rumored to pending: Caesars announced May 28 a signed definitive agreement to be acquired by Fertitta Entertainment for $31.00 per share in cash (~$17.6B incl. assumed debt; ~49% premium). Subject to shareholder and gaming/antitrust approvals. Verified against the Caesars issuer press release and SEC Form 8-K, Las Vegas Review-Journal/Reuters coverage and StockTitan aggregation.\n(2026-06-03) Press reports name as potential M&A target; Fertitta-led approaches per market chatter.",
+    "daysToClose": 390,
+    "quoteSymbol": "CZR",
+    "priceCurrency": "USD",
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 31 USD = 31 per share. Target price 28.99 USD (CZR). Gross spread = (value - price)/price = 6.93%. Annualized = spread x 365 / 390 days to 2027-11-27 = 6.5%. All cash, $31.00 per share. Ticking fee: if the deal has not closed by June 26, 2027, holders also get $0.007150 per share per day, counted from July 1, 2027 to the day before closing. The ticking fee is left out of fixedValue. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "spreadNote": "No explicit timing in the press release or DEFM14A (Aug 26, 2026). The ticking fee implies an expected close around mid-2027. Outside date Nov 27, 2027 with extensions."
   },
   {
     "target": "JetBlue Airways Corp",
@@ -7066,7 +7138,11 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Flex announced May 5, 2026 plan to spin off its Cloud & Power Infrastructure segment into a new independent publicly-traded company (SpinCo) focused on power and thermal management for AI data centers and mission-critical applications. Tax-free distribution targeted Q1 2027. Revathi Advaithi to become SpinCo CEO; Michael Hartung to become Flex CEO post-spin.",
     "sourceUrl": "https://www.prnewswire.com/news-releases/flex-announces-intention-to-spin-off-its-cloud-and-power-infrastructure-segment-into-a-new-independent-publicly-traded-company-302763151.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Spin-off; no merger spread",
+    "comment": "[2026-11-02 spread review] Review: SpinCo name (Axiom, expected ticker AXM) is not in the input row. Source is a news-wire (PRNewswire) link, not the IR or SEC page. Name details come from secondary summaries, not a primary document I read."
   },
   {
     "target": "LKQ Corporation",
@@ -7103,7 +7179,7 @@ const DEALS = [
     "annualizedReturn": -0.4331,
     "announced": "2026-05-09",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "description": "Apollo Global Management to acquire Emerald Holding for $5.03/share cash. Apollo will combine Emerald with portfolio company Questex to build a global B2B events and information platform. Definitive agreement signed May 9, 2026.",
     "dealSize": 0,
@@ -7112,8 +7188,11 @@ const DEALS = [
     "spreadCalc": "$5.03 deal value; (5.03 − 5.03) / 5.03 = 0.10%",
     "sourceUrl": "https://www.globenewswire.com/news-release/2026/05/09/3290929/0/en/Emerald-to-be-Acquired-by-Apollo-Funds.html",
     "category": "active_deal",
-    "comment": "(2026-06-03) Strategic review underway per recent reports.",
-    "daysToClose": 167
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-14: Apollo funds announce they completed the acquisitions of Emerald and Questex Review: Status: closed July 14, 2026; EEX delisted from NYSE.\n(2026-06-03) Strategic review underway per recent reports.",
+    "daysToClose": 167,
+    "quoteSymbol": "EEX",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. 2026-07-14: Apollo funds announce they completed the acquisitions of Emerald and Questex"
   },
   {
     "target": "Atkore Inc",
@@ -8391,7 +8470,7 @@ const DEALS = [
     "industry": "Energy / Natural Gas",
     "announced": "2026-04-27",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 75,
     "dealTerms": "75% stock / 25% cash; ~C$22B including assumed debt; ~30% premium to undisturbed price.",
     "dealSize": 22000,
@@ -8404,7 +8483,11 @@ const DEALS = [
     "currentPrice": 33.91,
     "spread": -3.2734,
     "annualizedReturn": -119.478,
-    "daysToClose": 10
+    "daysToClose": 10,
+    "quoteSymbol": "ARX.TO",
+    "priceCurrency": "CAD",
+    "spreadNote": "Not calculated: deal closed. ARC press release: arrangement completed, effective 2026-09-02; delisting from TSX followed. Shareholders approved in July 2026.",
+    "comment": "[2026-11-02 spread review] Status approved: ARC press release: arrangement completed, effective 2026-09-02; delisting from TSX followed. Shareholders approved in July 2026. Review: Status should be closed (2026-09-02). Terms are C$8.20 cash plus 0.40247 Shell shares; the input row's flat $32.80 dealPrice is not the stated structure. The arrangement agreement was amended (including 2026-08-26) and I could not verify whether terms changed. Ticker should be ARX.TO."
   },
   {
     "target": "XOMA Royalty Corp",
@@ -8441,8 +8524,12 @@ const DEALS = [
     "dealCurrency": "EUR",
     "dealRisk": "medium",
     "description": "Apollo agreed to acquire Forvia's Interiors business in a €1.82B carve-out announced April 27, 2026, as Forvia continues post-Hella deleveraging. Subject to EU and French regulatory review and works council consultation.",
-    "sourceUrl": "https://finance.yahoo.com/markets/stocks/articles/forvia-sell-interiors-business-group-053000278.html",
-    "category": "active_deal"
+    "sourceUrl": "https://www.forvia.com/en/press-releases",
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Carve-out / asset sale by a public parent; no per-share consideration",
+    "comment": "[2026-11-02 spread review] Review: I found no completion announcement as of search; guidance is closing by year-end 2026, subject to regulatory approvals and works council consultations. Not verified against a recent Forvia primary release. The source is Yahoo news, not primary; I could not confirm the exact Forvia press-release URL, so a generic Forvia press-releases URL is used."
   },
   {
     "target": "Ajax Therapeutics",
@@ -8517,7 +8604,11 @@ const DEALS = [
     "dealRisk": "high",
     "description": "Kone agreed to acquire TK Elevator from Advent/Cinven/RAG-Stiftung in a $34.4B combination announced April 29, 2026. Combined entity would lead the global elevator and escalator market alongside Otis and Schindler — extensive remedies expected from EU, UK, US, China antitrust regulators. High execution risk.",
     "sourceUrl": "https://www.kone.com/en/news-and-insights/news/kone-to-acquire-tk-elevator.aspx",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Private target (TK Elevator)",
+    "comment": "[2026-11-02 spread review] Review: Expected-close window kept as H2 2027 (end date 2027-12-31); regulatory progress after June comes from secondary reports."
   },
   {
     "target": "Emalex Biosciences",
@@ -8565,7 +8656,7 @@ const DEALS = [
     "industry": "Specialty Pharma",
     "announced": "2026-04-29",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "Per SEC filings (May 2026): Zydus Lifesciences launched a competing tender offer for Assertio at $23.50/share cash, topping Garda Capital Partners' prior $18.00/share + non-tradeable CVR tender (launched April 29, extended to May 4, 2026). Zydus's $23.50 offer represents ~30% premium to Garda's headline price. Tender subject to minimum tender condition and HSR clearance.",
     "dealSize": 0,
@@ -8578,7 +8669,11 @@ const DEALS = [
     "currentPrice": 23.5,
     "spread": 0.0,
     "annualizedReturn": 0.0,
-    "daysToClose": 10
+    "daysToClose": 10,
+    "quoteSymbol": "ASRT",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. Merger agreement with Zydus signed 2026-05-13; tender launched 2026-05-18; merger completed 2026-06-16 per 8-K Item 2.01; Form 25 filed 2026-07-07; Form 15 filed.",
+    "comment": "[2026-11-02 spread review] Status approved: Merger agreement with Zydus signed 2026-05-13; tender launched 2026-05-18; merger completed 2026-06-16 per 8-K Item 2.01; Form 25 filed 2026-07-07; Form 15 filed. Review: Status should be closed (2026-06-16). Zydus signed a definitive merger agreement with Assertio on 2026-05-13 (not just a competing tender). Source should be the SEC 8-K rather than the Garda tender release."
   },
   {
     "target": "SiriusXM Holdings",
@@ -8698,7 +8793,7 @@ const DEALS = [
     "industry": "Networking / Enterprise IT",
     "announced": "2026-04-30",
     "expectedClose": "TBD",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "dealTerms": "Belden agreed to acquire RUCKUS Networks business from Vistance",
     "dealSize": 0,
@@ -8706,7 +8801,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Belden Inc agreed to acquire RUCKUS Networks from Vistance, expanding Belden's enterprise networking offering. Announced April 30, 2026.",
     "sourceUrl": "https://www.gurufocus.com/news/8831875/belden-bdc-acquires-ruckus-networks-for-185-billion",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. Belden 8-K filed 2026-07-01 (Items 1.01, 2.01, 2.03) reports completion of the acquisition.",
+    "comment": "[2026-11-02 spread review] Status approved: Belden 8-K filed 2026-07-01 (Items 1.01, 2.01, 2.03) reports completion of the acquisition. Review: Status should be closed (completed 2026-07-01). Replace the GuruFocus source with the primary Belden 8-K (accession 0000913142-26-000029)."
   },
   {
     "target": "KalVista Pharmaceuticals",
@@ -8741,14 +8838,17 @@ const DEALS = [
     "industry": "Telecom / Fixed Wireless Access",
     "announced": "2026-04-30",
     "expectedClose": "TBD",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "dealTerms": "Nokia takes ~11% stake in Inseego (INSG) as part of Fixed Wireless Access business combination",
     "dealSize": 0,
     "dealCurrency": "USD",
     "dealRisk": "low",
     "description": "Nokia and Inseego (INSG) announced a strategic combination of Nokia's Fixed Wireless Access (FWA) business with Inseego, with Nokia taking a ~11% equity stake in INSG. Announced April 30, 2026.",
-    "category": "active_deal"
+    "category": "active_deal",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1022652/000168316826007512/inseego_8k.htm",
+    "spreadNote": "Not calculated: deal closed. Inseego 8-K (filed 2026-10-01) reports the transactions closed 2026-10-01; amendment on 2026-09-30 added a $10M Nokia cash payment.",
+    "comment": "[2026-11-02 spread review] Status approved: Inseego 8-K (filed 2026-10-01) reports the transactions closed 2026-10-01; amendment on 2026-09-30 added a $10M Nokia cash payment. Review: The input row frames Inseego as a target; it is actually the buyer of Nokia's FWA business. Status should be closed (2026-10-01). Source was missing."
   },
   {
     "target": "AvalonBay Communities, Inc.",
@@ -8884,7 +8984,7 @@ const DEALS = [
     "industry": "Healthcare Services / Staffing",
     "announced": "2026-05-06",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 90,
     "dealTerms": "$13.25 per share in cash; ~$437M equity value; 31% premium to May 6, 2026 close, 45% to 90-day VWAP. Termination date Oct 6, 2026 (extendable to Apr 6, 2027).",
     "dealSize": 437,
@@ -8893,7 +8993,11 @@ const DEALS = [
     "description": "Knox Lane to acquire Cross Country Healthcare in an all-cash take-private transaction valued at $437M. CCRN to become privately held platform in Knox Lane portfolio. Approvals: CCRN stockholders, HSR, regulatory. Expected close Q3 2026.",
     "sourceUrl": "https://www.businesswire.com/news/home/20260506144806/en/Cross-Country-Healthcare-to-be-Acquired-by-Knox-Lane-in-All-Cash-Transaction-Valued-at-$437-Million",
     "category": "active_deal",
-    "dealPrice": 13.25
+    "dealPrice": 13.25,
+    "quoteSymbol": "CCRN",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. Merger completed 2026-07-21 per 8-K Item 2.01 (filed 2026-07-28); Form 25 filed 2026-07-21; Form 15 filed 2026-07-27.",
+    "comment": "[2026-11-02 spread review] Status approved: Merger completed 2026-07-21 per 8-K Item 2.01 (filed 2026-07-28); Form 25 filed 2026-07-21; Form 15 filed 2026-07-27. Review: Status should be closed (completed 2026-07-21), not pending. Better to cite the primary SEC 8-K than BusinessWire."
   },
   {
     "target": "PathAI",
@@ -8911,7 +9015,11 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Roche to acquire AI pathology company PathAI for up to $1.05B ($750M upfront + $300M milestones). Strengthens Roche's Diagnostics division with AI-enabled pathology and companion diagnostics. Expected to close H2 2026.",
     "sourceUrl": "https://www.roche.com/media/releases/med-cor-2026-05-07",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Private target",
+    "comment": "[2026-11-02 spread review] Review: No completion announcement was found as of 2026-11-02, but it may have closed without wide coverage. Status not fully verified."
   },
   {
     "target": "Perfuse Therapeutics",
@@ -8921,7 +9029,7 @@ const DEALS = [
     "industry": "Biotech / Ophthalmology",
     "announced": "2026-05-06",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 90,
     "dealTerms": "$300M upfront cash + up to ~$2.15B in development, regulatory, and commercial milestones (total potential value up to $2.45B). Lead asset PER-001 (endothelin receptor antagonist) in Phase II for Glaucoma and Diabetic Retinopathy. Bayer's first drug company acquisition in several years and largest since AskBio in 2020.",
     "dealSize": 2450,
@@ -8929,7 +9037,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Bayer to acquire Perfuse Therapeutics for up to $2.45B ($300M upfront + milestones). Adds PER-001, a Phase II endothelin receptor antagonist for Glaucoma and Diabetic Retinopathy, to Bayer's ophthalmology pipeline.",
     "sourceUrl": "https://www.bayer.com/media/en-us/bayer-to-acquire-perfuse-therapeutics-to-complement-ophthalmology-pipeline/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. Bayer press release around 2026-06-16/17 announced completion of the acquisition.",
+    "comment": "[2026-11-02 spread review] Status approved: Bayer press release around 2026-06-16/17 announced completion of the acquisition. Review: Status should be closed (completed mid-June 2026)."
   },
   {
     "target": "Equiniti Group",
@@ -8947,7 +9057,11 @@ const DEALS = [
     "dealRisk": "medium",
     "description": "Bullish to acquire Equiniti from Siris Capital for $4.2B (debt + stock) to create the global transfer agent for tokenized securities. Combines Equiniti's SEC and FCA-regulated transfer agent business with Bullish's blockchain infrastructure. Expected close January 2027.",
     "sourceUrl": "https://www.bullish.com/us/news-insights/bullish-to-acquire-equiniti-from-siris-in-4-2-billion-transaction-creating-the-global-transfer-agent-for-tokenized-securities",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Private target (Equiniti owned by Siris); no public per-share price",
+    "comment": "[2026-11-02 spread review] Review: The July 2026 update comes from secondary search results, not a primary filing I read."
   },
   {
     "target": "Global Business Travel Group",
@@ -8980,7 +9094,7 @@ const DEALS = [
     "industry": "Financial Services / Specialty Finance",
     "announced": "2026-05-11",
     "expectedClose": "2026-Q4",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "Stonepeak to acquire BMO's Transportation Finance and Vendor Finance businesses (US and Canada). Combined portfolio ~C$14.5B (~US$10.6B) in loans and leases as of March 31, 2026. Cash consideration plus performance-based earnout (terms undisclosed). BMO retains 19.9% equity stake in the new entity. Expected after-tax charge of ~C$0.9B (primarily goodwill) in Q3 2026; ~28 bps CET1 ratio improvement. Subject to regulatory approvals.",
     "dealSize": 10.6,
@@ -8988,7 +9102,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Stonepeak to acquire BMO's Transportation Finance and Vendor Finance businesses, a ~$10.6B (C$14.5B) portfolio. BMO retains 19.9% equity stake. Cash + earnout. Expected close Q4 fiscal 2026 subject to regulatory approvals.",
     "sourceUrl": "https://www.prnewswire.com/news-releases/bmo-announces-strategic-sale-of-transportation-and-vendor-finance-businesses-302768712.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-10-29: BMO press release announces it closed the sale to Stonepeak",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-10-29: BMO press release announces it closed the sale to Stonepeak Review: Status: closed October 29, 2026. The CET1 benefit was revised to ~23 bps from 28 bps."
   },
   {
     "target": "Symphony Health",
@@ -9064,7 +9180,7 @@ const DEALS = [
     "industry": "Healthcare / Nonprofit Hospital Systems",
     "announced": "2026-05-08",
     "expectedClose": "2026-12-31",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "Nonprofit combination via definitive agreement. Sanford Health to commit $600M investment in Robbinsdale and Maple Grove hospitals. Twin Cities region: 450 physicians, 6,800 team members, 22+ clinics, 45+ specialties. Bill Gassen continues as President & CEO of combined organization; Trevor Sawallish remains CEO of Twin Cities region. Two North Memorial board members (Charlie Weaver, Reuben Moore) join Sanford Health Board of Trustees. Combined system remains nonprofit charitable organization. Subject to regulatory processes and customary closing conditions; close expected later in 2026.",
     "dealSize": 600,
@@ -9072,7 +9188,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Sanford Health and North Memorial Health to combine in nonprofit hospital system merger. Sanford to invest $600M in Robbinsdale and Maple Grove hospitals. Bill Gassen continues as combined CEO; local Twin Cities leadership retained. Expected close later in 2026 subject to regulatory processes.",
     "sourceUrl": "https://news.sanfordhealth.org/company/sanford-health-north-memorial-health-plan-to-combine/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-09-01: Sanford Health and North Memorial complete the merger (news reports)",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-09-01: Sanford Health and North Memorial complete the merger (news reports) Review: Status: closed. CEO roles in the row are swapped: Bill Gassen is Sanford CEO and Trevor Sawallish leads the Twin Cities region, which matches the row."
   },
   {
     "target": "MacroGenics GMP Manufacturing Operations",
@@ -9230,7 +9348,7 @@ const DEALS = [
     "industry": "MedTech / Robotic Endovascular",
     "announced": "2026-05-12",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 88,
     "dealTerms": "$20M upfront cash + up to $25M contingent on regulatory and commercial milestones (including FDA clearance of next-gen Robocath system). Robocath will become a wholly owned Stereotaxis subsidiary. Subject to customary closing conditions.",
     "dealSize": 45,
@@ -9238,7 +9356,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Stereotaxis to acquire France-based Robocath for up to $45M ($20M upfront + $25M milestones). Combines Stereotaxis magnetic navigation with Robocath's R-One+ mechanical robotic system for endovascular procedures. Expected close mid-2026.",
     "sourceUrl": "https://ir.stereotaxis.com/news-releases/news-release-details/stereotaxis-announces-definitive-agreement-acquire-robocath/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-07-09: Stereotaxis announces it completed the Robocath acquisition",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-09: Stereotaxis announces it completed the Robocath acquisition Review: Status: closed. One completion report describes the consideration as cash and common stock."
   },
   {
     "target": "ARKO Petroleum Corp",
@@ -9266,7 +9386,7 @@ const DEALS = [
     "industry": "Mining / Gold",
     "announced": "2026-05-13",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "Cash-and-stock combination valued at ~US$5.1B (almost entirely stock). Equinox shareholders to own ~67% and Orla shareholders ~33% of combined company. Implied combined market cap ~$18.5B. ~1.1M oz annual gold production, pathway to 1.9M oz. Pierre Lassonde backing. Shareholder votes expected July 2026; close targeted Q3 2026. Current Equinox CEO Darren Hall to lead combined entity; Orla CEO Jason Simpson to stay aboard as president.",
     "dealSize": 5100,
@@ -9279,7 +9399,11 @@ const DEALS = [
     "currentPrice": 9.44,
     "spread": 56.7797,
     "annualizedReturn": 2072.4576,
-    "daysToClose": 10
+    "daysToClose": 10,
+    "quoteSymbol": "ORLA.TO",
+    "priceCurrency": "CAD",
+    "spreadNote": "Not calculated: deal closed. 2026-07-31: Equinox Gold 6-K reports it acquired all Orla shares; TSX delisting August 4, 2026",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-31: Equinox Gold 6-K reports it acquired all Orla shares; TSX delisting August 4, 2026 Review: The deal was all stock at a 1:1 exchange ratio, with only nominal US$0.0001 cash, not a meaningful cash-and-stock mix. The dealPrice of 14.8 is not a contractual term. Status: closed. One Montreal Exchange circular gives July 22 as the date, which conflicts with the 6-K's July 31."
   },
   {
     "target": "Alegeus Technologies",
@@ -9289,7 +9413,7 @@ const DEALS = [
     "industry": "Healthcare / Benefits Technology",
     "announced": "2026-05-13",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 88,
     "dealTerms": "Terms undisclosed. Subject to regulatory review. Earnings neutral to 2026. Alegeus operates a white-labeled SaaS benefits administration platform for consumer-directed healthcare accounts (FSA/HSA/HRA), serving 75,000+ employers and 26M+ members and processing $6B+ in annual payments.",
     "dealSize": null,
@@ -9297,7 +9421,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "UnitedHealth/Optum to acquire Alegeus Technologies, a SaaS consumer-directed healthcare benefits administration platform serving 26M+ members and processing $6B+ in annual payments. Terms undisclosed; close expected H2 2026.",
     "sourceUrl": "https://www.beckerspayer.com/m-and-a/unitedhealth-to-buy-benefits-administration-platform-alegeus/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-07-02: Optum Financial announces it closed the Alegeus acquisition",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-02: Optum Financial announces it closed the Alegeus acquisition Review: Status: closed. Terms were later disclosed at about $3B (secondary reports of a UNH 10-Q)."
   },
   {
     "target": "National Taxi LLC",
@@ -9344,23 +9470,31 @@ const DEALS = [
     "geo": "USA",
     "industry": "Utilities / Electric Power",
     "announced": "2026-05-18",
-    "expectedClose": "2027-H2",
+    "expectedClose": "2027-12-31",
     "status": "pending",
     "closingProbability": 65,
-    "currentPrice": 61.02,
-    "dealPrice": 71.83,
-    "spread": 17.7155,
-    "annualizedReturn": 17.9616,
+    "currentPrice": 67.72,
+    "dealPrice": 69.6074,
+    "spread": 2.79,
+    "annualizedReturn": 2.4,
     "dealTerms": "Definitive all-stock + small cash agreement. Fixed exchange ratio 0.8138 NEE per D share + one-time $360M cash payment (~$0.43/share). At NEE $87.73 (May 18 close) + $0.43 cash, implies ~$71.83/share for D vs D $67.56 close = $4.27 gross spread (~4.7% annualized over ~16 months). Pro-forma ownership: NEE 74.5% / D 25.5%. Close expected 12-18 months. Approvals: both shareholder votes, HSR, FERC (Section 203), NRC, VA/NC/SC state PUCs. Termination fee $2.24B; reverse termination $6.52B; regulatory termination $4.83B.",
     "dealSize": 66800,
     "dealCurrency": "USD",
     "dealRisk": "high",
     "description": "NextEra Energy (NEE) to acquire Dominion Energy (D) in $66.8B definitive all-stock deal: 0.8138 NEE + $0.40 cash per D share (~$76.38, 24% premium). Creates world's largest regulated electric utility (~10M customers across FL/VA/NC/SC, 110 GW generation). Close 12-18 months pending HSR, FERC, NRC, state PUC approvals.",
-    "spreadCalc": "$0.43 cash + 0.8138 × NEE $85.94 = $70.37; (70.37 − 68.09) / 68.09 = 3.35%",
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 69.6074 USD = 0.41 cash + 0.8138 x NEE 85.03. Target price 67.72 USD (D). Gross spread = (value - price)/price = 2.79%. Annualized = spread x 365 / 424 days to 2027-12-31 = 2.4%. Each D share gets 0.8138 NEE shares plus a pro rata share of $360M aggregate cash. That is about $0.41 per share on 879.6M shares outstanding (Oct 23, 2026), and it falls as ATM issuance adds shares. Fixed exchange ratio, no collar. Quarterly dividends of up to $0.6675 continue. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.businesswire.com/news/home/20260517952728/en/NextEra-Energy-and-Dominion-Energy-to-Combine-Creating-the-Worlds-Largest-Regulated-Electric-Utility-Business-and-North-Americas-Premier-Energy-Infrastructure-Platform-Benefiting-Customers",
     "category": "active_deal",
-    "daysToClose": 360,
-    "comment": "(2026-10-08) Virginia SCC case PUR-2026-00112: local public hearings 7 October (Newport News) and 9 October (Fairfax County); telephone/in-person public witness hearings 5, 9 and 10 November; evidentiary hearing begins 17 November. Both companies' shareholders approved on 3 September. Other approvals: HSR, FERC, NRC, NC and SC commissions. Companies target closing in the second half of 2027.\n(2026-10-07) Regulatory/political headwind: Virginia Lt. Gov. Ghazala Hashmi on 6 October formally opposed the NextEra takeover after a five-city public tour, the first statewide elected official to do so, and urged the State Corporation Commission to reject it; State Sen. Mike Jones joined the opposition. The SCC review is still on its statutory clock with a decision due by 11 January 2027 unless extended, and the Attorney General and several legislators continue to press for an extended timeline. The companies recently amended their filing to extend customer bill credits to four years and commit to a Richmond headquarters. Not a formal regulatory action, but it raises the odds of conditions or delay; closing probability trimmed."
+    "daysToClose": 424,
+    "comment": "[2026-11-02 spread review] Review: Cash per share is about $0.41, not $0.43, because the share count rose to 879.6M. The agreement is dated May 15, 2026. Outside date is November 2027, extendable to August 2028.\n(2026-10-08) Virginia SCC case PUR-2026-00112: local public hearings 7 October (Newport News) and 9 October (Fairfax County); telephone/in-person public witness hearings 5, 9 and 10 November; evidentiary hearing begins 17 November. Both companies' shareholders approved on 3 September. Other approvals: HSR, FERC, NRC, NC and SC commissions. Companies target closing in the second half of 2027.\n(2026-10-07) Regulatory/political headwind: Virginia Lt. Gov. Ghazala Hashmi on 6 October formally opposed the NextEra takeover after a five-city public tour, the first statewide elected official to do so, and urged the State Corporation Commission to reject it; State Sen. Mike Jones joined the opposition. The SCC review is still on its statutory clock with a decision due by 11 January 2027 unless extended, and the Attorney General and several legislators continue to press for an extended timeline. The companies recently amended their filing to extend customer bill credits to four years and commit to a Richmond headquarters. Not a formal regulatory action, but it raises the odds of conditions or delay; closing probability trimmed.",
+    "quoteSymbol": "D",
+    "priceCurrency": "USD",
+    "liveTerms": {
+      "cash": 0.41,
+      "ratio": 0.8138,
+      "acq": "NEE"
+    },
+    "spreadNote": "D Q3 10-Q (Oct 30, 2026): closing 'expected in the second half of 2027'."
   },
   {
     "target": "LiveRamp Holdings Inc",
@@ -9370,7 +9504,7 @@ const DEALS = [
     "industry": "Technology / Data Collaboration & Identity",
     "announced": "2026-05-17",
     "expectedClose": "2026-11-15",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 92,
     "dealTerms": "$38.50 per share in cash. EV $2.167B / equity $2.546B (including $379M net cash). 29.8% premium to RAMP May 15 close. Both boards unanimously approved. HSR filing by June 15, CFIUS by June 30. Termination fee $32.35M each way. Termination date May 16, 2027, extendable to August 16, 2027. Close expected before year-end 2026.",
     "dealSize": 2546,
@@ -9379,7 +9513,10 @@ const DEALS = [
     "description": "Publicis Groupe to acquire LiveRamp (RAMP) for $38.50/share cash ($2.546B equity / $2.167B EV; $379M net cash). 29.8% premium. Combines Publicis CoreAI with LiveRamp's data collaboration network. HSR by June 15, CFIUS by June 30. Close before year-end 2026.",
     "sourceUrl": "https://www.publicisgroupe.com/en/news/press-releases/publicis-to-acquire-liveramp-to-accelerate-data-co-creation-for-smarter-agents",
     "category": "active_deal",
-    "comment": "(2026-10-21) FTC agreement reached. Publicis announced on 19 October 2026 that it has reached an agreement with the U.S. Federal Trade Commission based on commitments it offered proactively, covering customer choice, fair and non-discriminatory access to LiveRamp's products, data protection, interoperability with other agencies and platforms, and periodic independent audits. The company reiterates that closing is still expected before year-end 2026 at $38.50 cash. The FTC's own order text was not yet available at the time of this note. Sources: Publicis press release (19 Oct), French-language wire pickup, and M&A trade coverage.\n(2026-10-09) Status label corrected to pending: shareholder approval obtained but the transaction has not closed (no closing 8-K or Form 25 on EDGAR as of 9 October).\n(2026-08-18) Stockholder approval obtained. LiveRamp held its special meeting on August 17, 2026 and stockholders adopted the May 16, 2026 merger agreement with MMS USA Holdings, a Publicis Groupe subsidiary. Roughly 56.07mn shares — about 92.2% of the 60.79mn shares outstanding on the June 18 record date — were represented, comfortably clearing the two-thirds-of-outstanding threshold the charter required. With the vote behind it the deal is down to regulatory clearances and customary conditions, and the parties have pointed to completion by year-end 2026 against the $38.50 cash price. Sourced to the company's Item 5.07 8-K, its definitive merger proxy, and independent trade coverage of the meeting."
+    "comment": "[2026-11-02 spread review] Status approved: Closed 2026-11-02: LiveRamp 8-K Item 2.01 says MMS USA Holdings (Publicis) completed the merger, and Form 25 delisting was filed the same day. Review: The input dealPrice was null; it should be $38.50. The deal has now closed, on Nov 2, 2026.\n(2026-10-21) FTC agreement reached. Publicis announced on 19 October 2026 that it has reached an agreement with the U.S. Federal Trade Commission based on commitments it offered proactively, covering customer choice, fair and non-discriminatory access to LiveRamp's products, data protection, interoperability with other agencies and platforms, and periodic independent audits. The company reiterates that closing is still expected before year-end 2026 at $38.50 cash. The FTC's own order text was not yet available at the time of this note. Sources: Publicis press release (19 Oct), French-language wire pickup, and M&A trade coverage.\n(2026-10-09) Status label corrected to pending: shareholder approval obtained but the transaction has not closed (no closing 8-K or Form 25 on EDGAR as of 9 October).\n(2026-08-18) Stockholder approval obtained. LiveRamp held its special meeting on August 17, 2026 and stockholders adopted the May 16, 2026 merger agreement with MMS USA Holdings, a Publicis Groupe subsidiary. Roughly 56.07mn shares — about 92.2% of the 60.79mn shares outstanding on the June 18 record date — were represented, comfortably clearing the two-thirds-of-outstanding threshold the charter required. With the vote behind it the deal is down to regulatory clearances and customary conditions, and the parties have pointed to completion by year-end 2026 against the $38.50 cash price. Sourced to the company's Item 5.07 8-K, its definitive merger proxy, and independent trade coverage of the meeting.",
+    "quoteSymbol": "RAMP",
+    "priceCurrency": "USD",
+    "spreadNote": "Not calculated: deal closed. Closed 2026-11-02: LiveRamp 8-K Item 2.01 says MMS USA Holdings (Publicis) completed the merger, and Form 25 delisting was filed the same day."
   },
   {
     "target": "Tate & Lyle plc",
@@ -9388,7 +9525,7 @@ const DEALS = [
     "geo": "UK / USA",
     "industry": "Food Ingredients / Specialty Sweeteners",
     "announced": "2026-06-08",
-    "expectedClose": "2026-H2",
+    "expectedClose": "2027-12-31",
     "status": "pending",
     "closingProbability": 80,
     "dealTerms": "Recommended all-cash offer of 595p per share plus up to 20p in permitted dividends (615p total); enterprise value ~£3.7B ($5B). Unanimously recommended by Tate & Lyle board; irrevocable undertaking from Huber Equity (~16.8%). Court-sanctioned scheme of arrangement; completion expected H2 2027.",
@@ -9396,14 +9533,18 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "Ingredion announced a recommended all-cash acquisition of Tate & Lyle at 595p/share plus up to 20p dividends (615p total), valuing the target at ~£3.7B / $5B EV. Creates a global specialty food ingredients leader. Implemented via UK scheme of arrangement; completion expected H2 2027.",
-    "comment": "(2026-06-08) Moved from possible offer to recommended firm all-cash offer at 595p + up to 20p dividends (615p); ~£3.7B/$5B EV; board-recommended with Huber Equity irrevocable (~16.8%). Completion expected H2 2027.",
+    "comment": "[2026-11-02 spread review] Review: The expectedClose in the input (2026-H2) is wrong: guidance is H2 2027. Shareholder approval was obtained 2026-07-28 (Ingredion 8-K). I could not verify the permitted-dividend breakdown in a primary source.\n(2026-06-08) Moved from possible offer to recommended firm all-cash offer at 595p + up to 20p dividends (615p); ~£3.7B/$5B EV; board-recommended with Huber Equity irrevocable (~16.8%). Completion expected H2 2027.",
     "sourceUrl": "https://ir.ingredionincorporated.com/news-releases/news-release-details/ingredion-announces-recommended-all-cash-acquisition-tate-lyle",
     "category": "active_deal",
     "dealPrice": 595,
-    "currentPrice": 559.5,
-    "spread": 6.345,
-    "annualizedReturn": 231.5907,
-    "daysToClose": 10
+    "currentPrice": 565,
+    "spread": 5.31,
+    "annualizedReturn": 4.6,
+    "daysToClose": 424,
+    "quoteSymbol": "TATE.L",
+    "priceCurrency": "GBp",
+    "spreadCalc": "As of 2026-11-02 16:35 UTC. Deal value 595 GBp = 595 per share. Target price 565 GBp (TATE.L). Gross spread = (value - price)/price = 5.31%. Annualized = spread x 365 / 424 days to 2027-12-31 = 4.6%. 595p cash per share under the scheme. Holders may also keep permitted dividends of up to 20p in total (per the input/announcement). Those are excluded from fixedValue because some may already have been paid; add any unpaid permitted dividends for a full value of up to 615p. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "spreadNote": "Scheme document announcement (2026-07-03): the Scheme is expected to become effective 'during the second half of 2027', subject to the Material Antitrust Conditions. Court Meeting/GM approved 2026-07-28."
   },
   {
     "target": "OFB Bancshares Inc (One Florida Bank)",
@@ -9432,7 +9573,7 @@ const DEALS = [
     "industry": "Logistics / Air Cargo GSSA",
     "announced": "2026-05-14",
     "expectedClose": "2026-12-31",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "~$1.2B enterprise value. Acquired from EQT and PAI Partners (50-50 owners). Originally acquired by PAI/Baring 2018 for €600M+. WFC serves 300+ airlines on 3,500 trade lanes, 16,000+ freight forwarders across 80+ countries. Customary closing conditions; expected to complete by end of 2026.",
     "dealSize": 1200,
@@ -9440,7 +9581,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Brookfield Asset Management to acquire World Freight Company from EQT and PAI Partners for ~$1.2B EV. WFC is one of the world's largest general sales and service agents (GSSA) for global air freight, serving 300+ airlines and 16,000+ forwarders. Close expected end of 2026.",
     "sourceUrl": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-07-31: BBU 6-K reports the WFC acquisition completed",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-31: BBU 6-K reports the WFC acquisition completed Review: Status: closed. The Brookfield Business Corp 6-K says Brookfield Business Corp and its institutional partners were the buyers."
   },
   {
     "target": "RUCKUS Networks",
@@ -9450,7 +9593,7 @@ const DEALS = [
     "industry": "Networking / Enterprise Wi-Fi & Switching",
     "announced": "2026-05-14",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 85,
     "dealTerms": "~$1.85B all-cash; ~13x projected 2026 Adjusted EBITDA. Acquired from Vistance Networks (formerly CommScope CCS, renamed January 2026 after Amphenol sale). RUCKUS: 48,000+ customers in hospitality, education, healthcare; AI-driven cloud networking platform. High-single-digit revenue growth, >60% gross margins, >20% Adjusted EBITDA margins year one. Both boards approved. Subject to customary conditions and regulatory approvals. Close H2 2026.",
     "dealSize": 1850,
@@ -9458,7 +9601,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Belden (BDC) to acquire RUCKUS Networks from Vistance Networks (formerly CommScope CCS) for ~$1.85B all-cash (~13x 2026 EBITDA). Adds enterprise Wi-Fi, switching, AI cloud networking platform with 48,000+ customers. Close H2 2026.",
     "sourceUrl": "https://investor.belden.com/news/news-details/2026/Belden-to-Acquire-RUCKUS-Networks-from-Vistance-Networks-Accelerating-its-Transformation-into-a-Full-Stack-Networking-Solutions-Provider/default.aspx",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. 2026-07-01: Belden 8-K and press release announce completion",
+    "comment": "[2026-11-02 spread review] Status approved: 2026-07-01: Belden 8-K and press release announce completion Review: Status: closed"
   },
   {
     "target": "Chevron Asia-Pacific Refining & Retail Assets",
@@ -9476,7 +9621,11 @@ const DEALS = [
     "dealRisk": "medium",
     "description": "ENEOS Holdings to acquire Chevron's Asia-Pacific refining and retail assets for $2.17B all-cash — Chevron's 50% Singapore SRC stake plus retail/lubricants ops across Malaysia, Indonesia, Philippines, Australia, Vietnam. Targets growing 50% overseas sales mix by FY2030-31. Close 2027.",
     "sourceUrl": "https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/051426-eneos-to-acquire-chevron-downstream-assets-across-southeast-asia-australia",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Asset / carve-out sale by a public parent",
+    "comment": "[2026-11-02 spread review] Review: The source is S&P news, not a primary document; the ENEOS press release was not retrieved. No completion announcement was found."
   },
   {
     "target": "Octave Intelligence plc (Hexagon spin-off)",
@@ -9521,24 +9670,32 @@ const DEALS = [
     "acquirer": "Bank First Corporation (BFC)",
     "geo": "USA",
     "industry": "Financials / Community Banking",
-    "currentPrice": 52.98,
-    "dealPrice": 49.75,
+    "currentPrice": 52.5,
+    "dealPrice": 52.3796,
     "dealTerms": "0.3470 BFC shares per PSB share (all-stock); ~$202.9M transaction value based on BFC's May 18, 2026 closing price of $143.66. >80% premium. Both boards approved; subject to PSB shareholder vote and regulatory approval. Combined entity pro forma ~$7.6B assets, $5.64B loans, $6.27B deposits.",
-    "spread": -6.0966,
-    "annualizedReturn": -54.275,
+    "spread": -0.23,
+    "annualizedReturn": -2.6,
     "announced": "2026-05-19",
-    "expectedClose": "2026-Q4",
+    "expectedClose": "2026-12-04",
     "status": "pending",
     "closingProbability": 90,
     "description": "Bank First Corporation to acquire PSB Holdings (parent of Peoples State Bank, Wausau WI) in all-stock deal worth ~$202.9M (0.3470 BFC per PSB share). >80% premium. Both boards approved. Closing and systems conversion expected Q4 2026.",
-    "comment": "Thinly traded OTC target — current price may lag deal terms. Large headline spread reflects limited liquidity rather than deal risk. Clean community bank consolidation; regulatory approval typically routine for in-state combinations.",
+    "comment": "[2026-11-02 spread review] Review: The input dealPrice of $49.75 is a snapshot: the 424B3 implies $49.85 at BFC's $143.66. The input omits the TBV downward adjustment and the walk-away/top-up provision. A primary source has been added. I did not find the PSB vote result in an SEC filing (PSB is not an SEC filer); the planned closing date suggests it was approved.\nThinly traded OTC target — current price may lag deal terms. Large headline spread reflects limited liquidity rather than deal risk. Clean community bank consolidation; regulatory approval typically routine for in-state combinations.",
     "dealSize": 202.9,
     "dealCurrency": "USD",
     "dealRisk": "low",
-    "spreadCalc": "$49.75 deal value; (49.75 − 49.50) / 49.50 = 0.51%",
+    "spreadCalc": "As of 2026-11-02 16:38 UTC. Deal value 52.3796 USD = 0 cash + 0.347 x BFC 150.95. Target price 52.5 USD (PSBQ). Gross spread = (value - price)/price = -0.23%. Annualized = spread x 365 / 32 days to 2026-12-04 = -2.6%. All stock: 0.3470 BFC shares per PSB share, with cash for fractional shares. The total consideration can be cut if PSB's tangible book value is below $122,837,000 at closing. PSB has a walk-away right if BFC falls more than 15% beyond the NASDAQ Bank Index, and BFC can top up to avoid it. PSBQ trades on OTCQX. Price source: Yahoo Finance via mergeranalyst-quote.",
     "sourceUrl": "https://www.prnewswire.com/news-releases/bank-first-corporation-signs-agreement-to-acquire-psb-holdings-inc-302776812.html",
     "category": "active_deal",
-    "daysToClose": 41
+    "daysToClose": 32,
+    "quoteSymbol": "PSBQ",
+    "priceCurrency": "USD",
+    "liveTerms": {
+      "cash": 0,
+      "ratio": 0.347,
+      "acq": "BFC"
+    },
+    "spreadNote": "BFC Q3 2026 earnings release (Oct 20, 2026): 'our planned December 4, 2026 acquisition of Peoples'. Original guidance was Q4 2026."
   },
   {
     "target": "InMed Pharmaceuticals Inc",
@@ -9555,9 +9712,15 @@ const DEALS = [
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "InMed Pharmaceuticals to merge with Mentari Therapeutics in all-stock reverse merger; InMed shareholders retain ~1.51% of combined entity. Concurrent $290M PIPE expected to fund operations through 2028. Combined company to focus on migraine prevention with anti-PACAP mAb (MT-001) and CGRP/PACAP bispecific (MT-002). Both boards approved; close H2 2026.",
-    "comment": "(2026-07-12) InMed and Mentari Therapeutics have entered into an amendment to the definitive merger agreement and InMed has filed a registration statement on Form S-4 with the SEC containing a preliminary proxy statement/prospectus and management information circular. The amendment clarifies the sequencing of the contemplated transactions, the impact of the pre-closing financing on the exchange ratio, and the intended tax treatment of the merger; the agreement otherwise remains in full force and effect. Filing of the S-4 is a procedural step toward the shareholder vote. Verified against the company's SEC Form 8-K/425 and the issuer newswire release, plus independent aggregator coverage.\nReverse merger + PIPE recapitalizes INM as Mentari migraine play. INM holders dilute to ~1.5% but may receive CVRs from legacy program monetization. Pre-announcement INM closed $0.68; pre-market spiked to $1.60 on news.",
+    "comment": "[2026-11-02 spread review] Review: Upcoming: 1-for-10 consolidation and a return-of-capital proposal at the Nov 4, 2026 meeting. The details of the return-of-capital proposal and the CVR were not checked.\n(2026-07-12) InMed and Mentari Therapeutics have entered into an amendment to the definitive merger agreement and InMed has filed a registration statement on Form S-4 with the SEC containing a preliminary proxy statement/prospectus and management information circular. The amendment clarifies the sequencing of the contemplated transactions, the impact of the pre-closing financing on the exchange ratio, and the intended tax treatment of the merger; the agreement otherwise remains in full force and effect. Filing of the S-4 is a procedural step toward the shareholder vote. Verified against the company's SEC Form 8-K/425 and the issuer newswire release, plus independent aggregator coverage.\nReverse merger + PIPE recapitalizes INM as Mentari migraine play. INM holders dilute to ~1.5% but may receive CVRs from legacy program monetization. Pre-announcement INM closed $0.68; pre-market spiked to $1.60 on news.",
     "sourceUrl": "https://www.prnewswire.com/news-releases/inmed-pharmaceuticals--mentari-therapeutics-announce-merger-to-advance-migraine-prevention-therapies-302776112.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "quoteSymbol": "INM",
+    "priceCurrency": "USD",
+    "spread": null,
+    "annualizedReturn": null,
+    "spreadNote": "Not calculable: Reverse merger where the listed target (InMed) survives; no per-share consideration to INM holders",
+    "currentPrice": 1.63
   },
   {
     "target": "The Fortegra Group Inc",
@@ -9608,15 +9771,17 @@ const DEALS = [
     "industry": "Energy / Oil & Gas / Shale",
     "announced": "2026-05-20",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 80,
     "dealTerms": "$1.3B acquisition of Quantum-backed Caliber Resource Partners, with NextEra forming a joint venture with Quantum Capital Group ('NEQ Operating') to manage onshore U.S. shale basin interests. Alan Smith (Quantum Energy Partners MD) appointed interim executive chairman of JV. Enhances NextEra's natural gas supply position following its $67B Dominion Energy deal.",
     "dealSize": 1300,
     "dealCurrency": "USD",
     "dealRisk": "medium",
     "description": "NextEra Energy to acquire Caliber Resource Partners for $1.3B and form NEQ Operating JV with Quantum Capital to manage onshore U.S. shale assets. Boosts NextEra's natural gas supply chain post-Dominion.",
-    "sourceUrl": "https://www.reuters.com/business/energy/nextera-energy-buy-caliber-resource-partners-set-up-shale-jv-2026-05-20/",
-    "category": "active_deal"
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000081/nee-20260930.htm",
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. NEE's Q3 10-Q (filed 2026-10-21) says a 95%-owned NextEra Energy Resources subsidiary bought 100% of CRP XII Intermediate, LLC (owner of Caliber Resource Partners) on 2026-06-30.",
+    "comment": "[2026-11-02 spread review] Status approved: NEE's Q3 10-Q (filed 2026-10-21) says a 95%-owned NextEra Energy Resources subsidiary bought 100% of CRP XII Intermediate, LLC (owner of Caliber Resource Partners) on 2026-06-30. Review: The deal closed on 2026-06-30. Buyer was a 95%-owned NEER subsidiary. Source updated from Reuters to the NEE 10-Q."
   },
   {
     "target": "Everest Compañía de Seguros Generales Colombia",
@@ -9737,7 +9902,7 @@ const DEALS = [
     "industry": "Semiconductors / Integrated Voltage Regulators",
     "announced": "2026-05-19",
     "expectedClose": "2026-H2",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 90,
     "dealTerms": "$1.5B cash acquisition of Empower Semiconductor, a privately held leader in silicon-based integrated voltage regulators (IVRs) for AI/data-center power delivery. Adds Empower's silicon-capacitor IVR technology to ADI's power portfolio, strengthening positioning into AI compute platforms requiring high-density, low-noise power. Subject to customary regulatory approvals and closing conditions; expected to close in H2 2026.",
     "dealSize": 1500,
@@ -9745,7 +9910,9 @@ const DEALS = [
     "dealRisk": "low",
     "description": "Analog Devices to acquire Empower Semiconductor for $1.5B cash. Adds silicon-based integrated voltage regulators (IVRs) for AI/data-center power delivery to ADI's portfolio. Close expected H2 2026.",
     "sourceUrl": "https://www.analog.com/en/newsroom/press-releases/2026/5-19-2026-adi-to-acquire-empower-semiconductor.html",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. ADI's 10-Q for the quarter ended Aug 1, 2026 (Note 11) says ADI completed the Empower acquisition on 2026-07-07 for about $1.5B.",
+    "comment": "[2026-11-02 spread review] Status approved: ADI's 10-Q for the quarter ended Aug 1, 2026 (Note 11) says ADI completed the Empower acquisition on 2026-07-07 for about $1.5B. Review: The deal closed on 2026-07-07."
   },
   {
     "target": "InnocsAI",
@@ -9755,7 +9922,7 @@ const DEALS = [
     "industry": "Healthcare / AI Therapeutics",
     "announced": "2026-05-26",
     "expectedClose": "TBD",
-    "status": "pending",
+    "status": "approved",
     "closingProbability": 60,
     "dealTerms": "~$320M acquisition of privately held AI biotech InnocsAI by Liminatus Pharma. Transaction structure and consideration mix not fully disclosed in initial reports. Combines Liminatus's clinical-stage immuno-oncology pipeline with InnocsAI's AI-driven drug discovery and design capabilities.",
     "dealSize": 320,
@@ -9763,7 +9930,9 @@ const DEALS = [
     "dealRisk": "medium",
     "description": "Liminatus Pharma to acquire AI biotech InnocsAI for ~$320M. Adds AI-driven drug discovery to Liminatus's immuno-oncology platform. Terms and close timing pending further disclosure.",
     "sourceUrl": "https://www.businesswire.com/",
-    "category": "active_deal"
+    "category": "active_deal",
+    "spreadNote": "Not calculated: deal closed. Merger completed 2026-07-02 per Liminatus 8-K Item 2.01 filed 2026-07-06.",
+    "comment": "[2026-11-02 spread review] Status approved: Merger completed 2026-07-02 per Liminatus 8-K Item 2.01 filed 2026-07-06. Review: The deal closed on 2026-07-02. Liminatus Pharma trades as LIMN. Source updated to the SEC 8-K."
   },
   {
     "target": "Starz Entertainment Corp",
@@ -10075,11 +10244,11 @@ const DEALS = [
     "acquirer": "Intesa Sanpaolo S.p.A. (BIT: ISP)",
     "geo": "Italy",
     "industry": "Financials / Banking",
-    "dealPrice": null,
+    "dealPrice": 10.7748,
     "dealValue": "~€31.4bn total consideration at full acceptance (€27.6bn in ISP shares + €3.8bn cash); press reports value the offer at ~€34-35bn at current ISP prices",
     "dealTerms": "Voluntary public exchange and tender offer (OPAS) launched June 2026 for 100% of MPS: 1.6 newly issued Intesa Sanpaolo shares plus cash per MPS share. Cash component increased on October 3, 2026 from €1.00 to €1.25 per MPS share (~€800m additional cash). Implied value ~€11.37 per MPS share at the October 3, 2026 ISP close of €6.328, versus the MPS close of €11.278 (~0.9% simple premium before dividend adjustments). Original June terms implied €10.091 per share (12.5% premium to the June 5 close). Conditions include MPS not adopting defensive measures: Intesa has stated it will NOT waive conditions and the offer will lapse if MPS shareholders approve either of MPS's proposed all-share offers for Banco BPM or Banca Generali (or the related extraordinary distribution) at the EGM on October 29, 2026. Italian competition authority opened an investigation in September 2026.",
     "announced": "2026-06-08",
-    "expectedClose": "2027-H1",
+    "expectedClose": "2027-06-30",
     "status": "pending",
     "category": "active_deal",
     "closingProbability": 75,
@@ -10088,8 +10257,21 @@ const DEALS = [
     "dealRisk": "medium",
     "otherBidders": "MPS's defensive all-share offers for Banco BPM and Banca Generali were rejected by MPS shareholders at the October 29, 2026 EGM (~91% against) and have lapsed. No rival bidder for MPS disclosed.",
     "description": "Intesa Sanpaolo, Italy's largest bank, is seeking to absorb Monte dei Paschi in what would be Italy's largest-ever banking deal, targeting ~€2.9bn of annual pre-tax synergies by 2029. The transaction has become a contested shareholder showdown: MPS's board is advancing rival acquisitions of Banco BPM and Banca Generali as a defence, while Intesa has sweetened the cash component and conditioned the offer on those acquisitions being rejected.",
-    "comment": "(2026-11-02) MPS shareholders rejected the board's defence plan at the October 29, 2026 EGM: the exchange offers for Banco BPM (~91.1% against) and Banca Generali (~90.9% against) and the capital reduction funding the ~€4bn extraordinary distribution (~90.7% against) all failed, and MPS has declared both offers lapsed. This clears the key condition on Intesa's offer. Press reports indicate Intesa plans to open the acceptance period in the last week of November 2026; remaining gates are Italian antitrust clearance and shareholder tenders. Closing probability raised to 75%. Verification: MPS/Intesa statements of October 29-30, 2026; Bloomberg (October 29 and November 2, 2026); Reuters coverage; Retail Banker International.\n(2026-10-08) Press reports indicate Caltagirone's FGC (10.26% of MPS) will vote AGAINST MPS's proposed Banco BPM and Banca Generali acquisitions and the MPS-Mediobanca merger at the October 29 EGM, following Delfin (17.6%) and Edizione (1.45%), which have backed Intesa's offer. Roughly 29% of MPS now lines up against the defence plan, giving Intesa's improved €1.25 cash + 1.6 ISP shares offer momentum. Key catalyst: MPS EGM October 29, 2026 — Intesa has said it will withdraw if the defence plan passes.\n(2026-10-05) Intesa raised the cash component of its offer to €1.25 per MPS share (from €1.00), adding ~€800m; Delfin committed to tender its 17.6% stake and vote against the MPS defence plan.",
-    "sourceUrl": "https://www.emarketstorage.it/sites/default/files/comunicati/2026-06/20260608_185457.pdf"
+    "comment": "[2026-11-02 spread review] Review: The defensive-measure risk has largely passed: at the 2026-10-29 MPS EGM the alternative BPM/Banca Generali offers and the MPS-Mediobanca merger were not approved. Intesa waived the merger-related condition and continues the OPAS, with a mandatory offer for Mediobanca to follow if the OPAS completes. I confirmed the EUR 1.25 cash via secondary sources only (Teleborsa/Websim); the Intesa 3 Oct prim\n(2026-11-02) MPS shareholders rejected the board's defence plan at the October 29, 2026 EGM: the exchange offers for Banco BPM (~91.1% against) and Banca Generali (~90.9% against) and the capital reduction funding the ~€4bn extraordinary distribution (~90.7% against) all failed, and MPS has declared both offers lapsed. This clears the key condition on Intesa's offer. Press reports indicate Intesa plans to open the acceptance period in the last week of November 2026; remaining gates are Italian antitrust clearance and shareholder tenders. Closing probability raised to 75%. Verification: MPS/Intesa statements of October 29-30, 2026; Bloomberg (October 29 and November 2, 2026); Reuters coverage; Retail Banker International.\n(2026-10-08) Press reports indicate Caltagirone's FGC (10.26% of MPS) will vote AGAINST MPS's proposed Banco BPM and Banca Generali acquisitions and the MPS-Mediobanca merger at the October 29 EGM, following Delfin (17.6%) and Edizione (1.45%), which have backed Intesa's offer. Roughly 29% of MPS now lines up against the defence plan, giving Intesa's improved €1.25 cash + 1.6 ISP shares offer momentum. Key catalyst: MPS EGM October 29, 2026 — Intesa has said it will withdraw if the defence plan passes.\n(2026-10-05) Intesa raised the cash component of its offer to €1.25 per MPS share (from €1.00), adding ~€800m; Delfin committed to tender its 17.6% stake and vote against the MPS defence plan.",
+    "sourceUrl": "https://www.emarketstorage.it/sites/default/files/comunicati/2026-06/20260608_185457.pdf",
+    "quoteSymbol": "BMPS.MI",
+    "priceCurrency": "EUR",
+    "liveTerms": {
+      "cash": 1.25,
+      "ratio": 1.6,
+      "acq": "ISP.MI"
+    },
+    "currentPrice": 10.97,
+    "spread": -1.78,
+    "daysToClose": 240,
+    "annualizedReturn": -2.7,
+    "spreadCalc": "As of 2026-11-02 16:37 UTC. Deal value 10.7748 EUR = 1.25 cash + 1.6 x ISP.MI 5.953. Target price 10.97 EUR (BMPS.MI). Gross spread = (value - price)/price = -1.78%. Annualized = spread x 365 / 240 days to 2027-06-30 = -2.7%. OPAS terms: 1.6 new Intesa Sanpaolo shares plus EUR 1.25 cash per MPS share (cash raised from EUR 1.00 on 2026-10-03; ratio unchanged). Value depends on the ISP.MI price. Possible adjustments for dividends paid before settlement, not verified. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "spreadNote": "Intesa 28 Oct 2026: all prior regulatory authorisations obtained. Offer document filed with CONSOB 27 Jun 2026; the acceptance period starts after CONSOB approval (press reports: Nov-Dec 2026). Intesa 30 Oct 2026: offer continues after the MPS EGM. No official settlement date found; input guidance o"
   },
   {
     "target": "Bio-Techne Corporation",
@@ -10097,11 +10279,11 @@ const DEALS = [
     "acquirer": "Merck KGaA, Darmstadt, Germany (via EMD Holdings NewCo)",
     "geo": "USA / Germany",
     "industry": "Life sciences tools / Reagents and diagnostics",
-    "dealPrice": 73.0,
+    "dealPrice": 73,
     "dealValue": "$73.00 per share in cash; ~$11.3bn enterprise value (~EUR 9.9bn)",
     "dealTerms": "Definitive merger agreement signed and announced 25 June 2026: Merck KGaA acquires Bio-Techne for $73.00 per share in cash. Bio-Techne shareholders approved on 23 September 2026. HSR waiting period expired 18 September 2026 (after refiling); Germany cleared 17 August; Australia's ACCC approved 8 October 2026. Ireland's CCPC Phase 1 review pending. Outside date 25 March 2027, extendable to 25 June and 25 September 2027 for regulatory conditions.",
     "announced": "2026-06-25",
-    "expectedClose": "2027-Q1",
+    "expectedClose": "2027-03-31",
     "status": "pending",
     "category": "active_deal",
     "closingProbability": 88,
@@ -10111,11 +10293,16 @@ const DEALS = [
     "otherBidders": "",
     "breakupFee": "$230.5M (target) / $576.1M (parent)",
     "description": "Merck KGaA, Darmstadt, Germany is acquiring Bio-Techne, a supplier of proteins, antibodies, reagents, spatial biology and diagnostic tools, in an all-cash transaction.",
-    "comment": "(2026-10-08) New row. All-cash $73.00 per share; shareholder approval obtained 23 September. Regulatory progress: US HSR expired 18 September, Germany cleared 17 August, Australia ACCC approved 8 October (Phase 1). Ireland CCPC review pending (information request issued 25 September). Companies expect closing late 2026 or early 2027.",
-    "currentPrice": null,
-    "spread": null,
-    "annualizedReturn": null,
-    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/842023/000199937126013429/ex99-1.htm"
+    "comment": "[2026-11-02 spread review] Review: Original guidance was 'late 2026 or early 2027'; I used the end of Q1 2027. Shareholder approval on 2026-09-23 is confirmed by 8-K. I could not verify in primary filings the input's specific clearances (HSR expiry Sept 18, Germany, ACCC Oct 8, Irish CCPC pending). Outside date is March 25, 2027, auto-extending to June 25 and then Sept 25, 2027. One disclosure lawsuit (Garfield, Minnesota) was file\n(2026-10-08) New row. All-cash $73.00 per share; shareholder approval obtained 23 September. Regulatory progress: US HSR expired 18 September, Germany cleared 17 August, Australia ACCC approved 8 October (Phase 1). Ireland CCPC review pending (information request issued 25 September). Companies expect closing late 2026 or early 2027.",
+    "currentPrice": 72.67,
+    "spread": 0.45,
+    "annualizedReturn": 1.1,
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/842023/000199937126013429/ex99-1.htm",
+    "quoteSymbol": "TECH",
+    "priceCurrency": "USD",
+    "daysToClose": 149,
+    "spreadCalc": "As of 2026-11-02 21:00 UTC. Deal value 73 USD = 73 per share. Target price 72.67 USD (TECH). Gross spread = (value - price)/price = 0.45%. Annualized = spread x 365 / 149 days to 2027-03-31 = 1.1%. All cash, $73.00 per share. No CVR. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "spreadNote": "June 25, 2026 press release: 'expected to close by late 2026 or early 2027'"
   },
   {
     "target": "Jamieson Wellness Inc.",
@@ -11006,6 +11193,36 @@ const DEALS = [
     "daysToClose": 149,
     "spreadCalc": "As of 2026-11-02 close. Deal value 11.7 USD = $11.70 cash. Target price 11.41 USD. Gross spread = (value - price)/price = 2.54%. Annualized = spread x 365 / 149 days to 2027-03-31 (conservative close date) = 6.2%. Prices: PERI 11.41 USD (Nasdaq.com official close (NASDAQ-GS), 2026-11-02).",
     "spreadNote": "Guidance \"early 2027\"; outside date ~30 Apr 2027. Israeli withholding may apply."
+  },
+  {
+    "target": "Capricorn Energy plc",
+    "targetTicker": "CNE.L",
+    "acquirer": "Genel Energy plc (LSE: GENL), through Genel Energy No.9 Limited (Bidco)",
+    "geo": "UK / Egypt",
+    "industry": "Energy / Oil & Gas Exploration and Production - Egyptian Western Desert onshore assets",
+    "dealPrice": 427.74,
+    "dealValue": "US$5.74 per share (US$4.75 cash plus US$0.99 permitted special dividend), ~434p at announcement; ~US$436mn / ~£330mn fully diluted",
+    "dealTerms": "Increased recommended cash offer announced 25 September 2026 by the boards of Genel Energy plc, Genel Energy No.9 Limited (Bidco) and Capricorn Energy plc: US$4.75 cash per Capricorn share plus a US$0.99 per share permitted special dividend to be declared by Capricorn before the Effective Date (total US$5.74, ~434p at the announcement exchange rate). To be implemented by a Scottish scheme of arrangement. Capricorn board recommends the Genel offer and withdrew its recommendation of the rival DNO ASA offer (US$5.214), which DNO said on 28 Sep 2026 it would not increase.",
+    "announced": "2026-09-01",
+    "expectedClose": "2026-12-31",
+    "status": "pending",
+    "category": "active_deal",
+    "closingProbability": 75,
+    "dealSize": 330,
+    "dealCurrency": "USD",
+    "dealRisk": "medium",
+    "otherBidders": "Genel Energy plc had a competing proposal for Capricorn which the Capricorn board has now declined in favour of the DNO terms. A revised Genel proposal is the main identifiable source of upside and of timetable risk.",
+    "description": "DNO ASA has agreed a recommended cash acquisition of Capricorn Energy plc at $5.214 per share in aggregate ($4.224 cash plus an expected ~$0.99 special dividend), equivalent to ~384 pence and ~$396mn / ~£292mn of equity value, a ~45% premium to the 266p unaffected close of 10 March 2026. The deal marks DNO's entry into Egyptian upstream and displaces a competing proposal from Genel Energy.",
+    "comment": "[2026-11-02 spread review] New row: Genel Energy increased offer (25 Sep 2026) replaced the DNO offer as the recommended deal.",
+    "sourceUrl": "https://www.capricornenergy.com/investors/recommended-cash-acquisition-of-capricorn-energy-plc-by-genel-energy-no-9-limited/",
+    "currentPrice": 424.0,
+    "spread": 0.88,
+    "annualizedReturn": 5.4,
+    "daysToClose": 59,
+    "spreadCalc": "As of 2026-11-02 close. Deal value 427.74 GBp = US$5.74 (US$4.75 cash + US$0.99 special dividend) / GBPUSD 1.3419 (ECB 2 Nov). Target price 424 GBp (CNE.L). Gross spread = 0.88%. Annualized = spread x 365 / 59 days to 2026-12-31 = 5.4%. USD-denominated offer: value moves with GBP/USD; not live-updated. Price source: Yahoo Finance via mergeranalyst-quote.",
+    "quoteSymbol": "CNE.L",
+    "priceCurrency": "GBp",
+    "spreadNote": "Genel scheme guided to become effective in H2 2026 (long stop 2 Jan 2027); 31 Dec 2026 used."
   }
 ];
 
@@ -11087,7 +11304,9 @@ async function fetchLivePrices() {
     if (d.liveTerms) {
       const lt = d.liveTerms, a = quotes[lt.acq];
       if (!fresh(a)) continue;
-      value = (lt.cash || 0) + (lt.ratio || 0) * a.price;
+      // lt.collar = {lo, hi, value}: stock leg worth a fixed value between the collar bounds, else a fixed lo/hi ratio
+      const stockLeg = lt.collar ? Math.max(lt.collar.lo * a.price, Math.min(lt.collar.hi * a.price, lt.collar.value)) : (lt.ratio || 0) * a.price;
+      value = (lt.cash || 0) + stockLeg;
       if (lt.cap != null) value = Math.min(value, lt.cap);       // collar: fixed value above the cap
       if (lt.floor != null) value = Math.max(value, lt.floor);
       value = +value.toFixed(4);
