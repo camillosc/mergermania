@@ -641,6 +641,12 @@
 
   .geo-usa { background: #DBEAFE; color: #1E40AF; border: 1px solid #BFDBFE; }
   .geo-eu  { background: #FEF9C3; color: #854D0E; border: 1px solid #FDE68A; }
+  .geo-ca  { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+  .geo-uk  { background: #E0E7FF; color: #3730A3; border: 1px solid #C7D2FE; }
+  .geo-latam { background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0; }
+  .geo-apac  { background: #FCE7F3; color: #9D174D; border: 1px solid #FBCFE8; }
+  .geo-mea   { background: #FFEDD5; color: #9A3412; border: 1px solid #FED7AA; }
+  .geo-global { background: #F3F4F6; color: #374151; border: 1px solid #E5E7EB; }
 
   .industry-tag {
     font-size: 10px;
@@ -1480,8 +1486,8 @@
 
   <div class="controls">
     <button class="filter-btn active" onclick="setFilter('all')">All Deals</button>
-    <button class="filter-btn" onclick="setFilter('USA')">US USA</button>
-    <button class="filter-btn" onclick="setFilter('EU')">EU Europe</button>
+    <button class="filter-btn" onclick="setFilter('USA')">US</button>
+    <button class="filter-btn" onclick="setFilter('EU')">Europe &amp; UK</button>
     <div class="filter-divider"></div>
     <button class="filter-btn" onclick="setFilter('high-spread')">High Spread (&gt;5%)</button>
     <button class="filter-btn" onclick="setFilter('closing-soon')">Closing Soon</button>
@@ -11699,8 +11705,8 @@ async function fetchLivePrices() {
 function renderDeals() {
   let deals = [...allDeals];
   const srch = ((document.getElementById("searchInput")||{}).value||"").toLowerCase();
-  if      (currentFilter==="USA")          deals=deals.filter(d=>d.geo==="USA");
-  else if (currentFilter==="EU")           deals=deals.filter(d=>d.geo==="EU");
+  if      (currentFilter==="USA")          deals=deals.filter(d=>geoRegion(d)==="us");
+  else if (currentFilter==="EU")           deals=deals.filter(isEurope);
   else if (currentFilter==="high-spread")  deals=deals.filter(d=>(d.spread||0)>5);
   else if (currentFilter==="closing-soon") deals=deals.filter(d=>{const t=dtc(d.expectedClose);return t!==null&&t<180;});
   else if (currentFilter==="megadeal")     deals=deals.filter(d=>(d.dealSize||0)>=10);
@@ -11795,7 +11801,7 @@ function renderDeals() {
 
     tr.innerHTML=
       '<td data-col="0" class="company-cell"><div class="target-name">'+targetHTML+'</div><div class="acquirer-name"><- <span>'+esc(d.acquirer||" - ")+'</span></div>'+(d.targetTicker?'<div class="ticker-badge">'+esc(d.targetTicker)+'</div>':'')+'</td>'+
-      '<td data-col="1"><div class="geo-badge '+(d.geo==="USA"?"geo-usa":"geo-eu")+'">'+(d.geo==="USA"?"US USA":"EU EU")+'</div><div class="industry-tag">'+esc(d.industry||" - ")+'</div></td>'+
+      '<td data-col="1"><div class="geo-badge geo-'+(geoRegion(d)==="us"?"usa":geoRegion(d))+'" title="'+esc(d.geo||"")+'">'+REGION_LABEL[geoRegion(d)]+'</div><div class="industry-tag">'+esc(d.industry||" - ")+'</div></td>'+
       '<td data-col="2" style="white-space:nowrap">'+dtBadge+'</td>'+
       '<td data-col="3" class="deal-size-cell">'+sizeStr+ebitdaStr+'</td>'+
       '<td data-col="4" class="price-cell"><div class="current-price">'+fp(d.currentPrice,d)+'</div><div class="deal-price">Deal: '+(d.dealPrice?fp(d.dealPrice,d):esc((d.dealTerms||" - ").slice(0,40)))+'</div></td>'+
@@ -11940,8 +11946,8 @@ function updateStats(){
   else document.getElementById("stat-avg-spread").textContent=" - ";
   if(an.length) countUp(document.getElementById("stat-avg-ann"), an.reduce((a,b)=>a+b,0)/an.length, "%", 1);
   else document.getElementById("stat-avg-ann").textContent=" - ";
-  countUp(document.getElementById("stat-usa"), d.filter(x=>x.geo==="USA").length, "", 0);
-  countUp(document.getElementById("stat-eu"), d.filter(x=>x.geo==="EU").length, "", 0);
+  countUp(document.getElementById("stat-usa"), d.filter(x=>geoRegion(x)==="us").length, "", 0);
+  countUp(document.getElementById("stat-eu"), d.filter(isEurope).length, "", 0);
   countUp(document.getElementById("stat-risk"), d.filter(x=>x.dealRisk==="high"||x.status==="at-risk").length, "", 0);
   const evEl = document.getElementById("stat-total-ev-val");
   if(evEl && totalEV > 0) {
@@ -12096,6 +12102,28 @@ function fd(s){if(!s)return" - ";const d=new Date(s);return isNaN(d)?s:d.toLocal
 const CUR_SYM={USD:"$",CAD:"C$",AUD:"A$",EUR:"€",GBP:"£",CHF:"CHF ",SEK:"SEK ",NOK:"NOK ",DKK:"DKK ",JPY:"¥",HKD:"HK$",BRL:"R$",NZD:"NZ$",SGD:"S$",ILS:"₪",INR:"₹",ZAR:"R",PEN:"S/ "};
 const SFX_CUR={L:"GBp",TO:"CAD",V:"CAD",CN:"CAD",NE:"CAD",AX:"AUD",DE:"EUR",F:"EUR",PA:"EUR",AS:"EUR",BR:"EUR",MI:"EUR",MC:"EUR",LS:"EUR",HE:"EUR",IR:"EUR",VI:"EUR",ST:"SEK",OL:"NOK",CO:"DKK",SW:"CHF",T:"JPY",HK:"HKD",SA:"BRL",NZ:"NZD",SI:"SGD",TA:"ILS",JO:"ZAc",LM:"PEN"};
 // Listing currency of a row's prices: explicit priceCurrency, else inferred from the quote symbol's exchange suffix, else USD.
+// Region of the target: first recognised country in geo ("target / acquirer"), skipping offshore domiciles; else the listing suffix
+const REGION_LABEL={us:"US",ca:"Canada",uk:"UK",eu:"Europe",latam:"LatAm",apac:"APAC",mea:"MEA",global:"Global"};
+const REGION_OF={usa:"us",us:"us","united states":"us",canada:"ca",uk:"uk","united kingdom":"uk",eu:"eu",europe:"eu",
+  france:"eu",germany:"eu",italy:"eu",spain:"eu",ireland:"eu",switzerland:"eu",netherlands:"eu",sweden:"eu",denmark:"eu",
+  finland:"eu",austria:"eu",belgium:"eu",norway:"eu",portugal:"eu",poland:"eu",bulgaria:"eu",greece:"eu",luxembourg:"eu",
+  brazil:"latam",peru:"latam",mexico:"latam",colombia:"latam",chile:"latam",argentina:"latam",latam:"latam","latin america":"latam",
+  australia:"apac","new zealand":"apac",singapore:"apac",japan:"apac",china:"apac",taiwan:"apac","south korea":"apac",korea:"apac",
+  india:"apac",indonesia:"apac","hong kong":"apac","asia-pacific":"apac",apac:"apac",
+  israel:"mea",uae:"mea",egypt:"mea","saudi arabia":"mea","south africa":"mea",qatar:"mea",
+  bvi:"global",bermuda:"global",cayman:"global","cayman islands":"global",global:"global"};
+const DOMICILE=new Set(["bvi","bermuda","cayman","cayman islands","luxembourg","global"]);
+const SFX_REGION={L:"uk",TO:"ca",V:"ca",CN:"ca",NE:"ca",AX:"apac",NZ:"apac",SI:"apac",T:"apac",HK:"apac",SA:"latam",LM:"latam",MX:"latam",TA:"mea",JO:"mea",
+  DE:"eu",F:"eu",PA:"eu",AS:"eu",BR:"eu",MI:"eu",MC:"eu",LS:"eu",HE:"eu",IR:"eu",VI:"eu",ST:"eu",OL:"eu",CO:"eu",SW:"eu"};
+function geoRegion(d){
+  const toks=String(d.geo||"").toLowerCase().split(/\s*(?:\/|,|&|\band\b)\s*/).map(s=>s.trim()).filter(Boolean);
+  let fallback=null;
+  for(const t of toks){const r=REGION_OF[t];if(!r)continue;if(DOMICILE.has(t)){fallback=fallback||r;continue;}return r;}
+  const s=d.quoteSymbol||quoteSym(d.targetTicker)||"", m=s.match(/\.([A-Z]+)$/);
+  if(m&&SFX_REGION[m[1]])return SFX_REGION[m[1]];
+  return fallback||(toks.length?"global":"us");
+}
+const isEurope=d=>{const r=geoRegion(d);return r==="eu"||r==="uk";};
 function priceCur(d){
   if(!d||typeof d!=="object")return d==="EU"?"EUR":"USD";
   if(d.priceCurrency)return d.priceCurrency;
