@@ -206,7 +206,7 @@ async function main() {
     if (p.ann != null) { wAnn += p.w * p.ann; wSum += p.w; }
   }
   const gross = (longs + shorts) / nav, net = (longs - shorts) / nav, cashPct = 1 - longs / nav;
-  document.getElementById("sub").textContent = `Inception ${pf.inception} at NAV ${pf.baseNAV}. Last recorded close ${last.date}. ` +
+  document.getElementById("sub").textContent = `${pf.inceptionLabel || "Inception " + pf.inception}. Base NAV ${pf.baseNAV}. Last recorded close ${last.date}. ` +
     (useLive ? `Live marks for ${liveCount} of ${open.length} holdings as of ${new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}.` : "Live feed unavailable; showing last recorded close.");
   const k = [
     ["NAV (live)", num(nav), `${pct(nav / pf.baseNAV - 1)} since inception`, cls(nav - pf.baseNAV)],

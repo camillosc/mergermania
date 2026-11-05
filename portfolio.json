@@ -2,6 +2,7 @@
  "name": "MergerAnalyst Model Merger-Arb Portfolio (US & Europe)",
  "disclaimer": "Model portfolio for illustration only. Not investment advice, not a real trading account, no fees, borrow costs or slippage.",
  "inception": "2026-11-05",
+ "inceptionLabel": "Inception Nov 5, 2026, ~4:00pm ET: live-feed prices taken at 21:03 UTC, i.e. the Nov 5 closing prints (European names at their Nov 5 close)",
  "baseNAV": 100,
  "cash": 14.337587586479541,
  "rules": {
