@@ -102,7 +102,7 @@ def region(d):
         return r
     return fb or ('us' if not toks else 'other')
 
-def candidates(deals, held, today):
+def candidates(deals, held, today, excluded=None):
     """Quantitative pre-screen; the qualitative quality screen (see rules) is applied by the reviewer before --add."""
     out = []
     for d in deals:
@@ -115,7 +115,8 @@ def candidates(deals, held, today):
         if ann >= 5 or (ann >= 3 and days is not None and days <= 45):
             out.append({'ticker': d['targetTicker'], 'target': d['target'], 'acquirer': d.get('acquirer'), 'spread': d['spread'],
                         'annualized': ann, 'expectedClose': d.get('expectedClose'), 'prob': d.get('closingProbability'),
-                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders')})
+                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'),
+                        **({'previouslyExcluded': (excluded or {})[norm(d['targetTicker'])]} if norm(d['targetTicker']) in (excluded or {}) else {})})
     return sorted(out, key=lambda c: -c['annualized'])
 
 # --- portfolio mechanics ---
@@ -212,7 +213,8 @@ def daily(pf, deals, now):
     pf['navHistory'] = [x for x in pf['navHistory'] if x['date'] != d] + [pt]
     pf['navHistory'].sort(key=lambda x: x['date'])
     pf['asOf'] = now.strftime('%Y-%m-%d %H:%M UTC')
-    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d))
+    excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
+    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d), excl)
 
 def push(pf, msg):
     for attempt in range(1, 6):
@@ -257,7 +259,7 @@ if __name__ == '__main__':
         events, cands = daily(pf, deals, now)
         last = pf['navHistory'][-1]
         print(f"NAV {last['date']}: {last['nav']:.2f} (cash {last['cash']:.2f}, open {last['open']}); events: {events or 'none'}")
-        print('CANDIDATES (quant pre-screen; apply the quality screen before --add):')
+        print('CANDIDATES (quant pre-screen; apply the quality screen before --add; previouslyExcluded = failed it at inception, add only if that reason is resolved):')
         for c in cands[:15]: print('  ', json.dumps(c, ensure_ascii=False))
         msg = f"Model portfolio NAV {last['date']}: {last['nav']:.2f}" + (f" ({'; '.join(events)})" if events else '')
     if a.dry: print(json.dumps(pf['navHistory'][-1:]), '(dry run, not pushed)')
