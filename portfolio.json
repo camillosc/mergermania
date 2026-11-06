@@ -13,7 +13,8 @@
    "Financing committed (no financing condition, or UK/Irish Code cash confirmation)",
    "Limited antitrust/regulatory risk: no second request, CMA Phase 2 / EU Phase 2, sector-regulator veto risk, or contested high-threshold tender condition",
    "Target board recommendation and/or shareholder support",
-   "Sensible return: annualized spread of at least ~3% (at least ~5% for the daily add screen), unless closing is imminent"
+   "Sensible return: annualized spread of at least ~3% (at least ~5% for the daily add screen), unless closing is imminent",
+   "Break protection: termination fees from the merger agreement are scored; a large reverse (acquirer-paid, incl. regulatory) fee is preferred because it compensates holders if the deal breaks"
   ],
   "sizing": "Equal weight 7% of NAV per name at entry, hard cap 10%. Unallocated capital sits in cash (0% return).",
   "hedging": "Stock and cash+stock deals with a fixed exchange ratio: short the acquirer at the ratio on entry (proceeds credited to cash). Fixed-dollar or NAV-based stock legs are not share-hedged.",
@@ -21,7 +22,10 @@
   "closings": "When a deal completes it is booked at deal value (cash plus ratio x acquirer close); the hedge is covered with the acquirer shares received.",
   "breaks": "When a deal is terminated it is sold at that day's close and the loss is booked; the hedge is covered at the acquirer close.",
   "rebalancing": "No rebalancing of open positions. Cash from closings and breaks is redeployed into new names that pass the screen, at 7% each, only while cash stays at or above 5% of NAV after the purchase.",
-  "nav": "NAV = cash + long market value - short market value, recorded once per trading day after the US close (stamped with the session date)."
+  "nav": "NAV = cash + long market value - short market value, recorded once per trading day after the US close (stamped with the session date).",
+  "qualityScore": "Each deal gets a 0-100 quality score: closing probability (40 pts), annualized spread capped at 15% (25), reverse termination fee as % of equity value, full credit at 6%+ (20), deal risk low/medium/high (10/5/0), target break fee, full credit at 4%+ (5; UK Takeover Code deals, where target break fees are not permitted, get a neutral 2.5). Fees come from the merger agreement, 8-K or Rule 2.7 announcement and are shown on the holdings table as reverse / break fee %. Larger fees are better: a big reverse or regulatory fee is paid to the target if the buyer walks or regulators block the deal, which cushions a break.",
+  "swaps": "A holding is swapped for a candidate only when the candidate passes the quality screen and the quant pre-screen, was not excluded for a qualitative reason, and its quality score beats the weakest holding's by at least 15 points. Swaps trade at the session close and are logged.",
+  "feeReview": "Nov 5, 2026 re-rank after adding termination fees: weakest holdings are PTC (score 50.9; its merger agreement has no reverse fee, so a break in the long Q3 2027 review would be uncompensated) and SLN (52.2; ~3% annualized, no reverse fee). Top fee-protected candidates LXFR (~7% reverse fee) and CHMI (~6.8%) score higher on the site's stored spreads, but at the Nov 5 close their live spreads were only ~0.4% (LXFR, ~2.6% annualized) and ~0.7% (CHMI, ~4.8%), below the return screen, so no swap was made. PTC and SLN are flagged; they will be swapped if a candidate clears the screen on live prices with a 15+ point score lead."
  },
  "excludedAtInception": [
   {
@@ -107,7 +111,13 @@
    "rationale": "Ares Capital (largest US BDC) buying MFIC for $10.88/share ($1.21 cash + $9.67 of ARCC stock, priced at the greater of ARCC NAV or market). Strategic, well-capitalised buyer; both boards unanimous, Apollo affiliates support; no antitrust overlap. The stock leg is a fixed dollar amount converted at closing, so there is no static share hedge.",
    "status": "open",
    "lastPrice": 10.27,
-   "dealValueNow": 10.88
+   "dealValueNow": 10.88,
+   "fees": {
+    "reversePct": null,
+    "targetPct": 1.21,
+    "regime": "standard"
+   },
+   "qualityScore": 62.0
   },
   {
    "ticker": "BLHK",
@@ -136,7 +146,13 @@
     "lastPrice": 36.62
    },
    "lastPrice": 50.59,
-   "dealValueNow": 51.27550799999999
+   "dealValueNow": 51.27550799999999,
+   "fees": {
+    "reversePct": null,
+    "targetPct": null,
+    "regime": "not-disclosed"
+   },
+   "qualityScore": 59.1
   },
   {
    "ticker": "OTTW",
@@ -159,7 +175,13 @@
    "rationale": "Pontiac Bancorp all-cash $19.78/share for Ottawa Bancorp. Small community-bank deal, routine regulatory approvals, board approved; Q1 2027 close. Thinly traded.",
    "status": "open",
    "lastPrice": 19.29,
-   "dealValueNow": 19.78
+   "dealValueNow": 19.78,
+   "fees": {
+    "reversePct": null,
+    "targetPct": null,
+    "regime": "not-disclosed"
+   },
+   "qualityScore": 55.7
   },
   {
    "ticker": "SYNA",
@@ -182,7 +204,13 @@
    "rationale": "onsemi all-cash $123/share (amended Oct 1). Strategic buyer, cash on hand plus fully committed Morgan Stanley debt. The board reaffirmed onsemi over an unsolicited rival proposal, which also supports the price. Mid-2027 close.",
    "status": "open",
    "lastPrice": 116.4,
-   "dealValueNow": 123
+   "dealValueNow": 123,
+   "fees": {
+    "reversePct": 5.61,
+    "targetPct": 4.12,
+    "regime": "standard"
+   },
+   "qualityScore": 77.2
   },
   {
    "ticker": "SLAB",
@@ -205,7 +233,13 @@
    "rationale": "Texas Instruments all-cash $231/share. Strategic, investment-grade buyer; shareholders approved and US HSR expired; only remaining foreign approvals. H1 2027 close.",
    "status": "open",
    "lastPrice": 221.35,
-   "dealValueNow": 231
+   "dealValueNow": 231,
+   "fees": {
+    "reversePct": 7.34,
+    "targetPct": 3.81,
+    "regime": "standard"
+   },
+   "qualityScore": 69.9
   },
   {
    "ticker": "PTC",
@@ -228,7 +262,14 @@
    "rationale": "Schneider Electric all-cash $205/share. Strategic, investment-grade buyer with limited product overlap; board unanimous. Longer-dated (Q3 2027 assumption).",
    "status": "open",
    "lastPrice": 194.6,
-   "dealValueNow": 205.0
+   "dealValueNow": 205.0,
+   "fees": {
+    "reversePct": null,
+    "targetPct": 3.1,
+    "regime": "standard"
+   },
+   "qualityScore": 50.9,
+   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)"
   },
   {
    "ticker": "ULBI",
@@ -251,7 +292,13 @@
    "rationale": "EnerSys all-cash $16/share tender offer funded from cash on hand, no financing condition; holders of ~40% have tender support agreements. HSR and UK NSIA clearances; offer expires Dec 3 (extendable).",
    "status": "open",
    "lastPrice": 15.63,
-   "dealValueNow": 16.0
+   "dealValueNow": 16.0,
+   "fees": {
+    "reversePct": 3.22,
+    "targetPct": 3.22,
+    "regime": "standard"
+   },
+   "qualityScore": 71.6
   },
   {
    "ticker": "VREX",
@@ -274,7 +321,13 @@
    "rationale": "Teledyne all-cash $18.90/share. Strategic serial acquirer, ample liquidity; boards unanimous. HSR and foreign clearances, early 2027 close.",
    "status": "open",
    "lastPrice": 18.44,
-   "dealValueNow": 18.9
+   "dealValueNow": 18.9,
+   "fees": {
+    "reversePct": null,
+    "targetPct": 2.3,
+    "regime": "standard"
+   },
+   "qualityScore": 57.7
   },
   {
    "ticker": "GAMA.L",
@@ -297,7 +350,13 @@
    "rationale": "Epiris-backed Bradbury Bidco recommended cash offer, 1,120p/share by scheme. UK Takeover Code cash confirmation means the funding is committed; board recommends. Q1 2027.",
    "status": "open",
    "lastPrice": 1097,
-   "dealValueNow": 1120
+   "dealValueNow": 1120,
+   "fees": {
+    "reversePct": null,
+    "targetPct": null,
+    "regime": "uk-code-none-permitted"
+   },
+   "qualityScore": 57.0
   },
   {
    "ticker": "BOY.L",
@@ -320,7 +379,13 @@
    "rationale": "Veritas Capital recommended cash offer, 932.8p/share by scheme (the 7.2p interim dividend has been paid). Committed funding under the Code; board recommends; NSIA review expected routine. Q1 2027.",
    "status": "open",
    "lastPrice": 917.5,
-   "dealValueNow": 932.8
+   "dealValueNow": 932.8,
+   "fees": {
+    "reversePct": null,
+    "targetPct": null,
+    "regime": "uk-code-none-permitted"
+   },
+   "qualityScore": 55.8
   },
   {
    "ticker": "PTSB.I",
@@ -343,7 +408,13 @@
    "rationale": "BAWAG all-cash EUR 2.97/share by Irish scheme. Irish State (largest holder) supports; shareholders approved; the High Court sanction hearing began Oct 27, so completion is near (Q4 2026).",
    "status": "open",
    "lastPrice": 2.95,
-   "dealValueNow": 2.97
+   "dealValueNow": 2.97,
+   "fees": {
+    "reversePct": null,
+    "targetPct": 1.0,
+    "regime": "standard"
+   },
+   "qualityScore": 55.1
   },
   {
    "ticker": "ADT",
@@ -366,7 +437,13 @@
    "rationale": "Thrive Holdings all-cash $10/share with debt fully committed by Apollo funds, no financing condition. Board approved; HSR only; the go-shop to Nov 28 is optional upside. Q1 2027.",
    "status": "open",
    "lastPrice": 9.89,
-   "dealValueNow": 10.0
+   "dealValueNow": 10.0,
+   "fees": {
+    "reversePct": 6.22,
+    "targetPct": 2.99,
+    "regime": "standard"
+   },
+   "qualityScore": 75.1
   },
   {
    "ticker": "SLN",
@@ -389,7 +466,14 @@
    "rationale": "Merck KGaA all-cash $20/ADS by UK scheme. Strategic, investment-grade buyer; board unanimous, ~14% of votes committed. Q1 2027.",
    "status": "open",
    "lastPrice": 19.72,
-   "dealValueNow": 20.0
+   "dealValueNow": 20.0,
+   "fees": {
+    "reversePct": null,
+    "targetPct": 1.0,
+    "regime": "standard"
+   },
+   "qualityScore": 52.2,
+   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)"
   }
  ],
  "trades": [

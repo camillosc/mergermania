@@ -89,7 +89,7 @@
     <table>
       <thead><tr>
         <th>Deal</th><th class="n">Weight</th><th class="n">Entry</th><th class="n">Current</th><th class="n">Deal value</th>
-        <th class="n">Spread</th><th class="n">Annualized</th><th>Exp. close</th><th class="n">P&amp;L %</th><th class="n">P&amp;L (NAV pts)</th>
+        <th class="n">Spread</th><th class="n">Annualized</th><th class="n" title="Reverse termination fee (paid by the acquirer, incl. regulatory) / target break fee, % of equity value">Rev / break fee</th><th class="n" title="Quality score 0-100: probability 40, annualized 25, reverse fee 20, risk 10, target fee 5">Score</th><th>Exp. close</th><th class="n">P&amp;L %</th><th class="n">P&amp;L (NAV pts)</th>
       </tr></thead>
       <tbody id="hold"></tbody>
       <tfoot id="holdFoot"></tfoot>
@@ -171,10 +171,16 @@ function drawChart(hist, live) {
     "Blue: recorded daily closing NAV (base 100 at inception). Orange: live indicative NAV from intraday prices.";
 }
 
+function feeStr(p) {
+  const f = p.fees || {};
+  const r = f.reversePct != null ? (+f.reversePct).toFixed(1) + "%" : (f.regime === "not-disclosed" ? "n/d" : "none");
+  const t = f.targetPct != null ? (+f.targetPct).toFixed(1) + "%" : (f.regime === "uk-code-none-permitted" ? "none (Code)" : f.regime === "not-disclosed" ? "n/d" : "none");
+  return `<b>${r}</b> / ${t}`;
+}
 function renderRules(pf) {
   const r = pf.rules || {};
   let h = `<dl><dt>Universe</dt><dd>${esc(r.universe)}</dd><dt>Quality screen (all must hold)</dt><dd><ul>${(r.qualityScreen||[]).map(x => `<li>${esc(x)}</li>`).join("")}</ul></dd>`;
-  for (const [k, lab] of [["sizing","Sizing"],["hedging","Hedging"],["pricing","Pricing"],["closings","Deal closings"],["breaks","Deal breaks"],["rebalancing","Rebalancing & new names"],["nav","NAV"]])
+  for (const [k, lab] of [["qualityScore","Quality score & termination fees"],["sizing","Sizing"],["hedging","Hedging"],["pricing","Pricing"],["closings","Deal closings"],["breaks","Deal breaks"],["rebalancing","Rebalancing & new names"],["swaps","Swaps"],["feeReview","Fee review"],["nav","NAV"]])
     if (r[k]) h += `<dt>${lab}</dt><dd>${esc(r[k])}</dd>`;
   if (pf.excludedAtInception) h += `<dt>Notable exclusions at inception</dt><dd><ul>${pf.excludedAtInception.map(x => `<li><span class="tk">${esc(x.ticker)}</span>: ${esc(x.reason)}</li>`).join("")}</ul></dd>`;
   if (pf.previousVersion) h += `<dt>Previous version</dt><dd>${esc(pf.previousVersion.note)} <a href="/${esc(pf.previousVersion.file)}">${esc(pf.previousVersion.file)}</a></dd>`;
@@ -223,16 +229,17 @@ async function main() {
   let totPnl = 0;
   document.getElementById("hold").innerHTML = open.map(p => {
     totPnl += p.pnl;
-    let h = `<tr><td class="deal"><span class="tk">${esc(p.ticker)}</span>${p.flag ? `<span class="tag flag">${esc(p.flag)}</span>` : ""} ${esc(p.target)}
+    let h = `<tr><td class="deal"><span class="tk">${esc(p.ticker)}</span>${p.flag ? `<span class="tag flag">${esc(p.flag)}</span>` : ""}${p.review ? `<span class="tag flag" title="${esc(p.review)}">swap watch</span>` : ""} ${esc(p.target)}
       <div class="acq">&larr; ${esc(p.acquirer)}</div><div class="why">${esc(p.rationale)}</div></td>
       <td class="n">${(p.w*100).toFixed(1)}%</td><td class="n">${px(p.entryPrice, p.currency)}</td><td class="n">${px(p.cur, p.currency)}</td>
       <td class="n">${px(p.dv, p.currency)}</td><td class="n ${cls(p.spread)}">${pct(p.spread)}</td><td class="n ${cls(p.ann)}">${pct(p.ann, 1)}</td>
+      <td class="n">${feeStr(p)}</td><td class="n">${p.qualityScore != null ? num(p.qualityScore, 0) : "-"}</td>
       <td class="dt">${esc(p.expectedClose)}</td><td class="n ${cls(p.pnlPct)}">${pct(p.pnlPct)}</td><td class="n ${cls(p.pnl)}">${(p.pnl >= 0 ? "+" : "") + num(p.pnl, 3)}</td></tr>`;
-    if (p.hedge) h += `<tr class="hedge"><td colspan="10">Hedge: short ${num(p.hedge.shares, 4)} <span class="tk">${esc(p.hedge.symbol)}</span> (${p.terms.ratio} per target share) at ${px(p.hedge.entryPrice, p.currency)}, now ${px(p.hedge.cur, p.currency)}. Deal value = ${p.terms.cash ? px(p.terms.cash, p.currency) + " + " : ""}${p.terms.ratio} &times; ${esc(p.hedge.symbol)}. P&amp;L above is net of the hedge.</td></tr>`;
+    if (p.hedge) h += `<tr class="hedge"><td colspan="12">Hedge: short ${num(p.hedge.shares, 4)} <span class="tk">${esc(p.hedge.symbol)}</span> (${p.terms.ratio} per target share) at ${px(p.hedge.entryPrice, p.currency)}, now ${px(p.hedge.cur, p.currency)}. Deal value = ${p.terms.cash ? px(p.terms.cash, p.currency) + " + " : ""}${p.terms.ratio} &times; ${esc(p.hedge.symbol)}. P&amp;L above is net of the hedge.</td></tr>`;
     return h;
   }).join("");
   document.getElementById("holdFoot").innerHTML = `<tr><td>Total invested (cash ${(cashPct*100).toFixed(1)}%)</td><td class="n">${((longs/nav)*100).toFixed(1)}%</td><td colspan="4"></td>
-    <td class="n">${pct(wSum ? wAnn / wSum : null, 1)}</td><td></td><td></td><td class="n ${cls(totPnl)}">${(totPnl >= 0 ? "+" : "") + num(totPnl, 3)}</td></tr>`;
+    <td class="n">${pct(wSum ? wAnn / wSum : null, 1)}</td><td></td><td></td><td></td><td></td><td class="n ${cls(totPnl)}">${(totPnl >= 0 ? "+" : "") + num(totPnl, 3)}</td></tr>`;
 
   const closed = pf.positions.filter(p => p.status !== "open");
   if (closed.length) {

@@ -9,6 +9,7 @@ Usage (GITHUB_TOKEN in env; pushes portfolio.json merge-safe unless --dry):
   python3 portfolio_update.py                      # daily: MTM, book closings/breaks/term changes, record NAV, print candidates
   python3 portfolio_update.py --add TICKER --reason "..." [--weight 0.07]   # buy a new candidate at the latest close
   python3 portfolio_update.py --exit TICKER --reason "..."                   # discretionary exit at the latest close
+  python3 portfolio_update.py --rank               # print quality scores for holdings and candidates (no trades)
   add --dry to print without pushing.
 """
 import os, sys, json, re, base64, time, argparse, subprocess, urllib.request, urllib.error
@@ -102,6 +103,22 @@ def region(d):
         return r
     return fb or ('us' if not toks else 'other')
 
+# --- quality score (0-100): closing probability 40, annualized spread 25, reverse-fee protection 20, deal risk 10, target fee 5 ---
+def fee_pcts(d):
+    f = d.get('fees') or {}
+    rv, tg = (f.get('reverse') or {}).get('pct'), (f.get('target') or {}).get('pct')
+    return rv, tg, f.get('regime')
+
+def quality_score(d, ann=None):
+    ann = d.get('annualizedReturn') if ann is None else ann
+    rv, tg, regime = fee_pcts(d)
+    prob = min(max(d.get('closingProbability') or 0, 0), 100) / 100 * 40
+    ret = min(max(ann or 0, 0), 15) / 15 * 25
+    rev = min(rv or 0, 6) / 6 * 20                  # a reverse/regulatory fee of 6%+ of equity value earns full credit
+    risk = {'low': 10, 'medium': 5}.get(norm(d.get('dealRisk')), 0 if norm(d.get('dealRisk')) == 'high' else 5)
+    tgt = 2.5 if regime == 'uk-code-none-permitted' else min(tg or 0, 4) / 4 * 5   # UK Code bars target fees: neutral credit
+    return round(prob + ret + rev + risk + tgt, 1)
+
 def candidates(deals, held, today, excluded=None):
     """Quantitative pre-screen; the qualitative quality screen (see rules) is applied by the reviewer before --add."""
     out = []
@@ -115,9 +132,15 @@ def candidates(deals, held, today, excluded=None):
         if ann >= 5 or (ann >= 3 and days is not None and days <= 45):
             out.append({'ticker': d['targetTicker'], 'target': d['target'], 'acquirer': d.get('acquirer'), 'spread': d['spread'],
                         'annualized': ann, 'expectedClose': d.get('expectedClose'), 'prob': d.get('closingProbability'),
-                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'),
+                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'), 'score': quality_score(d, ann),
+                        'reverseFeePct': fee_pcts(d)[0], 'targetFeePct': fee_pcts(d)[1], 'feeRegime': fee_pcts(d)[2],
                         **({'previouslyExcluded': (excluded or {})[norm(d['targetTicker'])]} if norm(d['targetTicker']) in (excluded or {}) else {})})
-    return sorted(out, key=lambda c: -c['annualized'])
+    return sorted(out, key=lambda c: -c['score'])
+
+def refresh_fees(p, row):
+    rv, tg, regime = fee_pcts(row)
+    p['fees'] = {'reversePct': rv, 'targetPct': tg, 'regime': regime}
+    p['qualityScore'] = quality_score(row)
 
 # --- portfolio mechanics ---
 def mark(p, qs, now):
@@ -170,6 +193,7 @@ def open_position(pf, row, qs, now, d, weight, reason, rationale=None, force=Fal
          'target': row['target'], 'acquirer': row.get('acquirer', ''), 'terms': terms, 'entryDate': d, 'entryPrice': px,
          'entryDealValue': deal_value(terms, apx), 'shares': notional / px, 'targetWeight': weight, 'expectedClose': row.get('expectedClose'),
          'rationale': rationale or reason, 'status': 'open'}
+    refresh_fees(p, row)
     pf['cash'] -= notional
     pf['positions'].append(p)
     log(pf, d, 'BUY', p, px, p['shares'], reason)
@@ -206,6 +230,7 @@ def daily(pf, deals, now):
                 p['terms']['cash'] = p['entryDealValue'] = new_cash
                 events.append(f"TERMS {p['ticker']} -> {new_cash}")
             p['flag'] = row.get('status') if st != 'pending' else None
+            refresh_fees(p, row)
             if row.get('expectedClose'): p['expectedClose'] = row['expectedClose']
     nav, longs, shorts = nav_of(pf, qs, now)
     pt = {'date': d, 'nav': round(nav, 4), 'cash': round(pf['cash'], 4), 'long': round(longs, 4), 'short': round(shorts, 4),
@@ -234,10 +259,22 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--add'); ap.add_argument('--exit'); ap.add_argument('--reason', default='')
     ap.add_argument('--weight', type=float, default=TARGET_WEIGHT); ap.add_argument('--dry', action='store_true')
+    ap.add_argument('--rationale', default=None); ap.add_argument('--rank', action='store_true')
     a = ap.parse_args()
     now = datetime.now(timezone.utc)
     pf = json.loads(get_file('portfolio.json')[1])
     deals = load_deals()
+    if a.rank:
+        print('HOLDINGS (score, reverse fee %, target fee %, regime):')
+        for p in pf['positions']:
+            if p['status'] != 'open': continue
+            row = find_row(deals, p)
+            if row: print(f"  {p['ticker']:8} {quality_score(row):5}  rev {fee_pcts(row)[0]}  tgt {fee_pcts(row)[1]}  {fee_pcts(row)[2]}  ann {row.get('annualizedReturn')}")
+        excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
+        print('CANDIDATES:')
+        for c in candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, now.date(), excl)[:20]:
+            print('  ', json.dumps(c, ensure_ascii=False))
+        sys.exit(0)
     if a.add or a.exit:
         if not a.reason: raise SystemExit('--reason is required')
         d = session_date(now)
@@ -246,7 +283,7 @@ if __name__ == '__main__':
             if not row: raise SystemExit(f'{a.add}: no pending DEALS row')
             sym, acq = row.get('quoteSymbol') or row['targetTicker'], (row.get('liveTerms') or {}).get('acq')
             qs = quotes({sym, acq} | {p['quoteSymbol'] for p in pf['positions'] if p['status'] == 'open'} | {p['terms'].get('acq') for p in pf['positions'] if p['status'] == 'open'})
-            p = open_position(pf, row, qs, now, d, a.weight, a.reason)
+            p = open_position(pf, row, qs, now, d, a.weight, a.reason, rationale=a.rationale)
             msg = f"Model portfolio {d}: BUY {p['ticker']}"
         else:
             p = next(p for p in pf['positions'] if p['status'] == 'open' and norm(p['ticker']) == norm(a.exit))
