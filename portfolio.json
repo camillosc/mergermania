@@ -117,7 +117,8 @@
     "targetPct": 1.21,
     "regime": "standard"
    },
-   "qualityScore": 62.0
+   "qualityScore": 62.0,
+   "flag": null
   },
   {
    "ticker": "BLHK",
@@ -152,7 +153,8 @@
     "targetPct": null,
     "regime": "not-disclosed"
    },
-   "qualityScore": 59.1
+   "qualityScore": 59.1,
+   "flag": null
   },
   {
    "ticker": "OTTW",
@@ -174,14 +176,15 @@
    "expectedClose": "2027-03-31",
    "rationale": "Pontiac Bancorp all-cash $19.78/share for Ottawa Bancorp. Small community-bank deal, routine regulatory approvals, board approved; Q1 2027 close. Thinly traded.",
    "status": "open",
-   "lastPrice": 19.29,
+   "lastPrice": 19.25,
    "dealValueNow": 19.78,
    "fees": {
     "reversePct": null,
     "targetPct": null,
     "regime": "not-disclosed"
    },
-   "qualityScore": 55.7
+   "qualityScore": 55.7,
+   "flag": null
   },
   {
    "ticker": "SYNA",
@@ -210,7 +213,8 @@
     "targetPct": 4.12,
     "regime": "standard"
    },
-   "qualityScore": 77.2
+   "qualityScore": 77.2,
+   "flag": null
   },
   {
    "ticker": "SLAB",
@@ -239,7 +243,8 @@
     "targetPct": 3.81,
     "regime": "standard"
    },
-   "qualityScore": 69.9
+   "qualityScore": 69.9,
+   "flag": null
   },
   {
    "ticker": "PTC",
@@ -269,7 +274,8 @@
     "regime": "standard"
    },
    "qualityScore": 50.9,
-   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)"
+   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)",
+   "flag": null
   },
   {
    "ticker": "ULBI",
@@ -298,7 +304,8 @@
     "targetPct": 3.22,
     "regime": "standard"
    },
-   "qualityScore": 71.6
+   "qualityScore": 71.6,
+   "flag": null
   },
   {
    "ticker": "VREX",
@@ -327,7 +334,8 @@
     "targetPct": 2.3,
     "regime": "standard"
    },
-   "qualityScore": 57.7
+   "qualityScore": 57.7,
+   "flag": null
   },
   {
    "ticker": "GAMA.L",
@@ -356,7 +364,8 @@
     "targetPct": null,
     "regime": "uk-code-none-permitted"
    },
-   "qualityScore": 57.0
+   "qualityScore": 57.0,
+   "flag": null
   },
   {
    "ticker": "BOY.L",
@@ -385,7 +394,8 @@
     "targetPct": null,
     "regime": "uk-code-none-permitted"
    },
-   "qualityScore": 55.8
+   "qualityScore": 55.8,
+   "flag": null
   },
   {
    "ticker": "PTSB.I",
@@ -414,7 +424,8 @@
     "targetPct": 1.0,
     "regime": "standard"
    },
-   "qualityScore": 55.1
+   "qualityScore": 55.1,
+   "flag": null
   },
   {
    "ticker": "ADT",
@@ -436,14 +447,15 @@
    "expectedClose": "2027-03-31",
    "rationale": "Thrive Holdings all-cash $10/share with debt fully committed by Apollo funds, no financing condition. Board approved; HSR only; the go-shop to Nov 28 is optional upside. Q1 2027.",
    "status": "open",
-   "lastPrice": 9.89,
+   "lastPrice": 9.9,
    "dealValueNow": 10.0,
    "fees": {
     "reversePct": 6.22,
     "targetPct": 2.99,
     "regime": "standard"
    },
-   "qualityScore": 75.1
+   "qualityScore": 75.1,
+   "flag": null
   },
   {
    "ticker": "SLN",
@@ -473,7 +485,8 @@
     "regime": "standard"
    },
    "qualityScore": 52.2,
-   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)"
+   "review": "Swap watch: lowest fee-aware quality score (no reverse fee)",
+   "flag": null
   }
  ],
  "trades": [
@@ -621,12 +634,12 @@
  "navHistory": [
   {
    "date": "2026-11-05",
-   "nav": 100.0,
+   "nav": 99.9926,
    "cash": 14.3376,
-   "long": 91.0,
+   "long": 90.9926,
    "short": 5.3376,
    "open": 13
   }
  ],
- "asOf": "2026-11-05 21:03 UTC"
+ "asOf": "2026-11-06 13:13 UTC"
 }
