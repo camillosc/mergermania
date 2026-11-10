@@ -7,7 +7,8 @@ positions, cash, trade log and NAV history (inception NAV 100). Prices come from
 
 Usage (GITHUB_TOKEN in env; pushes portfolio.json merge-safe unless --dry):
   python3 portfolio_update.py                      # daily: MTM, book closings/breaks/term changes, record NAV, print candidates
-  python3 portfolio_update.py --add TICKER --reason "..." [--weight 0.07]   # buy a new candidate at the latest close
+  python3 portfolio_update.py --add TICKER --reason "..." [--weight W]   # buy at the latest close; default size = 1.75% NAV break-loss budget / downside, 3-10%
+  python3 portfolio_update.py --trim TICKER --to 0.03 --reason "..."         # partial sale to a target weight (hedge covered pro rata)
   python3 portfolio_update.py --exit TICKER --reason "..."                   # discretionary exit at the latest close
   python3 portfolio_update.py --rank               # print quality scores for holdings and candidates (no trades)
   add --dry to print without pushing.
@@ -17,7 +18,11 @@ from datetime import datetime, timezone, timedelta, date
 
 REPO = 'https://api.github.com/repos/Camillosc/mergermania'
 QUOTE = 'https://mergeranalyst-quote.camillosc2.workers.dev/quote?symbols='
-TARGET_WEIGHT, MAX_WEIGHT, MIN_CASH = 0.07, 0.10, 0.05   # entry weight, hard cap, cash buffer kept after any new purchase
+TARGET_WEIGHT, MAX_WEIGHT, MIN_CASH = 0.07, 0.10, 0.05   # legacy equal weight, hard cap, cash buffer kept after any new purchase
+# Downside-based sizing (Farallon-style: size by potential loss, not expected gain)
+BREAK_LOSS_BUDGET, MIN_WEIGHT, TRIM_TRIGGER = 0.0175, 0.03, 0.03   # break loss per deal ~1.75% of NAV; floor 3%; trim if a position's break loss > 3% of NAV
+DEFAULT_DOWNSIDE = 0.25   # used when the undisturbed price is unavailable or the deal leaked before announcement (computed downside < 10%)
+FARALLON_BONUS = 5        # quality-score points if Farallon's latest 13F holds the target (lagged, long-only signal)
 EU_CLOSE_UTC, US_CLOSE_UTC = (16, 35), (21, 0)   # conservative (winter) closes; used to decide whether today's print is final
 EU_SFX = {'L', 'IR', 'DE', 'F', 'PA', 'AS', 'BR', 'MI', 'MC', 'LS', 'HE', 'VI', 'ST', 'OL', 'CO', 'SW'}
 SFX_CUR = {'L': 'GBp', 'IR': 'EUR', 'DE': 'EUR', 'F': 'EUR', 'PA': 'EUR', 'AS': 'EUR', 'BR': 'EUR', 'MI': 'EUR', 'MC': 'EUR', 'LS': 'EUR',
@@ -109,7 +114,36 @@ def fee_pcts(d):
     rv, tg = (f.get('reverse') or {}).get('pct'), (f.get('target') or {}).get('pct')
     return rv, tg, f.get('regime')
 
-def quality_score(d, ann=None):
+def farallon_set(pf):
+    fo = (pf or {}).get('farallonOverlay') or {}
+    return {norm(h['targetTicker']) for h in fo.get('overlap', []) if h.get('latest')}
+
+def unaffected_price(sym, announced):
+    """Last close before the announcement date (Yahoo chart API), as the break-price estimate."""
+    try:
+        a = datetime.fromisoformat(str(announced)[:10]).replace(tzinfo=timezone.utc)
+        url = f'https://query1.finance.yahoo.com/v8/finance/chart/{sym}?period1={int((a - timedelta(days=12)).timestamp())}&period2={int(a.timestamp())}&interval=1d'
+        r = subprocess.run(['curl', '-s', '--max-time', '20', '-A', 'Mozilla/5.0', url], capture_output=True, text=True).stdout
+        res = json.loads(r)['chart']['result'][0]
+        pts = [(datetime.fromtimestamp(t, timezone.utc).date().isoformat(), x) for t, x in zip(res['timestamp'], res['indicators']['quote'][0]['close']) if x]
+        pts = [p for p in pts if p[0] < str(announced)[:10]]
+        return pts[-1] if pts else None
+    except Exception:
+        return None
+
+def downside(sym, announced, cur, currency=None):
+    """(breakPrice, downside fraction, basis). Downside = (current - undisturbed) / current, floored to the default when unreliable."""
+    u = unaffected_price(sym, announced) if cur else None
+    if u:
+        bp = u[1] * (100 if currency == 'GBp' and u[1] < cur / 20 else 1)
+        dn = (cur - bp) / cur
+        if dn >= 0.10: return round(bp, 4), round(dn, 4), f'undisturbed close {u[0]}'
+    return round(cur * (1 - DEFAULT_DOWNSIDE), 4) if cur else None, DEFAULT_DOWNSIDE, 'default 25% (undisturbed price unavailable or pre-leaked)'
+
+def size_for(dn):
+    return round(min(MAX_WEIGHT, max(MIN_WEIGHT, BREAK_LOSS_BUDGET / max(dn, 0.01))), 4)
+
+def quality_score(d, ann=None, farallon=None):
     ann = d.get('annualizedReturn') if ann is None else ann
     rv, tg, regime = fee_pcts(d)
     prob = min(max(d.get('closingProbability') or 0, 0), 100) / 100 * 40
@@ -117,9 +151,10 @@ def quality_score(d, ann=None):
     rev = min(rv or 0, 6) / 6 * 20                  # a reverse/regulatory fee of 6%+ of equity value earns full credit
     risk = {'low': 10, 'medium': 5}.get(norm(d.get('dealRisk')), 0 if norm(d.get('dealRisk')) == 'high' else 5)
     tgt = 2.5 if regime == 'uk-code-none-permitted' else min(tg or 0, 4) / 4 * 5   # UK Code bars target fees: neutral credit
-    return round(prob + ret + rev + risk + tgt, 1)
+    far = FARALLON_BONUS if farallon and norm(d.get('targetTicker')) in farallon else 0
+    return round(min(100, prob + ret + rev + risk + tgt + far), 1)
 
-def candidates(deals, held, today, excluded=None):
+def candidates(deals, held, today, excluded=None, farallon=None):
     """Quantitative pre-screen; the qualitative quality screen (see rules) is applied by the reviewer before --add."""
     out = []
     for d in deals:
@@ -132,15 +167,36 @@ def candidates(deals, held, today, excluded=None):
         if ann >= 5 or (ann >= 3 and days is not None and days <= 45):
             out.append({'ticker': d['targetTicker'], 'target': d['target'], 'acquirer': d.get('acquirer'), 'spread': d['spread'],
                         'annualized': ann, 'expectedClose': d.get('expectedClose'), 'prob': d.get('closingProbability'),
-                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'), 'score': quality_score(d, ann),
+                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'), 'score': quality_score(d, ann, farallon), 'farallon': bool(farallon and norm(d['targetTicker']) in farallon),
                         'reverseFeePct': fee_pcts(d)[0], 'targetFeePct': fee_pcts(d)[1], 'feeRegime': fee_pcts(d)[2],
                         **({'previouslyExcluded': (excluded or {})[norm(d['targetTicker'])]} if norm(d['targetTicker']) in (excluded or {}) else {})})
     return sorted(out, key=lambda c: -c['score'])
 
-def refresh_fees(p, row):
+def refresh_fees(p, row, farallon=None):
     rv, tg, regime = fee_pcts(row)
     p['fees'] = {'reversePct': rv, 'targetPct': tg, 'regime': regime}
-    p['qualityScore'] = quality_score(row)
+    p['qualityScore'] = quality_score(row, None, farallon)
+    p['farallon'] = bool(farallon and norm(row.get('targetTicker')) in farallon)
+
+def break_loss(p, nav):
+    """Loss in NAV fraction if the deal breaks and the target falls to its break price (hedge P&L ignored)."""
+    if p.get('breakPrice') is None or not nav: return None
+    return round(p['shares'] * max(0.0, (p.get('lastPrice') or p['entryPrice']) - p['breakPrice']) / nav, 5)
+
+def trim_position(pf, p, d, px, apx, new_weight, nav, reason):
+    """Partial sale down to new_weight of NAV at the session close; the hedge is covered pro rata."""
+    keep = new_weight * nav / px
+    qty = p['shares'] - keep
+    if qty <= 1e-9: return
+    pf['cash'] += qty * px
+    log(pf, d, 'TRIM', p, px, qty, reason)
+    if p.get('hedge'):
+        hq = p['hedge']['shares'] * qty / p['shares']
+        pf['cash'] -= hq * apx
+        log(pf, d, 'COVER', p, apx, hq, 'Hedge reduced pro rata with the trim')
+        p['hedge']['shares'] -= hq
+    p['realizedPnl'] = round(p.get('realizedPnl', 0) + qty * (px - p['entryPrice']), 6)
+    p['shares'] = keep; p['targetWeight'] = new_weight
 
 # --- portfolio mechanics ---
 def mark(p, qs, now):
@@ -176,6 +232,7 @@ def close_position(pf, p, d, px_long, apx, action, reason):
     p['realizedPnl'] = round(p['shares'] * (px_long - p['entryPrice']) - (p['hedge']['shares'] * (apx - p['hedge']['entryPrice']) if p.get('hedge') else 0), 6)
 
 def open_position(pf, row, qs, now, d, weight, reason, rationale=None, force=False):
+    """weight=None sizes by downside: BREAK_LOSS_BUDGET / downside, clamped to [MIN_WEIGHT, MAX_WEIGHT]."""
     sym = row.get('quoteSymbol') or row['targetTicker']
     lt = row.get('liveTerms') or {}
     terms = {'cash': lt.get('cash', row['dealPrice']) if lt else row['dealPrice'], 'ratio': lt.get('ratio', 0), 'acq': lt.get('acq')}
@@ -185,6 +242,9 @@ def open_position(pf, row, qs, now, d, weight, reason, rationale=None, force=Fal
     px = last_close(sym, qs.get(sym), now)[0]
     apx = last_close(terms['acq'], qs.get(terms['acq']), now)[0] if terms['acq'] else None
     if px is None or (terms['acq'] and apx is None): raise SystemExit(f'no price for {sym} / {terms["acq"]}')
+    cur_code = row.get('priceCurrency') or SFX_CUR.get(sym.rsplit('.', 1)[1] if '.' in sym else '', 'USD')
+    bp, dn, basis = downside(sym, row.get('announced'), px, cur_code)
+    if weight is None: weight = size_for(dn)
     nav = nav_of(pf, qs, now)[0]
     notional = min(weight, MAX_WEIGHT) * nav
     if pf['cash'] - notional < MIN_CASH * nav - 1e-9 and not force:
@@ -192,8 +252,8 @@ def open_position(pf, row, qs, now, d, weight, reason, rationale=None, force=Fal
     p = {'ticker': row['targetTicker'], 'dealKey': row['targetTicker'], 'quoteSymbol': sym, 'currency': row.get('priceCurrency') or SFX_CUR.get(sym.rsplit('.', 1)[1] if '.' in sym else '', 'USD'),
          'target': row['target'], 'acquirer': row.get('acquirer', ''), 'terms': terms, 'entryDate': d, 'entryPrice': px,
          'entryDealValue': deal_value(terms, apx), 'shares': notional / px, 'targetWeight': weight, 'expectedClose': row.get('expectedClose'),
-         'rationale': rationale or reason, 'status': 'open'}
-    refresh_fees(p, row)
+         'rationale': rationale or reason, 'status': 'open', 'breakPrice': bp, 'downside': dn, 'breakBasis': basis}
+    refresh_fees(p, row, farallon_set(pf))
     pf['cash'] -= notional
     pf['positions'].append(p)
     log(pf, d, 'BUY', p, px, p['shares'], reason)
@@ -230,16 +290,20 @@ def daily(pf, deals, now):
                 p['terms']['cash'] = p['entryDealValue'] = new_cash
                 events.append(f"TERMS {p['ticker']} -> {new_cash}")
             p['flag'] = row.get('status') if st != 'pending' else None
-            refresh_fees(p, row)
+            refresh_fees(p, row, farallon_set(pf))
             if row.get('expectedClose'): p['expectedClose'] = row['expectedClose']
     nav, longs, shorts = nav_of(pf, qs, now)
+    for p in pf['positions']:
+        if p['status'] == 'open':
+            p['breakLoss'] = break_loss(p, nav)
+            if p['breakLoss'] is not None and p['breakLoss'] > TRIM_TRIGGER: events.append(f"TRIM-WATCH {p['ticker']} break loss {p['breakLoss']:.1%} of NAV")
     pt = {'date': d, 'nav': round(nav, 4), 'cash': round(pf['cash'], 4), 'long': round(longs, 4), 'short': round(shorts, 4),
           'open': sum(p['status'] == 'open' for p in pf['positions'])}
     pf['navHistory'] = [x for x in pf['navHistory'] if x['date'] != d] + [pt]
     pf['navHistory'].sort(key=lambda x: x['date'])
     pf['asOf'] = now.strftime('%Y-%m-%d %H:%M UTC')
     excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
-    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d), excl)
+    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d), excl, farallon_set(pf))
 
 def push(pf, msg):
     for attempt in range(1, 6):
@@ -258,8 +322,8 @@ def push(pf, msg):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--add'); ap.add_argument('--exit'); ap.add_argument('--reason', default='')
-    ap.add_argument('--weight', type=float, default=TARGET_WEIGHT); ap.add_argument('--dry', action='store_true')
-    ap.add_argument('--rationale', default=None); ap.add_argument('--rank', action='store_true')
+    ap.add_argument('--weight', type=float, default=None); ap.add_argument('--dry', action='store_true')
+    ap.add_argument('--rationale', default=None); ap.add_argument('--trim'); ap.add_argument('--to', type=float); ap.add_argument('--rank', action='store_true')
     a = ap.parse_args()
     now = datetime.now(timezone.utc)
     pf = json.loads(get_file('portfolio.json')[1])
@@ -269,13 +333,21 @@ if __name__ == '__main__':
         for p in pf['positions']:
             if p['status'] != 'open': continue
             row = find_row(deals, p)
-            if row: print(f"  {p['ticker']:8} {quality_score(row):5}  rev {fee_pcts(row)[0]}  tgt {fee_pcts(row)[1]}  {fee_pcts(row)[2]}  ann {row.get('annualizedReturn')}")
+            if row: print(f"  {p['ticker']:8} {quality_score(row, None, farallon_set(pf)):5}  rev {fee_pcts(row)[0]}  tgt {fee_pcts(row)[1]}  {fee_pcts(row)[2]}  ann {row.get('annualizedReturn')}")
         excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
         print('CANDIDATES:')
-        for c in candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, now.date(), excl)[:20]:
+        for c in candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, now.date(), excl, farallon_set(pf))[:20]:
             print('  ', json.dumps(c, ensure_ascii=False))
         sys.exit(0)
-    if a.add or a.exit:
+    if a.trim:
+        if not a.reason or a.to is None: raise SystemExit('--trim needs --to and --reason')
+        d = session_date(now)
+        p = next(p for p in pf['positions'] if p['status'] == 'open' and norm(p['ticker']) == norm(a.trim))
+        qs = quotes({q['quoteSymbol'] for q in pf['positions'] if q['status'] == 'open'} | {q['terms'].get('acq') for q in pf['positions'] if q['status'] == 'open'})
+        nav = nav_of(pf, qs, now)[0]; px, apx = mark(p, qs, now)
+        trim_position(pf, p, d, px, apx, a.to, nav, a.reason)
+        nav_of(pf, qs, now); msg = f"Model portfolio {d}: TRIM {p['ticker']}"
+    elif a.add or a.exit:
         if not a.reason: raise SystemExit('--reason is required')
         d = session_date(now)
         if a.add:

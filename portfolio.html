@@ -58,6 +58,10 @@
   .tag.break, .tag.sell { background: var(--red-lt); color: var(--red); }
   .tag.terms { background: var(--amber-lt); color: var(--amber); }
   .tag.flag { background: var(--red-lt); color: var(--red); margin-left: 6px; }
+  .tag.trim { background: var(--amber-lt); color: var(--amber); }
+  .tag.far { background: #EEF2FF; color: #3730A3; }
+  .far-note { padding: 12px 20px; font-size: 12.5px; color: #334155; border-bottom: 1px solid var(--border, #e2e8f0); }
+  .far-pr { padding: 12px 20px; font-size: 13px; } .far-pr li { margin: 4px 0; } .far-pr a { font-size: 11px; }
   .rules { padding: 16px 20px; font-size: 13px; }
   .rules dt { font-weight: 700; margin-top: 10px; } .rules dd { color: #334155; }
   .rules ul { padding-left: 18px; } .rules li { margin: 2px 0; }
@@ -89,7 +93,7 @@
     <table>
       <thead><tr>
         <th>Deal</th><th class="n">Weight</th><th class="n">Entry</th><th class="n">Current</th><th class="n">Deal value</th>
-        <th class="n">Spread</th><th class="n">Annualized</th><th class="n" title="Reverse termination fee (paid by the acquirer, incl. regulatory) / target break fee, % of equity value">Rev / break fee</th><th class="n" title="Quality score 0-100: probability 40, annualized 25, reverse fee 20, risk 10, target fee 5">Score</th><th>Exp. close</th><th class="n">P&amp;L %</th><th class="n">P&amp;L (NAV pts)</th>
+        <th class="n">Spread</th><th class="n">Annualized</th><th class="n" title="Reverse termination fee (paid by the acquirer, incl. regulatory) / target break fee, % of equity value">Rev / break fee</th><th class="n" title="Quality score 0-100: probability 40, annualized 25, reverse fee 20, risk 10, target fee 5, +5 if Farallon's latest 13F holds the target">Score</th><th class="n" title="Loss in % of NAV if the deal breaks and the target falls to its estimated break price (undisturbed pre-announcement close)">Break loss</th><th>Exp. close</th><th class="n">P&amp;L %</th><th class="n">P&amp;L (NAV pts)</th>
       </tr></thead>
       <tbody id="hold"></tbody>
       <tfoot id="holdFoot"></tfoot>
@@ -107,6 +111,18 @@
   <div class="card tbl"><table>
     <thead><tr><th>Date</th><th>Action</th><th>Security</th><th class="n">Price</th><th class="n">Quantity</th><th class="n">Notional (NAV pts)</th><th>Reason</th></tr></thead>
     <tbody id="trades"></tbody></table></div>
+
+  <div id="farWrap" style="display:none">
+    <h2>Farallon overlay</h2>
+    <div class="card tbl">
+      <div class="far-note" id="farNote"></div>
+      <table>
+        <thead><tr><th>Our deal</th><th>Farallon 13F holding</th><th class="n">Value</th><th class="n">Shares</th><th class="n">% of 13F</th><th>Change vs prior quarter</th><th>Notes</th></tr></thead>
+        <tbody id="farBody"></tbody>
+      </table>
+      <div class="far-pr" id="farPr"></div>
+    </div>
+  </div>
 
   <h2>Rules &amp; methodology</h2>
   <div class="card rules" id="rules"></div>
@@ -177,10 +193,23 @@ function feeStr(p) {
   const t = f.targetPct != null ? (+f.targetPct).toFixed(1) + "%" : (f.regime === "uk-code-none-permitted" ? "none (Code)" : f.regime === "not-disclosed" ? "n/d" : "none");
   return `<b>${r}</b> / ${t}`;
 }
+function renderFarallon(pf) {
+  const f = pf.farallonOverlay; if (!f) return;
+  document.getElementById("farWrap").style.display = "";
+  const money = v => v == null ? "-" : "$" + (v >= 1e9 ? (v / 1e9).toFixed(2) + "bn" : (v / 1e6).toFixed(1) + "m");
+  document.getElementById("farNote").innerHTML = `<b>13F as of ${esc(f.latestPeriod)}</b> (filed ${esc(f.latestFiled)}; prior quarter ${esc(f.priorPeriod)}). ${esc(f.note)} ` +
+    `Disclosed long positions in ${esc(f.manager)} filings that overlap our deal universe. Targets held add +5 to our quality score.`;
+  document.getElementById("farBody").innerHTML = (f.overlap || []).map(o => `<tr><td><span class="tk">${esc(o.targetTicker)}</span> <span class="muted">&larr; ${esc((o.acquirer || "").slice(0, 40))}</span></td>
+    <td>${esc(o.issuerName)}</td><td class="n">${money(o.latest && o.latest.value)}</td><td class="n">${o.latest ? num(o.latest.shares, 0) : "-"}</td>
+    <td class="n">${o.latest ? o.latest.pctPortfolio.toFixed(2) + "%" : "-"}</td><td>${esc(o.change)}</td><td class="muted">${esc(o.note || "")}</td></tr>`).join("") +
+    (f.schedule13 || []).map(s => `<tr><td colspan="7" class="muted">${esc(s.form)} filed ${esc(s.filed)}: ${esc(s.issuer)} ${s.pct}% (as of ${esc(s.eventDate || "")}) <a href="${esc(s.url)}" target="_blank" rel="noopener">filing</a></td></tr>`).join("");
+  document.getElementById("farPr").innerHTML = `<b>Principles applied (from public sources)</b><ol>${(f.principles || []).map(x => `<li><b>${esc(x.title)}.</b> ${esc(x.rule)} ${x.sources.map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">[${i + 1}]</a>`).join(" ")}</li>`).join("")}</ol>` +
+    (f.otherArbLike && f.otherArbLike.length ? `<div class="muted">Other event-driven positions in the same filings, outside our universe: ${f.otherArbLike.map(esc).join("; ")}.</div>` : "");
+}
 function renderRules(pf) {
   const r = pf.rules || {};
   let h = `<dl><dt>Universe</dt><dd>${esc(r.universe)}</dd><dt>Quality screen (all must hold)</dt><dd><ul>${(r.qualityScreen||[]).map(x => `<li>${esc(x)}</li>`).join("")}</ul></dd>`;
-  for (const [k, lab] of [["qualityScore","Quality score & termination fees"],["sizing","Sizing"],["hedging","Hedging"],["pricing","Pricing"],["closings","Deal closings"],["breaks","Deal breaks"],["rebalancing","Rebalancing & new names"],["swaps","Swaps"],["feeReview","Fee review"],["nav","NAV"]])
+  for (const [k, lab] of [["qualityScore","Quality score & termination fees"],["sizing","Sizing"],["diversification","Diversification"],["hedging","Hedging"],["pricing","Pricing"],["closings","Deal closings"],["breaks","Deal breaks"],["rebalancing","Rebalancing & new names"],["swaps","Swaps"],["feeReview","Fee review"],["nav","NAV"]])
     if (r[k]) h += `<dt>${lab}</dt><dd>${esc(r[k])}</dd>`;
   if (pf.excludedAtInception) h += `<dt>Notable exclusions at inception</dt><dd><ul>${pf.excludedAtInception.map(x => `<li><span class="tk">${esc(x.ticker)}</span>: ${esc(x.reason)}</li>`).join("")}</ul></dd>`;
   if (pf.previousVersion) h += `<dt>Previous version</dt><dd>${esc(pf.previousVersion.note)} <a href="/${esc(pf.previousVersion.file)}">${esc(pf.previousVersion.file)}</a></dd>`;
@@ -233,13 +262,13 @@ async function main() {
       <div class="acq">&larr; ${esc(p.acquirer)}</div><div class="why">${esc(p.rationale)}</div></td>
       <td class="n">${(p.w*100).toFixed(1)}%</td><td class="n">${px(p.entryPrice, p.currency)}</td><td class="n">${px(p.cur, p.currency)}</td>
       <td class="n">${px(p.dv, p.currency)}</td><td class="n ${cls(p.spread)}">${pct(p.spread)}</td><td class="n ${cls(p.ann)}">${pct(p.ann, 1)}</td>
-      <td class="n">${feeStr(p)}</td><td class="n">${p.qualityScore != null ? num(p.qualityScore, 0) : "-"}</td>
+      <td class="n">${feeStr(p)}</td><td class="n">${p.qualityScore != null ? num(p.qualityScore, 0) : "-"}${p.farallon ? ' <span class="tag far" title="Held by Farallon Capital per its latest 13F">F</span>' : ""}</td><td class="n" title="${esc((p.breakPrice != null ? "Break price " + p.breakPrice + " (" + (p.breakBasis || "") + ")" : ""))}">${p.breakPrice != null ? pct(p.shares * Math.max(0, p.cur - p.breakPrice) / nav, 1) : "-"}</td>
       <td class="dt">${esc(p.expectedClose)}</td><td class="n ${cls(p.pnlPct)}">${pct(p.pnlPct)}</td><td class="n ${cls(p.pnl)}">${(p.pnl >= 0 ? "+" : "") + num(p.pnl, 3)}</td></tr>`;
-    if (p.hedge) h += `<tr class="hedge"><td colspan="12">Hedge: short ${num(p.hedge.shares, 4)} <span class="tk">${esc(p.hedge.symbol)}</span> (${p.terms.ratio} per target share) at ${px(p.hedge.entryPrice, p.currency)}, now ${px(p.hedge.cur, p.currency)}. Deal value = ${p.terms.cash ? px(p.terms.cash, p.currency) + " + " : ""}${p.terms.ratio} &times; ${esc(p.hedge.symbol)}. P&amp;L above is net of the hedge.</td></tr>`;
+    if (p.hedge) h += `<tr class="hedge"><td colspan="13">Hedge: short ${num(p.hedge.shares, 4)} <span class="tk">${esc(p.hedge.symbol)}</span> (${p.terms.ratio} per target share) at ${px(p.hedge.entryPrice, p.currency)}, now ${px(p.hedge.cur, p.currency)}. Deal value = ${p.terms.cash ? px(p.terms.cash, p.currency) + " + " : ""}${p.terms.ratio} &times; ${esc(p.hedge.symbol)}. P&amp;L above is net of the hedge.</td></tr>`;
     return h;
   }).join("");
   document.getElementById("holdFoot").innerHTML = `<tr><td>Total invested (cash ${(cashPct*100).toFixed(1)}%)</td><td class="n">${((longs/nav)*100).toFixed(1)}%</td><td colspan="4"></td>
-    <td class="n">${pct(wSum ? wAnn / wSum : null, 1)}</td><td></td><td></td><td></td><td></td><td class="n ${cls(totPnl)}">${(totPnl >= 0 ? "+" : "") + num(totPnl, 3)}</td></tr>`;
+    <td class="n">${pct(wSum ? wAnn / wSum : null, 1)}</td><td></td><td></td><td class="n">${pct(open.reduce((a, p) => a + (p.breakPrice != null ? p.shares * Math.max(0, p.cur - p.breakPrice) : 0), 0) / nav, 1)}</td><td></td><td></td><td class="n ${cls(totPnl)}">${(totPnl >= 0 ? "+" : "") + num(totPnl, 3)}</td></tr>`;
 
   const closed = pf.positions.filter(p => p.status !== "open");
   if (closed.length) {
@@ -253,6 +282,7 @@ async function main() {
     <td><span class="tag ${esc(t.action.toLowerCase())}">${esc(t.action)}</span></td><td class="tk">${esc(t.symbol || t.ticker)}</td>
     <td class="n">${t.action === "TERMS" ? px(t.price, curOf[t.symbol]) : px(t.price, curOf[t.symbol])}</td><td class="n">${t.qty ? num(t.qty, 4) : "-"}</td>
     <td class="n">${t.notional ? num(t.notional, 3) : "-"}</td><td class="muted">${esc(t.reason)}</td></tr>`).join("");
+  renderFarallon(pf);
   renderRules(pf);
 }
 main().catch(e => { document.getElementById("sub").textContent = "Could not load portfolio data: " + e.message; });
