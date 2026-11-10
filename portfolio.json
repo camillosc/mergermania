@@ -144,10 +144,10 @@
     "symbol": "TOWN",
     "shares": 0.14575607827633918,
     "entryPrice": 36.62,
-    "lastPrice": 36.62
+    "lastPrice": 36.72
    },
-   "lastPrice": 50.59,
-   "dealValueNow": 51.27550799999999,
+   "lastPrice": 48.5,
+   "dealValueNow": 51.380848,
    "fees": {
     "reversePct": null,
     "targetPct": null,
@@ -176,7 +176,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Pontiac Bancorp all-cash $19.78/share for Ottawa Bancorp. Small community-bank deal, routine regulatory approvals, board approved; Q1 2027 close. Thinly traded.",
    "status": "open",
-   "lastPrice": 19.25,
+   "lastPrice": 19.35,
    "dealValueNow": 19.78,
    "fees": {
     "reversePct": null,
@@ -206,7 +206,7 @@
    "expectedClose": "2027-07-31",
    "rationale": "onsemi all-cash $123/share (amended Oct 1). Strategic buyer, cash on hand plus fully committed Morgan Stanley debt. The board reaffirmed onsemi over an unsolicited rival proposal, which also supports the price. Mid-2027 close.",
    "status": "open",
-   "lastPrice": 116.4,
+   "lastPrice": 117.25,
    "dealValueNow": 123,
    "fees": {
     "reversePct": 5.61,
@@ -236,7 +236,7 @@
    "expectedClose": "2027-06-30",
    "rationale": "Texas Instruments all-cash $231/share. Strategic, investment-grade buyer; shareholders approved and US HSR expired; only remaining foreign approvals. H1 2027 close.",
    "status": "open",
-   "lastPrice": 221.35,
+   "lastPrice": 221.8,
    "dealValueNow": 231,
    "fees": {
     "reversePct": 7.34,
@@ -266,7 +266,7 @@
    "expectedClose": "2027-09-30",
    "rationale": "Schneider Electric all-cash $205/share. Strategic, investment-grade buyer with limited product overlap; board unanimous. Longer-dated (Q3 2027 assumption).",
    "status": "open",
-   "lastPrice": 194.6,
+   "lastPrice": 195.87,
    "dealValueNow": 205.0,
    "fees": {
     "reversePct": null,
@@ -297,7 +297,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "EnerSys all-cash $16/share tender offer funded from cash on hand, no financing condition; holders of ~40% have tender support agreements. HSR and UK NSIA clearances; offer expires Dec 3 (extendable).",
    "status": "open",
-   "lastPrice": 15.63,
+   "lastPrice": 15.69,
    "dealValueNow": 16.0,
    "fees": {
     "reversePct": 3.22,
@@ -327,7 +327,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Teledyne all-cash $18.90/share. Strategic serial acquirer, ample liquidity; boards unanimous. HSR and foreign clearances, early 2027 close.",
    "status": "open",
-   "lastPrice": 18.44,
+   "lastPrice": 18.45,
    "dealValueNow": 18.9,
    "fees": {
     "reversePct": null,
@@ -357,7 +357,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Epiris-backed Bradbury Bidco recommended cash offer, 1,120p/share by scheme. UK Takeover Code cash confirmation means the funding is committed; board recommends. Q1 2027.",
    "status": "open",
-   "lastPrice": 1097,
+   "lastPrice": 1098,
    "dealValueNow": 1120,
    "fees": {
     "reversePct": null,
@@ -417,7 +417,7 @@
    "expectedClose": "2026-12-31",
    "rationale": "BAWAG all-cash EUR 2.97/share by Irish scheme. Irish State (largest holder) supports; shareholders approved; the High Court sanction hearing began Oct 27, so completion is near (Q4 2026).",
    "status": "open",
-   "lastPrice": 2.95,
+   "lastPrice": 2.94,
    "dealValueNow": 2.97,
    "fees": {
     "reversePct": null,
@@ -447,7 +447,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Thrive Holdings all-cash $10/share with debt fully committed by Apollo funds, no financing condition. Board approved; HSR only; the go-shop to Nov 28 is optional upside. Q1 2027.",
    "status": "open",
-   "lastPrice": 9.9,
+   "lastPrice": 9.93,
    "dealValueNow": 10.0,
    "fees": {
     "reversePct": 6.22,
@@ -477,7 +477,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Merck KGaA all-cash $20/ADS by UK scheme. Strategic, investment-grade buyer; board unanimous, ~14% of votes committed. Q1 2027.",
    "status": "open",
-   "lastPrice": 19.72,
+   "lastPrice": 19.75,
    "dealValueNow": 20.0,
    "fees": {
     "reversePct": null,
@@ -639,7 +639,15 @@
    "long": 90.9926,
    "short": 5.3376,
    "open": 13
+  },
+  {
+   "date": "2026-11-09",
+   "nav": 99.8813,
+   "cash": 14.3376,
+   "long": 90.8959,
+   "short": 5.3522,
+   "open": 13
   }
  ],
- "asOf": "2026-11-06 13:13 UTC"
+ "asOf": "2026-11-10 15:41 UTC"
 }
