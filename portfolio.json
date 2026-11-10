@@ -16,17 +16,26 @@
    "Sensible return: annualized spread of at least ~3% (at least ~5% for the daily add screen), unless closing is imminent",
    "Break protection: termination fees from the merger agreement are scored; a large reverse (acquirer-paid, incl. regulatory) fee is preferred because it compensates holders if the deal breaks"
   ],
-  "sizing": "Downside-based sizing (from Nov 10, 2026; Farallon principle: size by potential loss, not expected gain). New positions are sized so a break costs about 1.75% of NAV: weight = 1.75% / downside, clamped to 3%-10%. Downside = (current price - break price) / current price, with the break price estimated as the undisturbed close before announcement (Yahoo history), or a default 25% downside when that price is unavailable or the deal leaked early. Positions whose break loss exceeds 3% of NAV are trimmed back to the downside-based size. Inception positions were bought at an equal 7%.",
+  "sizing": "Downside-based sizing (from Nov 10, 2026): size by potential loss, not expected gain. New positions are sized so a break costs about 1.75% of NAV: weight = 1.75% / downside, clamped to 3%-10%. Downside = (current price - break price) / current price, with the break price estimated as the undisturbed close before announcement (Yahoo history), or a default 25% downside when that price is unavailable or the deal leaked early. Positions whose break loss exceeds 3% of NAV are trimmed back to the downside-based size. Inception positions were bought at an equal 7%.",
   "hedging": "Stock and cash+stock deals with a fixed exchange ratio: short the acquirer at the ratio on entry (proceeds credited to cash). Fixed-dollar or NAV-based stock legs are not share-hedged.",
   "pricing": "Entries and daily marks use closing prices from the site's live quote feed (Yahoo-backed) in each listing's local currency; returns are measured in local currency (FX assumed hedged).",
   "closings": "When a deal completes it is booked at deal value (cash plus ratio x acquirer close); the hedge is covered with the acquirer shares received.",
   "breaks": "When a deal is terminated it is sold at that day's close and the loss is booked; the hedge is covered at the acquirer close.",
   "rebalancing": "No rebalancing of open positions. Cash from closings and breaks is redeployed into new names that pass the screen, at 7% each, only while cash stays at or above 5% of NAV after the purchase.",
   "nav": "NAV = cash + long market value - short market value, recorded once per trading day after the US close (stamped with the session date).",
-  "qualityScore": "Each deal gets a 0-100 quality score: closing probability (40 pts), annualized spread capped at 15% (25), reverse termination fee as % of equity value, full credit at 6%+ (20), deal risk low/medium/high (10/5/0), target break fee, full credit at 4%+ (5; UK Takeover Code deals, where target break fees are not permitted, get a neutral 2.5). Fees come from the merger agreement, 8-K or Rule 2.7 announcement and are shown on the holdings table as reverse / break fee %. Larger fees are better: a big reverse or regulatory fee is paid to the target if the buyer walks or regulators block the deal, which cushions a break. Farallon signal: +5 points (score capped at 100) when Farallon Capital's latest 13F holds the target (currently the 2026-06-30 13F filed 2026-08-14). It is a modest input because 13F data is lagged and long-only.",
+  "qualityScore": "Each deal gets a 0-100 quality score: closing probability (40 pts), annualized spread capped at 15% (25), reverse termination fee as % of equity value, full credit at 6%+ (20), deal risk low/medium/high (10/5/0), target break fee, full credit at 4%+ (5; UK Takeover Code deals, where target break fees are not permitted, get a neutral 2.5). Fees come from the merger agreement, 8-K or Rule 2.7 announcement and are shown on the holdings table as reverse / break fee %. Larger fees are better: a big reverse or regulatory fee is paid to the target if the buyer walks or regulators block the deal, which cushions a break.",
   "swaps": "A holding is swapped for a candidate only when the candidate passes the quality screen and the quant pre-screen, was not excluded for a qualitative reason, and its quality score beats the weakest holding's by at least 15 points. Swaps trade at the session close and are logged.",
   "feeReview": "Nov 5, 2026 re-rank after adding termination fees: weakest holdings are PTC (score 50.9; its merger agreement has no reverse fee, so a break in the long Q3 2027 review would be uncompensated) and SLN (52.2; ~3% annualized, no reverse fee). Top fee-protected candidates LXFR (~7% reverse fee) and CHMI (~6.8%) score higher on the site's stored spreads, but at the Nov 5 close their live spreads were only ~0.4% (LXFR, ~2.6% annualized) and ~0.7% (CHMI, ~4.8%), below the return screen, so no swap was made. PTC and SLN are flagged; they will be swapped if a candidate clears the screen on live prices with a 15+ point score lead.",
-  "diversification": "Many small positions and no single deal above 10% of NAV; at most 25% of NAV in one industry or awaiting the same regulator. Cash is not forced into thin spreads: unallocated capital stays in cash when no candidate clears the screen on live prices."
+  "diversification": "Many small positions and no single deal above 10% of NAV; at most 25% of NAV in one industry or awaiting the same regulator. Cash is not forced into thin spreads: unallocated capital stays in cash when no candidate clears the screen on live prices.",
+  "principles": [
+   "Hedge stock deals: buy the target and short the acquirer at the exchange ratio, so the position earns the spread rather than taking market direction.",
+   "Underwrite the downside: estimate a break price (the undisturbed pre-announcement close) and the paths by which the deal could fail before sizing.",
+   "Size by potential loss, not expected gain: about 1.75% of NAV lost per deal break, weights 3%-10%, trim when break loss exceeds 3% of NAV.",
+   "Diversify: many small positions, at most ~10% of NAV per deal and 25% per industry or awaiting the same regulator.",
+   "Low leverage: gross exposure stays modest; returns should come from spreads, not borrowing.",
+   "Don't force capital into thin spreads: cash stays in cash when nothing clears the screen on live prices.",
+   "Bottom-up research: each deal is underwritten from its merger agreement, filings and regulatory path; complex deals with real research edge are preferred to crowded 'safe' spreads."
+  ]
  },
  "excludedAtInception": [
   {
@@ -120,7 +129,6 @@
    },
    "qualityScore": 62.0,
    "flag": null,
-   "farallon": false,
    "breakPrice": 8.36,
    "downside": 0.186,
    "breakBasis": "undisturbed close 2026-10-26",
@@ -161,7 +169,6 @@
    },
    "qualityScore": 59.1,
    "flag": null,
-   "farallon": false,
    "breakPrice": 39.7,
    "downside": 0.1814,
    "breakBasis": "undisturbed close 2026-10-05",
@@ -196,7 +203,6 @@
    },
    "qualityScore": 55.7,
    "flag": null,
-   "farallon": false,
    "breakPrice": 15.9,
    "downside": 0.1783,
    "breakBasis": "undisturbed close 2026-08-19",
@@ -231,7 +237,6 @@
    },
    "qualityScore": 77.2,
    "flag": null,
-   "farallon": false,
    "breakPrice": 87.9375,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
@@ -266,7 +271,6 @@
    },
    "qualityScore": 69.9,
    "flag": null,
-   "farallon": false,
    "breakPrice": 136.62,
    "downside": 0.384,
    "breakBasis": "undisturbed close 2026-02-03",
@@ -302,7 +306,6 @@
    "qualityScore": 50.9,
    "review": "Swap watch: lowest fee-aware quality score (no reverse fee)",
    "flag": null,
-   "farallon": false,
    "breakPrice": 144.03,
    "downside": 0.2647,
    "breakBasis": "undisturbed close 2026-10-02",
@@ -337,7 +340,6 @@
    },
    "qualityScore": 71.6,
    "flag": null,
-   "farallon": false,
    "breakPrice": 6.01,
    "downside": 0.617,
    "breakBasis": "undisturbed close 2026-10-26",
@@ -373,7 +375,6 @@
    },
    "qualityScore": 57.7,
    "flag": null,
-   "farallon": false,
    "breakPrice": 12.41,
    "downside": 0.3274,
    "breakBasis": "undisturbed close 2026-08-07",
@@ -408,7 +409,6 @@
    },
    "qualityScore": 57.0,
    "flag": null,
-   "farallon": false,
    "breakPrice": 726.0,
    "downside": 0.3388,
    "breakBasis": "undisturbed close 2026-04-02",
@@ -443,7 +443,6 @@
    },
    "qualityScore": 55.8,
    "flag": null,
-   "farallon": false,
    "breakPrice": 688.125,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
@@ -478,7 +477,6 @@
    },
    "qualityScore": 55.1,
    "flag": null,
-   "farallon": false,
    "breakPrice": 2.205,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
@@ -513,7 +511,6 @@
    },
    "qualityScore": 75.1,
    "flag": null,
-   "farallon": false,
    "breakPrice": 7.41,
    "downside": 0.2538,
    "breakBasis": "undisturbed close 2026-10-28",
@@ -549,7 +546,6 @@
    "qualityScore": 52.2,
    "review": "Swap watch: lowest fee-aware quality score (no reverse fee)",
    "flag": null,
-   "farallon": false,
    "breakPrice": 8.68,
    "downside": 0.5605,
    "breakBasis": "undisturbed close 2026-10-16",
@@ -737,172 +733,5 @@
    "open": 13
   }
  ],
- "asOf": "2026-11-10 15:44 UTC",
- "farallonOverlay": {
-  "manager": "Farallon Capital Management, L.L.C. (CIK 0000909661, CRD 107322)",
-  "latestPeriod": "2026-06-30",
-  "latestFiled": "2026-08-14",
-  "priorPeriod": "2026-03-31",
-  "note": "Form 13F shows long US-listed equity positions as of quarter-end, filed up to 45 days later; it omits shorts, non-US listings and most hedges. The Q3 2026 13F (period 2026-09-30) was not yet filed as of 2026-11-10.",
-  "overlap": [
-   {
-    "targetTicker": "LNTH",
-    "target": "Lantheus Holdings Inc",
-    "acquirer": "Curium US Holdings LLC (Curium Group; CapVest-controlled)",
-    "issuerName": "LANTHEUS HLDGS INC",
-    "cusip": "516544103",
-    "latest": {
-     "value": 619431160,
-     "shares": 5583479,
-     "pctPortfolio": 2.858
-    },
-    "prior": {
-     "value": 423506882,
-     "shares": 5583479,
-     "pctPortfolio": 2.221
-    },
-    "change": "unchanged (0 sh)",
-    "acquirerHeld": "No - acquirer Curium is private, no listed security to hedge with. Cash deal ($102.50 + CVR up to $12), so no hedge needed anyway.",
-    "options": "None - common stock only, no puts/calls on LNTH in either quarter.",
-    "note": "Pre-deal holding: deal announced 2026-08-03, after both 13F periods. Farallon has been a >5% 13G holder (8.2% at 12/31/25, 8.6% at 6/30/26 per 13G/A filed 2026-08-13, i.e. after announcement). Still filing passive 13G, not 13D."
-   },
-   {
-    "targetTicker": "AXTA",
-    "target": "Axalta Coating Systems Ltd",
-    "acquirer": "Akzo Nobel NV",
-    "issuerName": "AXALTA COATING SYS LTD",
-    "cusip": "G0750C108",
-    "latest": {
-     "value": 16357160,
-     "shares": 478000,
-     "pctPortfolio": 0.075
-    },
-    "prior": null,
-    "change": "new",
-    "acquirerHeld": "Not visible - no Akzo Nobel security in the 13F (Akzo ordinary shares/OTC ADR AKZOY are not 13(f) securities, so a short/hedge on Akzo would not appear). Stock-for-stock deal (0.6539 AKZOY per AXTA), so a short Akzo hedge is likely but unobservable; 13F never shows shorts.",
-    "options": "None - common stock only.",
-    "note": "New position in Q2 2026 (deal announced 2025-11-18), consistent with a classic arb entry; small (0.08% of 13F)."
-   },
-   {
-    "targetTicker": "FLEX",
-    "target": "Flex Ltd (Cloud & Power Infrastructure SpinCo)",
-    "acquirer": "Spin-off (tax-free distribution to FLEX shareholders)",
-    "issuerName": "FLEXTRONICS INTL LTD",
-    "cusip": "Y2573F102",
-    "latest": null,
-    "prior": {
-     "value": 5105880,
-     "shares": 78000,
-     "pctPortfolio": 0.027
-    },
-    "change": "exited (-78,000 sh)",
-    "acquirerHeld": "n/a - spin-off, no acquirer.",
-    "options": "None.",
-    "note": "Spin-off, not an acquisition. 78,000 sh (~$5.1M) in Q1 was one of ~30 uniform ~$5M positions (a basket that was fully exited in Q2); not an event-driven position. Exited before/around the 2026-05-05 spin announcement."
-   }
-  ],
-  "otherArbLike": [
-   "Electronic Arts (EA) - PIF/Silver Lake/Affinity $210 take-private, closed 2026-08-04; 7.92M sh ($1.62B) at 6/30/26, 7.47M at 3/31/26 (Q1 position was confidential, disclosed via 13F-HR/A)",
-   "Crinetics Pharmaceuticals (CRNX) - Vertex $85 cash, announced 2026-07-06 (after Q2 period); 8.99M sh ($336M) at 6/30/26; 13G 8.5%",
-   "Centessa Pharmaceuticals (CNTA) - Eli Lilly $38 + CVR, announced 2026-03-31; 4.81M sh ($191M) at 3/31/26, gone by 6/30/26 (13D 6.1% filed 6/24, 13D/A to 0% 6/26)",
-   "Nuvalent (NUVL) - GSK $124 cash, announced 2026-06-09; token 3,000 sh in Q1 only",
-   "Rumored/no definitive deal: Protagonist Therapeutics (PTGX, J&J talks; 13G 9.99%), Revolution Medicines (RVMD; AbbVie/Merck talks ended; 13G 6.4%), Abivax (ABVX), Madrigal (MDGL)"
-  ],
-  "schedule13": [
-   {
-    "issuer": "Lantheus Holdings, Inc.",
-    "form": "SCHEDULE 13G/A",
-    "filed": "2026-02-05",
-    "eventDate": "12/31/2025",
-    "pct": 8.2,
-    "url": "https://www.sec.gov/Archives/edgar/data/1521036/000090883426000050/",
-    "isOurDealTarget": true
-   },
-   {
-    "issuer": "Lantheus Holdings, Inc.",
-    "form": "SCHEDULE 13G/A",
-    "filed": "2026-08-13",
-    "eventDate": "06/30/2026",
-    "pct": 8.6,
-    "url": "https://www.sec.gov/Archives/edgar/data/1521036/000090883426000401/",
-    "isOurDealTarget": true
-   }
-  ],
-  "principles": [
-   {
-    "title": "Capture the spread; hedge stock-for-stock deals by shorting the acquirer",
-    "rule": "Cash deals: long target only. Stock or mixed deals: short the acquirer at the exchange ratio for the stock component, so the position is long the spread and not the acquirer's stock. When computing break loss for stock deals, include the possible loss on the acquirer short (the acquirer can rally when a deal breaks).",
-    "sources": [
-     "https://www.faralloncapital.com/core-strategies",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894",
-     "https://store.hbr.org/product/farallon-capital-management-risk-arbitrage-b/299021"
-    ]
-   },
-   {
-    "title": "Underwrite to the downside: break price and a probability for each outcome",
-    "rule": "For every deal, record: deal value (upside), estimated undisturbed/break price (downside), and an explicit completion probability with named break paths (antitrust/regulatory, financing, tax/political, target business deterioration, shareholder vote). Enter only when expected value is positive after weighting the break loss, and re-estimate the probability when material deal news arrives.",
-    "sources": [
-     "https://fortune.com/2026/04/22/nicolas-giauque-farallon-goldman-sachs-great-investors/",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894"
-    ]
-   },
-   {
-    "title": "Size each position by its potential loss, not its expected gain",
-    "rule": "Set position size so that the break loss (target falling to its break price, plus any loss on the hedge) equals a fixed fraction of NAV. For example, cap break loss at about 1% of NAV per deal. A wide-spread deal with a large downside therefore gets a smaller position than a tight, low-downside deal, even if its gross spread is larger.",
-    "sources": [
-     "https://institutionalinvestor.com/article/b150nnccmkqjv6/steyer-power",
-     "https://www.institutionalinvestor.com/article/2bsu8i5kowok54lhlrim8/portfolio/andrew-spokes-the-new-face-of-farallon"
-    ]
-   },
-   {
-    "title": "Hold many small positions with a hard single-name cap",
-    "rule": "Hold many deals (e.g. 20 or more) and do not let any single deal exceed 10% of NAV, with a much lower usual size. Also cap total exposure to one industry, one regulator (e.g. a single antitrust agency) or one acquirer, because breaks within these groups are correlated.",
-    "sources": [
-     "https://institutionalinvestor.com/article/b150nnccmkqjv6/steyer-power",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894"
-    ]
-   },
-   {
-    "title": "Use little leverage; earn returns rather than lever them",
-    "rule": "Keep gross long merger-arb exposure near 100% to 125% of NAV, with only modest leverage. Hold enough unencumbered cash that a cluster of breaks or a margin increase cannot force you to sell spreads before they converge.",
-    "sources": [
-     "https://institutionalinvestor.com/article/b150nnccmkqjv6/steyer-power",
-     "https://www.institutionalinvestor.com/article/2bsu8i5kowok54lhlrim8/portfolio/andrew-spokes-the-new-face-of-farallon",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894"
-    ]
-   },
-   {
-    "title": "Treat merger arb as one sleeve whose weight moves with the opportunity set",
-    "rule": "Do not force capital into spreads. Scale gross merger-arb exposure to the supply and quality of announced deals (spread level adjusted for risk and deal count). When spreads are thin or deals are scarce, hold the rest in cash or other low-correlation sleeves rather than in marginal deals.",
-    "sources": [
-     "https://www.faralloncapital.com/about-us---2025-1",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894",
-     "https://institutionalinvestor.com/article/b150nnccmkqjv6/steyer-power",
-     "https://www.institutionalinvestor.com/article/2bsu8i5kowok54lhlrim8/portfolio/andrew-spokes-the-new-face-of-farallon",
-     "https://www.institutionalinvestor.com/article/b18bk9msqd21jw/merger-mania-pays-off-for-farallon-to-a-point"
-    ]
-   },
-   {
-    "title": "Do fundamental, bottom-up deal research, and prefer complexity to crowded 'safe' spreads",
-    "rule": "Score each deal on a documented checklist: regulatory and antitrust path by jurisdiction, financing certainty, votes and conditions, MAC/target fundamentals, and timeline. Lean toward deals where analysis can show the market overprices the risk (complex structure, multiple jurisdictions, crowded-out situations). Underweight very tight 'sure thing' spreads where a break costs far more than the remaining spread.",
-    "sources": [
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894",
-     "https://www.faralloncapital.com/core-strategies",
-     "https://www.institutionalinvestor.com/article/2bsu8i5kowok54lhlrim8/portfolio/andrew-spokes-the-new-face-of-farallon",
-     "https://fortune.com/2026/04/22/nicolas-giauque-farallon-goldman-sachs-great-investors/"
-    ]
-   },
-   {
-    "title": "Run it globally and include adjacent 'risk arbitrage' convergence trades",
-    "rule": "Cover announced deals in the US, Europe and Asia rather than the US only, while respecting the per-regulator and per-jurisdiction caps above. Consider a small sleeve of hedged convergence trades (holdco/sub, dual listings) with a time stop, since convergence may not happen within the holding period.",
-    "sources": [
-     "https://www.faralloncapital.com/about-us---2025-1",
-     "https://www.faralloncapital.com/core-strategies",
-     "https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1032894",
-     "https://institutionalinvestor.com/article/b150nnccmkqjv6/steyer-power"
-    ]
-   }
-  ],
-  "updated": "2026-11-10"
- }
+ "asOf": "2026-11-10 15:44 UTC"
 }

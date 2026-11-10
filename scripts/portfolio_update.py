@@ -19,10 +19,9 @@ from datetime import datetime, timezone, timedelta, date
 REPO = 'https://api.github.com/repos/Camillosc/mergermania'
 QUOTE = 'https://mergeranalyst-quote.camillosc2.workers.dev/quote?symbols='
 TARGET_WEIGHT, MAX_WEIGHT, MIN_CASH = 0.07, 0.10, 0.05   # legacy equal weight, hard cap, cash buffer kept after any new purchase
-# Downside-based sizing (Farallon-style: size by potential loss, not expected gain)
+# Downside-based sizing: size by potential loss, not expected gain
 BREAK_LOSS_BUDGET, MIN_WEIGHT, TRIM_TRIGGER = 0.0175, 0.03, 0.03   # break loss per deal ~1.75% of NAV; floor 3%; trim if a position's break loss > 3% of NAV
 DEFAULT_DOWNSIDE = 0.25   # used when the undisturbed price is unavailable or the deal leaked before announcement (computed downside < 10%)
-FARALLON_BONUS = 5        # quality-score points if Farallon's latest 13F holds the target (lagged, long-only signal)
 EU_CLOSE_UTC, US_CLOSE_UTC = (16, 35), (21, 0)   # conservative (winter) closes; used to decide whether today's print is final
 EU_SFX = {'L', 'IR', 'DE', 'F', 'PA', 'AS', 'BR', 'MI', 'MC', 'LS', 'HE', 'VI', 'ST', 'OL', 'CO', 'SW'}
 SFX_CUR = {'L': 'GBp', 'IR': 'EUR', 'DE': 'EUR', 'F': 'EUR', 'PA': 'EUR', 'AS': 'EUR', 'BR': 'EUR', 'MI': 'EUR', 'MC': 'EUR', 'LS': 'EUR',
@@ -114,10 +113,6 @@ def fee_pcts(d):
     rv, tg = (f.get('reverse') or {}).get('pct'), (f.get('target') or {}).get('pct')
     return rv, tg, f.get('regime')
 
-def farallon_set(pf):
-    fo = (pf or {}).get('farallonOverlay') or {}
-    return {norm(h['targetTicker']) for h in fo.get('overlap', []) if h.get('latest')}
-
 def unaffected_price(sym, announced):
     """Last close before the announcement date (Yahoo chart API), as the break-price estimate."""
     try:
@@ -143,7 +138,7 @@ def downside(sym, announced, cur, currency=None):
 def size_for(dn):
     return round(min(MAX_WEIGHT, max(MIN_WEIGHT, BREAK_LOSS_BUDGET / max(dn, 0.01))), 4)
 
-def quality_score(d, ann=None, farallon=None):
+def quality_score(d, ann=None):
     ann = d.get('annualizedReturn') if ann is None else ann
     rv, tg, regime = fee_pcts(d)
     prob = min(max(d.get('closingProbability') or 0, 0), 100) / 100 * 40
@@ -151,10 +146,9 @@ def quality_score(d, ann=None, farallon=None):
     rev = min(rv or 0, 6) / 6 * 20                  # a reverse/regulatory fee of 6%+ of equity value earns full credit
     risk = {'low': 10, 'medium': 5}.get(norm(d.get('dealRisk')), 0 if norm(d.get('dealRisk')) == 'high' else 5)
     tgt = 2.5 if regime == 'uk-code-none-permitted' else min(tg or 0, 4) / 4 * 5   # UK Code bars target fees: neutral credit
-    far = FARALLON_BONUS if farallon and norm(d.get('targetTicker')) in farallon else 0
-    return round(min(100, prob + ret + rev + risk + tgt + far), 1)
+    return round(min(100, prob + ret + rev + risk + tgt), 1)
 
-def candidates(deals, held, today, excluded=None, farallon=None):
+def candidates(deals, held, today, excluded=None):
     """Quantitative pre-screen; the qualitative quality screen (see rules) is applied by the reviewer before --add."""
     out = []
     for d in deals:
@@ -167,16 +161,15 @@ def candidates(deals, held, today, excluded=None, farallon=None):
         if ann >= 5 or (ann >= 3 and days is not None and days <= 45):
             out.append({'ticker': d['targetTicker'], 'target': d['target'], 'acquirer': d.get('acquirer'), 'spread': d['spread'],
                         'annualized': ann, 'expectedClose': d.get('expectedClose'), 'prob': d.get('closingProbability'),
-                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'), 'score': quality_score(d, ann, farallon), 'farallon': bool(farallon and norm(d['targetTicker']) in farallon),
+                        'risk': d.get('dealRisk'), 'otherBidders': d.get('otherBidders'), 'score': quality_score(d, ann),
                         'reverseFeePct': fee_pcts(d)[0], 'targetFeePct': fee_pcts(d)[1], 'feeRegime': fee_pcts(d)[2],
                         **({'previouslyExcluded': (excluded or {})[norm(d['targetTicker'])]} if norm(d['targetTicker']) in (excluded or {}) else {})})
     return sorted(out, key=lambda c: -c['score'])
 
-def refresh_fees(p, row, farallon=None):
+def refresh_fees(p, row):
     rv, tg, regime = fee_pcts(row)
     p['fees'] = {'reversePct': rv, 'targetPct': tg, 'regime': regime}
-    p['qualityScore'] = quality_score(row, None, farallon)
-    p['farallon'] = bool(farallon and norm(row.get('targetTicker')) in farallon)
+    p['qualityScore'] = quality_score(row)
 
 def break_loss(p, nav):
     """Loss in NAV fraction if the deal breaks and the target falls to its break price (hedge P&L ignored)."""
@@ -253,7 +246,7 @@ def open_position(pf, row, qs, now, d, weight, reason, rationale=None, force=Fal
          'target': row['target'], 'acquirer': row.get('acquirer', ''), 'terms': terms, 'entryDate': d, 'entryPrice': px,
          'entryDealValue': deal_value(terms, apx), 'shares': notional / px, 'targetWeight': weight, 'expectedClose': row.get('expectedClose'),
          'rationale': rationale or reason, 'status': 'open', 'breakPrice': bp, 'downside': dn, 'breakBasis': basis}
-    refresh_fees(p, row, farallon_set(pf))
+    refresh_fees(p, row)
     pf['cash'] -= notional
     pf['positions'].append(p)
     log(pf, d, 'BUY', p, px, p['shares'], reason)
@@ -290,7 +283,7 @@ def daily(pf, deals, now):
                 p['terms']['cash'] = p['entryDealValue'] = new_cash
                 events.append(f"TERMS {p['ticker']} -> {new_cash}")
             p['flag'] = row.get('status') if st != 'pending' else None
-            refresh_fees(p, row, farallon_set(pf))
+            refresh_fees(p, row)
             if row.get('expectedClose'): p['expectedClose'] = row['expectedClose']
     nav, longs, shorts = nav_of(pf, qs, now)
     for p in pf['positions']:
@@ -303,7 +296,7 @@ def daily(pf, deals, now):
     pf['navHistory'].sort(key=lambda x: x['date'])
     pf['asOf'] = now.strftime('%Y-%m-%d %H:%M UTC')
     excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
-    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d), excl, farallon_set(pf))
+    return events, candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, date.fromisoformat(d), excl)
 
 def push(pf, msg):
     for attempt in range(1, 6):
@@ -333,10 +326,10 @@ if __name__ == '__main__':
         for p in pf['positions']:
             if p['status'] != 'open': continue
             row = find_row(deals, p)
-            if row: print(f"  {p['ticker']:8} {quality_score(row, None, farallon_set(pf)):5}  rev {fee_pcts(row)[0]}  tgt {fee_pcts(row)[1]}  {fee_pcts(row)[2]}  ann {row.get('annualizedReturn')}")
+            if row: print(f"  {p['ticker']:8} {quality_score(row):5}  rev {fee_pcts(row)[0]}  tgt {fee_pcts(row)[1]}  {fee_pcts(row)[2]}  ann {row.get('annualizedReturn')}")
         excl = {norm(x['ticker']): x['reason'] for x in pf.get('excludedAtInception', [])}
         print('CANDIDATES:')
-        for c in candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, now.date(), excl, farallon_set(pf))[:20]:
+        for c in candidates(deals, {norm(p['dealKey']) for p in pf['positions'] if p['status'] == 'open'}, now.date(), excl)[:20]:
             print('  ', json.dumps(c, ensure_ascii=False))
         sys.exit(0)
     if a.trim:
