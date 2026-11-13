@@ -120,7 +120,7 @@
    "expectedClose": "2027-06-30",
    "rationale": "Ares Capital (largest US BDC) buying MFIC for $10.88/share ($1.21 cash + $9.67 of ARCC stock, priced at the greater of ARCC NAV or market). Strategic, well-capitalised buyer; both boards unanimous, Apollo affiliates support; no antitrust overlap. The stock leg is a fixed dollar amount converted at closing, so there is no static share hedge.",
    "status": "open",
-   "lastPrice": 10.29,
+   "lastPrice": 10.18,
    "dealValueNow": 10.88,
    "fees": {
     "reversePct": null,
@@ -132,7 +132,7 @@
    "breakPrice": 8.36,
    "downside": 0.186,
    "breakBasis": "undisturbed close 2026-10-26",
-   "breakLoss": 0.01314
+   "breakLoss": 0.01241
   },
   {
    "ticker": "BLHK",
@@ -158,10 +158,10 @@
     "symbol": "TOWN",
     "shares": 0.14575607827633918,
     "entryPrice": 36.62,
-    "lastPrice": 36.62
+    "lastPrice": 36.59
    },
    "lastPrice": 49.26,
-   "dealValueNow": 51.27550799999999,
+   "dealValueNow": 51.243905999999996,
    "fees": {
     "reversePct": null,
     "targetPct": null,
@@ -172,7 +172,7 @@
    "breakPrice": 39.7,
    "downside": 0.1814,
    "breakBasis": "undisturbed close 2026-10-05",
-   "breakLoss": 0.01322
+   "breakLoss": 0.01323
   },
   {
    "ticker": "OTTW",
@@ -194,7 +194,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Pontiac Bancorp all-cash $19.78/share for Ottawa Bancorp. Small community-bank deal, routine regulatory approvals, board approved; Q1 2027 close. Thinly traded.",
    "status": "open",
-   "lastPrice": 19.35,
+   "lastPrice": 19.3,
    "dealValueNow": 19.78,
    "fees": {
     "reversePct": null,
@@ -206,7 +206,7 @@
    "breakPrice": 15.9,
    "downside": 0.1783,
    "breakBasis": "undisturbed close 2026-08-19",
-   "breakLoss": 0.01251
+   "breakLoss": 0.01234
   },
   {
    "ticker": "SYNA",
@@ -228,7 +228,7 @@
    "expectedClose": "2027-07-31",
    "rationale": "onsemi all-cash $123/share (amended Oct 1). Strategic buyer, cash on hand plus fully committed Morgan Stanley debt. The board reaffirmed onsemi over an unsolicited rival proposal, which also supports the price. Mid-2027 close.",
    "status": "open",
-   "lastPrice": 117.86,
+   "lastPrice": 117.98,
    "dealValueNow": 123,
    "fees": {
     "reversePct": 5.61,
@@ -240,7 +240,7 @@
    "breakPrice": 87.9375,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01798
+   "breakLoss": 0.01807
   },
   {
    "ticker": "SLAB",
@@ -262,7 +262,7 @@
    "expectedClose": "2027-06-30",
    "rationale": "Texas Instruments all-cash $231/share. Strategic, investment-grade buyer; shareholders approved and US HSR expired; only remaining foreign approvals. H1 2027 close.",
    "status": "open",
-   "lastPrice": 221.61,
+   "lastPrice": 222.12,
    "dealValueNow": 231,
    "fees": {
     "reversePct": 7.34,
@@ -274,7 +274,7 @@
    "breakPrice": 136.62,
    "downside": 0.384,
    "breakBasis": "undisturbed close 2026-02-03",
-   "breakLoss": 0.02685
+   "breakLoss": 0.02705
   },
   {
    "ticker": "PTC",
@@ -296,7 +296,7 @@
    "expectedClose": "2027-09-30",
    "rationale": "Schneider Electric all-cash $205/share. Strategic, investment-grade buyer with limited product overlap; board unanimous. Longer-dated (Q3 2027 assumption).",
    "status": "open",
-   "lastPrice": 196.14,
+   "lastPrice": 196.25,
    "dealValueNow": 205.0,
    "fees": {
     "reversePct": null,
@@ -309,7 +309,7 @@
    "breakPrice": 144.03,
    "downside": 0.2647,
    "breakBasis": "undisturbed close 2026-10-02",
-   "breakLoss": 0.01873
+   "breakLoss": 0.01879
   },
   {
    "ticker": "ULBI",
@@ -331,7 +331,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "EnerSys all-cash $16/share tender offer funded from cash on hand, no financing condition; holders of ~40% have tender support agreements. HSR and UK NSIA clearances; offer expires Dec 3 (extendable).",
    "status": "open",
-   "lastPrice": 15.75,
+   "lastPrice": 15.78,
    "dealValueNow": 16.0,
    "fees": {
     "reversePct": 3.22,
@@ -343,7 +343,7 @@
    "breakPrice": 6.01,
    "downside": 0.617,
    "breakBasis": "undisturbed close 2026-10-26",
-   "breakLoss": 0.01858,
+   "breakLoss": 0.01866,
    "realizedPnl": 0.015413
   },
   {
@@ -366,7 +366,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Teledyne all-cash $18.90/share. Strategic serial acquirer, ample liquidity; boards unanimous. HSR and foreign clearances, early 2027 close.",
    "status": "open",
-   "lastPrice": 18.39,
+   "lastPrice": 18.27,
    "dealValueNow": 18.9,
    "fees": {
     "reversePct": null,
@@ -378,7 +378,7 @@
    "breakPrice": 12.41,
    "downside": 0.3274,
    "breakBasis": "undisturbed close 2026-08-07",
-   "breakLoss": 0.02268
+   "breakLoss": 0.02225
   },
   {
    "ticker": "GAMA.L",
@@ -412,7 +412,7 @@
    "breakPrice": 726.0,
    "downside": 0.3388,
    "breakBasis": "undisturbed close 2026-04-02",
-   "breakLoss": 0.02378
+   "breakLoss": 0.02381
   },
   {
    "ticker": "BOY.L",
@@ -434,7 +434,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Veritas Capital recommended cash offer, 932.8p/share by scheme (the 7.2p interim dividend has been paid). Committed funding under the Code; board recommends; NSIA review expected routine. Q1 2027.",
    "status": "open",
-   "lastPrice": 918,
+   "lastPrice": 920,
    "dealValueNow": 932.8,
    "fees": {
     "reversePct": null,
@@ -446,7 +446,7 @@
    "breakPrice": 688.125,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01752
+   "breakLoss": 0.0177
   },
   {
    "ticker": "PTSB.I",
@@ -468,7 +468,7 @@
    "expectedClose": "2026-12-31",
    "rationale": "BAWAG all-cash EUR 2.97/share by Irish scheme. Irish State (largest holder) supports; shareholders approved; the High Court sanction hearing began Oct 27, so completion is near (Q4 2026).",
    "status": "open",
-   "lastPrice": 2.96,
+   "lastPrice": 2.95,
    "dealValueNow": 2.97,
    "fees": {
     "reversePct": null,
@@ -480,7 +480,7 @@
    "breakPrice": 2.205,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.0179
+   "breakLoss": 0.01768
   },
   {
    "ticker": "ADT",
@@ -502,7 +502,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Thrive Holdings all-cash $10/share with debt fully committed by Apollo funds, no financing condition. Board approved; HSR only; the go-shop to Nov 28 is optional upside. Q1 2027.",
    "status": "open",
-   "lastPrice": 9.92,
+   "lastPrice": 9.89,
    "dealValueNow": 10.0,
    "fees": {
     "reversePct": 6.22,
@@ -514,7 +514,7 @@
    "breakPrice": 7.41,
    "downside": 0.2538,
    "breakBasis": "undisturbed close 2026-10-28",
-   "breakLoss": 0.01775
+   "breakLoss": 0.01756
   },
   {
    "ticker": "SLN",
@@ -536,7 +536,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Merck KGaA all-cash $20/ADS by UK scheme. Strategic, investment-grade buyer; board unanimous, ~14% of votes committed. Q1 2027.",
    "status": "open",
-   "lastPrice": 19.77,
+   "lastPrice": 19.8,
    "dealValueNow": 20.0,
    "fees": {
     "reversePct": null,
@@ -549,7 +549,7 @@
    "breakPrice": 8.68,
    "downside": 0.5605,
    "breakBasis": "undisturbed close 2026-10-16",
-   "breakLoss": 0.01748,
+   "breakLoss": 0.01755,
    "realizedPnl": 0.005915
   }
  ],
@@ -747,7 +747,15 @@
    "long": 83.1727,
    "short": 5.3376,
    "open": 13
+  },
+  {
+   "date": "2026-11-12",
+   "nav": 99.9712,
+   "cash": 22.2624,
+   "long": 83.0421,
+   "short": 5.3332,
+   "open": 13
   }
  ],
- "asOf": "2026-11-12 15:13 UTC"
+ "asOf": "2026-11-13 13:07 UTC"
 }
