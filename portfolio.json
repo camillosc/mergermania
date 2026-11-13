@@ -4,7 +4,7 @@
  "inception": "2026-11-05",
  "inceptionLabel": "Inception Nov 5, 2026, ~4:00pm ET: live-feed prices taken at 21:03 UTC, i.e. the Nov 5 closing prints (European names at their Nov 5 close)",
  "baseNAV": 100,
- "cash": 19.30031226380571,
+ "cash": 22.262371221817837,
  "rules": {
   "universe": "Active (pending) DEALS rows with a US, UK or European target. Excludes at-risk, hostile, contested-without-agreement and rumored deals.",
   "qualityScreen": [
@@ -571,7 +571,7 @@
    "targetWeight": 0.07,
    "expectedClose": "2026-12-31",
    "rationale": "Signed merger with TPG/MITT (0.3063 MITT + $0.93 cash), CHMI board unanimous, DEFM14A mailed with vote Dec 2 2026, no antitrust/sector-regulator hurdle, 6.8% reverse fee, ~11% annualized with close expected by year-end; score 82.5",
-   "status": "open",
+   "status": "exited",
    "breakPrice": 1.665,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
@@ -588,7 +588,10 @@
     "lastPrice": 4.18
    },
    "lastPrice": 2.22,
-   "dealValueNow": 2.210334
+   "dealValueNow": 2.210334,
+   "exitDate": "2026-11-12",
+   "exitPrice": 2.22,
+   "realizedPnl": 0.0
   }
  ],
  "trades": [
@@ -771,6 +774,26 @@
    "qty": 0.965533,
    "notional": 4.0359,
    "reason": "Hedge: short 0.3063 MITT per target share"
+  },
+  {
+   "date": "2026-11-12",
+   "action": "SELL",
+   "ticker": "CHMI",
+   "symbol": "CHMI",
+   "price": 2.22,
+   "qty": 3.152247,
+   "notional": 6.998,
+   "reason": "Same-day reversal: live quote feed shows CHMI 2.22 vs deal value 2.21 (0.3063 x MITT 4.18 + 0.93), i.e. a negative live spread; the DEALS spread (1.79%) was stale. Fails the return hurdle, so unwound at entry prices."
+  },
+  {
+   "date": "2026-11-12",
+   "action": "COVER",
+   "ticker": "CHMI",
+   "symbol": "MITT",
+   "price": 4.18,
+   "qty": 0.965533,
+   "notional": 4.0359,
+   "reason": "Hedge closed with the position"
   }
  ],
  "navHistory": [
