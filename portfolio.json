@@ -4,7 +4,7 @@
  "inception": "2026-11-05",
  "inceptionLabel": "Inception Nov 5, 2026, ~4:00pm ET: live-feed prices taken at 21:03 UTC, i.e. the Nov 5 closing prints (European names at their Nov 5 close)",
  "baseNAV": 100,
- "cash": 22.262371221817837,
+ "cash": 19.30031226380571,
  "rules": {
   "universe": "Active (pending) DEALS rows with a US, UK or European target. Excludes at-risk, hostile, contested-without-agreement and rumored deals.",
   "qualityScreen": [
@@ -551,6 +551,44 @@
    "breakBasis": "undisturbed close 2026-10-16",
    "breakLoss": 0.01755,
    "realizedPnl": 0.005915
+  },
+  {
+   "ticker": "CHMI",
+   "dealKey": "CHMI",
+   "quoteSymbol": "CHMI",
+   "currency": "USD",
+   "target": "Cherry Hill Mortgage Investment Corporation",
+   "acquirer": "TPG Mortgage Investment Trust Inc (MITT)",
+   "terms": {
+    "cash": 0.93,
+    "ratio": 0.3063,
+    "acq": "MITT"
+   },
+   "entryDate": "2026-11-12",
+   "entryPrice": 2.22,
+   "entryDealValue": 2.210334,
+   "shares": 3.15224660465753,
+   "targetWeight": 0.07,
+   "expectedClose": "2026-12-31",
+   "rationale": "Signed merger with TPG/MITT (0.3063 MITT + $0.93 cash), CHMI board unanimous, DEFM14A mailed with vote Dec 2 2026, no antitrust/sector-regulator hurdle, 6.8% reverse fee, ~11% annualized with close expected by year-end; score 82.5",
+   "status": "open",
+   "breakPrice": 1.665,
+   "downside": 0.25,
+   "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
+   "fees": {
+    "reversePct": 6.8,
+    "targetPct": 4.0,
+    "regime": "standard"
+   },
+   "qualityScore": 82.5,
+   "hedge": {
+    "symbol": "MITT",
+    "shares": 0.9655331350066015,
+    "entryPrice": 4.18,
+    "lastPrice": 4.18
+   },
+   "lastPrice": 2.22,
+   "dealValueNow": 2.210334
   }
  ],
  "trades": [
@@ -713,6 +751,26 @@
    "qty": 0.197182,
    "notional": 3.8944,
    "reason": "Downside sizing: break loss 3.9% of NAV (break price 8.68, undisturbed close 2026-10-16; downside 56%) exceeds the 3% trigger; trimmed to 3.1% of NAV so a break costs ~1.75%"
+  },
+  {
+   "date": "2026-11-12",
+   "action": "BUY",
+   "ticker": "CHMI",
+   "symbol": "CHMI",
+   "price": 2.22,
+   "qty": 3.152247,
+   "notional": 6.998,
+   "reason": "Signed merger with TPG/MITT (0.3063 MITT + $0.93 cash), CHMI board unanimous, DEFM14A mailed with vote Dec 2 2026, no antitrust/sector-regulator hurdle, 6.8% reverse fee, ~11% annualized with close expected by year-end; score 82.5"
+  },
+  {
+   "date": "2026-11-12",
+   "action": "SHORT",
+   "ticker": "CHMI",
+   "symbol": "MITT",
+   "price": 4.18,
+   "qty": 0.965533,
+   "notional": 4.0359,
+   "reason": "Hedge: short 0.3063 MITT per target share"
   }
  ],
  "navHistory": [
