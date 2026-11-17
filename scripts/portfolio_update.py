@@ -246,6 +246,52 @@ def deal_info(row):
         'feesDetail': row.get('fees'), 'breakupFee': row.get('breakupFee'), 'dealSize': row.get('dealSize'),
         'dealCurrency': row.get('dealCurrency'), 'sourceUrl': row.get('sourceUrl'), 'industry': row.get('industry'), 'geo': row.get('geo')}.items() if v not in (None, '', [])}
 
+MONTHS_RE = r'(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?'
+MON = {m[:3].lower(): i + 1 for i, m in enumerate(['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'])}
+def _dates(s):
+    out = []
+    for m in re.finditer(MONTHS_RE + r' (\d{1,2}),? (\d{4})', s): out.append((m, f"{m.group(3)}-{MON[m.group(1)[:3].lower()]:02d}-{int(m.group(2)):02d}"))
+    for m in re.finditer(r'\b(\d{1,2}) ' + MONTHS_RE + r',? (\d{4})', s): out.append((m, f"{m.group(3)}-{MON[m.group(2)[:3].lower()]:02d}-{int(m.group(1)):02d}"))
+    return out
+
+def timeline(p, row):
+    """Deal milestones: announcement, dated events extracted from the site's deal notes, portfolio entry, expected close."""
+    ev = []
+    if row.get('announced'): ev.append({'date': str(row['announced'])[:10], 'kind': 'announce', 'label': 'Deal announced'})
+    txt = ' '.join(str(row.get(k) or '') for k in ('dealTerms', 'spreadNote', 'comment'))[:4000]
+    txt = re.sub(r'\(\d{4}-\d\d-\d\d\)|\[\d{4}-\d\d-\d\d[^\]]*\]', ' ', txt)
+    seen = set()
+    for sent in re.split(r'(?<=[.;])\s+|\n', txt):
+        for m, d in _dates(sent):
+            kind = ('vote' if re.search(r'vote|stockholders|shareholders|court meeting|general meeting|special meeting', sent, re.I) else
+                    'regulatory' if re.search(r'HSR|antitrust|CMA|Commission|clearance|approv|regulat|ECB|Federal Reserve|OCC|FDIC|court|sanction|CFIUS|FCA|PRA', sent, re.I) else
+                    'close' if re.search(r'clos|complet|effective', sent, re.I) else 'announce' if re.search(r'announc|agreement|signed|offer', sent, re.I) else 'other')
+            if kind == 'other' or re.search(r'premium|unaffected|quarter ended|Verification|Sources?:|coverage|VWAP|assets|deposits', sent, re.I): continue
+            if kind == 'announce' and row.get('announced') and abs((date.fromisoformat(d) - date.fromisoformat(str(row['announced'])[:10])).days) <= 1: continue
+            if (d, kind) in seen or d < '2020-01-01' or any(e['label'] == re.sub(r'\s+', ' ', sent).strip()[:170] and e['kind'] == kind for e in ev): continue
+            seen.add((d, kind))
+            ev.append({'date': d, 'kind': kind, 'label': re.sub(r'\s+', ' ', sent).strip()[:170]})
+    ev.append({'date': p['entryDate'], 'kind': 'entry', 'label': f"Portfolio entry at {p['entryPrice']}"})
+    if re.match(r'\d{4}-\d\d-\d\d$', str(p.get('expectedClose'))): ev.append({'date': p['expectedClose'], 'kind': 'expected', 'label': 'Expected close (site estimate)'})
+    ev.sort(key=lambda e: e['date'])
+    return ev[:14]
+
+def spread_history(p):
+    """Daily spread to current deal terms from ~30 days before entry (not before announcement)."""
+    start = (date.fromisoformat(p['entryDate']) - timedelta(days=30)).isoformat()
+    if p.get('announced') and str(p['announced'])[:10] > start: start = str(p['announced'])[:10]
+    ann = str(p.get('announced') or '')[:10]
+    tg = [x for x in yahoo_series(p['quoteSymbol'], start, 'close') if x[0] >= start and (not ann or x[0] > ann)]
+    acq = p['terms'].get('acq')
+    ac = dict(yahoo_series(acq, start, 'close')) if acq else {}
+    out = []
+    for d, px in tg:
+        a = ac.get(d) if acq else None
+        if acq and a is None: continue
+        v = deal_value(p['terms'], a)
+        if v and px and abs(v / px - 1) < 0.5: out.append([d, round(v / px - 1, 5)])
+    return out
+
 def build_analytics(pf, deals):
     inc = pf['inception']
     for p in pf['positions']:
@@ -254,10 +300,14 @@ def build_analytics(pf, deals):
             p.update(classify(row, p))
             p['closingProbability'] = row.get('closingProbability')
             p['announced'] = row.get('announced')
-            if p['status'] == 'open': p['deal'] = deal_info(row)
+            if p['status'] == 'open':
+                p['deal'] = deal_info(row)
+                p['timeline'] = timeline(p, row)
         if p['status'] == 'open':
             a = adv20(p['quoteSymbol'])
             if a: p['adv20'] = a
+            sh = spread_history(p)
+            if sh: p['spreadHist'] = sh
     bm = {}
     for sym, name, field in BENCHMARKS:
         s = yahoo_series(sym, inc, field)

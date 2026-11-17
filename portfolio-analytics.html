@@ -4,176 +4,334 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Portfolio Analytics - MergerAnalyst</title>
-<meta name="description" content="Performance, risk, exposures and deal-risk statistics for the MergerAnalyst model merger-arbitrage portfolio. Illustrative only, not investment advice.">
+<meta name="description" content="Performance, portfolio mix, characteristics, risk, holdings and deal timelines for the MergerAnalyst model merger-arbitrage portfolio. Illustrative only, not investment advice.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F4F6F9; --surface: #FFFFFF; --surface2: #F8FAFC; --border: #E2E8F0; --border2: #CBD5E1;
-    --brand: #C84B11; --navy: #0F2044; --blue: #1A5FAB; --green: #0D6B3E; --green-lt: #EDFAF3;
-    --amber: #92521C; --amber-lt: #FFF8F0; --red: #B91C1C; --red-lt: #FEF2F2; --text: #1A2333; --dim: #64748B;
-    --sans: 'DM Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
-    --shadow-sm: 0 1px 2px rgba(15,32,68,.06), 0 1px 3px rgba(15,32,68,.04);
+    --bg: #F5F6F8; --surface: #FFFFFF; --surface2: #F8FAFC; --line: #E4E7EC; --line2: #CDD3DC;
+    --ink: #111827; --ink2: #374151; --dim: #6B7280; --faint: #9CA3AF;
+    --navy: #0F2044; --brand: #C84B11; --blue: #1A5FAB; --blue-lt: #EAF1FB;
+    --green: #0D6B3E; --green-lt: #ECF7F1; --red: #B42318; --red-lt: #FEF3F2; --amber: #93370D; --amber-lt: #FFF6ED;
+    --sans: 'DM Sans', system-ui, -apple-system, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --r: 12px; --sh: 0 1px 2px rgba(16,24,40,.05); --sh2: 0 6px 18px rgba(16,24,40,.08);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
   a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; }
-  header { background: var(--navy); border-bottom: 3px solid var(--brand); }
-  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
-  .hdr { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 18px; padding-bottom: 16px; }
-  .wordmark { font-weight: 700; font-size: 24px; color: #fff; letter-spacing: -.3px; }
-  .wordmark span { color: var(--brand); }
-  nav.top a { color: rgba(255,255,255,.75); font-size: 13px; font-weight: 600; margin-left: 18px; }
+  button, input, select { font: inherit; color: inherit; }
+  .num, td.n, th.n { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+  header.site { background: var(--navy); border-bottom: 3px solid var(--brand); }
+  .hdr { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 14px; padding-bottom: 12px; }
+  .wordmark { font-weight: 700; font-size: 22px; color: #fff; letter-spacing: -.3px; } .wordmark span { color: var(--brand); } .wordmark:hover { text-decoration: none; }
+  nav.top a { color: rgba(255,255,255,.72); font-size: 13px; font-weight: 600; margin-left: 18px; }
   nav.top a.on { color: #fff; border-bottom: 2px solid var(--brand); padding-bottom: 3px; }
-  .disclaimer { background: var(--amber-lt); border: 1px solid #F3D9BF; color: var(--amber); border-radius: 8px; padding: 10px 14px; margin: 20px 0 6px; font-size: 13px; }
-  .disclaimer strong { text-transform: uppercase; letter-spacing: .6px; font-size: 12px; }
-  h1 { font-size: 26px; letter-spacing: -.4px; margin: 18px 0 2px; }
-  .sub { color: var(--dim); font-size: 13px; }
-  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); margin: 30px 0 10px; }
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
-  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; box-shadow: var(--shadow-sm); }
-  .kpi .l { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--dim); font-weight: 600; }
-  .kpi .v { font-family: var(--mono); font-size: 22px; font-weight: 600; margin-top: 3px; font-variant-numeric: tabular-nums; }
-  .kpi .s { font-size: 12px; color: var(--dim); }
-  .pos { color: var(--green); } .neg { color: var(--red); }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-sm); }
-  .chart { padding: 14px 16px 8px; }
-  .chart svg { width: 100%; height: 240px; display: block; }
-  .chart .note { font-size: 12px; color: var(--dim); padding: 4px 0 6px; }
-  .tbl { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--dim); background: var(--surface2); padding: 9px 10px; border-bottom: 1px solid var(--border2); white-space: nowrap; }
-  td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  td.n, th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  tr:last-child td { border-bottom: none; }
-  tfoot td { background: var(--surface2); font-weight: 600; border-top: 1px solid var(--border2); }
-  .tk { font-family: var(--mono); font-weight: 600; }
-  .why { color: var(--dim); font-size: 12px; margin-top: 3px; max-width: 560px; }
-  td.deal { min-width: 380px; } td.dt { white-space: nowrap; }
-  .acq { color: var(--dim); font-size: 12px; }
-  .hedge td { background: #FAFBFD; font-size: 12px; color: var(--dim); }
-  .tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .4px; padding: 1px 6px; border-radius: 4px; text-transform: uppercase; }
-  .tag.buy, .tag.close { background: var(--green-lt); color: var(--green); }
-  .tag.short, .tag.cover { background: #EEF2FF; color: #3730A3; }
-  .tag.break, .tag.sell { background: var(--red-lt); color: var(--red); }
-  .tag.terms { background: var(--amber-lt); color: var(--amber); }
-  .tag.flag { background: var(--red-lt); color: var(--red); margin-left: 6px; }
-  .tag.trim { background: var(--amber-lt); color: var(--amber); }
-  .rules { padding: 16px 20px; font-size: 13px; }
-  .rules dt { font-weight: 700; margin-top: 10px; } .rules dd { color: #334155; }
-  .rules ul { padding-left: 18px; } .rules li { margin: 2px 0; }
-  .muted { color: var(--dim); font-size: 12px; }
-  footer { margin: 34px 0 40px; color: var(--dim); font-size: 12px; }
 
-  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .chips a { flex: 0 0 auto; font-size: 12px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 11px; color: var(--navy); }
-  .chips a:hover { border-color: var(--blue); text-decoration: none; }
-  h2[id] { scroll-margin-top: 12px; }
-  .sh { font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--dim); margin: 16px 0 8px; }
-  .ct { font-size: 13px; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
-  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-  .hc { width: 100%; min-height: 240px; } .hc.sm { min-height: 240px; } .hc.pie { min-height: 300px; }
-  .hc.empty { min-height: 0; } .ph { padding: 40px 12px; text-align: center; color: var(--dim); font-size: 13px; background: var(--surface2); border-radius: 8px; }
-  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
-  .na { color: var(--dim); font-family: var(--mono); }
-  .prov { display: block; font-size: 11px; color: var(--dim); font-family: var(--sans); font-weight: 400; }
-  .kpi .v .prov { margin-top: 2px; }
-  .caveat { background: var(--amber-lt); border: 1px solid #F3D9BF; color: var(--amber); border-radius: 8px; padding: 8px 12px; font-size: 12.5px; margin-bottom: 4px; }
-  .method { padding: 14px 20px; font-size: 12.5px; color: #334155; } .method li { margin: 5px 0 5px 18px; }
-  .pcard { margin-bottom: 10px; overflow: hidden; }
-  .pcard summary { cursor: pointer; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; list-style: none; }
-  .pcard summary::-webkit-details-marker { display: none; }
-  .pcard summary::before { content: "B8"; color: var(--dim); font-size: 12px; transition: transform .15s; }
-  .pcard[open] summary::before { transform: rotate(90deg); }
-  .pcard[open] summary { border-bottom: 1px solid var(--border); background: var(--surface2); }
-  .pname { font-weight: 600; flex: 1 1 200px; min-width: 0; }
-  .pstats { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--mono); font-size: 12px; color: #334155; }
-  .pbody { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 22px; padding: 6px 16px 14px; }
-  .pcol h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .7px; color: var(--brand); margin: 12px 0 6px; }
-  .kv { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; padding: 3px 0; border-bottom: 1px dashed var(--border); }
-  .kv span { color: var(--dim); flex: 0 0 auto; } .kv b { font-weight: 600; text-align: right; overflow-wrap: anywhere; }
-  .txt { font-size: 12.5px; color: #334155; margin-top: 8px; overflow-wrap: anywhere; } .pcol ul { padding-left: 16px; font-size: 12.5px; margin-top: 6px; }
-  @media (max-width: 1100px) { .grid3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pbody { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 760px) { .grid2, .grid3, .pbody { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .kpi .v { font-size: 18px; } .kpi { padding: 10px 11px; } }
-  @media (max-width: 640px) { .wrap { padding: 0 16px; } h1 { font-size: 22px; } nav.top a { margin-left: 12px; } }
+  /* hero */
+  .hero { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .hero .wrap { padding-top: 26px; padding-bottom: 22px; }
+  .eyebrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12px; color: var(--dim); font-weight: 600; letter-spacing: .3px; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--blue-lt); color: var(--blue); }
+  .pill.model { background: var(--amber-lt); color: var(--amber); }
+  .hero h1 { font-size: 30px; line-height: 1.15; letter-spacing: -.6px; margin: 8px 0 6px; font-weight: 700; color: var(--navy); }
+  .hero .lede { color: var(--ink2); max-width: 760px; font-size: 14.5px; }
+  .hstats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; margin-top: 20px; border-top: 1px solid var(--line); }
+  .hstat { padding: 14px 16px 2px 0; border-right: 1px solid var(--line); margin-right: 16px; }
+  .hstat:last-child { border-right: none; }
+  .hstat .l { font-size: 11.5px; color: var(--dim); font-weight: 600; }
+  .hstat .v { font-size: 24px; font-weight: 700; letter-spacing: -.4px; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .hstat .s { font-size: 11.5px; color: var(--faint); }
+  .hactions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line2); background: var(--surface); border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 600; color: var(--navy); cursor: pointer; transition: background .15s, border-color .15s; }
+  .btn:hover { background: var(--surface2); border-color: var(--blue); text-decoration: none; }
+  .btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); } .btn.primary:hover { background: #18305f; }
+  .disc { font-size: 12px; color: var(--amber); background: var(--amber-lt); border: 1px solid #F9DBAF; border-radius: 8px; padding: 8px 12px; margin-top: 16px; }
+
+  /* sticky tabs */
+  .tabs { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.96); backdrop-filter: saturate(1.4) blur(6px); border-bottom: 1px solid var(--line); }
+  .tabs .wrap { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .tabs .wrap::-webkit-scrollbar { display: none; }
+  .tabs a { flex: 0 0 auto; padding: 13px 14px 11px; font-size: 13.5px; font-weight: 600; color: var(--dim); border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s, border-color .15s; }
+  .tabs a:hover { color: var(--navy); text-decoration: none; }
+  .tabs a.on { color: var(--navy); border-bottom-color: var(--brand); }
+
+  section.sec { padding: 34px 0 6px; scroll-margin-top: 50px; }
+  .sec-h { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .sec-h h2 { font-size: 22px; letter-spacing: -.4px; color: var(--navy); font-weight: 700; }
+  .sec-h .asof { font-size: 12px; color: var(--dim); }
+  h3.ct { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .cs { font-size: 12px; color: var(--dim); margin-bottom: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh); padding: 18px 20px; }
+  .g2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .g3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .g-ov { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+  .g-pie { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: center; }
+  .mt { margin-top: 16px; }
+  .ch { width: 100%; height: 340px; } .ch.sm { height: 260px; } .ch.pie { height: 360px; } .ch.spark { height: 220px; }
+  .muted { color: var(--dim); font-size: 12px; } .pos { color: var(--green); } .neg { color: var(--red); }
+  .na { color: var(--faint); } .prov { display: block; font-size: 11px; color: var(--faint); font-weight: 500; }
+  .caveat { background: var(--amber-lt); border: 1px solid #F9DBAF; color: var(--amber); border-radius: 10px; padding: 10px 14px; font-size: 12.5px; margin-bottom: 14px; }
+
+  /* segmented controls & chips */
+  .seg { display: inline-flex; flex-wrap: wrap; background: var(--surface2); border: 1px solid var(--line); border-radius: 9px; padding: 3px; gap: 2px; }
+  .seg button { border: 0; background: transparent; padding: 5px 11px; border-radius: 7px; font-size: 12.5px; font-weight: 600; color: var(--dim); cursor: pointer; transition: background .15s, color .15s; }
+  .seg button:hover { color: var(--navy); }
+  .seg button.on { background: var(--surface); color: var(--navy); box-shadow: 0 1px 2px rgba(16,24,40,.12); }
+  .seg button:disabled { opacity: .4; cursor: default; }
+  .toggles { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tg { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line2); border-radius: 999px; padding: 4px 10px 4px 8px; font-size: 12px; font-weight: 600; background: var(--surface); cursor: pointer; color: var(--ink2); transition: opacity .15s, border-color .15s; }
+  .tg i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .tg.off { opacity: .45; border-style: dashed; }
+  .ctrl { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .fchip { display: inline-flex; align-items: center; gap: 6px; background: var(--blue-lt); color: var(--blue); border-radius: 999px; padding: 4px 6px 4px 11px; font-size: 12px; font-weight: 600; }
+  .fchip button { border: 0; background: rgba(26,95,171,.14); color: var(--blue); width: 18px; height: 18px; border-radius: 50%; cursor: pointer; line-height: 1; font-size: 13px; }
+
+  /* tables */
+  .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--r); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--dim); font-weight: 700; padding: 10px 12px; border-bottom: 1px solid var(--line2); white-space: nowrap; background: var(--surface2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: none; }
+  th.sort { cursor: pointer; user-select: none; } th.sort:hover { color: var(--navy); }
+  th.sort.asc::after { content: " ▲"; font-size: 9px; } th.sort.desc::after { content: " ▼"; font-size: 9px; }
+  .tk { font-weight: 700; color: var(--navy); } .tsub { color: var(--dim); font-size: 12px; }
+  tr.hrow { cursor: pointer; transition: background .12s; } tr.hrow:hover td { background: #FAFBFD; }
+  tr.hrow.open td { background: var(--blue-lt); }
+  tr.drow td { background: #FBFCFE; padding: 0; }
+  .dbox { padding: 16px 18px; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 18px; animation: fade .18s ease-out; }
+  @keyframes fade { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 1px dashed var(--line); font-size: 12.5px; }
+  .kv span { color: var(--dim); } .kv b { font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+  .stick td:first-child, .stick th:first-child { position: sticky; left: 0; background: inherit; z-index: 1; }
+  .stick tbody td:first-child { background: var(--surface); } .stick tr.hrow.open td:first-child { background: var(--blue-lt); }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .3px; padding: 1px 7px; border-radius: 5px; text-transform: uppercase; background: var(--surface2); color: var(--dim); border: 1px solid var(--line); }
+  .tag.buy, .tag.close { background: var(--green-lt); color: var(--green); border-color: #C7E8D5; }
+  .tag.short, .tag.cover { background: var(--blue-lt); color: var(--blue); border-color: #CFE0F5; }
+  .tag.break, .tag.sell { background: var(--red-lt); color: var(--red); border-color: #F7D4D0; }
+  .tag.terms, .tag.trim { background: var(--amber-lt); color: var(--amber); border-color: #F9DBAF; }
+  .search { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .search input, .search select { border: 1px solid var(--line2); border-radius: 8px; padding: 7px 10px; font-size: 13px; background: var(--surface); }
+  .search input { min-width: 200px; }
+
+  /* key facts */
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+  .fact { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--line); }
+  .fact .l { font-size: 12px; color: var(--dim); font-weight: 600; display: flex; gap: 5px; align-items: center; }
+  .fact .v { font-size: 20px; font-weight: 700; letter-spacing: -.3px; margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .fact .s { font-size: 11.5px; color: var(--faint); margin-top: 1px; }
+  .info { display: inline-flex; width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--line2); color: var(--faint); font-size: 10px; align-items: center; justify-content: center; cursor: help; position: relative; font-weight: 700; }
+  .info:hover::after, .info:focus::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 140%; transform: translateX(-50%); width: 230px; background: var(--navy); color: #fff; font-size: 11.5px; font-weight: 500; line-height: 1.4; padding: 8px 10px; border-radius: 8px; z-index: 40; box-shadow: var(--sh2); }
+
+  /* legend table for pies */
+  .ltab td { padding: 7px 8px; cursor: pointer; } .ltab tr:hover td { background: var(--surface2); }
+  .ltab tr.sel td { background: var(--blue-lt); } .ltab tr.dim td { opacity: .45; }
+  .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+  .bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; margin-top: 4px; } .bar i { display: block; height: 100%; background: var(--blue); border-radius: 3px; }
+
+  /* top holdings list */
+  .th-list .row { display: grid; grid-template-columns: 74px 1fr 64px; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .th-list .row:last-child { border-bottom: none; }
+
+  /* timeline */
+  .tl-track { position: relative; height: 54px; margin: 18px 8px 6px; }
+  .tl-line { position: absolute; left: 0; right: 0; top: 22px; height: 4px; background: var(--line); border-radius: 2px; }
+  .tl-prog { position: absolute; left: 0; top: 22px; height: 4px; background: var(--blue); border-radius: 2px; transition: width .4s ease; }
+  .tl-dot { position: absolute; top: 15px; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line2); cursor: pointer; }
+  .tl-today { position: absolute; top: 4px; bottom: 6px; width: 2px; background: var(--brand); }
+  .tl-today span { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: var(--brand); white-space: nowrap; }
+  .tl-ax { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); margin: 0 8px; }
+  .tl-list { list-style: none; margin-top: 14px; border-left: 2px solid var(--line); padding-left: 0; }
+  .tl-list li { position: relative; padding: 4px 0 12px 18px; font-size: 13px; }
+  .tl-list li::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--c, var(--line2)); border: 2px solid var(--surface); }
+  .tl-list li.future { color: var(--dim); } .tl-list li.future::before { background: var(--surface); box-shadow: inset 0 0 0 2px var(--c, var(--line2)); }
+  .tl-list .d { font-weight: 700; font-size: 12px; color: var(--navy); margin-right: 8px; font-variant-numeric: tabular-nums; }
+  .tl-list .k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--c, var(--dim)); margin-right: 6px; }
+  .dpick { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+  .dpick button { flex: 0 0 auto; border: 1px solid var(--line2); background: var(--surface); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; font-weight: 700; color: var(--navy); cursor: pointer; }
+  .dpick button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .mstrip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; margin: 14px 0; }
+  .mstrip > div { padding: 10px 12px; border-right: 1px solid var(--line); } .mstrip > div:last-child { border-right: none; }
+  .mstrip .l { font-size: 11px; color: var(--dim); font-weight: 600; } .mstrip .v { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .note { font-size: 12.5px; color: var(--ink2); margin-top: 8px; overflow-wrap: anywhere; }
+  .slider { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13px; }
+  .slider input[type=range] { width: 220px; accent-color: var(--blue); }
+  .readout { font-weight: 700; color: var(--navy); }
+  .doclist a { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-weight: 600; color: var(--navy); }
+  .doclist a:last-child { border-bottom: none; } .doclist a span { font-size: 12px; color: var(--dim); font-weight: 500; }
+  details.acc { margin-top: 14px; } details.acc summary { cursor: pointer; font-weight: 700; color: var(--navy); padding: 12px 0; list-style: none; }
+  details.acc summary::-webkit-details-marker { display: none; } details.acc summary::before { content: "+ "; color: var(--brand); } details.acc[open] summary::before { content: "− "; }
+  .method li { margin: 6px 0 6px 18px; font-size: 13px; color: var(--ink2); }
+  footer { margin: 40px 0 46px; color: var(--dim); font-size: 12px; }
+  .ph { display: flex; align-items: center; justify-content: center; text-align: center; color: var(--dim); font-size: 13px; background: var(--surface2); border-radius: 10px; padding: 16px; }
+
+  @media (max-width: 1080px) {
+    .hstats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .hstat:nth-child(3) { border-right: none; }
+    .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dbox { grid-template-columns: 1fr 1fr; }
+    .mstrip { grid-template-columns: repeat(3, minmax(0, 1fr)); } .mstrip > div:nth-child(3) { border-right: none; } .mstrip > div:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .hero h1 { font-size: 23px; } .hero .lede { font-size: 13.5px; }
+    .hstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hstat { margin-right: 12px; padding-right: 10px; } .hstat:nth-child(3) { border-right: 1px solid var(--line); } .hstat:nth-child(2n) { border-right: none; }
+    .hstat .v { font-size: 20px; }
+    .g2, .g3, .g-ov, .g-pie, .dbox { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fact .v { font-size: 17px; }
+    .card { padding: 14px 14px; }
+    .ch { height: 300px; } .ch.pie { height: 300px; }
+    .sec-h h2 { font-size: 19px; }
+    .search input { min-width: 0; flex: 1 1 100%; }
+    .mstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mstrip > div { border-bottom: 1px solid var(--line); } .mstrip > div:nth-child(2n) { border-right: none; } .mstrip > div:nth-child(3) { border-right: 1px solid var(--line); }
+    nav.top a { margin-left: 12px; }
+    .info:hover::after, .info:focus::after { left: 0; transform: none; width: 200px; }
+  }
 </style>
 </head>
 <body>
-<header>
+<header class="site">
   <div class="wrap hdr">
     <a class="wordmark" href="/">Merger<span>Analyst</span></a>
     <nav class="top"><a href="/">Deals</a><a href="/portfolio.html">Model Portfolio</a><a class="on" href="/portfolio-analytics.html">Analytics</a></nav>
   </div>
 </header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="pill model">Model portfolio</span><span class="pill">Merger arbitrage</span><span>US · UK · Europe</span><span>·</span><span id="hInc"></span></div>
+    <h1>MergerAnalyst Merger-Arb Model Portfolio</h1>
+    <p class="lede">A paper portfolio of signed takeover deals tracked on MergerAnalyst. It buys targets trading below the agreed deal price, hedges stock-for-stock deals, and sizes each position by its estimated loss if the deal breaks.</p>
+    <div class="hstats" id="hStats"></div>
+    <div class="hactions">
+      <a class="btn primary" href="#holdings">View holdings</a>
+      <button class="btn" type="button" id="csvTop">Download holdings (CSV)</button>
+      <a class="btn" href="/portfolio.json">Data (JSON)</a>
+      <a class="btn" href="#docs">Methodology</a>
+    </div>
+    <div class="disc"><b>Illustrative only, not investment advice.</b> This is a hypothetical portfolio with no fees, financing, borrow or FX costs. Simulated results say nothing about future returns.</div>
+  </div>
+</div>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs">
+  <a href="#overview">Overview</a><a href="#performance">Performance</a><a href="#portfolio">Portfolio</a><a href="#characteristics">Characteristics</a><a href="#risk">Risk</a><a href="#holdings">Holdings</a><a href="#deal">Deal Detail</a><a href="#docs">Documents &amp; Methodology</a>
+</div></nav>
+
 <main class="wrap">
-  <div class="disclaimer"><strong>Model portfolio, illustrative only. Not investment advice.</strong>
-    This is a hypothetical paper portfolio with no fees, borrow costs, FX costs or slippage. Simulated performance says nothing about future results.</div>
-  <h1>Portfolio Analytics</h1>
-  <div class="sub" id="sub">Loading&hellip;</div>
-  <nav class="chips" aria-label="Sections"><a href="#stats">Stats</a><a href="#perf">Performance</a><a href="#mix">Mix</a><a href="#poscharts">Position charts</a><a href="#cards">Deal drill-down</a><a href="#attr">Attribution</a><a href="#trades">Trades</a><a href="#history">Closed / broken</a><a href="#method">Methodology</a><a href="/portfolio.html">Holdings page &rarr;</a></nav>
+  <section class="sec" id="overview">
+    <div class="sec-h"><h2>Overview</h2><span class="asof" id="ovAsof"></span></div>
+    <div class="g-ov">
+      <div class="card">
+        <h3 class="ct">Growth of $10,000 since inception</h3><div class="cs">Model portfolio against the merger-arb ETF and T-bills</div>
+        <div class="ch sm" id="cOvGrowth"></div>
+      </div>
+      <div class="card">
+        <h3 class="ct">Top holdings</h3><div class="cs">% of NAV · spread to deal value</div>
+        <div class="th-list" id="ovTop"></div>
+      </div>
+    </div>
+    <div class="card mt"><div class="facts" id="ovFacts"></div></div>
+  </section>
 
-  <h2 id="stats">Portfolio statistics</h2>
-  <div class="caveat" id="riskCaveat"></div>
-  <div id="statGroups"></div>
+  <section class="sec" id="performance">
+    <div class="sec-h"><h2>Performance</h2><span class="asof" id="pfAsof"></span></div>
+    <div class="caveat" id="pfCaveat"></div>
+    <div class="card">
+      <div class="ctrl">
+        <div><h3 class="ct">Growth of $10,000</h3><div class="cs" style="margin:0">Hover or tap for values; the range buttons rebase all series to $10,000 at the start.</div></div>
+        <div class="seg" id="rangeSeg"></div>
+      </div>
+      <div class="toggles" id="benchToggles"></div>
+      <div class="ch" id="cGrowth"></div>
+    </div>
+    <div class="card mt">
+      <h3 class="ct">Period returns</h3><div class="cs">Cumulative returns to the last recorded close. "n/a" means the history is shorter than the period.</div>
+      <div class="tw"><table id="periodTbl"></table></div>
+    </div>
+    <div class="card mt">
+      <h3 class="ct">Calendar returns by month</h3><div class="cs">Month-end to month-end. * = month in progress. The first month is partial, from inception.</div>
+      <div class="tw"><table id="calTbl"></table></div>
+    </div>
+  </section>
 
-  <h2 id="perf">Performance</h2>
-  <div class="kpis" id="perfKpis"></div>
-  <div class="card chart"><h3 class="ct">NAV vs benchmarks (rebased to 100)</h3><div class="hc" id="cNav"></div><div class="note" id="navNote"></div></div>
-  <div class="card tbl" style="margin-top:12px"><table>
-    <thead><tr><th>Series</th><th class="n">Since inception</th><th class="n">MTD</th><th class="n">1 week</th><th class="n">Annualized</th><th class="n">Last</th></tr></thead>
-    <tbody id="retBody"></tbody></table></div>
-  <div class="grid2" style="margin-top:12px">
-    <div class="card chart"><h3 class="ct">Drawdown from peak NAV</h3><div class="hc sm" id="cDD"></div></div>
-    <div class="card chart"><h3 class="ct">Rolling 20-day annualized return</h3><div class="hc sm" id="cRoll"></div></div>
-  </div>
+  <section class="sec" id="portfolio">
+    <div class="sec-h"><h2>Portfolio</h2><span class="asof">Share of the long book (invested capital). Click a slice or row to filter the holdings and charts.</span></div>
+    <div class="card">
+      <div class="ctrl"><div class="seg" id="allocSeg"></div><div id="filterChip"></div></div>
+      <div class="g-pie">
+        <div class="ch pie" id="cPie"></div>
+        <div><table class="ltab" id="legendTbl"></table></div>
+      </div>
+    </div>
+    <div class="g2 mt">
+      <div class="card"><h3 class="ct">Position weights</h3><div class="cs" id="wSub">% of NAV, highlighted by the current filter</div><div class="ch" id="cWeights"></div></div>
+      <div class="card"><h3 class="ct">Spread at entry vs now</h3><div class="cs">Gross spread to deal value</div><div class="ch" id="cSpread"></div></div>
+    </div>
+  </section>
 
-  <h2 id="mix">Portfolio mix</h2>
-  <div class="muted" style="margin-bottom:8px">The 3D pies show shares of the long book (invested capital, excluding cash). Hover or tap a slice for its % of NAV and the holdings in it.</div>
-  <div class="grid3">
-    <div class="card chart"><h3 class="ct">Geography (target country)</h3><div class="hc pie" id="pGeo"></div></div>
-    <div class="card chart"><h3 class="ct">Sector</h3><div class="hc pie" id="pSector"></div></div>
-    <div class="card chart"><h3 class="ct">Regulator / jurisdiction</h3><div class="hc pie" id="pReg"></div></div>
-    <div class="card chart"><h3 class="ct">Deal type &amp; hedge</h3><div class="hc pie" id="pType"></div></div>
-    <div class="card chart"><h3 class="ct">Expected close quarter</h3><div class="hc pie" id="pQtr"></div></div>
-    <div class="card chart"><h3 class="ct">Currency</h3><div class="hc pie" id="pCur"></div></div>
-  </div>
+  <section class="sec" id="characteristics">
+    <div class="sec-h"><h2>Characteristics</h2><span class="asof" id="chAsof"></span></div>
+    <div class="card"><div class="facts" id="facts"></div></div>
+  </section>
 
-  <h2 id="poscharts">Position charts</h2>
-  <div class="grid2">
-    <div class="card chart"><h3 class="ct">Position weight and break loss (% of NAV)</h3><div class="hc" id="cWeights"></div></div>
-    <div class="card chart"><h3 class="ct">P&amp;L contribution by deal (bp of NAV)</h3><div class="hc" id="cWaterfall"></div></div>
-    <div class="card chart"><h3 class="ct">Spread at entry vs now</h3><div class="hc" id="cSpread"></div></div>
-    <div class="card chart"><h3 class="ct">Annualized return vs close probability (bubble = weight)</h3><div class="hc" id="cBubble"></div></div>
-  </div>
+  <section class="sec" id="risk">
+    <div class="sec-h"><h2>Risk</h2><span class="asof" id="rkAsof"></span></div>
+    <div class="caveat" id="rkCaveat"></div>
+    <div class="card"><div class="facts" id="riskFacts"></div></div>
+    <div class="g2 mt">
+      <div class="card"><h3 class="ct">Risk vs return by deal</h3><div class="cs">Downside to break price (x) vs annualized spread (y). Bubble size shows weight, colour shows sector; filtered deals are emphasised.</div><div class="ch" id="cScatter"></div></div>
+      <div class="card"><h3 class="ct">Deal-break stress</h3><div class="cs">NAV loss if the largest positions broke at their estimated break prices</div><div class="ch" id="cStress"></div></div>
+      <div class="card"><h3 class="ct">Drawdown</h3><div class="cs">From peak daily closing NAV</div><div class="ch sm" id="cDD"></div></div>
+      <div class="card"><h3 class="ct">Concentration</h3>
+        <div class="slider"><label for="wSlider">Show positions above</label><input type="range" id="wSlider" min="0" max="8" step="0.25" value="0"><span class="readout" id="wRead"></span></div>
+        <div class="ch sm" id="cConc"></div></div>
+    </div>
+  </section>
 
-  <h2 id="cards">Deal drill-down</h2>
-  <div class="muted" style="margin-bottom:8px">Tap a deal to expand it. Sorted by weight.</div>
-  <div id="pcards"></div>
+  <section class="sec" id="holdings">
+    <div class="sec-h"><h2>Holdings</h2><span class="asof" id="hdAsof"></span></div>
+    <div class="card" style="padding:14px 14px 4px">
+      <div class="ctrl">
+        <div class="search"><input type="search" id="q" placeholder="Search ticker, target, acquirer…" aria-label="Search holdings"><select id="fRegion" aria-label="Region"></select><select id="fSector" aria-label="Sector"></select><select id="fType" aria-label="Deal type"></select></div>
+        <div style="display:flex;gap:8px;align-items:center"><span id="hdChip"></span><button class="btn" type="button" id="csvBtn">Download CSV</button></div>
+      </div>
+      <div class="tw"><table class="stick" id="hTbl"></table></div>
+      <div class="muted" style="padding:8px 2px 10px" id="hdFoot"></div>
+    </div>
+  </section>
 
-  <h2 id="attr">Attribution</h2>
-  <div class="grid3" id="attrTables"></div>
-  <h3 class="sh">Monthly returns (portfolio NAV)</h3>
-  <div class="card tbl"><table id="monthly"></table></div>
+  <section class="sec" id="deal">
+    <div class="sec-h"><h2>Deal Detail</h2><span class="asof">Timeline milestones are taken from the site's deal notes and primary-source summaries.</span></div>
+    <div class="dpick" id="dPick"></div>
+    <div class="card mt" id="dCard"></div>
+  </section>
 
-  <h2 id="trades">Trade log</h2>
-  <div class="card tbl"><table>
-    <thead><tr><th>Date</th><th>Action</th><th>Security</th><th class="n">Price</th><th class="n">Quantity</th><th class="n">Notional (NAV pts)</th><th>Reason</th></tr></thead>
-    <tbody id="tradeBody"></tbody></table></div>
+  <section class="sec" id="docs">
+    <div class="sec-h"><h2>Documents &amp; Methodology</h2></div>
+    <div class="g2">
+      <div class="card doclist">
+        <a href="/portfolio.json">Portfolio data (JSON) <span>positions, NAV history, benchmarks</span></a>
+        <a href="#" id="csvDoc">Holdings (CSV) <span>current holdings, filtered view</span></a>
+        <a href="/portfolio.html">Holdings &amp; trade log page <span>rules, quality screen</span></a>
+        <a href="/">Deal tracker <span>all live deals and sources</span></a>
+      </div>
+      <div class="card"><h3 class="ct">Methodology</h3><ul class="method" id="method"></ul></div>
+    </div>
+    <div class="card mt">
+      <details class="acc" open><summary>Trade log</summary><div class="tw"><table id="tradeTbl"></table></div></details>
+      <details class="acc"><summary>Deals closed, broken or exited</summary><div class="tw"><table id="histTbl"></table></div></details>
+    </div>
+  </section>
 
-  <h2 id="history">Deals closed / broken / exited</h2>
-  <div class="card tbl"><table>
-    <thead><tr><th>Deal</th><th>Outcome</th><th>Entry</th><th>Exit</th><th class="n">Days held</th><th class="n">Realized (bp of NAV)</th><th>Reason</th></tr></thead>
-    <tbody id="histBody"></tbody></table></div>
-
-  <h2 id="method">Methodology &amp; caveats</h2>
-  <div class="card method" id="methodBox"></div>
-
-  <footer>Data: <a href="/portfolio.json">portfolio.json</a> holds positions, daily closing NAV, benchmark closes, FX rates, 20-day volumes and the deal universe, refreshed once per trading day after the US close. Holdings are marked with the site's live quote feed (Yahoo Finance-backed) when available. Charts use <a href="https://www.highcharts.com" rel="noopener">Highcharts</a>.</footer>
+  <footer>Data come from <a href="/portfolio.json">portfolio.json</a>, refreshed after each US close; holdings are marked live from the site's quote feed (Yahoo Finance-backed) when it's available. Benchmarks use Yahoo Finance daily closes. Charts: Apache ECharts.</footer>
 </main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.4.8/highcharts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.4.8/highcharts-more.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.4.8/highcharts-3d.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
 <script>
 const QUOTE_URL = "https://mergeranalyst-quote.camillosc2.workers.dev/quote?symbols=";
 const CUR = {USD:"$", EUR:"€", GBP:"£", CAD:"C$", CHF:"CHF "};
@@ -206,87 +364,62 @@ async function liveQuotes(symbols) {
 }
 function fresh(q) { return q && q.price != null && (Date.now()/1000 - q.ts) < 10*86400; }
 
-const MIN_OBS = 20;          // daily observations required before vol/Sharpe/beta/VaR/annualized are shown
-const PALETTE = ["#1A5FAB", "#C84B11", "#0D6B3E", "#0F2044", "#CA8A04", "#7C3AED", "#0891B2", "#B91C1C", "#64748B", "#DB2777", "#65A30D", "#92521C"];
-const SERIES = [
-  {key: "NAV", name: "Model portfolio", color: "#1A5FAB", w: 3},
-  {key: "^GSPC", name: "S&P 500", color: "#0F2044", w: 1.5},
-  {key: "MNA", name: "Merger-arb ETF (MNA)", color: "#C84B11", w: 1.5},
-  {key: "MERFX", name: "Merger Fund (MERFX)", color: "#0D6B3E", w: 1.5},
-  {key: "BIL", name: "T-bills (BIL)", color: "#94A3B8", w: 1.5, dash: "Dash"},
+// ===== constants & helpers =====
+const MIN_OBS = 20;
+const PAL = ["#0F2044", "#1A5FAB", "#C84B11", "#0D6B3E", "#6E8FC9", "#D9A273", "#7A5195", "#3E9C8F", "#9AA5B8", "#B8860B", "#5C6B80", "#E07B53"];
+const SER = [
+  {key: "NAV", name: "Model portfolio", color: "#1A5FAB", w: 3, on: true},
+  {key: "MNA", name: "Merger-arb ETF (MNA)", color: "#C84B11", w: 1.8, on: true},
+  {key: "MERFX", name: "Merger Fund (MERFX)", color: "#0D6B3E", w: 1.8, on: false},
+  {key: "^GSPC", name: "S&P 500", color: "#0F2044", w: 1.8, on: true},
+  {key: "BIL", name: "T-bills (BIL)", color: "#9AA5B8", w: 1.8, on: true, dash: true},
 ];
+const KIND = {announce: ["Announced", "#1A5FAB"], vote: ["Shareholder vote", "#7A5195"], regulatory: ["Regulatory / court", "#0D6B3E"], close: ["Closing", "#C84B11"], entry: ["Portfolio entry", "#0F2044"], expected: ["Expected close", "#C84B11"]};
 const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
 const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)); };
-const isoMinus = (iso, days) => new Date(Date.parse(iso + "T00:00:00Z") - days * 864e5).toISOString().slice(0, 10);
+const iso = t => new Date(t).toISOString().slice(0, 10);
+const isoMinus = (d, days) => iso(Date.parse(d + "T00:00:00Z") - days * 864e5);
 const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
-const kpi = (l, v, s, c = "") => `<div class="kpi"><div class="l">${l}</div><div class="v ${c}">${v}</div><div class="s">${s}</div></div>`;
-const pp = (x, d = 2) => x == null || isNaN(x) || !isFinite(x) ? "-" : (x * 100).toFixed(d) + "%";
-const f2 = x => x == null || isNaN(x) || !isFinite(x) ? "-" : x.toFixed(2);
-const bp = x => x == null || isNaN(x) ? "-" : (x >= 0 ? "+" : "") + Math.round(x).toLocaleString() + " bp";
-const usd = x => x == null || isNaN(x) ? "-" : (x < 0 ? "−$" : "$") + (Math.abs(x) >= 1e6 ? (Math.abs(x) / 1e6).toFixed(2) + "m" : Math.round(Math.abs(x) / 1e3).toLocaleString() + "k");
-const gated = (v, fmt, n) => n >= MIN_OBS ? fmt(v) : `<span class="na">n/a</span><span class="prov">provisional ${v == null || isNaN(v) ? "-" : fmt(v)}</span>`;
-const gatedAnn = (v, n) => n >= MIN_OBS ? pct(v, 1) : `<span class="na">n/a</span><span class="prov">needs ${MIN_OBS}+ daily closes</span>`;
+const pp = (x, d = 2) => x == null || !isFinite(x) ? "–" : (x * 100).toFixed(d) + "%";
+const sp = (x, d = 2) => x == null || !isFinite(x) ? "–" : (x >= 0 ? "+" : "") + (x * 100).toFixed(d) + "%";
+const f2 = x => x == null || !isFinite(x) ? "–" : x.toFixed(2);
+const bp = x => x == null || !isFinite(x) ? "–" : (x >= 0 ? "+" : "") + Math.round(x) + " bp";
+const usd = x => x == null || !isFinite(x) ? "–" : (x < 0 ? "−$" : "$") + (Math.abs(x) >= 1e6 ? (Math.abs(x) / 1e6).toFixed(2) + "m" : Math.round(Math.abs(x) / 1e3).toLocaleString() + "k");
+const fmtDate = d => d ? new Date(d + "T12:00:00Z").toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"}) : "–";
 const quarter = s => /^\d{4}-\d\d/.test(s || "") ? `${s.slice(0, 4)} Q${Math.ceil(+s.slice(5, 7) / 3)}` : "No date";
 const curCode = c => c === "GBp" ? "GBP" : (c || "USD");
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const narrow = () => window.innerWidth < 760;
 function valAt(series, d) { let v = null; for (const [dt, x] of series) { if (dt <= d) v = x; else break; } return v; }
-const hasHC = () => typeof Highcharts !== "undefined";
-function noChart(id, msg) { const el = document.getElementById(id); if (el) { el.classList.add("empty"); el.innerHTML = `<div class="ph">${esc(msg)}</div>`; } }
-const narrow = () => window.innerWidth < 560;
+const $ = id => document.getElementById(id);
+const gatedHTML = (v, fmt, n) => n >= MIN_OBS ? fmt(v) : `<span class="na">n/a</span><span class="prov">provisional ${fmt(v)}</span>`;
+const info = t => `<span class="info" tabindex="0" data-tip="${esc(t)}">i</span>`;
+const fact = (l, v, s = "", tip = "") => `<div class="fact"><div class="l">${l}${tip ? info(tip) : ""}</div><div class="v">${v}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
+const hedgeLab = p => p.hedge ? `${p.dealType || "Cash + stock"} · hedged` : /stock/i.test(p.dealType || "") ? `${p.dealType} · unhedged` : (p.dealType || "Cash");
+const DIMS = {
+  country: {label: "Geography", fn: p => p.country || "Unknown"},
+  sector: {label: "Sector", fn: p => p.sector || "Other"},
+  regulator: {label: "Regulator", fn: p => p.regulator || "Other"},
+  type: {label: "Deal type", fn: hedgeLab},
+  currency: {label: "Currency", fn: p => curCode(p.currency)},
+  quarter: {label: "Close quarter", fn: p => quarter(p.expectedClose)},
+};
+const charts = {};
+function chart(id) { if (!charts[id]) charts[id] = echarts.init($(id), null, {renderer: "canvas"}); return charts[id]; }
+const AX = {axisLine: {lineStyle: {color: "#CDD3DC"}}, axisLabel: {color: "#6B7280", fontSize: 11}, splitLine: {lineStyle: {color: "#EEF0F3"}}};
+const TT = {backgroundColor: "#fff", borderColor: "#CDD3DC", textStyle: {color: "#111827", fontSize: 12}, extraCssText: "box-shadow:0 6px 18px rgba(16,24,40,.12);border-radius:8px;"};
+const S = {filter: null, alloc: "country", range: "SI", bench: new Set(SER.filter(s => s.on).map(s => s.key)), sort: {k: "w", d: -1}, q: "", fRegion: "", fSector: "", fType: "", minW: 0, open: new Set(), deal: null};
 
-function hcDefaults() {
-  Highcharts.setOptions({
-    colors: PALETTE, credits: {enabled: false}, title: {text: null}, exporting: {enabled: false},
-    chart: {style: {fontFamily: "'DM Sans', system-ui, sans-serif"}, backgroundColor: "transparent", spacing: [8, 6, 8, 6]},
-    legend: {itemStyle: {fontSize: "11px", fontWeight: "500", color: "#334155"}},
-    xAxis: {labels: {style: {fontSize: "10px", color: "#64748B"}}, lineColor: "#CBD5E1", tickColor: "#CBD5E1"},
-    yAxis: {labels: {style: {fontSize: "10px", color: "#64748B"}}, gridLineColor: "#E2E8F0", title: {text: null}},
-    tooltip: {style: {fontSize: "12px"}, backgroundColor: "#FFFFFF", borderColor: "#CBD5E1"},
-  });
-}
-function pie3d(id, rows, nav) {
-  if (!rows.length) return noChart(id, "No holdings");
-  const tot = rows.reduce((s, r) => s + r.w, 0);
-  Highcharts.chart(id, {
-    chart: {type: "pie", options3d: {enabled: true, alpha: 48, beta: 0}, height: narrow() ? 250 + 20 * rows.length : 320},
-    tooltip: {useHTML: true, formatter() { return `<b>${esc(this.point.name)}</b><br>${this.percentage.toFixed(1)}% of long book · ${(this.point.y * 100).toFixed(1)}% of NAV<br><span style="color:#64748B">${esc(this.point.names)}</span>`; }},
-    plotOptions: {pie: {depth: 38, allowPointSelect: true, cursor: "pointer", size: narrow() ? "90%" : "72%", showInLegend: narrow(),
-      dataLabels: {enabled: true, distance: narrow() ? -16 : 18, filter: narrow() ? {property: "percentage", operator: ">", value: 6} : undefined, style: {fontSize: "11px", fontWeight: "700", textOutline: narrow() ? "1px rgba(0,0,0,.35)" : "none", color: narrow() ? "#FFFFFF" : "#1A2333"},
-        formatter() { return narrow() ? `${this.percentage.toFixed(0)}%` : `${this.point.name}<br><span style="font-weight:500">${this.percentage.toFixed(1)}%</span>`; }}}},
-    legend: {enabled: narrow(), itemStyle: {fontSize: "10.5px"}},
-    series: [{name: "Share", data: rows.map(r => ({name: r.k, y: r.w, names: r.t.join(", ")}))}],
-  });
-}
-
-function group(items, keyFn, valFn) {
-  const m = {};
-  for (const p of items) { const k = keyFn(p) || "Unknown"; (m[k] = m[k] || {k, w: 0, t: [], n: 0}); m[k].w += valFn(p); m[k].t.push(p.ticker); m[k].n++; }
-  return Object.values(m).sort((a, b) => b.w - a.w);
-}
-function fee(f, side) {
-  const x = (f || {})[side];
-  if (!x) return (f && f.regime === "uk-code-none-permitted") ? "None (UK Takeover Code)" : (f && f.regime === "not-disclosed") ? "Not disclosed" : "None";
-  return `${x.amt != null ? (CUR[x.cur] || (x.cur ? x.cur + " " : "$")) + num(x.amt, 0) + "m" : ""}${x.pct != null ? ` (${(+x.pct).toFixed(2)}% of equity)` : ""}${x.regulatory ? " · regulatory" : ""}${x.note ? `<div class="muted">${esc(x.note)}</div>` : ""}`;
-}
-function steps(s) {
-  if (!s) return "";
-  if (!Array.isArray(s)) return `<div>${esc(typeof s === "string" ? s : JSON.stringify(s))}</div>`;
-  return `<ul>${s.map(x => `<li>${esc(typeof x === "string" ? x : [x.name || x.step || x.regulator || x.label, x.status, x.date].filter(Boolean).join(" · "))}</li>`).join("")}</ul>`;
-}
-
-async function main() {
+// ===== data model =====
+let D;
+async function load() {
   const pf = await fetch("/portfolio.json?t=" + Date.now()).then(r => r.json());
   const A = pf.analytics || {}, BM = A.benchmarks || {}, FX = Object.assign({USD: 1}, A.fxUsd || {}), AUM = A.notionalAum || 1e8;
   const hist = (pf.navHistory || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
   const inc = pf.inception, last = hist[hist.length - 1] || {date: inc, nav: pf.baseNAV};
-  const navSeries = [[inc, pf.baseNAV], ...hist.filter(h => h.date > inc).map(h => [h.date, h.nav])];
-  const dates = navSeries.map(x => x[0]);
-  const ser = {NAV: navSeries};
-  for (const s of SERIES) if (s.key !== "NAV" && BM[s.key]) ser[s.key] = BM[s.key].series.filter(x => x[0] <= last.date);
-  const avail = SERIES.filter(s => ser[s.key] && ser[s.key].length);
-  if (hasHC()) hcDefaults();
-
-  // ===== live marks =====
+  const navS = [[inc, pf.baseNAV], ...hist.filter(h => h.date > inc).map(h => [h.date, h.nav])];
+  const ser = {NAV: navS};
+  for (const s of SER) if (s.key !== "NAV" && BM[s.key]) ser[s.key] = BM[s.key].series.filter(x => x[0] <= last.date);
   const open = pf.positions.filter(p => p.status === "open"), closed = pf.positions.filter(p => p.status !== "open");
   const q = await liveQuotes(open.flatMap(p => [p.quoteSymbol, p.terms.acq]));
   let live = 0, longs = 0, shorts = 0;
@@ -296,11 +429,9 @@ async function main() {
     p.dv = p.terms.acq ? dealValue(p.terms, p.hedge ? p.hedge.cur : null) : p.terms.cash;
     longs += p.shares * p.cur; if (p.hedge) shorts += p.hedge.shares * p.hedge.cur;
   }
-  const nav = live ? pf.cash + longs - shorts : last.nav, today = new Date().toISOString().slice(0, 10);
-  const hedgeLab = p => p.hedge ? `${p.dealType || "Cash + stock"} · hedged` : /stock/i.test(p.dealType || "") ? `${p.dealType} · unhedged` : (p.dealType || "Cash");
-  let W = 0, wSp = 0, wAnn = 0, wAnnS = 0, wPr = 0, wPrS = 0, ev = 0, bl = 0, expLoss = 0, wUp = 0, wDn = 0, wK = 0, wKS = 0, wImp = 0, wImpS = 0, wDays = 0, wDaysS = 0, maxDays = 0;
+  const nav = live ? pf.cash + longs - shorts : last.nav, today = iso(Date.now());
   for (const p of open) {
-    p.val = p.shares * p.cur; p.w = p.val / nav; W += p.w;
+    p.val = p.shares * p.cur; p.w = p.val / nav; p.lw = p.val / longs;
     p.spr0 = p.entryDealValue / p.entryPrice - 1;
     p.spr = p.dv != null ? (p.dv - p.cur) / p.cur : null;
     p.dtc = daysTo(p.expectedClose);
@@ -317,249 +448,485 @@ async function main() {
     p.ev = p.prob != null && p.spr != null && p.dn != null ? p.prob * p.spr - (1 - p.prob) * p.dn : null;
     const a = p.adv20, c = curCode(p.currency);
     p.advUsd = a ? a.shares * a.avgClose / (p.currency === "GBp" ? 100 : 1) * (FX[c] || 1) : null;
-    p.posUsd = p.w * AUM * (nav / 100);
+    p.posUsd = p.w * AUM * nav / 100;
     p.daysExit = p.advUsd ? p.posUsd / (0.2 * p.advUsd) : null;
-    if (p.spr != null) wSp += p.w * p.spr;
-    if (p.ann != null) { wAnnS += p.w; wAnn += p.w * p.ann; }
-    if (p.prob != null) { wPrS += p.w; wPr += p.w * p.prob; }
-    if (p.ev != null) { ev += p.w * p.ev; expLoss += p.w * (1 - p.prob) * p.dn; }
-    if (p.bl != null) bl += p.bl;
-    if (p.dn != null && p.spr != null) { wUp += p.w * p.spr; wDn += p.w * p.dn; }
-    if (p.kelly != null) { wK += p.w * p.kelly; wKS += p.w; }
-    if (p.implied != null) { wImp += p.w * p.implied; wImpS += p.w; }
-    if (p.daysExit != null) { wDays += p.w * p.daysExit; wDaysS += p.w; maxDays = Math.max(maxDays, p.daysExit); }
+    p.revPct = p.fees && p.fees.reversePct != null ? +p.fees.reversePct / 100 : null;
+    for (const k in DIMS) p["_" + k] = DIMS[k].fn(p);
   }
-  document.getElementById("sub").textContent = `${pf.inceptionLabel || "Inception " + inc}. Returns and risk use recorded daily closes through ${last.date}. ` +
-    (live ? `Positions and exposures use live marks for ${live} of ${open.length} holdings.` : "Positions use the last recorded close.");
-
-  // ===== return series stats =====
-  const rets = [], spx = [], mna = [];
-  for (let i = 1; i < navSeries.length; i++) {
-    const [d0, a] = navSeries[i - 1], [d1, b] = navSeries[i]; rets.push(b / a - 1);
-    for (const [k, arr] of [["^GSPC", spx], ["MNA", mna]]) if (ser[k]) { const s0 = valAt(ser[k], d0), s1 = valAt(ser[k], d1); arr.push(s0 && s1 ? s1 / s0 - 1 : 0); }
+  // returns
+  const rets = [], bret = {};
+  for (let i = 1; i < navS.length; i++) {
+    const [d0, a] = navS[i - 1], [d1, b] = navS[i]; rets.push(b / a - 1);
+    for (const k of ["^GSPC", "MNA"]) if (ser[k]) { const s0 = valAt(ser[k], d0), s1 = valAt(ser[k], d1); (bret[k] = bret[k] || []).push(s0 && s1 ? s1 / s0 - 1 : 0); }
   }
-  const N = rets.length, rfA = (A.riskFree && A.riskFree.annualPct != null ? A.riskFree.annualPct : 4) / 100, rfD = rfA / 252;
-  const R = {};
+  const N = rets.length, rfA = (A.riskFree && A.riskFree.annualPct != null ? A.riskFree.annualPct : 4) / 100, rfD = rfA / 252, R = {};
   if (N >= 2) {
     const s = sd(rets), m = mean(rets);
     R.vol = s * Math.sqrt(252); R.sharpe = s ? (m - rfD) / s * Math.sqrt(252) : null;
     const dd = Math.sqrt(mean(rets.map(r => Math.min(0, r - rfD) ** 2))); R.sortino = dd ? (m - rfD) / dd * Math.sqrt(252) : null;
-    R.var = 1.645 * s - m; R.cvarP = 2.063 * s - m;
-    const sorted = rets.slice().sort((a, b) => a - b), k = Math.max(1, Math.floor(.05 * sorted.length));
-    R.hvar = -sorted[k - 1]; R.hcvar = -mean(sorted.slice(0, k));
-    const corrBeta = x => { if (x.length !== N) return [null, null]; const mx = mean(x), sx = sd(x), cov = rets.reduce((t, r, i) => t + (r - m) * (x[i] - mx), 0) / (N - 1); return [sx ? cov / sx ** 2 : null, sx && s ? cov / (sx * s) : null]; };
-    [R.beta, R.corr] = corrBeta(spx); [R.betaM, R.corrM] = corrBeta(mna);
+    R.var = 1.645 * s - m; R.cvar = 2.063 * s - m;
+    const so = rets.slice().sort((x, y) => x - y), k = Math.max(1, Math.floor(.05 * so.length)); R.hvar = -so[k - 1]; R.hcvar = -mean(so.slice(0, k));
+    const cb = x => { if (!x || x.length !== N) return [null, null]; const mx = mean(x), sx = sd(x), cov = rets.reduce((t, r, i) => t + (r - m) * (x[i] - mx), 0) / (N - 1); return [sx ? cov / sx ** 2 : null, sx && s ? cov / (sx * s) : null]; };
+    [R.beta, R.corr] = cb(bret["^GSPC"]); [R.betaM, R.corrM] = cb(bret.MNA);
   }
-  let peak = -Infinity, mdd = 0, mddAt = null; const ddSeries = [];
-  for (const [d, v] of navSeries) { peak = Math.max(peak, v); const x = v / peak - 1; ddSeries.push([d, x]); if (x < mdd) { mdd = x; mddAt = d; } }
-  const curDD = ddSeries[ddSeries.length - 1][1];
-  document.getElementById("riskCaveat").innerHTML = N >= MIN_OBS ? `Return-based statistics use ${N} daily NAV returns since ${inc}.` :
-    `<b>Too little history to be statistically meaningful.</b> There are only ${N} daily NAV returns since ${esc(inc)}. Volatility, Sharpe, Sortino, beta, correlation, VaR/CVaR and annualized returns show <b>n/a</b> until there are ${MIN_OBS} daily observations; for risk statistics, the small grey figure is the provisional value, for reference only. Deal-level statistics (spreads, probabilities, fees, break loss) are forward-looking and don't depend on history.`;
-
-  // ===== active share =====
-  const uni = (A.universe && A.universe.deals) || [], NU = uni.length;
+  let peak = -Infinity, mdd = 0, mddAt = null; const dd = [];
+  for (const [d, v] of navS) { peak = Math.max(peak, v); const x = v / peak - 1; dd.push([d, x]); if (x < mdd) { mdd = x; mddAt = d; } }
+  // active share
+  const uni = (A.universe && A.universe.deals) || [];
   let activeShare = null;
-  if (NU) {
-    const wb = 1 / NU, uniSet = new Set(uni.map(u => u.ticker.toUpperCase())), held = new Map(open.map(p => [p.dealKey.toUpperCase(), p.val / longs]));
-    activeShare = 0; for (const t of uniSet) activeShare += Math.abs((held.get(t) || 0) - wb);
-    for (const [t, w] of held) if (!uniSet.has(t)) activeShare += w;
-    activeShare /= 2;
-  }
-  const ws = open.map(p => p.w).sort((a, b) => b - a), lw = open.map(p => p.val / longs), hhi = lw.reduce((s, x) => s + x * x, 0);
-  const curMix = group(open, p => curCode(p.currency), p => p.val / nav);
-  const shortCur = open.filter(p => p.hedge).reduce((m, p) => (m[curCode(p.currency)] = (m[curCode(p.currency)] || 0) + p.hedge.shares * p.hedge.cur / nav, m), {});
-  const allHeld = [...open.map(p => p.held), ...closed.filter(p => p.exitDate).map(p => dayDiff(p.entryDate, p.exitDate))];
-
-  // ===== stats panel =====
-  const groups = [
-    ["Exposure", [
-      kpi("Gross / net", `${(100 * (longs + shorts) / nav).toFixed(0)}% / ${(100 * (longs - shorts) / nav).toFixed(0)}%`, `long ${pp(longs / nav, 1)}, short hedges ${pp(shorts / nav, 1)}`),
-      kpi("Cash", pp(1 - longs / nav, 1), "of NAV, unallocated (+ short proceeds)"),
-      kpi("Positions", open.length, `${closed.length} closed / exited`),
-      kpi("Avg holding period", `${Math.round(mean(open.map(p => p.held)))}d`, `open names; all-time avg ${Math.round(mean(allHeld))}d`),
-      kpi("Active share", pp(activeShare, 1), `vs equal-weight universe of ${NU} live deals`),
-    ]],
-    ["Return & reward/risk", [
-      kpi("Wtd. spread", pp(W ? wSp / W : null), "gross spread to current deal value"),
-      kpi("Wtd. IRR (annualized)", pp(wAnnS ? wAnn / wAnnS : null, 1), `${pp(wAnn, 1)} on total NAV incl. cash`),
-      kpi("Wtd. close probability", pp(wPrS ? wPr / wPrS : null, 0), `market-implied ${pp(wImpS ? wImp / wImpS : null, 0)}`),
-      kpi("Expected value", pp(ev), `of NAV; expected break cost ${pp(expLoss)}`, cls(ev)),
-      kpi("Upside / downside", wDn ? (wUp / wDn).toFixed(2) + "x" : "-", `${pp(wUp)} to deal vs ${pp(wDn, 1)} to break (NAV)`),
-      kpi("Kelly-style edge", wImpS && wPrS ? `${((wPr / wPrS - wImp / wImpS) * 100 >= 0 ? "+" : "") + ((wPr / wPrS - wImp / wImpS) * 100).toFixed(1)} pp` : "-", `site close prob vs market-implied; ${open.filter(p => p.kelly > 0).length} of ${open.length} deals have a positive Kelly fraction`),
-    ]],
-    ["Concentration & liquidity", [
-      kpi("Top 5 weight", pp(ws.slice(0, 5).reduce((s, x) => s + x, 0), 1), "% of NAV"),
-      kpi("HHI", Math.round(hhi * 10000).toLocaleString(), `long book; effective N ${(1 / hhi).toFixed(1)}`),
-      kpi("Total break loss", pp(bl, 1), "of NAV if every deal broke (no hedge P&L)"),
-      kpi("Days to exit (max)", maxDays ? maxDays.toFixed(1) : "-", `wtd ${wDaysS ? (wDays / wDaysS).toFixed(1) : "-"}d; $${(AUM / 1e6).toFixed(0)}m AUM, 20% of 20-day ADV`),
-      kpi("Currency (long)", curMix.map(c => `${c.k} ${(c.w * 100).toFixed(0)}%`).join(" · "), `FX: modeled as fully hedged to local currency${Object.keys(shortCur).length ? "; short hedges " + Object.entries(shortCur).map(([k, v]) => `${k} ${pp(v, 1)}`).join(", ") : ""}`),
-    ]],
-    ["Risk (daily NAV returns)", [
-      kpi("Volatility (ann.)", gated(R.vol, pp, N), "stdev × √252"),
-      kpi("Sharpe", gated(R.sharpe, f2, N), `rf ${pp(rfA)} (13-week T-bill)`),
-      kpi("Sortino", gated(R.sortino, f2, N), "downside deviation vs rf"),
-      kpi("Max drawdown", pp(mdd), mddAt ? `trough ${mddAt}; now ${pp(curDD)}` : "no drawdown yet", cls(mdd)),
-      kpi("VaR 95% (1-day)", gated(R.var, pp, N), `parametric; historical ${N >= MIN_OBS ? pp(R.hvar) : "n/a"}`),
-      kpi("CVaR 95% (1-day)", gated(R.cvarP, pp, N), `parametric; historical ${N >= MIN_OBS ? pp(R.hcvar) : "n/a"}`),
-      kpi("Beta / corr. S&P 500", N >= MIN_OBS ? `${f2(R.beta)} / ${f2(R.corr)}` : `<span class="na">n/a</span><span class="prov">provisional ${f2(R.beta)} / ${f2(R.corr)}</span>`, "daily returns, same dates"),
-      kpi("Beta / corr. merger-arb ETF", N >= MIN_OBS ? `${f2(R.betaM)} / ${f2(R.corrM)}` : `<span class="na">n/a</span><span class="prov">provisional ${f2(R.betaM)} / ${f2(R.corrM)}</span>`, "vs MNA daily returns"),
-    ]],
-  ];
-  document.getElementById("statGroups").innerHTML = groups.map(([t, ks]) => `<h3 class="sh">${t}</h3><div class="kpis">${ks.join("")}</div>`).join("");
-
-  // ===== performance =====
-  const cal = dayDiff(inc, last.date);
-  const monthStart = last.date.slice(0, 8) + "01", mtdBase = monthStart <= inc ? inc : isoMinus(monthStart, 1), wkBase = isoMinus(last.date, 7) < inc ? inc : isoMinus(last.date, 7);
-  const perf = {};
-  for (const s of avail) { const S = ser[s.key], vEnd = valAt(S, last.date), v0 = valAt(S, inc), si = vEnd / v0 - 1;
-    perf[s.key] = {si, mtd: vEnd / valAt(S, mtdBase) - 1, wk: vEnd / valAt(S, wkBase) - 1, ann: Math.pow(1 + si, 365 / Math.max(cal, 1)) - 1, last: vEnd}; }
-  document.getElementById("retBody").innerHTML = avail.map(s => { const r = perf[s.key];
-    return `<tr><td><i class="sw" style="background:${s.color}"></i>${esc(s.key === "NAV" ? s.name : (BM[s.key].name || s.name))}</td>
-      <td class="n ${cls(r.si)}">${pct(r.si)}</td><td class="n ${cls(r.mtd)}">${pct(r.mtd)}</td><td class="n ${cls(r.wk)}">${pct(r.wk)}</td>
-      <td class="n">${gatedAnn(r.ann, N)}</td><td class="n">${num(r.last)}</td></tr>`; }).join("");
-  const P0 = perf.NAV;
-  document.getElementById("perfKpis").innerHTML = [
-    kpi("NAV (last close)", num(last.nav), `${last.date}; live ${num(nav)}`),
-    kpi("Since inception", pct(P0.si), `${cal} calendar days, ${N} daily returns`, cls(P0.si)),
-    kpi("MTD", pct(P0.mtd), "month to date", cls(P0.mtd)),
-    kpi("1 week", pct(P0.wk), `vs close on/before ${wkBase}`, cls(P0.wk)),
-    kpi("Annualized", gatedAnn(P0.ann, N), "compounded since inception"),
-    perf.MNA ? kpi("vs merger-arb ETF", pct(P0.si - perf.MNA.si), "since inception (MNA)", cls(P0.si - perf.MNA.si)) : "",
-    perf["^GSPC"] ? kpi("vs S&P 500", pct(P0.si - perf["^GSPC"].si), "since inception", cls(P0.si - perf["^GSPC"].si)) : "",
-  ].join("");
-  document.getElementById("navNote").textContent = `All series rebased to 100 at the inception close (${inc}). Portfolio = recorded daily closing NAV. Benchmarks = Yahoo daily closes (total-return adjusted for MNA, MERFX and BIL; S&P 500 price index), on or before each NAV date.`;
-
-  // ===== monthly table =====
-  const mEnd = {}; for (const [d, v] of navSeries) mEnd[d.slice(0, 7)] = v;
-  const months = Object.keys(mEnd).sort(), years = [...new Set(months.map(m => m.slice(0, 4)))];
-  let prev = pf.baseNAV; const mRet = {};
-  for (const m of months) { mRet[m] = mEnd[m] / prev - 1; prev = mEnd[m]; }
-  document.getElementById("monthly").innerHTML = `<thead><tr><th>Year</th>${MONTHS.map(m => `<th class="n">${m}</th>`).join("")}<th class="n">YTD</th></tr></thead><tbody>` +
-    years.map(y => { let c = 1; const cells = MONTHS.map((_, i) => { const k = `${y}-${String(i + 1).padStart(2, "0")}`; if (mRet[k] == null) return `<td class="n muted">·</td>`; c *= 1 + mRet[k];
-      return `<td class="n ${cls(mRet[k])}">${pct(mRet[k])}${k === last.date.slice(0, 7) ? "*" : ""}</td>`; }).join("");
-      return `<tr><td class="tk">${y}</td>${cells}<td class="n ${cls(c - 1)}"><b>${pct(c - 1)}</b></td></tr>`; }).join("") +
-    `</tbody><tfoot><tr><td colspan="14" class="muted" style="font-weight:400">* month in progress. ${inc.slice(0, 7) === last.date.slice(0, 7) ? "The first month is partial (from inception)." : ""}</td></tr></tfoot>`;
-
-  // ===== attribution =====
-  const contrib = [...open.map(p => ({...p, c: p.pnl / nav, wt: p.w})), ...closed.map(p => ({...p, c: (p.realizedPnl || 0) / pf.baseNAV, wt: 0}))];
-  const totC = contrib.reduce((s, x) => s + x.c, 0);
-  const attrDims = [["Geography", p => p.region || p.country], ["Sector", p => p.sector], ["Deal type & hedge", p => p.hedge || /stock/i.test(p.dealType || "") ? hedgeLab(p) : (p.dealType || "Cash")]];
-  document.getElementById("attrTables").innerHTML = attrDims.map(([t, fn]) => {
-    const g = group(contrib, fn, x => x.c), gw = Object.fromEntries(group(contrib, fn, x => x.wt).map(x => [x.k, x.w]));
-    return `<div class="card tbl"><table><thead><tr><th>${t}</th><th class="n">Weight</th><th class="n">Contribution</th></tr></thead><tbody>` +
-      g.map(x => `<tr><td>${esc(x.k)}<div class="muted">${esc(x.t.join(", "))}</div></td><td class="n">${pp(gw[x.k], 1)}</td><td class="n ${cls(x.w)}">${bp(x.w * 1e4)}</td></tr>`).join("") +
-      `</tbody><tfoot><tr><td>Total</td><td class="n">${pp(W, 1)}</td><td class="n ${cls(totC)}">${bp(totC * 1e4)}</td></tr></tfoot></table></div>`; }).join("");
-
-  // ===== trades & history =====
-  const tradesSorted = (pf.trades || []).map((t, i) => ({...t, i})).sort((a, b) => a.date === b.date ? b.i - a.i : (a.date < b.date ? 1 : -1));
-  const ccy = Object.fromEntries(pf.positions.map(p => [p.ticker, p.currency]));
-  document.getElementById("tradeBody").innerHTML = tradesSorted.map(t => `<tr><td class="dt">${esc(t.date)}</td><td><span class="tag ${esc(String(t.action).toLowerCase())}">${esc(t.action)}</span></td>
-    <td><span class="tk">${esc(t.symbol || t.ticker)}</span>${t.symbol && t.symbol !== t.ticker ? ` <span class="muted">(${esc(t.ticker)})</span>` : ""}</td>
-    <td class="n">${px(t.price, t.symbol === (pf.positions.find(p => p.ticker === t.ticker) || {}).quoteSymbol ? ccy[t.ticker] : "USD")}</td><td class="n">${num(t.qty, 4)}</td><td class="n">${num(t.notional, 3)}</td><td class="why" style="margin:0">${esc(t.reason)}</td></tr>`).join("") || `<tr><td colspan="7" class="muted">No trades.</td></tr>`;
-  document.getElementById("histBody").innerHTML = closed.map(p => {
-    const t = (pf.trades || []).filter(x => x.ticker === p.ticker && /SELL|CLOSE|BREAK/.test(x.action)).pop() || {};
-    return `<tr><td><span class="tk">${esc(p.ticker)}</span> <span class="acq">${esc(p.target)}</span><div class="muted">${esc((p.acquirer || "").slice(0, 80))}</div></td>
-      <td><span class="tag ${p.status === "closed" ? "close" : p.status === "broken" ? "break" : "sell"}">${esc(p.status)}</span></td>
-      <td class="dt">${esc(p.entryDate)}<div class="muted">${px(p.entryPrice, p.currency)}</div></td><td class="dt">${esc(p.exitDate || "")}<div class="muted">${px(p.exitPrice, p.currency)}</div></td>
-      <td class="n">${p.exitDate ? dayDiff(p.entryDate, p.exitDate) : "-"}</td><td class="n ${cls(p.realizedPnl)}">${bp((p.realizedPnl || 0) / pf.baseNAV * 1e4)}</td><td class="why" style="margin:0">${esc(t.reason || "")}</td></tr>`; }).join("") ||
-    `<tr><td colspan="7" class="muted">No deals have closed or broken yet.</td></tr>`;
-
-  // ===== drill-down cards =====
-  open.sort((a, b) => b.w - a.w);
-  document.getElementById("pcards").innerHTML = open.map(p => {
-    const d = p.deal || {}, f = d.feesDetail || {}, c = curCode(p.currency);
-    const termStr = p.terms.acq ? `${p.terms.cash ? px(p.terms.cash, p.currency) + " cash + " : ""}${p.terms.ratio} ${esc(p.terms.acq)} per share` : `${px(p.terms.cash, p.currency)} per share${/stock/i.test(p.dealType || "") ? " (incl. fixed-$ stock leg)" : " cash"}`;
-    const row = (l, v) => v == null || v === "" ? "" : `<div class="kv"><span>${l}</span><b>${v}</b></div>`;
-    return `<details class="pcard card"><summary><span class="tk">${esc(p.ticker)}</span> <span class="pname">${esc(p.target)}</span>
-      <span class="pstats"><span>${pp(p.w, 1)} wt</span><span>${pp(p.spr)} spread</span><span>${pp(p.ann, 1)} ann.</span><span class="${cls(p.pnl)}">${bp(p.pnl / nav * 1e4)}</span></span></summary>
-      <div class="pbody">
-        <div class="pcol"><h4>Deal</h4>
-          ${row("Acquirer", esc(p.acquirer))}${row("Terms", termStr)}${row("Deal value now", px(p.dv, p.currency))}
-          ${row("Announced", esc(p.announced || "-"))}${row("Expected close", `${esc(p.expectedClose || "-")}${p.dtc != null ? ` (${p.dtc} days)` : ""}`)}
-          ${row("Deal size", d.dealSize ? `${CUR[d.dealCurrency] || (d.dealCurrency || "") + " "}${num(d.dealSize, 0)}m` : null)}
-          ${row("Location / sector", `${esc(p.country || "")} · ${esc(p.sector || "")}`)}${row("Deal risk (site)", esc(d.dealRisk || "-"))}
-          ${row("Close probability", p.prob != null ? `${pp(p.prob, 0)} (market-implied ${pp(p.implied, 0)})` : null)}
-          <div class="txt">${esc(d.dealTerms || "")}</div>${d.otherBidders ? `<div class="txt muted"><b>Other bidders:</b> ${esc(d.otherBidders)}</div>` : ""}</div>
-        <div class="pcol"><h4>Regulatory &amp; approvals</h4>
-          ${row("Primary regime", esc(p.regulator || "-"))}
-          ${d.regulatorySteps ? steps(d.regulatorySteps) : ""}${d.milestones ? steps(d.milestones) : ""}
-          ${d.statusNote ? `<div class="txt"><b>Status:</b> ${esc(d.statusNote)}</div>` : ""}${d.latestNote ? `<div class="txt muted"><b>Latest note:</b> ${esc(d.latestNote)}</div>` : ""}
-          <h4>Termination fees</h4>${row("Target break fee", fee(f, "target"))}${row("Reverse fee (acquirer)", fee(f, "reverse"))}
-          ${d.sourceUrl ? `<div class="txt"><a href="${esc(d.sourceUrl)}" target="_blank" rel="noopener">Primary source &rarr;</a></div>` : ""}</div>
-        <div class="pcol"><h4>Economics</h4>
-          ${row("Entry / current", `${px(p.entryPrice, p.currency)} → ${px(p.cur, p.currency)}`)}
-          ${row("Upside to deal", pp(p.spr))}${row("Spread at entry", pp(p.spr0))}
-          ${row("Annualized (simple / IRR)", `${pp(p.ann, 1)} / ${pp(p.irr, 1)}`)}
-          ${row("Break price (est.)", `${px(p.breakPrice, p.currency)}<div class="muted">${esc(p.breakBasis || "")}</div>`)}
-          ${row("Downside to break", pp(p.dn, 1))}${row("Break loss", pp(p.bl, 2) + " of NAV")}
-          ${row("Expected value", p.ev != null ? `${pp(p.ev)} of position (${bp(p.w * p.ev * 1e4)} NAV)` : null)}
-          ${row("Kelly fraction", p.kelly == null ? null : p.kelly > 0 ? pp(p.kelly, 0) + " of capital" : "negative (no edge at our probability)")}
-          <h4>Position</h4>
-          ${row("Weight", `${pp(p.w, 2)} · ${usd(p.posUsd)} on $${(AUM / 1e6).toFixed(0)}m`)}${row("Entered", `${esc(p.entryDate)} (${p.held} days)`)}
-          ${row("P&L", `<span class="${cls(p.pnl)}">${usd(p.pnl / 100 * AUM)} · ${bp(p.pnl / nav * 1e4)} of NAV · ${pct(p.pnl / (p.shares * p.entryPrice))}</span>`)}
-          ${row("Hedge", p.hedge ? `Short ${num(p.hedge.shares, 4)} ${esc(p.hedge.symbol)} @ ${px(p.hedge.entryPrice, "USD")} → ${px(p.hedge.cur, "USD")} (P&L ${bp(p.hedgePnl / nav * 1e4)})` : /stock/i.test(p.dealType || "") ? "Unhedged: the stock leg is a fixed $ amount" : "None (cash deal)")}
-          ${row("Liquidity", p.advUsd ? `20d ADV ${usd(p.advUsd)} · ${p.daysExit.toFixed(1)} days to exit` : null)}${row("Currency", `${c}${c !== "USD" ? " (FX modeled as hedged)" : ""}`)}</div>
-      </div></details>`; }).join("");
-
-  document.getElementById("methodBox").innerHTML = `<ul>
-    <li><b>Small sample.</b> The portfolio started on ${esc(inc)}. With ${N} daily returns, risk statistics and annualized figures aren't statistically meaningful: they show n/a until there are ${MIN_OBS} daily closes, and stay noisy for a year or more. One daily close (Nov 6) wasn't recorded, so one return spans two sessions.</li>
-    <li><b>Returns</b> come from NAV (cash + longs − short hedges) at recorded daily closes, base ${pf.baseNAV}. This is a paper portfolio: no fees, financing, borrow costs, dividends on shorts, FX or slippage. Returns are in local currency, assuming FX is fully hedged; no FX forwards are booked. Dollar amounts assume a notional $${(AUM / 1e6).toFixed(0)}m portfolio (1 NAV point = $${(AUM / 1e8).toFixed(0)}m).</li>
-    <li><b>Benchmarks.</b> S&amp;P 500 is the price index (^GSPC). The merger-arb proxies are the IQ Merger Arbitrage ETF (MNA) and The Merger Fund (MERFX), using adjusted closes; there's no free daily HFRI Merger Arbitrage series. Cash is BIL (1-3 month T-bills). The risk-free rate is the 13-week T-bill yield (${pp(rfA)}).</li>
-    <li><b>Risk.</b> Volatility, Sharpe and Sortino are annualized from daily returns. VaR and CVaR (95%, 1-day) are parametric, with historical values shown alongside. Beta and correlation use same-date daily returns. Drawdown is measured on closing NAV. The rolling chart uses a 20-day window.</li>
-    <li><b>Deal economics.</b> Spread is upside to current deal value. Annualized = spread × 365 / days to the expected close; IRR compounds it. Break price is the undisturbed pre-announcement close (or a 25% default when it leaked or is unavailable). Downside is current to break price. Expected value = p × upside − (1−p) × downside. Market-implied probability = downside / (downside + upside). Kelly = p/downside − (1−p)/upside: a negative value means the market prices more break risk than the site's estimate. Close probabilities and fees come from the site's deal records (merger agreements, 8-K / Rule 2.7 announcements).</li>
-    <li><b>Liquidity</b> = position size on the notional AUM ÷ (20% × 20-day average daily dollar volume), using Yahoo volumes.</li>
-    <li><b>Active share</b> = ½ Σ |w<sub>portfolio</sub> − w<sub>benchmark</sub>| on long weights, against an equal weight across every active (pending, signed) US, UK or European deal on the site (${NU} deals). ETF constituent data isn't freely available.</li>
-    <li><b>Classifications.</b> Country is the target's primary country. Sectors are GICS-style groupings mapped from the deal's industry description. Regulator is the main gating regime. These are simplified labels; the drill-down cards carry the deal notes.</li>
-    <li><b>Attribution</b> splits unrealized P&amp;L on open positions (live marks, including hedges) plus realized P&amp;L on closed positions, in bp of NAV.</li>
-  </ul>`;
-
-  // ===== charts =====
-  if (!hasHC()) { for (const id of ["cNav", "cDD", "cRoll", "pGeo", "pSector", "pReg", "pType", "pQtr", "pCur", "cWeights", "cWaterfall", "cSpread", "cBubble"]) noChart(id, "Charts unavailable (chart library did not load)."); return; }
-  Highcharts.chart("cNav", {chart: {type: "line", height: narrow() ? 280 : 340}, xAxis: {categories: dates, tickmarkPlacement: "on", labels: {step: Math.ceil(dates.length / (narrow() ? 3 : 6))}},
-    yAxis: {plotLines: [{value: 100, color: "#94A3B8", dashStyle: "Dot", width: 1}], labels: {format: "{value:.1f}"}},
-    tooltip: {shared: true, valueDecimals: 2}, legend: {itemDistance: 12},
-    series: avail.map(s => { const b = valAt(ser[s.key], inc); return {name: s.key === "NAV" ? s.name : s.name, color: s.color, lineWidth: s.w, dashStyle: s.dash || "Solid", marker: {radius: s.key === "NAV" ? 3 : 2},
-      data: dates.map(d => { const v = valAt(ser[s.key], d); return v != null && b ? +(v / b * 100).toFixed(3) : null; })}; })});
-  Highcharts.chart("cDD", {chart: {type: "area", height: 240}, xAxis: {categories: dates, labels: {step: Math.ceil(dates.length / 3)}}, legend: {enabled: false},
-    yAxis: {max: 0, labels: {formatter() { return (this.value * 100).toFixed(2) + "%"; }}}, tooltip: {formatter() { return `${this.x}: ${(this.y * 100).toFixed(2)}%`; }},
-    series: [{name: "Drawdown", data: ddSeries.map(x => x[1]), color: "#B91C1C", fillOpacity: .18, marker: {radius: 2}}]});
-  const RW = 20;
-  if (navSeries.length > RW) {
-    const roll = navSeries.slice(RW).map(([d, v], i) => [d, Math.pow(v / navSeries[i][1], 365 / Math.max(1, dayDiff(navSeries[i][0], d))) - 1]);
-    Highcharts.chart("cRoll", {chart: {type: "line", height: 240}, xAxis: {categories: roll.map(x => x[0]), labels: {step: Math.ceil(roll.length / 3)}}, legend: {enabled: false},
-      yAxis: {labels: {formatter() { return (this.value * 100).toFixed(0) + "%"; }}}, tooltip: {formatter() { return `${this.x}: ${(this.y * 100).toFixed(1)}%`; }},
-      series: [{name: "Rolling 20d annualized", data: roll.map(x => x[1]), color: "#1A5FAB"}]});
-  } else noChart("cRoll", `Starts once there are ${RW + 1} daily closes (${navSeries.length} so far, including inception).`);
-
-  const longMix = fn => group(open, fn, p => p.val / longs).map(g => ({...g, w: g.w}));
-  const pieRows = fn => group(open, fn, p => p.val / nav);
-  pie3d("pGeo", pieRows(p => p.country), nav);
-  pie3d("pSector", pieRows(p => p.sector), nav);
-  pie3d("pReg", pieRows(p => p.regulator), nav);
-  pie3d("pType", pieRows(hedgeLab), nav);
-  pie3d("pQtr", pieRows(p => quarter(p.expectedClose)).sort((a, b) => a.k < b.k ? -1 : 1), nav);
-  pie3d("pCur", curMix, nav);
-
-  const byW = open.slice().sort((a, b) => b.w - a.w), hBar = n => Math.max(300, 34 * n + 90);
-  Highcharts.chart("cWeights", {chart: {type: "bar", height: hBar(byW.length)}, xAxis: {categories: byW.map(p => p.ticker)},
-    yAxis: {labels: {format: "{value}%"}}, tooltip: {shared: true, valueSuffix: "%", valueDecimals: 2}, plotOptions: {bar: {groupPadding: .12, pointPadding: .04}},
-    series: [{name: "Weight", data: byW.map(p => +(p.w * 100).toFixed(2)), color: "#1A5FAB"}, {name: "Break loss", data: byW.map(p => p.bl != null ? +(p.bl * 100).toFixed(2) : null), color: "#B91C1C"}]});
-  const byP = open.slice().sort((a, b) => b.pnl - a.pnl);
-  Highcharts.chart("cWaterfall", {chart: {type: "waterfall", height: narrow() ? 320 : 360}, xAxis: {type: "category", labels: {rotation: -45, style: {fontSize: "10px"}}},
-    yAxis: {labels: {format: "{value} bp"}}, legend: {enabled: false}, tooltip: {pointFormat: "<b>{point.y:.1f} bp</b> of NAV"},
-    series: [{upColor: "#0D6B3E", color: "#B91C1C", borderWidth: 0, data: [...byP.map(p => ({name: p.ticker, y: +(p.pnl / nav * 1e4).toFixed(2)})), {name: "Total", isSum: true, color: "#1A5FAB"}],
-      dataLabels: {enabled: !narrow(), formatter() { return this.y.toFixed(0); }, style: {fontSize: "9px", textOutline: "none"}}}]});
-  Highcharts.chart("cSpread", {chart: {type: "bar", height: hBar(byW.length)}, xAxis: {categories: byW.map(p => p.ticker)},
-    yAxis: {labels: {format: "{value}%"}}, tooltip: {shared: true, valueSuffix: "%", valueDecimals: 2}, plotOptions: {bar: {groupPadding: .12, pointPadding: .04}},
-    series: [{name: "Spread at entry", data: byW.map(p => +(p.spr0 * 100).toFixed(2)), color: "#94A3B8"}, {name: "Spread now", data: byW.map(p => p.spr != null ? +(p.spr * 100).toFixed(2) : null), color: "#C84B11"}]});
-  Highcharts.chart("cBubble", {chart: {type: "bubble", height: narrow() ? 320 : 360, plotBorderWidth: 1, plotBorderColor: "#E2E8F0"}, legend: {enabled: false},
-    xAxis: {title: {text: "Close probability (site estimate)", style: {fontSize: "11px"}}, labels: {format: "{value}%"}, gridLineWidth: 1, gridLineColor: "#F1F5F9"},
-    yAxis: {title: {text: "Annualized return", style: {fontSize: "11px"}}, labels: {format: "{value}%"}},
-    tooltip: {useHTML: true, formatter() { const p = this.point; return `<b>${esc(p.name)}</b><br>Close prob ${p.x}% · annualized ${p.y.toFixed(1)}%<br>Weight ${p.z.toFixed(1)}%`; }},
-    plotOptions: {bubble: {minSize: narrow() ? 10 : 14, maxSize: narrow() ? 34 : 50, dataLabels: {enabled: true, format: "{point.name}", style: {fontSize: "9.5px", textOutline: "1px #fff", fontWeight: "600", color: "#1A2333"}}}},
-    series: [{name: "Deals", color: "rgba(26,95,171,.55)", data: open.filter(p => p.prob != null && p.ann != null).map(p => ({x: p.closingProbability, y: +(p.ann * 100).toFixed(2), z: +(p.w * 100).toFixed(2), name: p.ticker}))}]});
+  if (uni.length) { const wb = 1 / uni.length, set = new Set(uni.map(u => u.ticker.toUpperCase())), held = new Map(open.map(p => [p.dealKey.toUpperCase(), p.lw]));
+    activeShare = 0; for (const t of set) activeShare += Math.abs((held.get(t) || 0) - wb); for (const [t, w] of held) if (!set.has(t)) activeShare += w; activeShare /= 2; }
+  const W = open.reduce((s, p) => s + p.w, 0), wsum = (fn, flt = p => fn(p) != null) => { const xs = open.filter(flt); const ww = xs.reduce((s, p) => s + p.w, 0); return ww ? xs.reduce((s, p) => s + p.w * fn(p), 0) / ww : null; };
+  D = {pf, A, BM, FX, AUM, hist, inc, last, navS, ser, open, closed, live, longs, shorts, nav, today, rets, N, R, rfA, dd, mdd, mddAt, uni, activeShare, W, wsum};
 }
-main().catch(e => { console.error(e); document.getElementById("sub").textContent = "Could not load portfolio data: " + e.message; });
+
+// ===== filter =====
+const passFilter = p => !S.filter || p["_" + S.filter.dim] === S.filter.val;
+function setFilter(dim, val) {
+  S.filter = S.filter && S.filter.dim === dim && S.filter.val === val ? null : {dim, val};
+  renderPortfolio(); renderRiskCharts(); renderHoldings();
+}
+function chipHTML() {
+  return S.filter ? `<span class="fchip">${esc(DIMS[S.filter.dim].label)}: ${esc(S.filter.val)} <button type="button" aria-label="Clear filter" data-clear="1">×</button></span>` : "";
+}
+document.addEventListener("click", e => { if (e.target.closest("[data-clear]")) { S.filter = null; renderPortfolio(); renderRiskCharts(); renderHoldings(); } });
+
+// ===== hero & overview =====
+function renderHero() {
+  const {last, nav, inc, navS, live, open, wsum, pf} = D;
+  const prev = navS.length > 1 ? navS[navS.length - 2][1] : pf.baseNAV, dchg = last.nav / prev - 1, si = last.nav / pf.baseNAV - 1;
+  $("hInc").textContent = `Inception ${fmtDate(inc)}`;
+  const hs = [
+    ["NAV", num(last.nav), `as of ${fmtDate(last.date)} close`],
+    ["1-day change", `<span class="${cls(dchg)}">${sp(dchg)}</span>`, `vs prior close`],
+    ["Since inception", `<span class="${cls(si)}">${sp(si)}</span>`, `cumulative, base ${pf.baseNAV}`],
+    ["Live NAV (indicative)", num(nav), live ? `${live}/${open.length} live marks` : "live feed unavailable"],
+    ["Weighted IRR", pp(wsum(p => p.ann), 1), "annualized spread"],
+    ["Holdings", open.length, `${D.closed.length} closed / exited`],
+  ];
+  $("hStats").innerHTML = hs.map(([l, v, s]) => `<div class="hstat"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join("");
+  const asof = `As of ${fmtDate(last.date)} close · positions marked ${live ? "live" : "at last close"}`;
+  for (const id of ["ovAsof", "pfAsof", "chAsof", "rkAsof", "hdAsof"]) $(id).textContent = asof;
+  const top = open.slice().sort((a, b) => b.w - a.w).slice(0, 10), mx = top[0] ? top[0].w : 1;
+  $("ovTop").innerHTML = top.map(p => `<div class="row"><span class="tk">${esc(p.ticker)}</span><div><div style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.target)}</div><div class="bar"><i style="width:${(p.w / mx * 100).toFixed(0)}%"></i></div></div><div class="n" style="text-align:right"><b>${pp(p.w, 1)}</b><div class="muted">${pp(p.spr, 1)}</div></div></div>`).join("");
+  const f = [
+    fact("Strategy", "Merger arbitrage", "signed deals; hedges stock legs"),
+    fact("Universe", `${D.uni.length} live deals`, "US, UK and European targets"),
+    fact("Inception", fmtDate(inc), `base NAV ${pf.baseNAV}`),
+    fact("Benchmarks", "MNA · MERFX", "S&P 500 and T-bills for context"),
+    fact("Wtd. spread", pp(wsum(p => p.spr)), "to current deal value"),
+    fact("Wtd. close probability", pp(wsum(p => p.prob), 0), `market-implied ${pp(wsum(p => p.implied), 0)}`),
+    fact("Gross / net exposure", `${(100 * (D.longs + D.shorts) / nav).toFixed(0)}% / ${(100 * (D.longs - D.shorts) / nav).toFixed(0)}%`, `cash ${pp(1 - D.longs / nav, 1)}`),
+    fact("Sizing rule", "~1.75% NAV", "break loss per deal; 3–10% weights"),
+  ];
+  $("ovFacts").innerHTML = f.join("");
+  const ovS = SER.filter(s => ["NAV", "MNA", "BIL"].includes(s.key) && D.ser[s.key]);
+  growthChart("cOvGrowth", ovS, D.navS.map(x => x[0]), true);
+}
+
+// ===== performance =====
+function rangeStart(r) {
+  const L = D.last.date, inc = D.inc;
+  const s = r === "1W" ? isoMinus(L, 7) : r === "1M" ? isoMinus(L, 30) : r === "3M" ? isoMinus(L, 91) : r === "YTD" ? isoMinus(L.slice(0, 4) + "-01-01", 1) : inc;
+  return s < inc ? inc : s;
+}
+function growthChart(id, list, dates, compact) {
+  const c = chart(id);
+  const b0 = dates[0];
+  c.setOption({
+    animationDuration: 350, grid: {left: 52, right: 14, top: compact ? 14 : 24, bottom: compact ? 26 : 36},
+    tooltip: {...TT, trigger: "axis", axisPointer: {type: "cross", label: {backgroundColor: "#0F2044"}},
+      formatter: ps => `<b>${fmtDate(ps[0].axisValue)}</b><br>` + ps.map(p => `${p.marker}${p.seriesName}: <b>$${Math.round(p.value).toLocaleString()}</b> <span style="color:#6B7280">(${sp(p.value / 1e4 - 1)})</span>`).join("<br>")},
+    xAxis: {type: "category", data: dates, boundaryGap: false, ...AX, axisLabel: {...AX.axisLabel, formatter: v => fmtDate(v).replace(/, \d{4}$/, "")}},
+    yAxis: {type: "value", scale: true, ...AX, axisLabel: {...AX.axisLabel, formatter: v => "$" + Math.round(v).toLocaleString()}},
+    series: list.map(s => { const base = valAt(D.ser[s.key], b0); return {name: s.name, type: "line", smooth: false, symbol: "circle", symbolSize: s.key === "NAV" ? 6 : 4, showSymbol: dates.length < 40,
+      lineStyle: {width: s.w, color: s.color, type: s.dash ? "dashed" : "solid"}, itemStyle: {color: s.color}, emphasis: {focus: "series"},
+      data: dates.map(d => { const v = valAt(D.ser[s.key], d); return v != null && base ? +(v / base * 1e4).toFixed(2) : null; })}; }),
+  }, true);
+}
+function renderPerf() {
+  const {N} = D;
+  $("pfCaveat").innerHTML = `<b>Short track record.</b> The portfolio has ${N} daily returns since ${fmtDate(D.inc)}. Periods longer than the history show n/a, and annualized figures stay hidden until there are ${MIN_OBS}+ daily closes. Short-period returns are noise, not a signal.`;
+  const histDays = dayDiff(D.inc, D.last.date);
+  const avail = {"1W": histDays >= 7, "1M": histDays >= 28, "3M": histDays >= 90, "YTD": true, "SI": true};
+  if (!avail[S.range]) S.range = "SI";
+  $("rangeSeg").innerHTML = ["1W", "1M", "3M", "YTD", "SI"].map(r => `<button type="button" data-r="${r}" class="${S.range === r ? "on" : ""}" ${avail[r] ? "" : "disabled title='History is shorter than this period'"}>${r}</button>`).join("");
+  $("benchToggles").innerHTML = SER.filter(s => D.ser[s.key]).map(s => `<button type="button" class="tg ${S.bench.has(s.key) ? "" : "off"}" data-b="${esc(s.key)}"><i style="background:${s.color}"></i>${esc(s.name)}</button>`).join("");
+  drawGrowth();
+  // period table
+  const cols = [["1W", 7], ["1M", 30], ["3M", 91], ["YTD", null], ["SI", null]];
+  const L = D.last.date;
+  const row = s => {
+    const S0 = D.ser[s.key]; if (!S0) return "";
+    const vEnd = valAt(S0, L), v0 = valAt(S0, D.inc);
+    const cells = cols.map(([c, days]) => {
+      if (c === "SI") return vEnd / v0 - 1;
+      if (c === "YTD") { const st = rangeStart("YTD"); return vEnd / valAt(S0, st) - 1; }
+      const st = isoMinus(L, days); if (st < D.inc) return undefined; return vEnd / valAt(S0, st) - 1;
+    });
+    const si = vEnd / v0 - 1, ann = Math.pow(1 + si, 365 / Math.max(1, histDays)) - 1;
+    return `<tr><td><span class="sw" style="background:${s.color}"></span>${esc(s.name)}</td>${cells.map(x => x === undefined ? `<td class="n na">n/a</td>` : `<td class="n ${cls(x)}">${sp(x)}</td>`).join("")}<td class="n">${N >= MIN_OBS ? sp(ann, 1) : '<span class="na">n/a</span>'}</td></tr>`;
+  };
+  $("periodTbl").innerHTML = `<thead><tr><th>Series</th>${cols.map(c => `<th class="n">${c[0] === "SI" ? "Since incep." : c[0]}</th>`).join("")}<th class="n">SI annualized</th></tr></thead><tbody>${SER.map(row).join("")}</tbody>`;
+  // calendar
+  const mEnd = {};
+  const months = [...new Set(D.navS.map(x => x[0].slice(0, 7)))].sort();
+  const yr = L.slice(0, 4);
+  const calRow = s => {
+    const S0 = D.ser[s.key]; if (!S0) return "";
+    let prevV = valAt(S0, D.inc), ytd = 1;
+    const cell = {};
+    for (const m of months) { const end = m === L.slice(0, 7) ? L : D.navS.filter(x => x[0].startsWith(m)).pop()[0]; const v = valAt(S0, end); cell[m] = v / prevV - 1; if (m.startsWith(yr)) ytd *= 1 + cell[m]; prevV = v; }
+    return `<tr><td><span class="sw" style="background:${s.color}"></span>${esc(s.name)}</td>${MONTHS.map((_, i) => { const k = `${yr}-${String(i + 1).padStart(2, "0")}`; return cell[k] == null ? `<td class="n na">·</td>` : `<td class="n ${cls(cell[k])}">${sp(cell[k])}${k === L.slice(0, 7) ? "*" : ""}</td>`; }).join("")}<td class="n ${cls(ytd - 1)}"><b>${sp(ytd - 1)}</b></td></tr>`;
+  };
+  $("calTbl").innerHTML = `<thead><tr><th>${yr}</th>${MONTHS.map(m => `<th class="n">${m}</th>`).join("")}<th class="n">YTD*</th></tr></thead><tbody>${SER.map(calRow).join("")}</tbody>`;
+}
+function drawGrowth() {
+  const st = rangeStart(S.range), dates = D.navS.map(x => x[0]).filter(d => d >= st);
+  if (dates.length && dates[0] > st) { const prior = D.navS.map(x => x[0]).filter(d => d < st).pop(); if (prior) dates.unshift(prior); }
+  growthChart("cGrowth", SER.filter(s => D.ser[s.key] && S.bench.has(s.key)), dates.length ? dates : [D.inc], false);
+}
+document.addEventListener("click", e => {
+  const r = e.target.closest("[data-r]"); if (r && !r.disabled) { S.range = r.dataset.r; document.querySelectorAll("#rangeSeg button").forEach(b => b.classList.toggle("on", b === r)); drawGrowth(); }
+  const b = e.target.closest("[data-b]"); if (b) { const k = b.dataset.b; if (S.bench.has(k) && S.bench.size > 1) S.bench.delete(k); else S.bench.add(k); b.classList.toggle("off", !S.bench.has(k)); drawGrowth(); }
+});
+
+// ===== portfolio (3D pie) =====
+function paramEq(start, end, sel, k, h) {
+  const mid = (start + end) / 2 * Math.PI * 2, sr = start * Math.PI * 2, er = end * Math.PI * 2;
+  if (start === 0 && end === 1) sel = false;
+  const ox = sel ? Math.cos(mid) * .12 : 0, oy = sel ? Math.sin(mid) * .12 : 0;
+  return {u: {min: -Math.PI, max: Math.PI * 3, step: Math.PI / 32}, v: {min: 0, max: Math.PI * 2, step: Math.PI / 20},
+    x: (u, v) => ox + Math.cos(u < sr ? sr : u > er ? er : u) * (1 + Math.cos(v) * k),
+    y: (u, v) => oy + Math.sin(u < sr ? sr : u > er ? er : u) * (1 + Math.cos(v) * k),
+    z: (u, v) => u < -Math.PI * .5 ? Math.sin(u) : u > Math.PI * 2.5 ? Math.sin(u) * h * .1 : Math.sin(v) > 0 ? h * .1 : -1};
+}
+function allocRows(dim) {
+  const m = {};
+  for (const p of D.open) { const k = p["_" + dim]; (m[k] = m[k] || {k, lw: 0, w: 0, t: []}); m[k].lw += p.lw; m[k].w += p.w; m[k].t.push(p.ticker); }
+  const rows = Object.values(m).sort((a, b) => dim === "quarter" ? (a.k < b.k ? -1 : 1) : b.lw - a.lw);
+  rows.forEach((r, i) => r.color = PAL[i % PAL.length]);
+  return rows;
+}
+function renderPortfolio() {
+  const dim = S.alloc, rows = allocRows(dim);
+  $("allocSeg").innerHTML = Object.entries(DIMS).map(([k, v]) => `<button type="button" data-a="${k}" class="${k === dim ? "on" : ""}">${v.label}</button>`).join("");
+  $("filterChip").innerHTML = chipHTML();
+  const selVal = S.filter && S.filter.dim === dim ? S.filter.val : null;
+  $("legendTbl").innerHTML = `<thead><tr><th>${esc(DIMS[dim].label)}</th><th class="n">Long book</th><th class="n">NAV</th><th class="n">#</th></tr></thead><tbody>` +
+    rows.map(r => `<tr data-l="${esc(r.k)}" class="${selVal ? (selVal === r.k ? "sel" : "dim") : ""}"><td><span class="sw" style="background:${r.color}"></span>${esc(r.k)}<div class="muted">${esc(r.t.join(", "))}</div></td><td class="n"><b>${pp(r.lw, 1)}</b></td><td class="n">${pp(r.w, 1)}</td><td class="n">${r.t.length}</td></tr>`).join("") + `</tbody>`;
+  const el = $("cPie");
+  try {
+    let acc = 0; const tot = rows.reduce((s, r) => s + r.lw, 0);
+    const series = rows.map(r => { const st = acc / tot; acc += r.lw; const en = acc / tot;
+      return {name: r.k, type: "surface", parametric: true, wireframe: {show: false}, shading: "realistic", realisticMaterial: {roughness: .55, metalness: 0},
+        itemStyle: {color: r.color, opacity: selVal && selVal !== r.k ? .35 : 1}, parametricEquation: paramEq(st, en, selVal === r.k, 1, 22), _row: r}; });
+    const c = chart("cPie");
+    c.setOption({
+      tooltip: {...TT, formatter: p => { const r = rows.find(x => x.k === p.seriesName); return r ? `<b>${esc(r.k)}</b><br>${pp(r.lw, 1)} of long book · ${pp(r.w, 1)} of NAV<br><span style="color:#6B7280">${esc(r.t.join(", "))}</span>` : ""; }},
+      xAxis3D: {min: -2.05, max: 2.05}, yAxis3D: {min: -2.05, max: 2.05}, zAxis3D: {min: -1, max: 1},
+      grid3D: {show: false, boxHeight: 9, top: "-6%", viewControl: {alpha: 34, beta: 20, distance: narrow() ? 160 : 145, rotateSensitivity: [1, 0], zoomSensitivity: 0, panSensitivity: 0, autoRotate: false},
+        light: {main: {intensity: 1.15, shadow: false, alpha: 40, beta: 30}, ambient: {intensity: .55}}, postEffect: {enable: false}},
+      series: series.map(({_row, ...s}) => s),
+    }, true);
+    c.off("click"); c.on("click", p => setFilter(dim, p.seriesName));
+  } catch (err) { console.warn(err); el.innerHTML = '<div class="ph" style="height:100%">3D charts are unavailable in this browser; see the table.</div>'; }
+  // weights & spread bars
+  const byW = D.open.slice().sort((a, b) => a.w - b.w);
+  const hl = p => passFilter(p);
+  $("wSub").textContent = S.filter ? `% of NAV. Highlighted: ${DIMS[S.filter.dim].label} = ${S.filter.val} (${pp(D.open.filter(hl).reduce((s, p) => s + p.w, 0), 1)} of NAV)` : "% of NAV. Click a bar to open the deal.";
+  const barOpt = (vals, extra) => ({animationDuration: 300, grid: {left: 64, right: 46, top: 8, bottom: 22}, tooltip: {...TT, trigger: "axis", axisPointer: {type: "shadow"}},
+    xAxis: {type: "value", ...AX, axisLabel: {...AX.axisLabel, formatter: v => v + "%"}}, yAxis: {type: "category", data: byW.map(p => p.ticker), ...AX, axisLabel: {...AX.axisLabel, fontWeight: 600, color: "#111827"}}, ...extra});
+  const cw = chart("cWeights");
+  cw.setOption(barOpt(null, {series: [{name: "Weight", type: "bar", barWidth: "58%", data: byW.map(p => ({value: +(p.w * 100).toFixed(2), itemStyle: {color: hl(p) ? "#1A5FAB" : "#D5DCE6", borderRadius: [0, 4, 4, 0]}})), label: {show: true, position: "right", fontSize: 10.5, color: "#374151", formatter: x => x.value.toFixed(1) + "%"}}],
+    tooltip: {...TT, trigger: "axis", axisPointer: {type: "shadow"}, formatter: ps => { const p = byW[ps[0].dataIndex]; return `<b>${esc(p.ticker)}</b> ${esc(p.target)}<br>Weight ${pp(p.w, 2)} · break loss ${pp(p.bl, 2)} of NAV`; }}}), true);
+  cw.off("click"); cw.on("click", e => showDeal(byW[e.dataIndex].ticker));
+  const cs = chart("cSpread");
+  cs.setOption(barOpt(null, {legend: {top: 0, right: 0, itemWidth: 10, itemHeight: 10, textStyle: {fontSize: 11, color: "#374151"}}, grid: {left: 64, right: 16, top: 26, bottom: 22},
+    series: [{name: "At entry", type: "bar", barGap: "10%", itemStyle: {color: "#9AA5B8"}, data: byW.map(p => ({value: +(p.spr0 * 100).toFixed(2), itemStyle: {color: hl(p) ? "#9AA5B8" : "#E5E8EE"}}))},
+             {name: "Now", type: "bar", itemStyle: {color: "#C84B11"}, data: byW.map(p => ({value: p.spr != null ? +(p.spr * 100).toFixed(2) : null, itemStyle: {color: hl(p) ? "#C84B11" : "#F1D5C6"}}))}],
+    tooltip: {...TT, trigger: "axis", axisPointer: {type: "shadow"}, valueFormatter: v => v == null ? "–" : v.toFixed(2) + "%"}}), true);
+}
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-a]"); if (a) { S.alloc = a.dataset.a; renderPortfolio(); }
+  const l = e.target.closest("[data-l]"); if (l) setFilter(S.alloc, l.dataset.l);
+});
+
+// ===== characteristics =====
+function renderChars() {
+  const {open, wsum, nav, longs, shorts, R, N, activeShare} = D;
+  const ws = open.map(p => p.w).sort((a, b) => b - a), hhi = open.reduce((s, p) => s + p.lw * p.lw, 0);
+  const ev = open.reduce((s, p) => s + (p.ev != null ? p.w * p.ev : 0), 0), bl = open.reduce((s, p) => s + (p.bl || 0), 0);
+  const up = open.reduce((s, p) => s + (p.spr != null && p.dn != null ? p.w * p.spr : 0), 0), dnn = open.reduce((s, p) => s + (p.spr != null && p.dn != null ? p.w * p.dn : 0), 0);
+  const cur = {}; for (const p of open) cur[curCode(p.currency)] = (cur[curCode(p.currency)] || 0) + p.w;
+  const maxDays = Math.max(...open.map(p => p.daysExit || 0));
+  const f = [
+    fact("Number of holdings", open.length, `${D.closed.length} closed / exited since inception`),
+    fact("Wtd. spread", pp(wsum(p => p.spr)), "gross, to current deal value", "Weight-averaged (deal value − price) / price across open positions."),
+    fact("Wtd. IRR", pp(wsum(p => p.ann), 1), `compounded ${pp(wsum(p => p.irr), 1)}`, "Spread × 365 / days to the site's expected close date, weight-averaged."),
+    fact("Wtd. close probability", pp(wsum(p => p.prob), 0), `market-implied ${pp(wsum(p => p.implied), 0)}`, "Site estimate vs probability implied by price, deal value and estimated break price: downside / (downside + upside)."),
+    fact("Avg days to close", Math.round(wsum(p => p.dtc > 0 ? p.dtc : null)) + "d", "weighted, to expected close"),
+    fact("Avg holding period", Math.round(mean(open.map(p => p.held))) + "d", "open positions"),
+    fact("Gross exposure", pp((longs + shorts) / nav, 0), `long ${pp(longs / nav, 1)} · short ${pp(shorts / nav, 1)}`),
+    fact("Net exposure", pp((longs - shorts) / nav, 0), `cash ${pp(1 - longs / nav, 1)}`),
+    fact("Active share", pp(activeShare, 1), `vs ${D.uni.length}-deal equal-weight universe`, "½ Σ |portfolio weight − benchmark weight| on long weights; the benchmark is every active signed US/UK/European deal on the site, equal-weighted."),
+    fact("Beta to S&P 500", gatedHTML(R.beta, f2, N), "daily returns", "Needs 20+ daily returns before it is shown."),
+    fact("Top 5 concentration", pp(ws.slice(0, 5).reduce((s, x) => s + x, 0), 1), "% of NAV"),
+    fact("HHI / effective N", `${Math.round(hhi * 1e4).toLocaleString()} / ${(1 / hhi).toFixed(1)}`, "long book"),
+    fact("Expected value", `<span class="${cls(ev)}">${sp(ev)}</span>`, "of NAV, p × upside − (1−p) × downside", "Uses the site's close probabilities and estimated break prices (undisturbed pre-deal close, or a 25% default)."),
+    fact("Upside / downside", dnn ? (up / dnn).toFixed(2) + "×" : "–", `${pp(up)} to deal vs ${pp(dnn, 1)} to break`),
+    fact("Total break loss", pp(bl, 1), "NAV loss if every deal broke"),
+    fact("Wtd. reverse fee", pp(wsum(p => p.revPct, p => p.revPct != null), 1), `${open.filter(p => p.revPct).length} of ${open.length} deals carry one`, "Acquirer-paid termination fee as % of equity value, where the merger agreement provides one."),
+    fact("Currency (long)", Object.entries(cur).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${(v * 100).toFixed(0)}%`).join(" · "), "FX modeled as fully hedged"),
+    fact("Liquidity", `${maxDays.toFixed(0)}d max`, `wtd ${f2(wsum(p => p.daysExit))}d to exit at 20% of ADV, $${(D.AUM / 1e6).toFixed(0)}m AUM`),
+    fact("Kelly-style edge", `${((wsum(p => p.prob) - wsum(p => p.implied)) * 100).toFixed(1)} pp`, `${open.filter(p => p.kelly > 0).length} of ${open.length} deals with positive Kelly`, "Site probability minus market-implied probability; negative means prices embed more break risk than our estimate."),
+    fact("Volatility (ann.)", gatedHTML(R.vol, pp, N), "daily NAV returns"),
+  ];
+  $("facts").innerHTML = f.join("");
+}
+
+// ===== risk =====
+function renderRisk() {
+  const {R, N, mdd, mddAt, rfA} = D;
+  $("rkCaveat").innerHTML = N >= MIN_OBS ? `Return-based risk uses ${N} daily NAV returns.` : `<b>Not yet meaningful.</b> There are only ${N} daily returns. Volatility, Sharpe, Sortino, VaR/CVaR, beta and correlations show n/a until there are ${MIN_OBS}; the grey number is provisional. The deal-level charts below are forward-looking and don't depend on history.`;
+  $("riskFacts").innerHTML = [
+    fact("Volatility (ann.)", gatedHTML(R.vol, pp, N), "stdev × √252"),
+    fact("Sharpe", gatedHTML(R.sharpe, f2, N), `rf ${pp(rfA)}`),
+    fact("Sortino", gatedHTML(R.sortino, f2, N), "downside deviation"),
+    fact("Max drawdown", `<span class="${cls(mdd)}">${pp(mdd)}</span>`, mddAt ? `trough ${fmtDate(mddAt)}` : "none yet"),
+    fact("VaR 95% (1-day)", gatedHTML(R.var, pp, N), `historical ${N >= MIN_OBS ? pp(R.hvar) : "n/a"}`, "Parametric: 1.645σ − μ of daily NAV returns."),
+    fact("CVaR 95% (1-day)", gatedHTML(R.cvar, pp, N), `historical ${N >= MIN_OBS ? pp(R.hcvar) : "n/a"}`, "Expected loss beyond VaR (parametric, normal)."),
+    fact("Corr. S&P 500", gatedHTML(R.corr, f2, N), `beta ${N >= MIN_OBS ? f2(R.beta) : "n/a"}`),
+    fact("Corr. merger-arb ETF", gatedHTML(R.corrM, f2, N), `beta ${N >= MIN_OBS ? f2(R.betaM) : "n/a"}`),
+  ].join("");
+  const c = chart("cDD");
+  c.setOption({animationDuration: 300, grid: {left: 52, right: 12, top: 12, bottom: 26}, tooltip: {...TT, trigger: "axis", valueFormatter: v => (v * 100).toFixed(2) + "%"},
+    xAxis: {type: "category", data: D.dd.map(x => x[0]), boundaryGap: false, ...AX, axisLabel: {...AX.axisLabel, formatter: v => fmtDate(v).replace(/, \d{4}$/, "")}},
+    yAxis: {type: "value", max: 0, ...AX, axisLabel: {...AX.axisLabel, formatter: v => (v * 100).toFixed(2) + "%"}},
+    series: [{name: "Drawdown", type: "line", data: D.dd.map(x => x[1]), lineStyle: {color: "#B42318", width: 2}, itemStyle: {color: "#B42318"}, areaStyle: {color: "rgba(180,35,24,.12)"}, symbolSize: 5}]}, true);
+  const sl = $("wSlider"); sl.max = Math.ceil(Math.max(...D.open.map(p => p.w * 100))); sl.oninput = () => { S.minW = +sl.value; renderConc(); };
+  renderRiskCharts();
+}
+function renderConc() {
+  const byW = D.open.slice().sort((a, b) => b.w - a.w), th = S.minW / 100;
+  const above = byW.filter(p => p.w > th), sum = above.reduce((s, p) => s + p.w, 0);
+  $("wRead").textContent = `${S.minW.toFixed(2)}% → ${above.length} positions, ${pp(sum, 1)} of NAV`;
+  let cum = 0; const cumv = byW.map(p => (cum += p.w, +(cum * 100).toFixed(2)));
+  const c = chart("cConc");
+  c.setOption({animationDuration: 250, grid: {left: 40, right: 40, top: 18, bottom: 44}, tooltip: {...TT, trigger: "axis", axisPointer: {type: "shadow"}},
+    legend: {show: false},
+    xAxis: {type: "category", data: byW.map(p => p.ticker), ...AX, axisLabel: {...AX.axisLabel, rotate: 45, fontSize: 10}},
+    yAxis: [{type: "value", ...AX, axisLabel: {...AX.axisLabel, formatter: v => v + "%"}}, {type: "value", max: 100, ...AX, splitLine: {show: false}, axisLabel: {...AX.axisLabel, formatter: v => v + "%"}}],
+    series: [{name: "Weight", type: "bar", data: byW.map(p => ({value: +(p.w * 100).toFixed(2), itemStyle: {color: p.w > th ? (passFilter(p) ? "#1A5FAB" : "#7FA3D3") : "#E2E6EC", borderRadius: [3, 3, 0, 0]}})),
+      markLine: {symbol: "none", silent: true, lineStyle: {color: "#C84B11", type: "dashed"}, label: {formatter: `${S.minW}%`, color: "#C84B11", fontSize: 10}, data: [{yAxis: S.minW}]}},
+      {name: "Cumulative % of NAV", type: "line", yAxisIndex: 1, data: cumv, lineStyle: {color: "#0F2044", width: 1.5}, itemStyle: {color: "#0F2044"}, symbolSize: 4}],
+    }, true);
+}
+function renderRiskCharts() {
+  const secs = [...new Set(D.open.map(p => p._sector))];
+  const c = chart("cScatter");
+  c.setOption({animationDuration: 300, grid: {left: 50, right: 14, top: 30, bottom: 44},
+    legend: {top: 0, type: "scroll", textStyle: {fontSize: 10.5, color: "#374151"}, itemWidth: 9, itemHeight: 9},
+    tooltip: {...TT, formatter: p => { const x = D.open.find(o => o.ticker === p.data.name); return `<b>${esc(x.ticker)}</b> ${esc(x.target)}<br>Downside ${pp(x.dn, 1)} · annualized ${pp(x.ann, 1)}<br>Weight ${pp(x.w, 1)} · close prob ${x.prob != null ? pp(x.prob, 0) : "–"}`; }},
+    xAxis: {type: "value", name: "Downside to break", nameLocation: "middle", nameGap: 26, nameTextStyle: {color: "#6B7280", fontSize: 11}, ...AX, axisLabel: {...AX.axisLabel, formatter: v => v + "%"}},
+    yAxis: {type: "value", name: "Annualized", nameTextStyle: {color: "#6B7280", fontSize: 11}, ...AX, axisLabel: {...AX.axisLabel, formatter: v => v + "%"}},
+    series: secs.map((s, i) => ({name: s, type: "scatter", itemStyle: {color: PAL[(i + 1) % PAL.length]},
+      data: D.open.filter(p => p._sector === s && p.dn != null && p.ann != null).map(p => ({name: p.ticker, value: [+(p.dn * 100).toFixed(2), +(p.ann * 100).toFixed(2)], symbolSize: 8 + p.w * 260,
+        itemStyle: {opacity: passFilter(p) ? .85 : .18, borderColor: "#fff", borderWidth: 1}, label: {show: passFilter(p), formatter: p.ticker, position: "top", fontSize: 10, color: "#374151"}}))})),
+  }, true);
+  c.off("click"); c.on("click", e => e.data && showDeal(e.data.name));
+  const st = D.open.filter(passFilter).filter(p => p.bl != null).sort((a, b) => b.bl - a.bl).slice(0, 10).reverse();
+  const cs = chart("cStress");
+  cs.setOption({animationDuration: 300, grid: {left: 64, right: 50, top: 8, bottom: 22}, tooltip: {...TT, trigger: "axis", axisPointer: {type: "shadow"}, formatter: ps => { const p = st[ps[0].dataIndex]; return `<b>${esc(p.ticker)}</b>: −${pp(p.bl, 2)} of NAV if it breaks<br>break price ${px(p.breakPrice, p.currency)} (${esc(p.breakBasis || "")})<br>site close probability ${p.prob != null ? pp(p.prob, 0) : "–"}`; }},
+    xAxis: {type: "value", ...AX, axisLabel: {...AX.axisLabel, formatter: v => "−" + v + "%"}}, yAxis: {type: "category", data: st.map(p => p.ticker), ...AX, axisLabel: {...AX.axisLabel, fontWeight: 600, color: "#111827"}},
+    series: [{type: "bar", barWidth: "58%", data: st.map(p => ({value: +(p.bl * 100).toFixed(2), itemStyle: {color: "#B42318", borderRadius: [0, 4, 4, 0]}})), label: {show: true, position: "right", fontSize: 10.5, formatter: x => "−" + x.value.toFixed(2) + "%"}}]}, true);
+  cs.off("click"); cs.on("click", e => showDeal(st[e.dataIndex].ticker));
+  renderConc();
+}
+
+// ===== holdings =====
+const COLS = [
+  {k: "ticker", l: "Holding", f: p => `<span class="tk">${esc(p.ticker)}</span><div class="tsub">${esc(p.target.length > 34 ? p.target.slice(0, 33) + "…" : p.target)}</div>`, s: p => p.ticker},
+  {k: "region", l: "Region", f: p => esc(p.region || ""), s: p => p.region},
+  {k: "sector", l: "Sector", f: p => esc(p.sector || ""), s: p => p.sector},
+  {k: "w", l: "Weight", n: 1, f: p => pp(p.w, 2), s: p => p.w},
+  {k: "cur", l: "Price", n: 1, f: p => px(p.cur, p.currency), s: p => p.cur},
+  {k: "dv", l: "Deal value", n: 1, f: p => px(p.dv, p.currency), s: p => p.dv},
+  {k: "spr", l: "Spread", n: 1, f: p => pp(p.spr), s: p => p.spr},
+  {k: "ann", l: "Ann.", n: 1, f: p => pp(p.ann, 1), s: p => p.ann},
+  {k: "prob", l: "Prob.", n: 1, f: p => p.prob != null ? pp(p.prob, 0) : "–", s: p => p.prob},
+  {k: "bl", l: "Break loss", n: 1, f: p => pp(p.bl, 2), s: p => p.bl},
+  {k: "pnl", l: "P&L", n: 1, f: p => `<span class="${cls(p.pnl)}">${bp(p.pnl / D.nav * 1e4)}</span>`, s: p => p.pnl},
+  {k: "dtc", l: "Exp. close", n: 1, f: p => `${esc(p.expectedClose || "–")}<div class="tsub">${p.dtc != null ? p.dtc + "d" : ""}</div>`, s: p => p.dtc},
+];
+function filteredHoldings() {
+  const q = S.q.trim().toLowerCase();
+  return D.open.filter(p => passFilter(p) && (!S.fRegion || p.region === S.fRegion) && (!S.fSector || p.sector === S.fSector) && (!S.fType || p._type === S.fType) &&
+    (!q || [p.ticker, p.target, p.acquirer, p.sector, p.country, p.regulator].join(" ").toLowerCase().includes(q)));
+}
+function sparkSVG(h, entry) {
+  if (!h || h.length < 2) return '<div class="ph" style="height:90px">No spread history yet</div>';
+  const W = 320, H = 90, P = 6, vs = h.map(x => x[1] * 100), lo = Math.min(...vs, 0), hi = Math.max(...vs), r = hi - lo || 1;
+  const X = i => P + (W - 2 * P) * i / (h.length - 1), Y = v => H - P - (H - 2 * P) * (v - lo) / r;
+  const ei = h.findIndex(x => x[0] >= entry);
+  const pts = vs.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none" role="img" aria-label="Spread history">
+    <line x1="${P}" x2="${W - P}" y1="${Y(0)}" y2="${Y(0)}" stroke="#E4E7EC"/>
+    <polygon points="${X(0)},${Y(lo)} ${pts} ${X(h.length - 1)},${Y(lo)}" fill="rgba(26,95,171,.08)"/>
+    <polyline points="${pts}" fill="none" stroke="#1A5FAB" stroke-width="2"/>
+    ${ei >= 0 ? `<line x1="${X(ei)}" x2="${X(ei)}" y1="${P}" y2="${H - P}" stroke="#C84B11" stroke-dasharray="3 3"/>` : ""}
+    <circle cx="${X(h.length - 1)}" cy="${Y(vs[vs.length - 1])}" r="3.5" fill="#1A5FAB"/></svg>
+    <div class="muted" style="display:flex;justify-content:space-between"><span>${fmtDate(h[0][0])}</span><span>${ei >= 0 ? '<span style="color:#C84B11">┆ entry</span> · ' : ""}range ${lo.toFixed(1)}%–${hi.toFixed(1)}%</span><span>${fmtDate(h[h.length - 1][0])}</span></div>`;
+}
+function feeStr(x, regime) {
+  if (!x) return regime === "uk-code-none-permitted" ? "None (UK Code)" : regime === "not-disclosed" ? "Not disclosed" : "None";
+  return `${x.amt != null ? (CUR[x.cur] || (x.cur || "") + " ") + num(x.amt, 0) + "m" : ""}${x.pct != null ? ` · ${(+x.pct).toFixed(2)}%` : ""}${x.regulatory ? " · regulatory" : ""}`;
+}
+function detailHTML(p) {
+  const d = p.deal || {}, f = d.feesDetail || {};
+  const kv = (l, v) => `<div class="kv"><span>${l}</span><b>${v}</b></div>`;
+  return `<div class="dbox">
+    <div><h3 class="ct">Spread history</h3><div class="cs">Daily spread to current terms; dashed line = portfolio entry</div>${sparkSVG(p.spreadHist, p.entryDate)}
+      <div class="note">${esc((d.dealTerms || "").slice(0, 320))}${(d.dealTerms || "").length > 320 ? "…" : ""}</div></div>
+    <div>${kv("Acquirer", esc((p.acquirer || "").slice(0, 70)))}${kv("Announced", fmtDate(p.announced))}${kv("Regulator", esc(p.regulator || "–"))}
+      ${kv("Target fee", feeStr(f.target, f.regime))}${kv("Reverse fee", feeStr(f.reverse, f.regime))}${kv("Break price", `${px(p.breakPrice, p.currency)} (−${pp(p.dn, 1)})`)}
+      ${kv("Market-implied prob.", pp(p.implied, 0))}</div>
+    <div>${kv("Entry", `${px(p.entryPrice, p.currency)} · ${fmtDate(p.entryDate)}`)}${kv("P&L", `<span class="${cls(p.pnl)}">${usd(p.pnl / 100 * D.AUM)} · ${bp(p.pnl / D.nav * 1e4)}</span>`)}
+      ${kv("Hedge", p.hedge ? `Short ${num(p.hedge.shares, 4)} ${esc(p.hedge.symbol)}` : /stock/i.test(p.dealType || "") ? "Unhedged (fixed-$ stock)" : "None (cash)")}
+      ${kv("Liquidity", p.daysExit != null ? `${p.daysExit.toFixed(1)}d to exit` : "–")}${kv("IRR (compounded)", pp(p.irr, 1))}
+      <div style="margin-top:10px"><button class="btn" type="button" data-deal="${esc(p.ticker)}">Open deal detail &rarr;</button></div></div></div>`;
+}
+function renderHoldings() {
+  const rows = filteredHoldings(), col = COLS.find(c => c.k === S.sort.k);
+  rows.sort((a, b) => { const x = col.s(a), y = col.s(b); if (x == null) return 1; if (y == null) return -1; return (x < y ? -1 : x > y ? 1 : 0) * S.sort.d; });
+  $("hTbl").innerHTML = `<thead><tr>${COLS.map(c => `<th class="sort ${c.n ? "n" : ""} ${S.sort.k === c.k ? (S.sort.d > 0 ? "asc" : "desc") : ""}" data-s="${c.k}">${c.l}</th>`).join("")}</tr></thead><tbody>` +
+    rows.map(p => `<tr class="hrow ${S.open.has(p.ticker) ? "open" : ""}" data-h="${esc(p.ticker)}">${COLS.map(c => `<td class="${c.n ? "n" : ""}">${c.f(p)}</td>`).join("")}</tr>` +
+      (S.open.has(p.ticker) ? `<tr class="drow"><td colspan="${COLS.length}">${detailHTML(p)}</td></tr>` : "")).join("") +
+    (rows.length ? "" : `<tr><td colspan="${COLS.length}" class="muted" style="padding:20px">No holdings match the filters.</td></tr>`) + `</tbody>`;
+  const w = rows.reduce((s, p) => s + p.w, 0);
+  $("hdFoot").textContent = `${rows.length} of ${D.open.length} holdings · ${pp(w, 1)} of NAV · click a row to expand · click a column header to sort`;
+  $("hdChip").innerHTML = chipHTML();
+}
+function opts(id, label, vals) { $(id).innerHTML = `<option value="">${label}: all</option>` + [...new Set(vals)].sort().map(v => `<option>${esc(v)}</option>`).join(""); }
+function csv() {
+  const rows = filteredHoldings();
+  const hdr = ["Ticker", "Target", "Acquirer", "Country", "Sector", "Regulator", "Deal type", "Currency", "Weight %", "Price", "Deal value", "Spread %", "Annualized %", "Close prob %", "Break price", "Downside %", "Break loss % NAV", "P&L bp", "Entry date", "Entry price", "Expected close"];
+  const q = v => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const r2 = (x, k = 100) => x == null || !isFinite(x) ? "" : (x * k).toFixed(3);
+  const lines = [hdr.join(","), ...rows.map(p => [p.ticker, p.target, p.acquirer, p.country, p.sector, p.regulator, p._type, curCode(p.currency), r2(p.w), p.cur, p.dv, r2(p.spr), r2(p.ann), r2(p.prob), p.breakPrice, r2(p.dn), r2(p.bl), r2(p.pnl / D.nav, 1e4), p.entryDate, p.entryPrice, p.expectedClose].map(q).join(","))];
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([lines.join("\n")], {type: "text/csv"}));
+  a.download = `mergeranalyst-model-holdings-${D.last.date}.csv`; document.body.appendChild(a); a.click(); a.remove();
+}
+document.addEventListener("click", e => {
+  const s = e.target.closest("th[data-s]"); if (s) { const k = s.dataset.s; S.sort = {k, d: S.sort.k === k ? -S.sort.d : (["ticker", "region", "sector"].includes(k) ? 1 : -1)}; renderHoldings(); return; }
+  const dl = e.target.closest("[data-deal]"); if (dl) { showDeal(dl.dataset.deal); return; }
+  const h = e.target.closest("tr[data-h]"); if (h) { const t = h.dataset.h; S.open.has(t) ? S.open.delete(t) : S.open.add(t); renderHoldings(); }
+  if (e.target.closest("#csvBtn, #csvTop, #csvDoc")) { e.preventDefault(); csv(); }
+});
+
+// ===== deal detail =====
+function showDeal(t) { S.deal = t; renderDeal(); $("deal").scrollIntoView({behavior: "smooth"}); }
+function renderDeal() {
+  const list = D.open.slice().sort((a, b) => b.w - a.w);
+  if (!S.deal) S.deal = list[0] && list[0].ticker;
+  const p = D.open.find(x => x.ticker === S.deal); if (!p) return;
+  $("dPick").innerHTML = list.map(x => `<button type="button" data-pick="${esc(x.ticker)}" class="${x.ticker === S.deal ? "on" : ""}">${esc(x.ticker)}</button>`).join("");
+  const d = p.deal || {}, f = d.feesDetail || {}, tl = (p.timeline || []).slice();
+  const today = D.today;
+  const first = tl.length ? tl[0].date : p.entryDate, lastD = tl.reduce((m, e) => e.date > m ? e.date : m, today);
+  const span = Math.max(1, dayDiff(first, lastD)), pos = dt => Math.min(100, Math.max(0, dayDiff(first, dt) / span * 100));
+  const terms = p.terms.acq ? `${p.terms.cash ? px(p.terms.cash, p.currency) + " cash + " : ""}${p.terms.ratio} ${esc(p.terms.acq)} shares` : `${px(p.terms.cash, p.currency)} per share${/stock/i.test(p.dealType || "") ? " (cash + fixed-$ stock)" : " in cash"}`;
+  const m = [["Weight", pp(p.w, 2)], ["Spread", pp(p.spr)], ["Annualized", pp(p.ann, 1)], ["Close prob.", p.prob != null ? `${pp(p.prob, 0)}` : "–"], ["Downside", "−" + pp(p.dn, 1)], ["Days to close", p.dtc != null ? p.dtc : "–"]];
+  $("dCard").innerHTML = `
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div><div class="eyebrow"><span class="pill">${esc(p.country || "")}</span><span class="pill" style="background:#F3F4F6;color:#374151">${esc(p.sector || "")}</span><span>${esc(p.regulator || "")}</span></div>
+        <h3 style="font-size:20px;color:var(--navy);margin-top:6px">${esc(p.ticker)} · ${esc(p.target)}</h3>
+        <div class="muted" style="font-size:13px">Acquirer: ${esc(p.acquirer || "–")}</div><div style="margin-top:4px;font-weight:600">${terms} · deal value now ${px(p.dv, p.currency)}</div></div>
+      <div style="text-align:right">${d.sourceUrl ? `<a class="btn" href="${esc(d.sourceUrl)}" target="_blank" rel="noopener">Primary source ↗</a>` : ""}</div>
+    </div>
+    <div class="mstrip">${m.map(([l, v]) => `<div><div class="l">${l}</div><div class="v">${v}</div></div>`).join("")}</div>
+    <h3 class="ct">Deal timeline</h3><div class="cs">Announcement → approvals → expected close. Filled dots are past; hollow ones are upcoming. Tap a dot for details.</div>
+    <div class="tl-track"><div class="tl-line"></div><div class="tl-prog" style="width:${pos(today)}%"></div>
+      ${tl.map((e, i) => `<div class="tl-dot" title="${esc(fmtDate(e.date) + " · " + (KIND[e.kind] || [e.kind])[0] + ": " + e.label)}" data-tl="${i}" style="left:${pos(e.date)}%;background:${e.date <= today ? (KIND[e.kind] || ["", "#9AA5B8"])[1] : "#fff"};box-shadow:0 0 0 2px ${(KIND[e.kind] || ["", "#9AA5B8"])[1]}"></div>`).join("")}
+      <div class="tl-today" style="left:${pos(today)}%"><span>Today</span></div></div>
+    <div class="tl-ax"><span>${fmtDate(first)}</span><span>${fmtDate(lastD)}</span></div>
+    <ul class="tl-list" id="tlList">${tl.map((e, i) => `<li id="tl${i}" class="${e.date > today ? "future" : ""}" style="--c:${(KIND[e.kind] || ["", "#9AA5B8"])[1]}"><span class="d">${fmtDate(e.date)}</span><span class="k">${esc((KIND[e.kind] || [e.kind])[0])}</span>${esc(e.label)}</li>`).join("")}</ul>
+    <div class="g3 mt">
+      <div><h3 class="ct">Spread history</h3><div class="ch spark" id="cDealSpread"></div></div>
+      <div><h3 class="ct">Termination fees</h3>
+        <div class="kv"><span>Target break fee</span><b>${feeStr(f.target, f.regime)}</b></div><div class="kv"><span>Reverse fee</span><b>${feeStr(f.reverse, f.regime)}</b></div>
+        ${f.reverse && f.reverse.note ? `<div class="note">${esc(f.reverse.note)}</div>` : ""}
+        <h3 class="ct" style="margin-top:14px">Break analysis</h3>
+        <div class="kv"><span>Break price</span><b>${px(p.breakPrice, p.currency)}</b></div><div class="kv"><span>Basis</span><b>${esc(p.breakBasis || "–")}</b></div>
+        <div class="kv"><span>Break loss</span><b>${pp(p.bl, 2)} of NAV</b></div><div class="kv"><span>Expected value</span><b class="${cls(p.ev)}">${sp(p.ev)} of position</b></div>
+        <div class="kv"><span>Market-implied prob.</span><b>${pp(p.implied, 0)}</b></div></div>
+      <div><h3 class="ct">Status &amp; approvals</h3>
+        ${d.statusNote ? `<div class="note"><b>Status:</b> ${esc(d.statusNote)}</div>` : ""}${d.latestNote ? `<div class="note"><b>Latest:</b> ${esc(d.latestNote)}</div>` : ""}
+        ${d.otherBidders ? `<div class="note"><b>Other bidders:</b> ${esc(d.otherBidders)}</div>` : ""}
+        <div class="kv" style="margin-top:8px"><span>P&amp;L</span><b class="${cls(p.pnl)}">${usd(p.pnl / 100 * D.AUM)} · ${bp(p.pnl / D.nav * 1e4)}</b></div>
+        <div class="kv"><span>Hedge</span><b>${p.hedge ? `Short ${num(p.hedge.shares, 4)} ${esc(p.hedge.symbol)} @ ${px(p.hedge.entryPrice, "USD")}` : "None"}</b></div></div>
+    </div>`;
+  const h = p.spreadHist || [];
+  if (h.length > 1) {
+    if (charts.cDealSpread) charts.cDealSpread.dispose();
+    const c = charts.cDealSpread = echarts.init($("cDealSpread"));
+    const ei = h.findIndex(x => x[0] >= p.entryDate);
+    c.setOption({animationDuration: 300, grid: {left: 44, right: 10, top: 10, bottom: 24}, tooltip: {...TT, trigger: "axis", valueFormatter: v => v.toFixed(2) + "%"},
+      xAxis: {type: "category", data: h.map(x => x[0]), boundaryGap: false, ...AX, axisLabel: {...AX.axisLabel, formatter: v => fmtDate(v).replace(/, \d{4}$/, "")}},
+      yAxis: {type: "value", scale: true, ...AX, axisLabel: {...AX.axisLabel, formatter: v => v.toFixed(1) + "%"}},
+      series: [{name: "Spread", type: "line", data: h.map(x => +(x[1] * 100).toFixed(3)), showSymbol: false, lineStyle: {color: "#1A5FAB", width: 2}, areaStyle: {color: "rgba(26,95,171,.08)"},
+        markLine: ei >= 0 ? {symbol: "none", silent: true, label: {formatter: "entry", color: "#C84B11", fontSize: 10}, lineStyle: {color: "#C84B11", type: "dashed"}, data: [{xAxis: h[ei][0]}]} : undefined}]});
+  } else $("cDealSpread").innerHTML = '<div class="ph" style="height:100%">No spread history yet</div>';
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-pick]"); if (b) { S.deal = b.dataset.pick; renderDeal(); }
+  const t = e.target.closest("[data-tl]"); if (t) { const li = $("tl" + t.dataset.tl); if (li) { li.scrollIntoView({behavior: "smooth", block: "nearest"}); li.animate([{background: "#EAF1FB"}, {background: "transparent"}], {duration: 1400}); } }
+});
+
+// ===== documents =====
+function renderDocs() {
+  const {pf, rfA, N, AUM} = D;
+  $("method").innerHTML = [
+    `<b>Track record.</b> Inception ${fmtDate(D.inc)}, ${N} daily returns. Risk statistics and annualized returns show n/a until there are ${MIN_OBS} daily closes, and stay noisy for much longer. One early close (Nov 6) wasn't recorded.`,
+    `<b>Returns</b> use NAV (cash + longs − short hedges) at recorded daily closes, base ${pf.baseNAV}. Paper trading only: no fees, financing, borrow, dividends on shorts, FX or slippage. Returns are in local currency, with FX modeled as hedged. Dollar amounts assume a $${(AUM / 1e6).toFixed(0)}m portfolio.`,
+    `<b>Benchmarks.</b> IQ Merger Arbitrage ETF (MNA) and The Merger Fund (MERFX) use adjusted closes, because no free daily HFRI Merger Arbitrage series exists. Also shown: S&P 500 price index, and BIL for T-bills. The risk-free rate is the 13-week T-bill (${pp(rfA)}).`,
+    `<b>Deal economics.</b> Spread = (deal value − price) / price. Annualized = spread × 365 / days to the expected close. Break price = undisturbed pre-announcement close (25% default if it's unavailable or leaked). EV = p × upside − (1−p) × downside. Market-implied probability = downside / (downside + upside).`,
+    `<b>Risk.</b> Volatility, Sharpe and Sortino come from daily NAV returns. VaR and CVaR are 95%, 1-day, parametric with historical alongside. Beta and correlation use same-date daily returns. Stress = NAV loss if a deal breaks at its estimated break price, before hedge P&L.`,
+    `<b>Active share</b> is measured against an equal-weight universe of every active signed US, UK or European deal on the site (${D.uni.length}).`,
+    `<b>Classifications and timelines</b> are simplified labels drawn from the site's deal records. Timeline events are extracted from dated statements in the deal notes and primary-source summaries.`,
+    `<b>Liquidity</b> = position size ÷ (20% × 20-day average dollar volume).`,
+  ].map(x => `<li>${x}</li>`).join("");
+  const tr = (pf.trades || []).map((t, i) => ({...t, i})).sort((a, b) => a.date === b.date ? b.i - a.i : a.date < b.date ? 1 : -1);
+  $("tradeTbl").innerHTML = `<thead><tr><th>Date</th><th>Action</th><th>Security</th><th class="n">Price</th><th class="n">Qty</th><th class="n">Notional (NAV pts)</th><th>Reason</th></tr></thead><tbody>` +
+    tr.map(t => `<tr><td class="n" style="text-align:left">${esc(t.date)}</td><td><span class="tag ${esc(String(t.action).toLowerCase())}">${esc(t.action)}</span></td><td><span class="tk">${esc(t.symbol || t.ticker)}</span></td><td class="n">${num(t.price, t.price < 10 ? 3 : 2)}</td><td class="n">${num(t.qty, 4)}</td><td class="n">${num(t.notional, 3)}</td><td class="muted" style="min-width:260px">${esc(t.reason)}</td></tr>`).join("") + `</tbody>`;
+  $("histTbl").innerHTML = `<thead><tr><th>Deal</th><th>Outcome</th><th>Entry</th><th>Exit</th><th class="n">Days</th><th class="n">Realized</th></tr></thead><tbody>` +
+    (D.closed.map(p => `<tr><td><span class="tk">${esc(p.ticker)}</span><div class="tsub">${esc(p.target)}</div></td><td><span class="tag ${p.status === "closed" ? "close" : p.status === "broken" ? "break" : "sell"}">${esc(p.status)}</span></td><td>${esc(p.entryDate)}<div class="tsub">${px(p.entryPrice, p.currency)}</div></td><td>${esc(p.exitDate || "")}<div class="tsub">${px(p.exitPrice, p.currency)}</div></td><td class="n">${p.exitDate ? dayDiff(p.entryDate, p.exitDate) : "–"}</td><td class="n ${cls(p.realizedPnl)}">${bp((p.realizedPnl || 0) / pf.baseNAV * 1e4)}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">None yet.</td></tr>`) + `</tbody>`;
+}
+
+// ===== tabs scroll-spy =====
+function spy() {
+  const links = [...document.querySelectorAll("#tabs a")], secs = links.map(a => document.querySelector(a.getAttribute("href")));
+  const io = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { const i = secs.indexOf(e.target); links.forEach((l, j) => l.classList.toggle("on", j === i)); const on = links[i]; if (on) on.scrollIntoView({block: "nearest", inline: "nearest"}); } }, {rootMargin: "-45% 0px -50% 0px"});
+  secs.forEach(s => s && io.observe(s));
+}
+
+// ===== boot =====
+async function boot() {
+  try {
+    await load();
+    if (!window.echarts) throw new Error("chart library failed to load");
+    renderHero(); renderPerf(); renderPortfolio(); renderChars(); renderRisk();
+    opts("fRegion", "Region", D.open.map(p => p.region)); opts("fSector", "Sector", D.open.map(p => p.sector)); opts("fType", "Type", D.open.map(p => p._type));
+    $("q").oninput = e => { S.q = e.target.value; renderHoldings(); };
+    $("fRegion").onchange = e => { S.fRegion = e.target.value; renderHoldings(); };
+    $("fSector").onchange = e => { S.fSector = e.target.value; renderHoldings(); };
+    $("fType").onchange = e => { S.fType = e.target.value; renderHoldings(); };
+    renderHoldings(); renderDeal(); renderDocs(); spy();
+    let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => Object.values(charts).forEach(c => c && c.resize && c.resize()), 150); });
+  } catch (e) { console.error(e); $("hStats").innerHTML = `<div class="hstat"><div class="l">Error</div><div class="s">Could not load portfolio data: ${esc(e.message)}</div></div>`; }
+}
+boot();
 
 </script>
 </body>
