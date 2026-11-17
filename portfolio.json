@@ -139,7 +139,44 @@
    "regulator": "SEC / BDC shareholder votes",
    "dealType": "Cash + stock (fixed $)",
    "closingProbability": 90,
-   "announced": "2026-10-27"
+   "announced": "2026-10-27",
+   "deal": {
+    "dealTerms": "Definitive merger agreement announced October 27, 2026. MFIC stockholders receive total consideration of $10.88 per fully diluted share, consisting of ~$1.21 in cash and ~$9.67 in Ares Capital common stock (reduced dollar-for-dollar for a pre-closing MFIC special dividend of undistributed taxable income). Exchange ratio uses ARCC value equal to the greater of NAV per share and share price; MFIC holders share 50% of any ARCC premium to NAV up to 104.5% of NAV. 30.1% premium to MFIC's October 26, 2026 close and 25.8% premium to 30-day VWAP; preliminary Sept 30 NAV ~$12.86. Unanimously approved by both boards on the MFIC special committee's recommendation. Apollo affiliates holding 5.2% signed voting and support agreements. Conditions: MFIC stockholder approval, regulatory approvals, customary conditions. Expected to close in the first half of 2027. Pro forma ownership ~95% ARCC / ~5% MFIC ",
+    "description": "Ares Capital, the largest publicly traded BDC, is acquiring Apollo-managed MidCap Financial Investment Corporation in a stock-and-cash deal with a total enterprise value of about $2.6bn. The transaction adds a portfolio of senior secured middle-market loans and more than 200 incumbent positions, taking ARCC's pro forma portfolio above $31bn at fair value. Ares expects the deal to be modestly accretive to core EPS.",
+    "statusNote": "Stock leg is a $9.67 dollar value converted at closing using ARCC price vs NAV (up to 1.0225x if ARCC trades above 104.5% of NAV), less any post-signing special tax dividend (paid separately in cash). $10.88 headline used (conservative).",
+    "latestNote": "(2026-10-28) New: Ares Capital to acquire MFIC for $10.88 per share (~$1.21 cash + ~$9.67 ARCC stock), a 30.1% premium to the October 26 close; ~$2.6bn EV. Announced October 27, 2026; MFIC stockholder vote and regulatory approvals required; expected close 1H 2027. MFIC shares rose roughly 17% on the news per recent reports.",
+    "dealRisk": "low",
+    "otherBidders": "None disclosed.",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 31.36,
+      "cur": "USD",
+      "note": "Payable by MFIC in specified circumstances (superior proposal, change of recommendation); no ARCC reverse fee disclosed",
+      "pct": 1.21
+     },
+     "reverse": null,
+     "equityValue": {
+      "amt": 2600,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/1278752/000119312526432622/d115048d8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $31.36m (1.2%) / Reverse none",
+    "dealSize": 2600,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1287750/000110465926118958/tm2628314d1_ex99-1.htm",
+    "industry": "Financials / Business development company (middle-market direct lending)",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 1488640,
+    "avgClose": 9.8755,
+    "sessions": 20
+   }
   },
   {
    "ticker": "BLHK",
@@ -186,7 +223,38 @@
    "regulator": "US bank regulators (Fed/OCC/FDIC)",
    "dealType": "Cash + stock",
    "closingProbability": 92,
-   "announced": "2026-10-06"
+   "announced": "2026-10-06",
+   "deal": {
+    "dealTerms": "Definitive merger agreement announced 6 October 2026 under which TowneBank acquires blueharbor bank (OTCQX: BLHK). Each blueharbor share receives $12.70 in cash plus 1.0534 shares of TowneBank common stock, implying $50.78 per share based on TowneBank's 10-day VWAP of $36.15 as of 2 October 2026; aggregate value ~$154mn, ~75% paid in TOWN stock. blueharbor had ~$628mn of assets, ~$537mn of loans and ~$551mn of deposits at 30 June 2026 across five offices. Approved by both boards. Conditions: blueharbor shareholder approval, regulatory approval, customary conditions. Expected close Q1 2027. blueharbor chair Kelley Earnhardt Miller to join the TowneBank board; CEO Jim Marshall to become Piedmont Regional President.",
+    "description": "TowneBank has agreed to acquire Mooresville, NC-based blueharbor bank for ~$154mn in a 75% stock / 25% cash deal ($12.70 cash + 1.0534 TOWN shares per share, ~$50.78 implied). Extends TowneBank's Carolinas build-out into the Charlotte MSA and I-77 corridor. Q1 2027 close targeted.",
+    "statusNote": "Fixed ratio; merger agreement not public (TowneBank files with FDIC), so a collar cannot be ruled out.",
+    "latestNote": "(2026-10-07) New row. Small, mostly-stock community bank deal; value floats with TOWN. Target trades on OTCQX so liquidity is thin. Bank regulatory approvals (FDIC and state) are the gating items; TowneBank is FDIC-filed rather than SEC-registered, so deal documents will be on the FDIC site. Announced 8:30am ET on 6 October, after the prior day's refresh window.",
+    "dealRisk": "low",
+    "feesDetail": {
+     "regime": "not-disclosed",
+     "target": null,
+     "reverse": null,
+     "equityValue": {
+      "amt": 154,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://s201.q4cdn.com/520199522/files/content_files/blueharbor-Acquisition-Press-Release.pdf",
+     "confidence": "low",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Not disclosed",
+    "dealSize": 154,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/10/06/3375489/10357/en/townebank-enhances-north-carolina-presence-through-agreement-to-acquire-blueharbor-bank.html",
+    "industry": "Financials / Community banking - North Carolina (Charlotte MSA, I-77 corridor)",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 4995,
+    "avgClose": 49.2535,
+    "sessions": 20
+   }
   },
   {
    "ticker": "OTTW",
@@ -227,7 +295,38 @@
    "regulator": "US bank regulators (Fed/OCC/FDIC)",
    "dealType": "Cash",
    "closingProbability": 85,
-   "announced": "2026-08-20"
+   "announced": "2026-08-20",
+   "deal": {
+    "dealTerms": "All-cash merger agreement announced August 20, 2026. Pontiac Bancorp acquires Ottawa Bancorp for aggregate cash consideration of $45.5 million, equating to approximately $19.78 per share, subject to adjustment as provided in the merger agreement. Following closing, Ottawa Savings Bank merges into Bank of Pontiac and the surviving bank operates under the Bank of Pontiac name. The boards of both companies have approved the transaction, which remains subject to Ottawa Bancorp shareholder approval, required bank regulatory approvals and customary closing conditions. Closing is anticipated in the first quarter of 2027.",
+    "description": "Pontiac Bancorp has agreed to acquire Ottawa Bancorp for $45.5 million in cash, approximately $19.78 per share subject to adjustment. Ottawa Savings Bank will merge into Bank of Pontiac and operate under the Bank of Pontiac name. Closing is anticipated in the first quarter of 2027 subject to shareholder and bank regulatory approvals.",
+    "statusNote": "Aug 20, 2026 press release: closing anticipated in Q1 2027, subject to Ottawa shareholder approval and bank regulatory approvals.",
+    "latestNote": "[2026-11-02 spread review] Review: Could not find a current SEC filing for Ottawa Bancorp; it appears to be deregistered and trading OTC. Shareholder meeting date and vote result are not verified.",
+    "dealRisk": "low",
+    "feesDetail": {
+     "regime": "not-disclosed",
+     "target": null,
+     "reverse": null,
+     "equityValue": {
+      "amt": 46,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.globenewswire.com/news-release/2026/08/20/3348730/0/en/pontiac-bancorp-inc-has-agreed-to-acquire-ottawa-bancorp-inc.html",
+     "confidence": "low",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Not disclosed",
+    "dealSize": 46,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.globenewswire.com/news-release/2026/08/20/3348730/0/en/pontiac-bancorp-inc-has-agreed-to-acquire-ottawa-bancorp-inc.html",
+    "industry": "Financials / Community Banking & Thrifts",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 22075,
+    "avgClose": 19.223,
+    "sessions": 20
+   }
   },
   {
    "ticker": "SYNA",
@@ -268,7 +367,49 @@
    "regulator": "US antitrust (HSR)",
    "dealType": "Cash",
    "closingProbability": 82,
-   "announced": "2026-06-25"
+   "announced": "2026-06-25",
+   "deal": {
+    "dealTerms": "Amended merger agreement announced 1 October 2026 (originally announced 25 June 2026) under which onsemi acquires Synaptics for $123.00 per share in cash, aggregate value approximately $5.7 billion. The amendment follows an unsolicited competing proposal received from a third party; the Synaptics Board concluded that the onsemi transaction as amended continues to be in the best interests of Synaptics shareholders. Financing: cash on hand plus fully committed debt financing from Morgan Stanley. Prior terms were an all-stock exchange at a fixed 1.350 ratio implying ~$7 billion EV. Expected to close by mid-2027, subject to Synaptics stockholder approval, regulatory clearances and customary conditions.",
+    "description": "onsemi (Nasdaq: ON) to acquire Synaptics (Nasdaq: SYNA) at $123.00 per share in cash for ~$5.7bn aggregate value under an amended merger agreement announced 1 October 2026, following an unsolicited competing third-party proposal that the Synaptics Board declined. Original 25 June 2026 agreement was an all-stock deal at a fixed 1.350 exchange ratio implying ~$7bn EV. Financing: cash on hand plus Morgan Stanley-committed debt. Targeted mid-2027 close.",
+    "statusNote": "Oct 1, 2026 joint press release: 'still expected to close by mid-2027.'",
+    "latestNote": "[2026-11-02 spread review] Review: Terms confirmed at $123 cash. Note the amendment moved from all-stock to cash at a lower aggregate value after an unsolicited third-party proposal. End Date June 25, 2027, with up to three automatic 3-month extensions to March 25, 2028 (antitrust or FDI only). Antitrust filings are required in China, Hungary, Japan, South Korea, Taiwan and the US. The Synaptics termination fee is $235M; the onsemi",
+    "dealRisk": "low",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 235,
+      "cur": "USD",
+      "note": "Synaptics company termination fee payable to onsemi",
+      "pct": 4.12
+     },
+     "reverse": {
+      "amt": 320,
+      "cur": "USD",
+      "regulatory": true,
+      "note": "onsemi regulatory termination fee (~5.5% of EV at signing)",
+      "pct": 5.61
+     },
+     "equityValue": {
+      "amt": 5700,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/817720/000114036126039983/ny20081083x2_defm14a.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $235m (4.1%) / Reverse $320m (5.6%) regulatory",
+    "dealSize": 5700,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/817720/000114036126026434/ef20076748_ex99-1.htm",
+    "industry": "Semiconductors / Edge AI Compute & Connectivity",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 1085732,
+    "avgClose": 117.528,
+    "sessions": 20
+   }
   },
   {
    "ticker": "SLAB",
@@ -309,7 +450,48 @@
    "regulator": "US antitrust (HSR)",
    "dealType": "Cash",
    "closingProbability": 75,
-   "announced": "2026-02-04"
+   "announced": "2026-02-04",
+   "deal": {
+    "dealTerms": "$231.00 per share in cash. SLAB shareholders approved 30 April 2026. HSR waiting period expired 22 May 2026; certain other regulatory approvals remain.",
+    "statusNote": "10-Q for the quarter ended Jul 4, 2026 (filed Aug 11, 2026): 'expected to close in the first half of 2027,' subject to required regulatory approvals. HSR expired May 22, 2026 (8-K May 26, 2026). Stockholders approved Apr 30, 2026.",
+    "latestNote": "(2026-10-08) Corrected shareholder vote date: approved at the 30 April 2026 special meeting (not 1 May). Company still expects closing in the first half of 2027.",
+    "dealRisk": "medium",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 259,
+      "cur": "USD",
+      "note": "Superior proposal / change of recommendation",
+      "pct": 3.81
+     },
+     "reverse": {
+      "amt": 499,
+      "cur": "USD",
+      "regulatory": true,
+      "note": "Payable by TI if the deal is blocked by a regulatory injunction or required approvals are not obtained by the end date",
+      "pct": 7.34
+     },
+     "equityValue": {
+      "amt": 6800,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/1038074/000119312526036712/d62897d8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $259m (3.8%) / Reverse $499m (7.3%) regulatory",
+    "dealSize": 6800,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000014/slab-20260430.htm",
+    "industry": "Semiconductor / IoT",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 437431,
+    "avgClose": 221.7305,
+    "sessions": 20
+   }
   },
   {
    "ticker": "PTC",
@@ -351,7 +533,43 @@
    "regulator": "US antitrust (HSR) + foreign/CFIUS",
    "dealType": "Cash",
    "closingProbability": 80,
-   "announced": "2026-10-05"
+   "announced": "2026-10-05",
+   "deal": {
+    "dealTerms": "Definitive agreement announced 5 October 2026 under which Schneider Electric acquires 100% of the issued and outstanding share capital of PTC Inc. for $205.00 per share in cash. The consideration implies PTC equity value of approximately $22.6 billion (€20.1 billion) and enterprise value of approximately $23.7 billion (€21.1 billion), a premium of approximately 42.3% to the PTC closing price on 3 October 2026 and approximately 46.1% to the 30-trading-day VWAP ending 3 October 2026. Implied multiple: approximately 21x EV / Adjusted EBITA 2027E on a standalone basis and approximately 13x EV / Adjusted EBITA 2027E including full run-rate synergies. Schneider Electric expects approximately €250 million of annual run-rate cost synergies by Year 3 and approximately €800 million of expected revenue synergies. Unanimously approved by both boards. Completion expected by Q3 2027, subject to PTC sh",
+    "description": "Schneider Electric has agreed to acquire PTC at $205.00 per share in cash, ~$22.6bn equity value / ~$23.7bn EV, a 42.3% premium to the 3 October close. Largest acquisition in Schneider Electric's history; thesis is combining PTC's CAD/PLM/IIoT stack with Schneider's industrial automation footprint to build an industrial-AI platform. 21x EV/Adj. EBITA 2027E standalone, 13x including run-rate synergies (€250m cost + ~€800m revenue). Targeted Q3 2027 close subject to PTC vote and multi-jurisdiction antitrust/FDI review.",
+    "latestNote": "(2026-10-05) New row. Schneider Electric announced the largest deal in its history: $205 cash per PTC share, ~$22.6bn equity / ~$23.7bn EV, a 42.3% premium to the 3 October close. Three things worth isolating. First, this is a plain all-cash spread with no financing condition disclosed - the arbitrage is sized by probability × time rather than by stock-leg volatility. Second, the multi-jurisdiction review is the real gate: US antitrust (software, moderate overlap), EU antitrust and FDI (Schneider is French with a strategic industrial asset moving across the Atlantic), and PTC's own shareholder vote. The parties guided to Q3 2027 completion, implying an ~11 month timetable which is realistic ",
+    "dealRisk": "medium",
+    "otherBidders": "No competing proposal publicly disclosed as at the date of this entry.",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 700,
+      "cur": "USD",
+      "note": "Payable by PTC on superior offer / change of recommendation; merger agreement contains no reverse fee payable by Schneider",
+      "pct": 3.1
+     },
+     "reverse": null,
+     "equityValue": {
+      "amt": 22600,
+      "cur": "USD",
+      "basis": "equity value stated in primary source"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/857005/000119312526413124/d174191dex21.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $700m (3.1%) / Reverse none",
+    "dealSize": 22600,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0000857005/000119312526413124/d174191dex991.htm",
+    "industry": "Technology / Industrial Software - CAD, PLM, IIoT, AR and application lifecycle",
+    "geo": "USA / France"
+   },
+   "adv20": {
+    "shares": 1728431,
+    "avgClose": 195.131,
+    "sessions": 20
+   }
   },
   {
    "ticker": "ULBI",
@@ -393,7 +611,50 @@
    "regulator": "US antitrust (HSR)",
    "dealType": "Cash",
    "closingProbability": 92,
-   "announced": "2026-10-27"
+   "announced": "2026-10-27",
+   "deal": {
+    "dealTerms": "Definitive merger agreement signed October 27, 2026. EnerSys, through a wholly owned subsidiary, acquires all outstanding Ultralife shares for $16.00 per share in cash via a tender offer followed by a Section 251(h) merger, no stockholder vote required. The offer price is a 166% premium to Ultralife's unaffected close on October 26, 2026. Tender offer commenced October 28, 2026 and is scheduled to expire at 5:00 p.m. ET on December 3, 2026 unless extended. Conditions: majority-of-outstanding minimum tender condition, HSR clearance, UK National Security and Investment Act clearance and other foreign approvals, no MAE; no financing condition (funded from EnerSys cash on hand). Holders of ~40.3% of shares signed tender and support agreements. Outside date April 27, 2027, extendable by up to two 60-day periods for antitrust. Termination fee $10.3mn payable by Ultralife; equal $10.3mn reverse",
+    "description": "EnerSys is taking out Ultralife, a Newark, N.Y.-based maker of military and specialty batteries and communications systems, in an all-cash tender offer at $16.00 per share, about $320mn in enterprise value. The deal broadens EnerSys's defense power portfolio (munitions, soldier power, drones and counter-drone, autonomous systems) and adds FEOC-compliant manufacturing capacity. The tender offer launched October 28 and runs through December 3, 2026.",
+    "statusNote": "Tender expires 3 Dec 2026 (extendable).",
+    "latestNote": "(2026-10-28) New row. Small-cap cash tender with an unusually large headline premium (166%), ~40% of shares already locked up under support agreements and no financing condition, so the main gating items are HSR and UK NSIA clearance. The reverse fee covers regulatory failure. Tender launched at 7:00 a.m. ET on October 28 (Schedule TO-T on file), expiring December 3. Verification: Ultralife press release via GlobeNewswire and EnerSys 8-K/Schedule TO-T filings with the SEC (Oct 27-28, 2026); Investing.com and TradingView coverage (Oct 27, 2026).",
+    "dealRisk": "low",
+    "otherBidders": "None disclosed.",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 10.3,
+      "cur": "USD",
+      "note": "Company Termination Fee",
+      "pct": 3.22
+     },
+     "reverse": {
+      "amt": 10.3,
+      "cur": "USD",
+      "regulatory": true,
+      "note": "Reverse fee if outside date hit with only HSR/NSIA/foreign approvals outstanding",
+      "pct": 3.22
+     },
+     "equityValue": {
+      "amt": 320,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/875657/000143774926033731/ulbi20261027_8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $10.3m (3.2%) / Reverse $10.3m (3.2%) regulatory",
+    "dealSize": 320,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/875657/000119312526435071/0001193125-26-435071-index.htm",
+    "industry": "Industrials / Defense batteries, power and communications systems",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 315149,
+    "avgClose": 13.297,
+    "sessions": 20
+   }
   },
   {
    "ticker": "VREX",
@@ -434,7 +695,43 @@
    "regulator": "US antitrust (HSR)",
    "dealType": "Cash",
    "closingProbability": 88,
-   "announced": "2026-08-10"
+   "announced": "2026-08-10",
+   "deal": {
+    "dealTerms": "Definitive merger agreement executed August 10, 2026. Teledyne acquires all outstanding Varex common shares for $18.90 per share payable in cash. Aggregate transaction value approximately $1.1 billion taking into account Varex equity awards and net debt as of April 3, 2026. Unanimously approved by both boards. Anticipated to be completed in early 2027, subject to customary closing conditions including regulatory approvals and Varex stockholder approval. Evercore is exclusive financial advisor to Varex.",
+    "description": "Teledyne to acquire Varex Imaging for $18.90 per share in cash, roughly $1.1 billion including equity awards and net debt. Varex makes X-ray tubes, flat-panel and photon-counting detectors and imaging software for medical diagnostic, non-destructive inspection and security screening OEMs. Teledyne describes the portfolios as complementary with minimal overlap, which supports a benign antitrust path. Close anticipated in early 2027.",
+    "statusNote": "DEFM14A (9/21/2026): 'We currently expect the Merger to close in early 2027'. Remaining conditions are HSR, foreign merger control and foreign investment clearances.",
+    "latestNote": "(2026-08-17) New deal. Teledyne and Varex jointly announced a definitive all-cash merger agreement on August 10, 2026 at $18.90 per share (~$1.1B aggregate value). Both boards approved unanimously. Management characterises the product overlap as minimal — Teledyne does not produce X-ray tubes for radiography, fluoroscopy or CT, and Varex is the only party supplying advanced photon-counting detectors — which reduces regulatory risk despite overlapping customers. Remaining conditions are Varex stockholder approval and regulatory clearances; the early-2027 target implies a long close. Triple-source verified: joint issuer press release filed as Exhibit 99.1 to the Varex Form 8-K, the Teledyne Fo",
+    "dealRisk": "low",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 25.3,
+      "cur": "USD",
+      "note": "Superior proposal / change of recommendation; no reverse fee disclosed",
+      "pct": 2.3
+     },
+     "reverse": null,
+     "equityValue": {
+      "amt": 1100,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/1681622/000110465926093349/tm2622593d1_8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $25.3m (2.3%) / Reverse none",
+    "dealSize": 1100,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001681622/000110465926093349/tm2622593d1_ex99-1.htm",
+    "industry": "Medical Devices / X-ray Imaging Components",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 684859,
+    "avgClose": 18.3873,
+    "sessions": 20
+   }
   },
   {
    "ticker": "GAMA.L",
@@ -475,7 +772,39 @@
    "regulator": "UK/Irish Takeover Code (court scheme)",
    "dealType": "Cash",
    "closingProbability": 90,
-   "announced": "2026-04-07"
+   "announced": "2026-04-07",
+   "deal": {
+    "dealTerms": "Recommended cash acquisition announced 1 September 2026 under which Bradbury Bidco Limited, a vehicle formed by funds managed by Epiris GP III Limited, acquires the entire issued and to be issued ordinary share capital of Gamma Communications plc for 1,120 pence per share in cash. The terms value Gamma's fully diluted equity at approximately £1.015 billion and imply an enterprise value of approximately £1.079 billion. The price represents a premium of approximately 53% to the 732 pence closing price on 7 April 2026, the last business day before Gamma entered an offer period, and approximately 41% to the one-month average price. The Gamma board considers the terms fair and reasonable and intends to recommend them unanimously, having been advised on the financial terms by Barclays and Q Advisors. The acquisition is to be effected by a court-sanctioned scheme of arrangement and is condition",
+    "description": "Epiris has agreed a recommended cash acquisition of Gamma Communications plc at 1,120 pence per share, valuing the fully diluted equity at ~£1.015bn and the enterprise at ~£1.079bn - a ~53% premium to the 732p close of 7 April 2026 before the offer period began. To be effected by scheme of arrangement. Resolves a multi-bidder situation that had been running since April.",
+    "statusNote": "RNS Nov 2, 2026: Scheme expected to become Effective in Q1 2027.",
+    "latestNote": "[2026-11-02 spread review] Review: The source should be the Gamma RNS, not Bloomberg. The firm 2.7 offer was announced Sept 1, 2026 (offer period began Apr 7, 2026). The price was declared final Oct 19, 2026. Waterland had shown rival interest. Adjourned meetings on Nov 2, 2026 approved the scheme: Court Meeting 78.31% for, General Meeting 78.91% for. German and Austrian clearances have been obtained.",
+    "dealRisk": "low",
+    "otherBidders": "Gamma confirmed preliminary approaches from Providence Equity Partners, Epiris and an Oakley Capital / Giacom consortium during the offer period that began 7 April 2026. Epiris is the party that has now announced a firm intention to make an offer; no competing firm intention had been announced as at the date of this entry.",
+    "feesDetail": {
+     "regime": "uk-code-none-permitted",
+     "target": null,
+     "reverse": null,
+     "equityValue": {
+      "amt": 1015,
+      "cur": "GBP",
+      "basis": "equity value stated in primary source"
+     },
+     "source": "https://www.investegate.co.uk/announcement/rns/gamma-communications--gama/result-of-meeting/9853257",
+     "confidence": "low",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "UK Takeover Code: no target break fee permitted",
+    "dealSize": 1015,
+    "dealCurrency": "GBP",
+    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/gamma-communications--gama/result-of-meeting/9853257",
+    "industry": "Telecom / Cloud Communications",
+    "geo": "UK / USA"
+   },
+   "adv20": {
+    "shares": 1240540,
+    "avgClose": 1095.35,
+    "sessions": 20
+   }
   },
   {
    "ticker": "BOY.L",
@@ -516,7 +845,39 @@
    "regulator": "UK/Irish Takeover Code (court scheme)",
    "dealType": "Cash",
    "closingProbability": 90,
-   "announced": "2026-09-01"
+   "announced": "2026-09-01",
+   "deal": {
+    "dealTerms": "Recommended cash acquisition announced 1 September 2026 under which a Veritas Capital bidding vehicle acquires the entire issued and to be issued share capital of Bodycote plc for total value of 940 pence per share, comprising 932.8 pence in cash plus the 7.2 pence interim dividend for the financial year ending 31 December 2026 declared in July, which Bodycote shareholders retain. The terms value Bodycote's equity at approximately £1.65 billion and imply an enterprise value of approximately £1.85 billion. The 940 pence total represents a premium of approximately 25.3% to the 750.2 pence closing price on 4 August 2026, the last business day before the formal offer period commenced, and approximately 37.5% to the three-month volume weighted average price before takeover speculation emerged in May 2026. The acquisition is structured as a scheme of arrangement under Part 26 of the UK Compani",
+    "description": "Veritas Capital has agreed a recommended cash acquisition of Bodycote plc, the UK thermal processing group, at 940 pence per share (932.8 pence cash plus the retained 7.2 pence interim dividend), valuing the equity at ~£1.65bn and the enterprise at ~£1.85bn. The deal follows a competitive process in which CVC also tabled a conditional proposal. Structured as a scheme of arrangement targeted to become effective in Q1 2027.",
+    "statusNote": "Shares are ex the 7.2p interim dividend (paid 5 Nov 2026), so only the cash remains for a buyer. Prices in pence.",
+    "latestNote": "(2026-11-02) Shareholders approved the scheme on 21 October 2026; HSR has expired; the 7.2p interim dividend is payable 5 November 2026 (shares already ex-dividend).",
+    "dealRisk": "low",
+    "otherBidders": "Bodycote confirmed on 5 August 2026 that it had received competing conditional cash proposals from CVC (up to 915 pence per share) and Veritas Capital (up to 914 pence per share), and press reports indicate Apollo also looked at the asset. Veritas prevailed after an expedited competitive process and raised its terms to 940 pence. A counter-proposal from CVC before the scheme document is posted cannot be ruled out, though no competing firm intention to make an offer had been announced as at the date of this entry.",
+    "feesDetail": {
+     "regime": "uk-code-none-permitted",
+     "target": null,
+     "reverse": null,
+     "equityValue": {
+      "amt": 1652,
+      "cur": "GBP",
+      "basis": "equity value stated in primary source"
+     },
+     "source": "https://www.investegate.co.uk/announcement/rns/bodycote--boy/recommended-cash-acquisition-of-bodycote-plc/9747189",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "UK Takeover Code: no target break fee permitted",
+    "dealSize": 1650,
+    "dealCurrency": "GBP",
+    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/bodycote--boy/recommended-cash-acquisition-of-bodycote-plc/9747189",
+    "industry": "Industrials / Thermal Processing Services - heat treatment, hot isostatic pressing and specialist surface technology",
+    "geo": "UK"
+   },
+   "adv20": {
+    "shares": 1089435,
+    "avgClose": 916.25,
+    "sessions": 20
+   }
   },
   {
    "ticker": "PTSB.I",
@@ -557,7 +918,44 @@
    "regulator": "ECB / Central Bank of Ireland",
    "dealType": "Cash",
    "closingProbability": 92,
-   "announced": "2026-04-14"
+   "announced": "2026-04-14",
+   "deal": {
+    "dealTerms": "Recommended cash offer announced April 14, 2026, implemented by an Irish scheme of arrangement: BAWAG PSK acquires the entire issued and to be issued share capital of Permanent TSB Group Holdings for EUR 2.97 per share in cash (~EUR 1.619bn), a 26% premium to the undisturbed share price and 45% to the six-month undisturbed VWAP. The Irish State is the largest shareholder and supported the offer. Shareholders approved the scheme at meetings in July 2026 (scheme document dated May 15, 2026). On October 23, 2026 the board confirmed the High Court of Ireland sanction hearing will proceed on October 27, 2026 and is expected to run several days, with judgment timing at the court's discretion; four shareholders holding 0.002890% of the shares intend to object. Dublin advisory firm Axis Capital said on October 22, 2026 it is considering a possible cash offer at EUR 3.20 per share without committ",
+    "description": "Austria's BAWAG Group is acquiring Permanent TSB, Ireland's third-largest retail bank, in a recommended EUR 2.97 per share cash deal worth about EUR 1.62bn. Shareholders including the Irish State have approved the scheme, and the final step is High Court sanction at a hearing starting October 27, 2026. A late, unfunded indication of interest at EUR 3.20 from Axis Capital has been dismissed by the board as speculative.",
+    "statusNote": "Completion expected Q4 2026. RNS of Oct 23, 2026: sanction hearing proceeding Oct 27; judgment timing at the court's discretion.",
+    "latestNote": "(2026-11-10) The European Central Bank granted regulatory approval for BAWAG's acquisition of PTSB, reported Nov 6. The Irish High Court sanction hearing was held from Oct 27 with four minority shareholders objecting; the ruling is reportedly expected next week, and court sanction is the main remaining condition.",
+    "dealRisk": "low",
+    "otherBidders": "Axis Capital Limited (possible EUR 3.20 cash offer, unfunded, no offer made); Scotchstone Capital (indicated possible interest)",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 16.19,
+      "cur": "EUR",
+      "note": "Irish Rule 21.2 expense reimbursement capped at 1% of offer value (~EUR16.2m computed: 544,996,176 sh x EUR2.97)",
+      "pct": 1.0
+     },
+     "reverse": null,
+     "equityValue": {
+      "amt": 1618.6,
+      "cur": "EUR",
+      "basis": "equity value stated in primary source"
+     },
+     "source": "https://www.investegate.co.uk/announcement/rns/permanent-tsb-group-holdings-cdi---ptsb/recommended-cash-offer-for-permanent-tsb/9519415",
+     "confidence": "medium",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target €16.19m (1.0%) / Reverse none",
+    "dealSize": 1619,
+    "dealCurrency": "EUR",
+    "sourceUrl": "https://www.investegate.co.uk/announcement/rns/permanent-tsb-group-holdings-cdi---ptsb/update-on-high-court-sanction-hearing/9838849",
+    "industry": "Banking / Irish retail and SME bank",
+    "geo": "Ireland / Austria"
+   },
+   "adv20": {
+    "shares": 65725,
+    "avgClose": 2.9585,
+    "sessions": 20
+   }
   },
   {
    "ticker": "ADT",
@@ -598,7 +996,50 @@
    "regulator": "US antitrust (HSR)",
    "dealType": "Cash",
    "closingProbability": 88,
-   "announced": "2026-10-29"
+   "announced": "2026-10-29",
+   "deal": {
+    "dealTerms": "Definitive agreement announced October 29, 2026. ADT stockholders receive $10.00 per share in cash, a 45.6% premium to the unaffected closing price of $6.87 on October 27, 2026. Debt financing is committed solely by funds managed by affiliates of Apollo Global Management; no financing condition. 30-day go-shop period expiring 11:59 p.m. New York time on November 28, 2026, with a possible 10-day extension for qualifying bidders. Conditions: ADT stockholder approval, expiration of the HSR waiting period and customary closing conditions. Expected to close in the first quarter of 2027, after which ADT will be delisted from the NYSE.",
+    "description": "Thrive Holdings is taking home-security provider ADT private for $10.00 per share in cash, valuing the company at about $15.3bn including debt, with Apollo (ADT's former controlling owner) providing the financing. ADT will become the foundation of Thrive's AI-enabled smart-home security business. The deal carries a go-shop through late November and is expected to close in Q1 2027 pending stockholder and antitrust approvals.",
+    "statusNote": "Go-shop to 28 Nov 2026.",
+    "latestNote": "(2026-11-02) New row. Clean all-cash take-private with committed Apollo financing and only HSR plus a stockholder vote as gates; ADT traded just under the $10.00 offer after the announcement, indicating the market does not expect a topping bid during the go-shop (ends November 28, 2026). Verification: ADT Form 8-K (Exhibit 99.1) and DEFA14A of October 29, 2026; Bloomberg coverage of October 29, 2026; Axios Pro and TIKR coverage.",
+    "dealRisk": "low",
+    "otherBidders": "None disclosed; go-shop runs to November 28, 2026.",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 227,
+      "cur": "USD",
+      "note": "$114m for superior proposal during go-shop (to Nov 28, 2026) or with Excluded Party during go-shop extension",
+      "pct": 2.99
+     },
+     "reverse": {
+      "amt": 473,
+      "cur": "USD",
+      "regulatory": false,
+      "note": "Parent Termination Fee incl. failure to close; backed by limited guarantee",
+      "pct": 6.22
+     },
+     "equityValue": {
+      "amt": 7600,
+      "cur": "USD",
+      "basis": "equity value stated in primary source"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/1703056/000119312526437964/d184339d8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $227m (3.0%) / Reverse $473m (6.2%)",
+    "dealSize": 15300,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0001703056/000119312526437123/d572133dex991.htm",
+    "industry": "Business Services / Residential security and smart-home monitoring",
+    "geo": "USA"
+   },
+   "adv20": {
+    "shares": 26103014,
+    "avgClose": 9.0132,
+    "sessions": 20
+   }
   },
   {
    "ticker": "SLN",
@@ -641,7 +1082,44 @@
    "regulator": "UK/Irish Takeover Code (court scheme)",
    "dealType": "Cash",
    "closingProbability": 90,
-   "announced": "2026-10-19"
+   "announced": "2026-10-19",
+   "deal": {
+    "dealTerms": "Definitive agreement announced October 19, 2026. Merck KGaA acquires Silence Therapeutics for $20.00 per American Depositary Share in cash (each ADS = three ordinary shares), an 82% premium to the 30-day VWAP of $10.99 and ~130% to the October 16 closing ADS price. Implemented via a UK scheme of arrangement. Unanimously approved by the Silence board; holders of ~14% of voting power signed voting and support agreements. Conditions: Silence shareholder approval and required regulatory approvals. Funded with new debt. Expected to close in Q1 2027.",
+    "description": "Merck KGaA is acquiring London-based Silence Therapeutics for $20 per ADS in cash (~$1.3bn equity value) to add divesiran, a Phase 3-ready siRNA therapy for polycythemia vera that met its Phase 2 primary endpoint (88% responder rate vs 19% placebo). The deal is Merck's first major acquisition under CEO Kai Beckmann and follows its 2025 SpringWorks purchase. UK scheme of arrangement; closing expected Q1 2027.",
+    "statusNote": "Spread on the Nasdaq ADS line.",
+    "latestNote": "(2026-10-21) New row. Clean strategic biotech takeout: cash, debt-funded by an investment-grade buyer, a scheme structure that needs 75% by value of votes cast, and no overlapping products to trigger antitrust concern. Main gating item is simply the UK court timetable. The 82% premium to VWAP after a competitive process leaves little room for a topping bid. Verification: Merck KGaA press release (issuer), Silence Therapeutics Form DEFA14A (SEC), BioPharma Dive and Fierce Biotech.",
+    "dealRisk": "low",
+    "otherBidders": "Silence says the agreement followed a competitive sale process; no rival offer disclosed",
+    "feesDetail": {
+     "regime": "standard",
+     "target": {
+      "amt": 13,
+      "cur": "USD",
+      "note": "Payable by Silence on superior proposal, change of recommendation, or tail; fee permitted under Transaction Agreement (scheme of arrangement)",
+      "pct": 1.0
+     },
+     "reverse": null,
+     "equityValue": {
+      "amt": 1300,
+      "cur": "USD",
+      "basis": "site deal size"
+     },
+     "source": "https://www.sec.gov/Archives/edgar/data/1479615/000119312526424695/d172259d8k.htm",
+     "confidence": "high",
+     "verified": "2026-11-05"
+    },
+    "breakupFee": "Target $13m (1.0%) / Reverse none",
+    "dealSize": 1300,
+    "dealCurrency": "USD",
+    "sourceUrl": "https://www.emdgroup.com/en/news/silence-therapeutics-19-10-2026.html",
+    "industry": "Healthcare / Biotech - siRNA therapeutics (rare disease, hematology)",
+    "geo": "UK / Germany"
+   },
+   "adv20": {
+    "shares": 1488236,
+    "avgClose": 19.7575,
+    "sessions": 20
+   }
   },
   {
    "ticker": "CHMI",
@@ -946,7 +1424,7 @@
  ],
  "asOf": "2026-11-16 17:32 UTC",
  "analytics": {
-  "updated": "2026-11-17 20:27 UTC",
+  "updated": "2026-11-17 20:42 UTC",
   "benchmarks": {
    "^GSPC": {
     "name": "S&P 500",
@@ -985,7 +1463,7 @@
      ],
      [
       "2026-11-17",
-      7321.71
+      7328.4302
      ]
     ]
    },
@@ -1026,7 +1504,7 @@
      ],
      [
       "2026-11-17",
-      36.62
+      36.59
      ]
     ]
    },
@@ -1109,6 +1587,12 @@
     ]
    }
   },
+  "fxUsd": {
+   "GBP": 1.3213,
+   "EUR": 1.1011,
+   "CAD": 0.6999
+  },
+  "notionalAum": 100000000,
   "riskFree": {
    "symbol": "^IRX",
    "name": "13-week T-bill yield",
