@@ -10,10 +10,11 @@ Usage (GITHUB_TOKEN in env; pushes portfolio.json merge-safe unless --dry):
   python3 portfolio_update.py --add TICKER --reason "..." [--weight W]   # buy at the latest close; default size = 1.75% NAV break-loss budget / downside, 3-10%
   python3 portfolio_update.py --trim TICKER --to 0.03 --reason "..."         # partial sale to a target weight (hedge covered pro rata)
   python3 portfolio_update.py --exit TICKER --reason "..."                   # discretionary exit at the latest close
+  python3 portfolio_update.py --analytics          # refresh only the analytics block (benchmarks, classifications, universe)
   python3 portfolio_update.py --rank               # print quality scores for holdings and candidates (no trades)
   add --dry to print without pushing.
 """
-import os, sys, json, re, base64, time, argparse, subprocess, urllib.request, urllib.error
+import os, sys, json, re, base64, time, argparse, subprocess, urllib.request, urllib.error, urllib.parse
 from datetime import datetime, timezone, timedelta, date
 
 REPO = 'https://api.github.com/repos/Camillosc/mergermania'
@@ -166,6 +167,86 @@ def candidates(deals, held, today, excluded=None):
                         **({'previouslyExcluded': (excluded or {})[norm(d['targetTicker'])]} if norm(d['targetTicker']) in (excluded or {}) else {})})
     return sorted(out, key=lambda c: -c['score'])
 
+# --- analytics (portfolio-analytics.html): classifications, benchmark history, benchmark universe ---
+BENCHMARKS = [('^GSPC', 'S&P 500', 'close'), ('MNA', 'IQ Merger Arbitrage ETF (MNA)', 'adjclose'),
+              ('MERFX', 'The Merger Fund (MERFX)', 'adjclose'), ('BIL', 'T-bills (BIL, 1-3m)', 'adjclose')]
+COUNTRY = {'usa': 'United States', 'us': 'United States', 'united states': 'United States', 'uk': 'United Kingdom', 'united kingdom': 'United Kingdom',
+           'ireland': 'Ireland', 'france': 'France', 'germany': 'Germany', 'italy': 'Italy', 'spain': 'Spain', 'netherlands': 'Netherlands',
+           'switzerland': 'Switzerland', 'sweden': 'Sweden', 'denmark': 'Denmark', 'finland': 'Finland', 'austria': 'Austria', 'belgium': 'Belgium',
+           'norway': 'Norway', 'portugal': 'Portugal', 'poland': 'Poland', 'greece': 'Greece', 'luxembourg': 'Luxembourg', 'canada': 'Canada'}
+SECTOR_KW = [(r'semiconductor|software|technology|\bit\b|saas', 'Information Technology'), (r'telecom|communication|media|marketing', 'Communication Services'),
+             (r'bank|financ|insur|asset management|bdc|reit|thrift|lending', 'Financials'), (r'health|medical|biotech|pharma|life science', 'Health Care'),
+             (r'utilit', 'Utilities'), (r'energy|oil|gas|midstream', 'Energy'), (r'material|mining|chemical|metal', 'Materials'),
+             (r'real estate|property', 'Real Estate'), (r'consumer|retail|restaurant|leisure|residential security', 'Consumer Discretionary'),
+             (r'staples|food|beverage', 'Consumer Staples'), (r'industrial|defen|aerospace|business services|logistics', 'Industrials')]
+
+def classify(row, p=None):
+    """Country/region of the target, sector (GICS-style), primary regulatory gate, consideration type."""
+    geo = [t.strip().lower() for t in re.split(r'\s*/\s*|,', str(row.get('geo') or '')) if t.strip()]
+    country = COUNTRY.get(geo[0], geo[0].title()) if geo else 'Unknown'
+    reg = region(row)
+    regn = {'us': 'US', 'uk': 'UK', 'eu': 'Europe ex-UK', 'ca': 'Canada'}.get(reg, 'Other')
+    ind = str(row.get('industry') or '')
+    txt = (ind + ' ' + str(row.get('description') or '')[:200]).lower()
+    sector = ('Consumer Discretionary' if re.search(r'residential security|smart-home', ind.lower()) else None) or next((s for k, s in SECTOR_KW if re.search(k, ind.split('/')[0].lower())), None) or next((s for k, s in SECTOR_KW if re.search(k, txt)), 'Other')
+    terms = str(row.get('dealTerms') or '').lower()
+    bank = sector == 'Financials' and re.search(r'bank|thrift', ind.lower())
+    if reg in ('uk',) or (country in ('United Kingdom', 'Ireland') and re.search(r'scheme|takeover code|rule 2\.7|offer', terms)):
+        regulator = 'ECB / Central Bank of Ireland' if bank and country == 'Ireland' else 'UK/Irish Takeover Code (court scheme)'
+    elif bank and country == 'United States':
+        regulator = 'US bank regulators (Fed/OCC/FDIC)'
+    elif re.search(r'business development|\bbdc\b', ind.lower()):
+        regulator = 'SEC / BDC shareholder votes'
+    elif country == 'United States':
+        regulator = 'US antitrust (HSR)' + (' + foreign/CFIUS' if len(geo) > 1 and geo[1] not in ('usa', 'us') else '')
+    elif reg == 'eu':
+        regulator = 'EU / national regulators'
+    else:
+        regulator = 'Other'
+    t = (p or {}).get('terms') or row.get('liveTerms')
+    t = t if isinstance(t, dict) else {}
+    if t.get('ratio'):
+        dtype = 'Cash + stock' if t.get('cash') else 'Stock'
+    elif re.search(r'common stock|\bstock\b of|shares of (?:the )?acquir', terms[:250]):
+        dtype = 'Cash + stock (fixed $)'
+    else:
+        dtype = 'Cash'
+    return {'country': country, 'region': regn, 'sector': sector, 'regulator': regulator, 'dealType': dtype}
+
+def yahoo_series(sym, start, field='adjclose'):
+    a = int(datetime.fromisoformat(start).replace(tzinfo=timezone.utc).timestamp()) - 10 * 86400
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?period1={a}&period2={int(time.time())}&interval=1d'
+    try:
+        res = json.loads(subprocess.run(['curl', '-s', '--max-time', '20', '-A', 'Mozilla/5.0', url], capture_output=True, text=True).stdout)['chart']['result'][0]
+        vals = (res['indicators'].get('adjclose') or [{}])[0].get('adjclose') if field == 'adjclose' else None
+        vals = vals or res['indicators']['quote'][0]['close']
+        tz = timedelta(seconds=res['meta'].get('gmtoffset', -18000))
+        return [[(datetime.fromtimestamp(ts, timezone.utc) + tz).date().isoformat(), round(v, 4)] for ts, v in zip(res['timestamp'], vals) if v is not None]
+    except Exception as e:
+        sys.stderr.write(f'benchmark {sym}: {e}\n'); return []
+
+def build_analytics(pf, deals):
+    inc = pf['inception']
+    for p in pf['positions']:
+        row = find_row(deals, p)
+        if row:
+            p.update(classify(row, p))
+            p['closingProbability'] = row.get('closingProbability')
+            p['announced'] = row.get('announced')
+    bm = {}
+    for sym, name, field in BENCHMARKS:
+        s = yahoo_series(sym, inc, field)
+        base = [x for x in s if x[0] <= inc]
+        if s: bm[sym] = {'name': name, 'series': ([base[-1]] if base else []) + [x for x in s if x[0] > inc]}
+    irx = yahoo_series('^IRX', inc, 'close')
+    uni = []
+    for d in deals:
+        if d.get('status') != 'pending' or d.get('category') != 'active_deal' or region(d) not in ('us', 'uk', 'eu') or not d.get('targetTicker'): continue
+        c = classify(d); uni.append({'ticker': d['targetTicker'], 'region': c['region'], 'sector': c['sector']})
+    pf['analytics'] = {'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), 'benchmarks': bm,
+                       'riskFree': {'symbol': '^IRX', 'name': '13-week T-bill yield', 'annualPct': irx[-1][1] if irx else None, 'date': irx[-1][0] if irx else None},
+                       'universe': {'definition': 'Equal-weight benchmark: every active (pending, signed) deal on the site with a US, UK or European target', 'deals': uni}}
+
 def refresh_fees(p, row):
     rv, tg, regime = fee_pcts(row)
     p['fees'] = {'reversePct': rv, 'targetPct': tg, 'regime': regime}
@@ -316,7 +397,7 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--add'); ap.add_argument('--exit'); ap.add_argument('--reason', default='')
     ap.add_argument('--weight', type=float, default=None); ap.add_argument('--dry', action='store_true')
-    ap.add_argument('--rationale', default=None); ap.add_argument('--trim'); ap.add_argument('--to', type=float); ap.add_argument('--rank', action='store_true')
+    ap.add_argument('--rationale', default=None); ap.add_argument('--trim'); ap.add_argument('--to', type=float); ap.add_argument('--rank', action='store_true'); ap.add_argument('--analytics', action='store_true')
     a = ap.parse_args()
     now = datetime.now(timezone.utc)
     pf = json.loads(get_file('portfolio.json')[1])
@@ -357,6 +438,8 @@ if __name__ == '__main__':
             close_position(pf, p, d, px, apx, 'SELL', a.reason)
             msg = f"Model portfolio {d}: SELL {p['ticker']}"
         nav_of(pf, quotes({p['quoteSymbol'] for p in pf['positions'] if p['status'] == 'open'} | {p['terms'].get('acq') for p in pf['positions'] if p['status'] == 'open'}), now)
+    elif a.analytics:
+        pass
     else:
         events, cands = daily(pf, deals, now)
         last = pf['navHistory'][-1]
@@ -364,5 +447,8 @@ if __name__ == '__main__':
         print('CANDIDATES (quant pre-screen; apply the quality screen before --add; previouslyExcluded = failed it at inception, add only if that reason is resolved):')
         for c in cands[:15]: print('  ', json.dumps(c, ensure_ascii=False))
         msg = f"Model portfolio NAV {last['date']}: {last['nav']:.2f}" + (f" ({'; '.join(events)})" if events else '')
+    if a.analytics and not (a.add or a.exit or a.trim):
+        msg = 'Model portfolio analytics refresh'
+    build_analytics(pf, deals)   # classifications, benchmark history and universe for portfolio-analytics.html
     if a.dry: print(json.dumps(pf['navHistory'][-1:]), '(dry run, not pushed)')
     else: push(pf, msg + '\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>')

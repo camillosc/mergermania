@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio Analytics - MergerAnalyst</title>
+<meta name="description" content="Performance, risk, exposures and deal-risk statistics for the MergerAnalyst model merger-arbitrage portfolio. Illustrative only, not investment advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F6F9; --surface: #FFFFFF; --surface2: #F8FAFC; --border: #E2E8F0; --border2: #CBD5E1;
+    --brand: #C84B11; --navy: #0F2044; --blue: #1A5FAB; --green: #0D6B3E; --green-lt: #EDFAF3;
+    --amber: #92521C; --amber-lt: #FFF8F0; --red: #B91C1C; --red-lt: #FEF2F2; --text: #1A2333; --dim: #64748B;
+    --sans: 'DM Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --shadow-sm: 0 1px 2px rgba(15,32,68,.06), 0 1px 3px rgba(15,32,68,.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+  a { color: var(--blue); text-decoration: none; } a:hover { text-decoration: underline; }
+  header { background: var(--navy); border-bottom: 3px solid var(--brand); }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 18px; padding-bottom: 16px; }
+  .wordmark { font-weight: 700; font-size: 24px; color: #fff; letter-spacing: -.3px; }
+  .wordmark span { color: var(--brand); }
+  nav.top a { color: rgba(255,255,255,.75); font-size: 13px; font-weight: 600; margin-left: 18px; }
+  nav.top a.on { color: #fff; border-bottom: 2px solid var(--brand); padding-bottom: 3px; }
+  .disclaimer { background: var(--amber-lt); border: 1px solid #F3D9BF; color: var(--amber); border-radius: 8px; padding: 10px 14px; margin: 20px 0 6px; font-size: 13px; }
+  .disclaimer strong { text-transform: uppercase; letter-spacing: .6px; font-size: 12px; }
+  h1 { font-size: 26px; letter-spacing: -.4px; margin: 18px 0 2px; }
+  .sub { color: var(--dim); font-size: 13px; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); margin: 30px 0 10px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; box-shadow: var(--shadow-sm); }
+  .kpi .l { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--dim); font-weight: 600; }
+  .kpi .v { font-family: var(--mono); font-size: 22px; font-weight: 600; margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .kpi .s { font-size: 12px; color: var(--dim); }
+  .pos { color: var(--green); } .neg { color: var(--red); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-sm); }
+  .chart { padding: 14px 16px 8px; }
+  .chart svg { width: 100%; height: 240px; display: block; }
+  .chart .note { font-size: 12px; color: var(--dim); padding: 4px 0 6px; }
+  .tbl { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--dim); background: var(--surface2); padding: 9px 10px; border-bottom: 1px solid var(--border2); white-space: nowrap; }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  td.n, th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tfoot td { background: var(--surface2); font-weight: 600; border-top: 1px solid var(--border2); }
+  .tk { font-family: var(--mono); font-weight: 600; }
+  .why { color: var(--dim); font-size: 12px; margin-top: 3px; max-width: 560px; }
+  td.deal { min-width: 380px; } td.dt { white-space: nowrap; }
+  .acq { color: var(--dim); font-size: 12px; }
+  .hedge td { background: #FAFBFD; font-size: 12px; color: var(--dim); }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .4px; padding: 1px 6px; border-radius: 4px; text-transform: uppercase; }
+  .tag.buy, .tag.close { background: var(--green-lt); color: var(--green); }
+  .tag.short, .tag.cover { background: #EEF2FF; color: #3730A3; }
+  .tag.break, .tag.sell { background: var(--red-lt); color: var(--red); }
+  .tag.terms { background: var(--amber-lt); color: var(--amber); }
+  .tag.flag { background: var(--red-lt); color: var(--red); margin-left: 6px; }
+  .tag.trim { background: var(--amber-lt); color: var(--amber); }
+  .rules { padding: 16px 20px; font-size: 13px; }
+  .rules dt { font-weight: 700; margin-top: 10px; } .rules dd { color: #334155; }
+  .rules ul { padding-left: 18px; } .rules li { margin: 2px 0; }
+  .muted { color: var(--dim); font-size: 12px; }
+  footer { margin: 34px 0 40px; color: var(--dim); font-size: 12px; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; }
+  .bars { padding: 12px 16px 14px; }
+  .bars h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .7px; color: var(--dim); margin-bottom: 8px; }
+  .bar { display: grid; grid-template-columns: minmax(120px, 42%) 1fr 64px; gap: 8px; align-items: center; font-size: 12.5px; margin: 5px 0; }
+  .bar .lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar .trk { position: relative; height: 12px; background: var(--surface2); border-radius: 3px; border: 1px solid var(--border); }
+  .bar .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--blue); border-radius: 2px; }
+  .bar .bm { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--brand); }
+  .bar .val { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--dim); padding: 2px 0 6px; }
+  .legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 5px; border-radius: 2px; }
+  .na { color: var(--dim); font-family: var(--mono); }
+  .prov { display: block; font-size: 11px; color: var(--dim); font-family: var(--sans); font-weight: 400; }
+  .caveat { background: var(--amber-lt); border: 1px solid #F3D9BF; color: var(--amber); border-radius: 8px; padding: 8px 12px; font-size: 12.5px; margin-bottom: 10px; }
+  .method { padding: 14px 20px; font-size: 12.5px; color: #334155; } .method li { margin: 4px 0 4px 18px; }
+  .subnav { margin-top: 6px; font-size: 13px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } .bar { grid-template-columns: 40% 1fr 58px; } }
+  @media (max-width: 640px) { .wrap { padding: 0 16px; } h1 { font-size: 22px; } nav.top a { margin-left: 12px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hdr">
+    <a class="wordmark" href="/">Merger<span>Analyst</span></a>
+    <nav class="top"><a href="/">Deals</a><a href="/portfolio.html">Model Portfolio</a><a class="on" href="/portfolio-analytics.html">Analytics</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="disclaimer"><strong>Model portfolio, illustrative only. Not investment advice.</strong>
+    Hypothetical paper portfolio with no fees, borrow costs, FX costs or slippage. Simulated performance says nothing about future results.</div>
+  <h1>Portfolio Analytics</h1>
+  <div class="sub" id="sub">Loading&hellip;</div>
+  <div class="subnav"><a href="/portfolio.html">&larr; Holdings, trade log and rules</a></div>
+
+  <h2>Performance</h2>
+  <div class="kpis" id="perfKpis"></div>
+  <div class="card chart" style="margin-top:12px"><div class="legend" id="legend"></div><svg id="chart" role="img" aria-label="NAV versus benchmarks, rebased to 100"></svg><div class="note" id="chartNote"></div></div>
+  <div class="card tbl" style="margin-top:12px"><table>
+    <thead><tr><th>Series</th><th class="n">Since inception</th><th class="n">MTD</th><th class="n">1 week</th><th class="n">Annualized</th><th class="n">Last</th></tr></thead>
+    <tbody id="retBody"></tbody></table></div>
+
+  <h2>Risk</h2>
+  <div class="caveat" id="riskCaveat"></div>
+  <div class="kpis" id="riskKpis"></div>
+
+  <h2>Deal-risk statistics</h2>
+  <div class="kpis" id="dealKpis"></div>
+
+  <h2>Exposure breakdowns</h2>
+  <div class="muted" style="margin-bottom:8px">Bars show % of NAV (long market value). The orange tick marks the equal-weight benchmark universe, scaled to the portfolio's invested share.</div>
+  <div class="grid2" id="breakdowns"></div>
+
+  <h2>Positions</h2>
+  <div class="card tbl"><table>
+    <thead><tr><th>Deal</th><th class="n">Weight</th><th class="n">Entry</th><th class="n">Current</th><th class="n">Spread at entry</th><th class="n">Spread now</th><th class="n">Annualized</th><th class="n">Close prob.</th><th class="n">P&amp;L contrib. (NAV pts)</th><th class="n">Days held</th><th class="n" title="Loss in % of NAV if the deal breaks and the target falls to its estimated break price">Break loss</th><th>Hedge</th></tr></thead>
+    <tbody id="posBody"></tbody><tfoot id="posFoot"></tfoot></table></div>
+
+  <h2>Methodology &amp; caveats</h2>
+  <div class="card method" id="method"></div>
+
+  <footer>Data: <a href="/portfolio.json">portfolio.json</a> holds positions, daily closing NAV, benchmark closes and the benchmark universe, refreshed once per trading day after the US close. Holdings are marked with the site's live quote feed (Yahoo Finance-backed) when available. Benchmarks are Yahoo Finance daily closes.</footer>
+</main>
+<script>
+const QUOTE_URL = "https://mergeranalyst-quote.camillosc2.workers.dev/quote?symbols=";
+const CUR = {USD:"$", EUR:"€", GBP:"£", CAD:"C$", CHF:"CHF "};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pct = (x, d=2) => x == null || isNaN(x) ? "-" : (x >= 0 ? "+" : "") + (x*100).toFixed(d) + "%";
+const num = (x, d=2) => x == null || isNaN(x) ? "-" : Number(x).toLocaleString("en-US", {minimumFractionDigits:d, maximumFractionDigits:d});
+const cls = x => x > 0 ? "pos" : x < 0 ? "neg" : "";
+function px(v, cur) {
+  if (v == null || isNaN(v)) return "-";
+  if (cur === "GBp") return num(v, v >= 100 ? 1 : 2) + "p";
+  return (CUR[cur] || (cur ? cur + " " : "$")) + num(v, v < 10 ? 3 : 2);
+}
+function daysTo(s) {
+  if (!/^\d{4}-\d\d-\d\d$/.test(s || "")) return null;
+  return Math.round((new Date(s + "T00:00:00Z") - new Date(new Date().toISOString().slice(0,10) + "T00:00:00Z")) / 864e5);
+}
+function dealValue(t, acqPx) {
+  if (t.acq && acqPx == null) return null;
+  let v = (t.cash || 0) + (t.ratio || 0) * (acqPx || 0);
+  if (t.cap != null) v = Math.min(v, t.cap);
+  if (t.floor != null) v = Math.max(v, t.floor);
+  return v;
+}
+async function liveQuotes(symbols) {
+  const out = {}, s = [...new Set(symbols.filter(Boolean))];
+  const chunks = []; for (let i = 0; i < s.length; i += 12) chunks.push(s.slice(i, i + 12));
+  await Promise.all(chunks.map(c => fetch(QUOTE_URL + encodeURIComponent(c.join(",")).replace(/%2C/g, ","))
+    .then(r => r.ok ? r.json() : {}).then(j => Object.assign(out, j.quotes || {})).catch(() => {})));
+  return out;
+}
+function fresh(q) { return q && q.price != null && (Date.now()/1000 - q.ts) < 10*86400; }
+
+const MIN_OBS = 20;                         // daily observations required before vol/Sharpe/beta/VaR/annualized are shown
+const SERIES = [
+  {key: "NAV", name: "Model portfolio", color: "#1A5FAB", w: 2.5},
+  {key: "^GSPC", name: "S&P 500", color: "#0F2044", w: 1.5},
+  {key: "MNA", name: "Merger-arb ETF (MNA)", color: "#C84B11", w: 1.5},
+  {key: "MERFX", name: "Merger fund (MERFX)", color: "#0D6B3E", w: 1.5},
+  {key: "BIL", name: "T-bills (BIL)", color: "#94A3B8", w: 1.5, dash: "5 4"},
+];
+const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
+const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)); };
+const isoMinus = (iso, days) => new Date(Date.parse(iso + "T00:00:00Z") - days * 864e5).toISOString().slice(0, 10);
+const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
+const kpi = (l, v, s, c = "") => `<div class="kpi"><div class="l">${l}</div><div class="v ${c}">${v}</div><div class="s">${s}</div></div>`;
+const gated = (v, fmt, n) => n >= MIN_OBS ? fmt(v) : `<span class="na">n/a</span><span class="prov">provisional ${v == null || isNaN(v) ? "-" : fmt(v)}</span>`;
+const quarter = s => /^\d{4}-\d\d/.test(s || "") ? `${s.slice(0, 4)} Q${Math.ceil(+s.slice(5, 7) / 3)}` : "No date";
+
+// value of a series at a date: last close on or before it
+function valAt(series, d) { let v = null; for (const [dt, x] of series) { if (dt <= d) v = x; else break; } return v; }
+
+function drawChart(dates, lines) {
+  const svg = document.getElementById("chart"), W = svg.clientWidth || 900, Hh = 260, P = {l: 46, r: 14, t: 14, b: 26};
+  const all = lines.flatMap(l => l.pts.filter(v => v != null)).concat([100]);
+  const lo = Math.min(...all), hi = Math.max(...all), pad = Math.max((hi - lo) * .12, .3), y0 = lo - pad, y1 = hi + pad, n = Math.max(dates.length - 1, 1);
+  const X = i => P.l + (W - P.l - P.r) * (dates.length === 1 ? .5 : i / n), Y = v => P.t + (Hh - P.t - P.b) * (1 - (v - y0) / (y1 - y0));
+  let g = "";
+  for (let k = 0; k <= 4; k++) { const v = y0 + (y1 - y0) * k / 4;
+    g += `<line x1="${P.l}" x2="${W - P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#E2E8F0"/><text x="${P.l - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#64748B" font-family="JetBrains Mono, monospace">${v.toFixed(1)}</text>`; }
+  g += `<line x1="${P.l}" x2="${W - P.r}" y1="${Y(100)}" y2="${Y(100)}" stroke="#94A3B8" stroke-dasharray="2 4"/>`;
+  for (const l of [...lines].reverse()) {
+    const p = l.pts.map((v, i) => v == null ? null : X(i) + "," + Y(v)).filter(Boolean);
+    if (p.length > 1) g += `<polyline fill="none" stroke="${l.color}" stroke-width="${l.w}" ${l.dash ? `stroke-dasharray="${l.dash}"` : ""} points="${p.join(" ")}"/>`;
+    l.pts.forEach((v, i) => { if (v != null) g += `<circle cx="${X(i)}" cy="${Y(v)}" r="${l.key === "NAV" ? 3 : 2}" fill="${l.color}"><title>${l.name} ${dates[i]}: ${v.toFixed(2)}</title></circle>`; });
+  }
+  [0, Math.floor((dates.length - 1) / 2), dates.length - 1].filter((v, i, a) => v >= 0 && a.indexOf(v) === i)
+    .forEach(i => { g += `<text x="${X(i)}" y="${Hh - 6}" text-anchor="middle" font-size="11" fill="#64748B">${dates[i]}</text>`; });
+  svg.setAttribute("viewBox", `0 0 ${W} ${Hh}`); svg.style.height = Hh + "px"; svg.innerHTML = g;
+  document.getElementById("legend").innerHTML = lines.map(l => `<span><i style="background:${l.color}"></i>${esc(l.name)}</span>`).join("");
+}
+
+function bars(title, rows, bmRows) {
+  const max = Math.max(...rows.map(r => r[1]), ...(bmRows ? Object.values(bmRows) : [0]), .01);
+  return `<div class="card bars"><h3>${esc(title)}</h3>` + rows.map(([lab, w, tip]) => {
+    const b = bmRows ? bmRows[lab] || 0 : null;
+    return `<div class="bar" title="${esc(tip || "")}"><span class="lab">${esc(lab)}</span><span class="trk"><span class="fill" style="width:${(w / max * 100).toFixed(1)}%"></span>` +
+      (b != null ? `<span class="bm" style="left:${Math.min(99, b / max * 100).toFixed(1)}%" title="Benchmark universe: ${(b * 100).toFixed(1)}%"></span>` : "") +
+      `</span><span class="val">${(w * 100).toFixed(1)}%</span></div>`; }).join("") + `</div>`;
+}
+function group(open, nav, keyFn, tipFn) {
+  const m = {};
+  for (const p of open) { const k = keyFn(p) || "Unknown"; (m[k] = m[k] || {w: 0, t: []}).w += p.val / nav; m[k].t.push(p.ticker); }
+  return Object.entries(m).sort((a, b) => b[1].w - a[1].w).map(([k, v]) => [k, v.w, v.t.join(", ")]);
+}
+
+async function main() {
+  const pf = await fetch("/portfolio.json?t=" + Date.now()).then(r => r.json());
+  const A = pf.analytics || {}, BM = A.benchmarks || {};
+  const hist = (pf.navHistory || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+  const inc = pf.inception, last = hist[hist.length - 1] || {date: inc, nav: pf.baseNAV};
+  const dates = [inc, ...hist.map(h => h.date).filter(d => d > inc)];
+  const navSeries = [[inc, pf.baseNAV], ...hist.filter(h => h.date > inc).map(h => [h.date, h.nav])];
+  const ser = {NAV: navSeries};
+  for (const s of SERIES) if (s.key !== "NAV" && BM[s.key]) ser[s.key] = BM[s.key].series.filter(x => x[0] <= last.date);
+  const avail = SERIES.filter(s => ser[s.key] && ser[s.key].length);
+
+  // ---- performance ----
+  const lines = avail.map(s => { const b = valAt(ser[s.key], inc); return {...s, pts: dates.map(d => { const v = valAt(ser[s.key], d); return v != null && b ? v / b * 100 : null; })}; });
+  drawChart(dates, lines);
+  const nObs = navSeries.length - 1, cal = dayDiff(inc, last.date);
+  const monthStart = last.date.slice(0, 8) + "01", mtdBase = monthStart <= inc ? inc : isoMinus(monthStart, 1), wkBase = isoMinus(last.date, 7) < inc ? inc : isoMinus(last.date, 7);
+  const perf = {};
+  for (const s of avail) {
+    const S = ser[s.key], vEnd = valAt(S, last.date), v0 = valAt(S, inc);
+    const si = vEnd / v0 - 1;
+    perf[s.key] = {si, mtd: vEnd / valAt(S, mtdBase) - 1, wk: vEnd / valAt(S, wkBase) - 1, ann: Math.pow(1 + si, 365 / Math.max(cal, 1)) - 1, last: vEnd};
+  }
+  document.getElementById("retBody").innerHTML = avail.map(s => { const r = perf[s.key];
+    return `<tr><td><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${s.color};margin-right:6px"></i>${esc(s.key === "NAV" ? s.name : (BM[s.key].name || s.name))}</td>
+      <td class="n ${cls(r.si)}">${pct(r.si)}</td><td class="n ${cls(r.mtd)}">${pct(r.mtd)}</td><td class="n ${cls(r.wk)}">${pct(r.wk)}</td>
+      <td class="n">${gated(r.ann, x => pct(x, 1), nObs)}</td><td class="n">${num(r.last)}</td></tr>`; }).join("");
+  const P0 = perf.NAV;
+  document.getElementById("perfKpis").innerHTML = [
+    kpi("NAV (last close)", num(last.nav), last.date),
+    kpi("Since inception", pct(P0.si), `${cal} calendar days, ${nObs} daily closes`, cls(P0.si)),
+    kpi("MTD", pct(P0.mtd), "month to date", cls(P0.mtd)),
+    kpi("1 week", pct(P0.wk), `vs close on or before ${wkBase}`, cls(P0.wk)),
+    kpi("Annualized", gated(P0.ann, x => pct(x, 1), nObs), "compounded from since-inception"),
+    perf["MNA"] ? kpi("vs merger-arb ETF", pct(P0.si - perf["MNA"].si), "since inception, MNA", cls(P0.si - perf["MNA"].si)) : "",
+    perf["^GSPC"] ? kpi("vs S&P 500", pct(P0.si - perf["^GSPC"].si), "since inception", cls(P0.si - perf["^GSPC"].si)) : "",
+  ].join("");
+  document.getElementById("chartNote").textContent = "All series rebased to 100 at the inception close (" + inc + "). Portfolio = recorded daily closing NAV; benchmarks = Yahoo daily closes (total-return adjusted for the ETFs and MERFX; S&P 500 price index), taken on or before each NAV date.";
+
+  // ---- risk (from daily closing NAVs) ----
+  const rets = [], spx = [];
+  for (let i = 1; i < navSeries.length; i++) {
+    const [d0, a] = navSeries[i - 1], [d1, b] = navSeries[i]; rets.push(b / a - 1);
+    if (ser["^GSPC"]) { const s0 = valAt(ser["^GSPC"], d0), s1 = valAt(ser["^GSPC"], d1); spx.push(s0 && s1 ? s1 / s0 - 1 : 0); }
+  }
+  const rfA = (A.riskFree && A.riskFree.annualPct != null ? A.riskFree.annualPct : 4) / 100, rfD = rfA / 252;
+  let vol = null, sharpe = null, sortino = null, beta = null, corr = null, var95 = null, hvar = null;
+  if (rets.length >= 2) {
+    const s = sd(rets), m = mean(rets);
+    vol = s * Math.sqrt(252); sharpe = s ? (m - rfD) / s * Math.sqrt(252) : null;
+    const dd = Math.sqrt(mean(rets.map(r => Math.min(0, r - rfD) ** 2))); sortino = dd ? (m - rfD) / dd * Math.sqrt(252) : null;
+    var95 = 1.645 * s - m;
+    const sorted = rets.slice().sort((a, b) => a - b); hvar = -sorted[Math.max(0, Math.floor(.05 * sorted.length))];
+    if (spx.length === rets.length) {
+      const ms = mean(spx), cov = rets.reduce((t, r, i) => t + (r - m) * (spx[i] - ms), 0) / (rets.length - 1), vs = sd(spx);
+      beta = vs ? cov / vs ** 2 : null; corr = vs && s ? cov / (vs * s) : null;
+    }
+  }
+  let peak = -Infinity, mdd = 0, mddAt = null;
+  for (const [d, v] of navSeries) { peak = Math.max(peak, v); const x = v / peak - 1; if (x < mdd) { mdd = x; mddAt = d; } }
+  const curDD = navSeries[navSeries.length - 1][1] / peak - 1;
+  document.getElementById("riskCaveat").innerHTML = rets.length >= MIN_OBS ? `Statistics use ${rets.length} daily NAV returns since ${inc}.` :
+    `<b>Too little history to be meaningful.</b> Only ${rets.length} daily NAV returns since ${inc} (one is a two-day gap). Volatility, Sharpe, Sortino, beta, correlation, VaR and annualized return show <b>n/a</b> until ${MIN_OBS} daily observations; the small grey figure is the provisional value for reference only.`;
+  const f2 = x => x == null || isNaN(x) ? "-" : x.toFixed(2);
+  const pp = (x, d = 2) => x == null || isNaN(x) ? "-" : (x * 100).toFixed(d) + "%";
+  document.getElementById("riskKpis").innerHTML = [
+    kpi("Volatility (ann.)", gated(vol, pp, rets.length), "stdev of daily returns x sqrt(252)"),
+    kpi("Sharpe", gated(sharpe, f2, rets.length), `rf ${pp(rfA)} (13-week T-bill)`),
+    kpi("Sortino", gated(sortino, f2, rets.length), "downside deviation vs rf"),
+    kpi("Max drawdown", pp(mdd), mddAt ? `trough ${mddAt}; now ${pp(curDD)}` : "no drawdown yet", cls(mdd)),
+    kpi("Beta to S&P 500", gated(beta, f2, rets.length), "daily returns, same dates"),
+    kpi("Correlation to S&P", gated(corr, f2, rets.length), "daily returns"),
+    kpi("1-day VaR (95%)", gated(var95, pp, rets.length), `parametric, % of NAV; historical ${rets.length >= MIN_OBS ? pp(hvar) : "n/a"}`),
+  ].join("");
+
+  // ---- holdings: live marks with last-close fallback ----
+  const open = pf.positions.filter(p => p.status === "open");
+  const q = await liveQuotes(open.flatMap(p => [p.quoteSymbol, p.terms.acq]));
+  let live = 0, longs = 0, shorts = 0;
+  for (const p of open) {
+    const lq = q[p.quoteSymbol]; p.cur = fresh(lq) ? (live++, lq.price) : (p.lastPrice ?? p.entryPrice);
+    if (p.hedge) { const aq = q[p.hedge.symbol]; p.hedge.cur = fresh(aq) ? aq.price : (p.hedge.lastPrice ?? p.hedge.entryPrice); }
+    p.dv = p.terms.acq ? dealValue(p.terms, p.hedge ? p.hedge.cur : null) : p.terms.cash;
+    longs += p.shares * p.cur; if (p.hedge) shorts += p.hedge.shares * p.hedge.cur;
+  }
+  const nav = live ? pf.cash + longs - shorts : last.nav, today = new Date().toISOString().slice(0, 10);
+  let wS = 0, wSp = 0, wAnn = 0, wAnnS = 0, wPr = 0, wPrS = 0, ev = 0, bl = 0, expLoss = 0;
+  for (const p of open) {
+    p.val = p.shares * p.cur; p.w = p.val / nav;
+    p.spr0 = p.entryDealValue / p.entryPrice - 1;
+    p.spr = p.dv != null ? (p.dv - p.cur) / p.cur : null;
+    const dc = daysTo(p.expectedClose); p.ann = p.spr != null && dc > 0 ? p.spr * 365 / dc : null;
+    p.pnl = p.shares * (p.cur - p.entryPrice) - (p.hedge ? p.hedge.shares * (p.hedge.cur - p.hedge.entryPrice) : 0);
+    p.held = dayDiff(p.entryDate, today);
+    p.bl = p.breakPrice != null ? p.shares * Math.max(0, p.cur - p.breakPrice) / nav : null;
+    const pr = p.closingProbability != null ? p.closingProbability / 100 : null;
+    if (p.spr != null) { wS += p.w; wSp += p.w * p.spr; }
+    if (p.ann != null) { wAnnS += p.w; wAnn += p.w * p.ann; }
+    if (pr != null) { wPrS += p.w; wPr += p.w * pr; }
+    if (pr != null && p.dv != null && p.bl != null) {
+      ev += pr * p.shares * (p.dv - p.cur) / nav - (1 - pr) * p.bl; expLoss += (1 - pr) * p.bl;
+    }
+    if (p.bl != null) bl += p.bl;
+  }
+  document.getElementById("sub").textContent = `${pf.inceptionLabel || "Inception " + inc}. Returns and risk use recorded daily closes through ${last.date}. ` +
+    (live ? `Positions and exposures use live marks for ${live} of ${open.length} holdings.` : "Positions use the last recorded close.");
+
+  // ---- deal-risk stats ----
+  const ws = open.map(p => p.w).sort((a, b) => b - a), lw = open.map(p => p.val / longs);
+  const hhi = lw.reduce((s, x) => s + x * x, 0);
+  const uni = (A.universe && A.universe.deals) || [], N = uni.length;
+  let as = null;
+  if (N) {
+    const wb = 1 / N, uniSet = new Set(uni.map(u => u.ticker.toUpperCase())), held = new Map(open.map(p => [p.dealKey.toUpperCase(), p.val / longs]));
+    as = 0; for (const t of uniSet) as += Math.abs((held.get(t) || 0) - wb);
+    for (const [t, w] of held) if (!uniSet.has(t)) as += w;
+    as /= 2;
+  }
+  document.getElementById("dealKpis").innerHTML = [
+    kpi("Wtd. avg spread", pp(wS ? wSp / wS : null), "gross spread to deal value"),
+    kpi("Wtd. annualized", pp(wAnnS ? wAnn / wAnnS : null, 1), `${pp(wAnn, 1)} on total NAV incl. cash`),
+    kpi("Wtd. close probability", pp(wPrS ? wPr / wPrS : null, 0), "site's deal-level estimate"),
+    kpi("Expected value", pp(ev), `prob-weighted, % NAV; expected break cost ${pp(expLoss)}`, cls(ev)),
+    kpi("Total break loss", pp(bl, 1), `if every deal broke; EV / break loss ${bl ? (ev / bl).toFixed(2) : "-"}x`),
+    kpi("Active share", as == null ? "-" : pp(as, 1), `vs equal-weight universe of ${N} live deals`),
+    kpi("Top 5 weight", pp(ws.slice(0, 5).reduce((s, x) => s + x, 0), 1), "% of NAV"),
+    kpi("HHI", Math.round(hhi * 10000).toLocaleString(), `long book; effective N ${(1 / hhi).toFixed(1)} names`),
+    kpi("Gross / net", `${(100 * (longs + shorts) / nav).toFixed(0)}% / ${(100 * (longs - shorts) / nav).toFixed(0)}%`, `${pp(shorts / nav, 1)} short hedges`),
+    kpi("Cash", pp(1 - longs / nav, 1), "of NAV, unallocated"),
+  ].join("");
+
+  // ---- breakdowns ----
+  const inv = longs / nav, bmShare = key => { const m = {}; for (const u of uni) m[u[key]] = (m[u[key]] || 0) + inv / N; return m; };
+  const hedgeLab = p => p.hedge ? `${p.dealType || "Cash + stock"} · hedged` : /stock/i.test(p.dealType || "") ? `${p.dealType} · unhedged` : (p.dealType || "Cash");
+  document.getElementById("breakdowns").innerHTML = [
+    bars("Region", group(open, nav, p => p.region), N ? bmShare("region") : null),
+    bars("Country (target)", group(open, nav, p => p.country)),
+    bars("Sector", group(open, nav, p => p.sector), N ? bmShare("sector") : null),
+    bars("Primary regulator / jurisdiction", group(open, nav, p => p.regulator)),
+    bars("Consideration & hedge", group(open, nav, hedgeLab)),
+    bars("Expected close quarter", group(open, nav, p => quarter(p.expectedClose)).sort((a, b) => a[0] < b[0] ? -1 : 1)),
+  ].join("");
+
+  // ---- positions ----
+  open.sort((a, b) => b.w - a.w);
+  document.getElementById("posBody").innerHTML = open.map(p => `<tr>
+    <td><span class="tk">${esc(p.ticker)}</span> <span class="acq">${esc(p.target)}</span><div class="muted">${esc(p.country || "")} · ${esc(p.sector || "")} · ${esc(p.regulator || "")}</div></td>
+    <td class="n">${pp(p.w, 1)}</td><td class="n">${px(p.entryPrice, p.currency)}</td><td class="n">${px(p.cur, p.currency)}</td>
+    <td class="n">${pp(p.spr0)}</td><td class="n ${p.spr != null && p.spr < p.spr0 ? "pos" : ""}">${pp(p.spr)}</td><td class="n">${pp(p.ann, 1)}</td>
+    <td class="n">${p.closingProbability != null ? p.closingProbability + "%" : "-"}</td>
+    <td class="n ${cls(p.pnl)}">${(p.pnl >= 0 ? "+" : "") + num(p.pnl, 3)}</td><td class="n">${p.held}</td>
+    <td class="n" title="${esc(p.breakPrice != null ? "Break price " + p.breakPrice + " (" + (p.breakBasis || "") + ")" : "")}">${pp(p.bl, 1)}</td>
+    <td class="dt">${p.hedge ? `Short ${num(p.hedge.shares, 4)} ${esc(p.hedge.symbol)}` : /stock/i.test(p.dealType || "") ? '<span class="muted">unhedged (fixed $ stock leg)</span>' : '<span class="muted">none (cash)</span>'}</td></tr>`).join("");
+  const pnlTot = open.reduce((s, p) => s + p.pnl, 0);
+  document.getElementById("posFoot").innerHTML = `<tr><td>${open.length} positions</td><td class="n">${pp(longs / nav, 1)}</td><td></td><td></td><td></td><td class="n">${pp(wS ? wSp / wS : null)}</td><td class="n">${pp(wAnnS ? wAnn / wAnnS : null, 1)}</td><td class="n">${pp(wPrS ? wPr / wPrS : null, 0)}</td><td class="n ${cls(pnlTot)}">${(pnlTot >= 0 ? "+" : "") + num(pnlTot, 3)}</td><td></td><td class="n">${pp(bl, 1)}</td><td></td></tr>`;
+
+  // ---- methodology ----
+  document.getElementById("method").innerHTML = `<ul>
+    <li><b>Small sample.</b> The portfolio started on ${esc(inc)}. With ${rets.length} daily returns, risk statistics and annualized figures aren't statistically meaningful. They show n/a until ${MIN_OBS} daily closes exist, and even then remain noisy for a year or more. One daily close (Nov 6) was not recorded, so one return spans two sessions.</li>
+    <li><b>Returns</b> are based on NAV (cash + longs − short hedges) at the recorded daily closes, base ${pf.baseNAV}. Paper trades only: there are no fees, financing, borrow costs, dividends on shorts, FX or slippage. Local-currency returns assume FX is hedged.</li>
+    <li><b>Benchmarks.</b> S&amp;P 500 is the price index (^GSPC). Merger-arb proxies are the IQ Merger Arbitrage ETF (MNA) and The Merger Fund (MERFX), using total-return adjusted closes; no free daily HFRI Merger Arbitrage series exists. Cash is the SPDR 1-3 Month T-Bill ETF (BIL). The risk-free rate is the 13-week T-bill yield (^IRX, ${pp(rfA)}).</li>
+    <li><b>Risk.</b> Volatility is the annualized standard deviation of daily returns. Sharpe and Sortino are annualized and use the daily risk-free rate. Beta and correlation use daily S&amp;P 500 returns over the same dates. VaR (95%, 1-day) is parametric (1.645σ − μ), with the historical 5th percentile shown alongside. Max drawdown is measured on daily closing NAV.</li>
+    <li><b>Active share</b> = ½ Σ |w<sub>portfolio</sub> − w<sub>benchmark</sub>| over long weights. The benchmark is an equal weight across every active (pending, signed) US, UK or European deal on the site (${N} deals at last refresh). The site doesn't use ETF holdings data, because free constituent files aren't reliably available.</li>
+    <li><b>Deal-risk stats.</b> Spreads are to current deal value. Annualized = spread × 365 / days to the expected close. Close probability is the site's deal-level estimate. Break loss assumes the target falls to its undisturbed pre-announcement close (or a 25% default) and ignores hedge P&amp;L. Expected value = Σ [p × upside − (1 − p) × break loss], in % of NAV. HHI is computed on long-book weights.</li>
+    <li><b>Classifications.</b> Country is the target's primary country. Sectors are GICS-style groupings mapped from the deal's industry description. "Primary regulator / jurisdiction" is the main gating approval regime (for example bank regulators, US antitrust, or the UK/Irish Takeover Code). These are simplified labels, not a full list of required approvals.</li>
+  </ul>`;
+}
+main().catch(e => { document.getElementById("sub").textContent = "Could not load portfolio data: " + e.message; });
+
+</script>
+</body>
+</html>
