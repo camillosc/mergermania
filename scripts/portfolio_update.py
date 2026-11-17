@@ -225,6 +225,27 @@ def yahoo_series(sym, start, field='adjclose'):
     except Exception as e:
         sys.stderr.write(f'benchmark {sym}: {e}\n'); return []
 
+def adv20(sym):
+    """20-session average daily volume (shares) and average close, from Yahoo daily history."""
+    url = f'https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?range=3mo&interval=1d'
+    try:
+        res = json.loads(subprocess.run(['curl', '-s', '--max-time', '20', '-A', 'Mozilla/5.0', url], capture_output=True, text=True).stdout)['chart']['result'][0]
+        q = res['indicators']['quote'][0]
+        pts = [(v, c) for v, c in zip(q['volume'], q['close']) if v and c][-20:]
+        return {'shares': round(sum(v for v, _ in pts) / len(pts)), 'avgClose': round(sum(c for _, c in pts) / len(pts), 4), 'sessions': len(pts)} if pts else None
+    except Exception:
+        return None
+
+def deal_info(row):
+    cm = str(row.get('comment') or '')
+    latest = re.split(r'\n(?=\(\d{4}-\d\d-\d\d\)|\[\d{4}-\d\d-\d\d)', cm)[0].strip()
+    return {k: v for k, v in {
+        'dealTerms': str(row.get('dealTerms') or '')[:900], 'description': str(row.get('description') or '')[:600] or None,
+        'statusNote': row.get('spreadNote'), 'latestNote': latest[:700] or None, 'regulatorySteps': row.get('regulatorySteps'),
+        'milestones': row.get('milestones'), 'dealRisk': row.get('dealRisk'), 'otherBidders': row.get('otherBidders'),
+        'feesDetail': row.get('fees'), 'breakupFee': row.get('breakupFee'), 'dealSize': row.get('dealSize'),
+        'dealCurrency': row.get('dealCurrency'), 'sourceUrl': row.get('sourceUrl'), 'industry': row.get('industry'), 'geo': row.get('geo')}.items() if v not in (None, '', [])}
+
 def build_analytics(pf, deals):
     inc = pf['inception']
     for p in pf['positions']:
@@ -233,17 +254,25 @@ def build_analytics(pf, deals):
             p.update(classify(row, p))
             p['closingProbability'] = row.get('closingProbability')
             p['announced'] = row.get('announced')
+            if p['status'] == 'open': p['deal'] = deal_info(row)
+        if p['status'] == 'open':
+            a = adv20(p['quoteSymbol'])
+            if a: p['adv20'] = a
     bm = {}
     for sym, name, field in BENCHMARKS:
         s = yahoo_series(sym, inc, field)
         base = [x for x in s if x[0] <= inc]
         if s: bm[sym] = {'name': name, 'series': ([base[-1]] if base else []) + [x for x in s if x[0] > inc]}
     irx = yahoo_series('^IRX', inc, 'close')
+    fx = {}
+    for cur, sym in (('GBP', 'GBPUSD=X'), ('EUR', 'EURUSD=X'), ('CAD', 'CADUSD=X')):
+        s = yahoo_series(sym, (datetime.now(timezone.utc) - timedelta(days=10)).date().isoformat(), 'close')
+        if s: fx[cur] = s[-1][1]
     uni = []
     for d in deals:
         if d.get('status') != 'pending' or d.get('category') != 'active_deal' or region(d) not in ('us', 'uk', 'eu') or not d.get('targetTicker'): continue
         c = classify(d); uni.append({'ticker': d['targetTicker'], 'region': c['region'], 'sector': c['sector']})
-    pf['analytics'] = {'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), 'benchmarks': bm,
+    pf['analytics'] = {'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), 'benchmarks': bm, 'fxUsd': fx, 'notionalAum': 100_000_000,
                        'riskFree': {'symbol': '^IRX', 'name': '13-week T-bill yield', 'annualPct': irx[-1][1] if irx else None, 'date': irx[-1][0] if irx else None},
                        'universe': {'definition': 'Equal-weight benchmark: every active (pending, signed) deal on the site with a US, UK or European target', 'deals': uni}}
 
