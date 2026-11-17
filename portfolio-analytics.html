@@ -173,6 +173,7 @@ const isoMinus = (iso, days) => new Date(Date.parse(iso + "T00:00:00Z") - days *
 const dayDiff = (a, b) => Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5);
 const kpi = (l, v, s, c = "") => `<div class="kpi"><div class="l">${l}</div><div class="v ${c}">${v}</div><div class="s">${s}</div></div>`;
 const gated = (v, fmt, n) => n >= MIN_OBS ? fmt(v) : `<span class="na">n/a</span><span class="prov">provisional ${v == null || isNaN(v) ? "-" : fmt(v)}</span>`;
+const gatedAnn = (v, n) => n >= MIN_OBS ? pct(v, 1) : `<span class="na">n/a</span><span class="prov">needs ${MIN_OBS}+ daily closes</span>`;
 const quarter = s => /^\d{4}-\d\d/.test(s || "") ? `${s.slice(0, 4)} Q${Math.ceil(+s.slice(5, 7) / 3)}` : "No date";
 
 // value of a series at a date: last close on or before it
@@ -237,14 +238,14 @@ async function main() {
   document.getElementById("retBody").innerHTML = avail.map(s => { const r = perf[s.key];
     return `<tr><td><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${s.color};margin-right:6px"></i>${esc(s.key === "NAV" ? s.name : (BM[s.key].name || s.name))}</td>
       <td class="n ${cls(r.si)}">${pct(r.si)}</td><td class="n ${cls(r.mtd)}">${pct(r.mtd)}</td><td class="n ${cls(r.wk)}">${pct(r.wk)}</td>
-      <td class="n">${gated(r.ann, x => pct(x, 1), nObs)}</td><td class="n">${num(r.last)}</td></tr>`; }).join("");
+      <td class="n">${gatedAnn(r.ann, nObs)}</td><td class="n">${num(r.last)}</td></tr>`; }).join("");
   const P0 = perf.NAV;
   document.getElementById("perfKpis").innerHTML = [
     kpi("NAV (last close)", num(last.nav), last.date),
     kpi("Since inception", pct(P0.si), `${cal} calendar days, ${nObs} daily closes`, cls(P0.si)),
     kpi("MTD", pct(P0.mtd), "month to date", cls(P0.mtd)),
     kpi("1 week", pct(P0.wk), `vs close on or before ${wkBase}`, cls(P0.wk)),
-    kpi("Annualized", gated(P0.ann, x => pct(x, 1), nObs), "compounded from since-inception"),
+    kpi("Annualized", gatedAnn(P0.ann, nObs), "compounded from since-inception"),
     perf["MNA"] ? kpi("vs merger-arb ETF", pct(P0.si - perf["MNA"].si), "since inception, MNA", cls(P0.si - perf["MNA"].si)) : "",
     perf["^GSPC"] ? kpi("vs S&P 500", pct(P0.si - perf["^GSPC"].si), "since inception", cls(P0.si - perf["^GSPC"].si)) : "",
   ].join("");
@@ -273,7 +274,7 @@ async function main() {
   for (const [d, v] of navSeries) { peak = Math.max(peak, v); const x = v / peak - 1; if (x < mdd) { mdd = x; mddAt = d; } }
   const curDD = navSeries[navSeries.length - 1][1] / peak - 1;
   document.getElementById("riskCaveat").innerHTML = rets.length >= MIN_OBS ? `Statistics use ${rets.length} daily NAV returns since ${inc}.` :
-    `<b>Too little history to be meaningful.</b> Only ${rets.length} daily NAV returns since ${inc} (one is a two-day gap). Volatility, Sharpe, Sortino, beta, correlation, VaR and annualized return show <b>n/a</b> until ${MIN_OBS} daily observations; the small grey figure is the provisional value for reference only.`;
+    `<b>Too little history to be meaningful.</b> Only ${rets.length} daily NAV returns since ${inc} (one is a two-day gap). Volatility, Sharpe, Sortino, beta, correlation, VaR and annualized returns show <b>n/a</b> until ${MIN_OBS} daily observations. For risk statistics, the small grey figure is the provisional value, for reference only.`;
   const f2 = x => x == null || isNaN(x) ? "-" : x.toFixed(2);
   const pp = (x, d = 2) => x == null || isNaN(x) ? "-" : (x * 100).toFixed(d) + "%";
   document.getElementById("riskKpis").innerHTML = [
