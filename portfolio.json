@@ -132,7 +132,14 @@
    "breakPrice": 8.36,
    "downside": 0.186,
    "breakBasis": "undisturbed close 2026-10-26",
-   "breakLoss": 0.01241
+   "breakLoss": 0.01241,
+   "country": "United States",
+   "region": "US",
+   "sector": "Financials",
+   "regulator": "SEC / BDC shareholder votes",
+   "dealType": "Cash + stock (fixed $)",
+   "closingProbability": 90,
+   "announced": "2026-10-27"
   },
   {
    "ticker": "BLHK",
@@ -172,7 +179,14 @@
    "breakPrice": 39.7,
    "downside": 0.1814,
    "breakBasis": "undisturbed close 2026-10-05",
-   "breakLoss": 0.01426
+   "breakLoss": 0.01426,
+   "country": "United States",
+   "region": "US",
+   "sector": "Financials",
+   "regulator": "US bank regulators (Fed/OCC/FDIC)",
+   "dealType": "Cash + stock",
+   "closingProbability": 92,
+   "announced": "2026-10-06"
   },
   {
    "ticker": "OTTW",
@@ -206,7 +220,14 @@
    "breakPrice": 15.9,
    "downside": 0.1783,
    "breakBasis": "undisturbed close 2026-08-19",
-   "breakLoss": 0.01234
+   "breakLoss": 0.01234,
+   "country": "United States",
+   "region": "US",
+   "sector": "Financials",
+   "regulator": "US bank regulators (Fed/OCC/FDIC)",
+   "dealType": "Cash",
+   "closingProbability": 85,
+   "announced": "2026-08-20"
   },
   {
    "ticker": "SYNA",
@@ -240,7 +261,14 @@
    "breakPrice": 87.9375,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01817
+   "breakLoss": 0.01817,
+   "country": "United States",
+   "region": "US",
+   "sector": "Information Technology",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash",
+   "closingProbability": 82,
+   "announced": "2026-06-25"
   },
   {
    "ticker": "SLAB",
@@ -274,7 +302,14 @@
    "breakPrice": 136.62,
    "downside": 0.384,
    "breakBasis": "undisturbed close 2026-02-03",
-   "breakLoss": 0.02683
+   "breakLoss": 0.02683,
+   "country": "United States",
+   "region": "US",
+   "sector": "Information Technology",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash",
+   "closingProbability": 75,
+   "announced": "2026-02-04"
   },
   {
    "ticker": "PTC",
@@ -309,7 +344,14 @@
    "breakPrice": 144.03,
    "downside": 0.2647,
    "breakBasis": "undisturbed close 2026-10-02",
-   "breakLoss": 0.0187
+   "breakLoss": 0.0187,
+   "country": "United States",
+   "region": "US",
+   "sector": "Information Technology",
+   "regulator": "US antitrust (HSR) + foreign/CFIUS",
+   "dealType": "Cash",
+   "closingProbability": 80,
+   "announced": "2026-10-05"
   },
   {
    "ticker": "ULBI",
@@ -344,7 +386,14 @@
    "downside": 0.617,
    "breakBasis": "undisturbed close 2026-10-26",
    "breakLoss": 0.01857,
-   "realizedPnl": 0.015413
+   "realizedPnl": 0.015413,
+   "country": "United States",
+   "region": "US",
+   "sector": "Industrials",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash",
+   "closingProbability": 92,
+   "announced": "2026-10-27"
   },
   {
    "ticker": "VREX",
@@ -378,7 +427,14 @@
    "breakPrice": 12.41,
    "downside": 0.3274,
    "breakBasis": "undisturbed close 2026-08-07",
-   "breakLoss": 0.02161
+   "breakLoss": 0.02161,
+   "country": "United States",
+   "region": "US",
+   "sector": "Health Care",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash",
+   "closingProbability": 88,
+   "announced": "2026-08-10"
   },
   {
    "ticker": "GAMA.L",
@@ -412,7 +468,14 @@
    "breakPrice": 726.0,
    "downside": 0.3388,
    "breakBasis": "undisturbed close 2026-04-02",
-   "breakLoss": 0.02381
+   "breakLoss": 0.02381,
+   "country": "United Kingdom",
+   "region": "UK",
+   "sector": "Communication Services",
+   "regulator": "UK/Irish Takeover Code (court scheme)",
+   "dealType": "Cash",
+   "closingProbability": 90,
+   "announced": "2026-04-07"
   },
   {
    "ticker": "BOY.L",
@@ -446,7 +509,14 @@
    "breakPrice": 688.125,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01766
+   "breakLoss": 0.01766,
+   "country": "United Kingdom",
+   "region": "UK",
+   "sector": "Industrials",
+   "regulator": "UK/Irish Takeover Code (court scheme)",
+   "dealType": "Cash",
+   "closingProbability": 90,
+   "announced": "2026-09-01"
   },
   {
    "ticker": "PTSB.I",
@@ -480,7 +550,14 @@
    "breakPrice": 2.205,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01768
+   "breakLoss": 0.01768,
+   "country": "Ireland",
+   "region": "Europe ex-UK",
+   "sector": "Financials",
+   "regulator": "ECB / Central Bank of Ireland",
+   "dealType": "Cash",
+   "closingProbability": 92,
+   "announced": "2026-04-14"
   },
   {
    "ticker": "ADT",
@@ -514,7 +591,14 @@
    "breakPrice": 7.41,
    "downside": 0.2538,
    "breakBasis": "undisturbed close 2026-10-28",
-   "breakLoss": 0.01763
+   "breakLoss": 0.01763,
+   "country": "United States",
+   "region": "US",
+   "sector": "Consumer Discretionary",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash",
+   "closingProbability": 88,
+   "announced": "2026-10-29"
   },
   {
    "ticker": "SLN",
@@ -550,7 +634,14 @@
    "downside": 0.5605,
    "breakBasis": "undisturbed close 2026-10-16",
    "breakLoss": 0.0176,
-   "realizedPnl": 0.005915
+   "realizedPnl": 0.005915,
+   "country": "United Kingdom",
+   "region": "UK",
+   "sector": "Health Care",
+   "regulator": "UK/Irish Takeover Code (court scheme)",
+   "dealType": "Cash",
+   "closingProbability": 90,
+   "announced": "2026-10-19"
   },
   {
    "ticker": "CHMI",
@@ -591,7 +682,14 @@
    "dealValueNow": 2.210334,
    "exitDate": "2026-11-12",
    "exitPrice": 2.22,
-   "realizedPnl": 0.0
+   "realizedPnl": 0.0,
+   "country": "United States",
+   "region": "US",
+   "sector": "Financials",
+   "regulator": "US antitrust (HSR)",
+   "dealType": "Cash + stock",
+   "closingProbability": 85,
+   "announced": "2026-08-10"
   }
  ],
  "trades": [
@@ -846,5 +944,871 @@
    "open": 13
   }
  ],
- "asOf": "2026-11-16 17:32 UTC"
+ "asOf": "2026-11-16 17:32 UTC",
+ "analytics": {
+  "updated": "2026-11-17 20:27 UTC",
+  "benchmarks": {
+   "^GSPC": {
+    "name": "S&P 500",
+    "series": [
+     [
+      "2026-11-05",
+      7353.73
+     ],
+     [
+      "2026-11-06",
+      7376.8599
+     ],
+     [
+      "2026-11-09",
+      7549.9399
+     ],
+     [
+      "2026-11-10",
+      7520.9302
+     ],
+     [
+      "2026-11-11",
+      7619.3799
+     ],
+     [
+      "2026-11-12",
+      7592.3999
+     ],
+     [
+      "2026-11-13",
+      7561.6699
+     ],
+     [
+      "2026-11-16",
+      7416.5898
+     ],
+     [
+      "2026-11-17",
+      7321.71
+     ]
+    ]
+   },
+   "MNA": {
+    "name": "IQ Merger Arbitrage ETF (MNA)",
+    "series": [
+     [
+      "2026-11-05",
+      36.69
+     ],
+     [
+      "2026-11-06",
+      36.75
+     ],
+     [
+      "2026-11-09",
+      36.86
+     ],
+     [
+      "2026-11-10",
+      36.85
+     ],
+     [
+      "2026-11-11",
+      36.76
+     ],
+     [
+      "2026-11-12",
+      36.78
+     ],
+     [
+      "2026-11-13",
+      36.78
+     ],
+     [
+      "2026-11-16",
+      36.71
+     ],
+     [
+      "2026-11-17",
+      36.62
+     ]
+    ]
+   },
+   "MERFX": {
+    "name": "The Merger Fund (MERFX)",
+    "series": [
+     [
+      "2026-11-05",
+      17.65
+     ],
+     [
+      "2026-11-06",
+      17.67
+     ],
+     [
+      "2026-11-09",
+      17.68
+     ],
+     [
+      "2026-11-10",
+      17.68
+     ],
+     [
+      "2026-11-11",
+      17.69
+     ],
+     [
+      "2026-11-12",
+      17.69
+     ],
+     [
+      "2026-11-13",
+      17.66
+     ],
+     [
+      "2026-11-16",
+      17.64
+     ]
+    ]
+   },
+   "BIL": {
+    "name": "T-bills (BIL, 1-3m)",
+    "series": [
+     [
+      "2026-11-05",
+      91.43
+     ],
+     [
+      "2026-11-06",
+      91.46
+     ],
+     [
+      "2026-11-09",
+      91.48
+     ],
+     [
+      "2026-11-10",
+      91.49
+     ],
+     [
+      "2026-11-11",
+      91.5
+     ],
+     [
+      "2026-11-12",
+      91.5
+     ],
+     [
+      "2026-11-13",
+      91.53
+     ],
+     [
+      "2026-11-16",
+      91.55
+     ],
+     [
+      "2026-11-17",
+      91.55
+     ]
+    ]
+   }
+  },
+  "riskFree": {
+   "symbol": "^IRX",
+   "name": "13-week T-bill yield",
+   "annualPct": 4.138,
+   "date": "2026-11-17"
+  },
+  "universe": {
+   "definition": "Equal-weight benchmark: every active (pending, signed) deal on the site with a US, UK or European target",
+   "deals": [
+    {
+     "ticker": "private",
+     "region": "Europe ex-UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "private",
+     "region": "UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "ITGR",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "QGEN",
+     "region": "Europe ex-UK",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "AONC",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "SLN",
+     "region": "UK",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "REC (BIT)",
+     "region": "Europe ex-UK",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "CCC",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "PCRX",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "UK",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "BLHK",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "OPCH",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "RXO",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "PTC",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "SANG",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "VSVS.L",
+     "region": "UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "BOY.L",
+     "region": "UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "private",
+     "region": "Europe ex-UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "BOW",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "HOWL",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "OTTW",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "HHS",
+     "region": "US",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "private",
+     "region": "Europe ex-UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "BRBS",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "FULC",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "CHMI",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "DV",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "LXFR",
+     "region": "UK",
+     "sector": "Materials"
+    },
+    {
+     "ticker": "ARX",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "BWMN",
+     "region": "US",
+     "sector": "Other"
+    },
+    {
+     "ticker": "VREX",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "PSNL",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "MTO.L",
+     "region": "UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "PLTH",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "DSGR",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "TCBK",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "IRDM",
+     "region": "US",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Real Estate"
+    },
+    {
+     "ticker": "SYNA",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "PASG",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "RFX.L",
+     "region": "UK",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "HUN",
+     "region": "US",
+     "sector": "Materials"
+    },
+    {
+     "ticker": "PAYO",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "ETN",
+     "region": "US",
+     "sector": "Other"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "LCII",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "NSC",
+     "region": "US",
+     "sector": "Other"
+    },
+    {
+     "ticker": "PEN",
+     "region": "US",
+     "sector": "Other"
+    },
+    {
+     "ticker": "ALLFG.AS",
+     "region": "Europe ex-UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "TECK-B.TO",
+     "region": "US",
+     "sector": "Materials"
+    },
+    {
+     "ticker": "CBK.DE",
+     "region": "Europe ex-UK",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "UNF",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "AES",
+     "region": "US",
+     "sector": "Utilities"
+    },
+    {
+     "ticker": "CZR",
+     "region": "US",
+     "sector": "Other"
+    },
+    {
+     "ticker": "EQH",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "OGN",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "GSAT",
+     "region": "US",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "HZO",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "FLEX",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "CSR",
+     "region": "US",
+     "sector": "Real Estate"
+    },
+    {
+     "ticker": "AXTA",
+     "region": "US",
+     "sector": "Materials"
+    },
+    {
+     "ticker": "BHF",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "WTRG",
+     "region": "US",
+     "sector": "Utilities"
+    },
+    {
+     "ticker": "IHS",
+     "region": "US",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "NATL",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "NWE",
+     "region": "US",
+     "sector": "Utilities"
+    },
+    {
+     "ticker": "SLAB",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "TXNM",
+     "region": "US",
+     "sector": "Utilities"
+    },
+    {
+     "ticker": "VAL",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "VECO",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "MKC",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "ITRK.L",
+     "region": "UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "SFR FP",
+     "region": "Europe ex-UK",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "FRVIA FP",
+     "region": "Europe ex-UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "Private",
+     "region": "Europe ex-UK",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "GPRO",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "GAMA.L",
+     "region": "UK",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "D",
+     "region": "US",
+     "sector": "Utilities"
+    },
+    {
+     "ticker": "TATE.L",
+     "region": "UK",
+     "sector": "Consumer Staples"
+    },
+    {
+     "ticker": "PSBQ",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "INM",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "DHER.DE",
+     "region": "Europe ex-UK",
+     "sector": "Consumer Staples"
+    },
+    {
+     "ticker": "LNTH",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "EZJ.L",
+     "region": "UK",
+     "sector": "Other"
+    },
+    {
+     "ticker": "WAFD",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "BWIN",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "MG",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "BMPS.MI",
+     "region": "Europe ex-UK",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "TECH",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "MKTX",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "DVN",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "GETY",
+     "region": "US",
+     "sector": "Communication Services"
+    },
+    {
+     "ticker": "BMBL",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "PAG",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "SLYG.DE",
+     "region": "Europe ex-UK",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "VRNS",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "BRZE",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "AT.L",
+     "region": "UK",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "PTSB.I",
+     "region": "Europe ex-UK",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "RRC",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "SGRY",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "MFIC",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "CART",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "ULBI",
+     "region": "US",
+     "sector": "Industrials"
+    },
+    {
+     "ticker": "private",
+     "region": "UK",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "LITE",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "ADT",
+     "region": "US",
+     "sector": "Consumer Discretionary"
+    },
+    {
+     "ticker": "CNE.L",
+     "region": "UK",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "SHLS",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "EGTX",
+     "region": "Europe ex-UK",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "Europe ex-UK",
+     "sector": "Information Technology"
+    },
+    {
+     "ticker": "IRES.IR",
+     "region": "Europe ex-UK",
+     "sector": "Real Estate"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "TRMK",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "ICMB",
+     "region": "US",
+     "sector": "Financials"
+    },
+    {
+     "ticker": "RPID",
+     "region": "US",
+     "sector": "Health Care"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Energy"
+    },
+    {
+     "ticker": "private",
+     "region": "US",
+     "sector": "Health Care"
+    }
+   ]
+  }
+ }
 }
