@@ -446,9 +446,9 @@ async function main() {
   const attrDims = [["Geography", p => p.region || p.country], ["Sector", p => p.sector], ["Deal type & hedge", p => p.hedge || /stock/i.test(p.dealType || "") ? hedgeLab(p) : (p.dealType || "Cash")]];
   document.getElementById("attrTables").innerHTML = attrDims.map(([t, fn]) => {
     const g = group(contrib, fn, x => x.c), gw = Object.fromEntries(group(contrib, fn, x => x.wt).map(x => [x.k, x.w]));
-    return `<div class="card tbl"><table><thead><tr><th>${t}</th><th class="n">Weight</th><th class="n">Contribution</th><th class="n">Share</th></tr></thead><tbody>` +
-      g.map(x => `<tr><td>${esc(x.k)}<div class="muted">${esc(x.t.join(", "))}</div></td><td class="n">${pp(gw[x.k], 1)}</td><td class="n ${cls(x.w)}">${bp(x.w * 1e4)}</td><td class="n">${totC ? (x.w / totC * 100).toFixed(0) + "%" : "-"}</td></tr>`).join("") +
-      `</tbody><tfoot><tr><td>Total</td><td class="n">${pp(W, 1)}</td><td class="n ${cls(totC)}">${bp(totC * 1e4)}</td><td></td></tr></tfoot></table></div>`; }).join("");
+    return `<div class="card tbl"><table><thead><tr><th>${t}</th><th class="n">Weight</th><th class="n">Contribution</th></tr></thead><tbody>` +
+      g.map(x => `<tr><td>${esc(x.k)}<div class="muted">${esc(x.t.join(", "))}</div></td><td class="n">${pp(gw[x.k], 1)}</td><td class="n ${cls(x.w)}">${bp(x.w * 1e4)}</td></tr>`).join("") +
+      `</tbody><tfoot><tr><td>Total</td><td class="n">${pp(W, 1)}</td><td class="n ${cls(totC)}">${bp(totC * 1e4)}</td></tr></tfoot></table></div>`; }).join("");
 
   // ===== trades & history =====
   const tradesSorted = (pf.trades || []).map((t, i) => ({...t, i})).sort((a, b) => a.date === b.date ? b.i - a.i : (a.date < b.date ? 1 : -1));
