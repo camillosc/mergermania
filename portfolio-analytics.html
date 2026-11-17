@@ -405,7 +405,13 @@ const DIMS = {
   quarter: {label: "Close quarter", fn: p => quarter(p.expectedClose)},
 };
 const charts = {};
-function chart(id) { if (!charts[id]) charts[id] = echarts.init($(id), null, {renderer: "canvas"}); return charts[id]; }
+function initChart(el) {
+  const w = el.clientWidth, h = el.clientHeight;
+  const c = echarts.init(el, null, w && h ? {} : {width: w || (el.parentElement && el.parentElement.clientWidth) || 320, height: h || 300});
+  if (window.ResizeObserver) new ResizeObserver(() => { if (el.clientWidth && el.clientHeight && !c.isDisposed()) c.resize(); }).observe(el);
+  return c;
+}
+function chart(id) { if (!charts[id]) charts[id] = initChart($(id)); return charts[id]; }
 const AX = {axisLine: {lineStyle: {color: "#CDD3DC"}}, axisLabel: {color: "#6B7280", fontSize: 11}, splitLine: {lineStyle: {color: "#EEF0F3"}}};
 const TT = {backgroundColor: "#fff", borderColor: "#CDD3DC", textStyle: {color: "#111827", fontSize: 12}, extraCssText: "box-shadow:0 6px 18px rgba(16,24,40,.12);border-radius:8px;"};
 const S = {filter: null, alloc: "country", range: "SI", bench: new Set(SER.filter(s => s.on).map(s => s.key)), sort: {k: "w", d: -1}, q: "", fRegion: "", fSector: "", fType: "", minW: 0, open: new Set(), deal: null};
@@ -870,7 +876,7 @@ function renderDeal() {
   const h = p.spreadHist || [];
   if (h.length > 1) {
     if (charts.cDealSpread) charts.cDealSpread.dispose();
-    const c = charts.cDealSpread = echarts.init($("cDealSpread"));
+    const c = charts.cDealSpread = initChart($("cDealSpread"));
     const ei = h.findIndex(x => x[0] >= p.entryDate);
     c.setOption({animationDuration: 300, grid: {left: 44, right: 10, top: 10, bottom: 24}, tooltip: {...TT, trigger: "axis", valueFormatter: v => v.toFixed(2) + "%"},
       xAxis: {type: "category", data: h.map(x => x[0]), boundaryGap: false, ...AX, axisLabel: {...AX.axisLabel, formatter: v => fmtDate(v).replace(/, \d{4}$/, "")}},
