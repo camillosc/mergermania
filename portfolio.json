@@ -120,7 +120,7 @@
    "expectedClose": "2027-06-30",
    "rationale": "Ares Capital (largest US BDC) buying MFIC for $10.88/share ($1.21 cash + $9.67 of ARCC stock, priced at the greater of ARCC NAV or market). Strategic, well-capitalised buyer; both boards unanimous, Apollo affiliates support; no antitrust overlap. The stock leg is a fixed dollar amount converted at closing, so there is no static share hedge.",
    "status": "open",
-   "lastPrice": 10.07,
+   "lastPrice": 10.1,
    "dealValueNow": 10.88,
    "fees": {
     "reversePct": null,
@@ -132,7 +132,7 @@
    "breakPrice": 8.36,
    "downside": 0.186,
    "breakBasis": "undisturbed close 2026-10-26",
-   "breakLoss": 0.01168,
+   "breakLoss": 0.01187,
    "country": "United States",
    "region": "US",
    "sector": "Financials",
@@ -173,8 +173,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 1169165,
-    "avgClose": 10.186,
+    "shares": 1028455,
+    "avgClose": 10.179,
     "sessions": 20
    },
    "timeline": [
@@ -274,6 +274,10 @@
     [
      "2026-11-24",
      0.08044
+    ],
+    [
+     "2026-11-25",
+     0.07723
     ]
    ]
   },
@@ -301,10 +305,10 @@
     "symbol": "TOWN",
     "shares": 0.14575607827633918,
     "entryPrice": 36.62,
-    "lastPrice": 35.62
+    "lastPrice": 35.64
    },
    "lastPrice": 48.9,
-   "dealValueNow": 50.22210799999999,
+   "dealValueNow": 50.24317599999999,
    "fees": {
     "reversePct": null,
     "targetPct": null,
@@ -315,7 +319,7 @@
    "breakPrice": 39.7,
    "downside": 0.1814,
    "breakBasis": "undisturbed close 2026-10-05",
-   "breakLoss": 0.01276,
+   "breakLoss": 0.01274,
    "country": "United States",
    "region": "US",
    "sector": "Financials",
@@ -350,8 +354,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 4075,
-    "avgClose": 49.3845,
+    "shares": 4250,
+    "avgClose": 49.4045,
     "sessions": 20
    },
    "timeline": [
@@ -511,6 +515,10 @@
     [
      "2026-11-24",
      0.02704
+    ],
+    [
+     "2026-11-25",
+     0.02747
     ]
    ]
   },
@@ -534,7 +542,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Pontiac Bancorp all-cash $19.78/share for Ottawa Bancorp. Small community-bank deal, routine regulatory approvals, board approved; Q1 2027 close. Thinly traded.",
    "status": "open",
-   "lastPrice": 19.66,
+   "lastPrice": 19.65,
    "dealValueNow": 19.78,
    "fees": {
     "reversePct": null,
@@ -546,7 +554,7 @@
    "breakPrice": 15.9,
    "downside": 0.1783,
    "breakBasis": "undisturbed close 2026-08-19",
-   "breakLoss": 0.01367,
+   "breakLoss": 0.01362,
    "country": "United States",
    "region": "US",
    "sector": "Financials",
@@ -581,8 +589,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 21270,
-    "avgClose": 19.3425,
+    "shares": 21315,
+    "avgClose": 19.369,
     "sessions": 20
    },
    "timeline": [
@@ -751,6 +759,10 @@
     [
      "2026-11-24",
      0.0061
+    ],
+    [
+     "2026-11-25",
+     0.00662
     ]
    ]
   },
@@ -774,7 +786,7 @@
    "expectedClose": "2027-07-31",
    "rationale": "onsemi all-cash $123/share (amended Oct 1). Strategic buyer, cash on hand plus fully committed Morgan Stanley debt. The board reaffirmed onsemi over an unsolicited rival proposal, which also supports the price. Mid-2027 close.",
    "status": "open",
-   "lastPrice": 116.77,
+   "lastPrice": 116.63,
    "dealValueNow": 123,
    "fees": {
     "reversePct": 5.61,
@@ -786,7 +798,7 @@
    "breakPrice": 87.9375,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01738,
+   "breakLoss": 0.01728,
    "country": "United States",
    "region": "US",
    "sector": "Information Technology",
@@ -832,8 +844,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 1398730,
-    "avgClose": 117.3795,
+    "shares": 1496075,
+    "avgClose": 117.286,
     "sessions": 20
    },
    "timeline": [
@@ -1017,6 +1029,10 @@
     [
      "2026-11-24",
      0.05335
+    ],
+    [
+     "2026-11-25",
+     0.05462
     ]
    ]
   },
@@ -1040,7 +1056,7 @@
    "expectedClose": "2027-06-30",
    "rationale": "Texas Instruments all-cash $231/share. Strategic, investment-grade buyer; shareholders approved and US HSR expired; only remaining foreign approvals. H1 2027 close.",
    "status": "open",
-   "lastPrice": 220.91,
+   "lastPrice": 221.09,
    "dealValueNow": 231,
    "fees": {
     "reversePct": 7.34,
@@ -1052,7 +1068,7 @@
    "breakPrice": 136.62,
    "downside": 0.384,
    "breakBasis": "undisturbed close 2026-02-03",
-   "breakLoss": 0.02671,
+   "breakLoss": 0.02674,
    "country": "United States",
    "region": "US",
    "sector": "Information Technology",
@@ -1097,8 +1113,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 506700,
-    "avgClose": 221.6425,
+    "shares": 510515,
+    "avgClose": 221.609,
     "sessions": 20
    },
    "timeline": [
@@ -1277,6 +1293,10 @@
     [
      "2026-11-24",
      0.04567
+    ],
+    [
+     "2026-11-25",
+     0.04482
     ]
    ]
   },
@@ -1313,7 +1333,7 @@
    "breakPrice": 144.03,
    "downside": 0.2647,
    "breakBasis": "undisturbed close 2026-10-02",
-   "breakLoss": 0.01873,
+   "breakLoss": 0.01872,
    "country": "United States",
    "region": "US",
    "sector": "Information Technology",
@@ -1353,8 +1373,8 @@
     "geo": "USA / France"
    },
    "adv20": {
-    "shares": 1740880,
-    "avgClose": 195.497,
+    "shares": 1778440,
+    "avgClose": 195.5485,
     "sessions": 20
    },
    "timeline": [
@@ -1518,6 +1538,10 @@
     [
      "2026-11-24",
      0.04592
+    ],
+    [
+     "2026-11-25",
+     0.04592
     ]
    ]
   },
@@ -1541,7 +1565,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "EnerSys all-cash $16/share tender offer funded from cash on hand, no financing condition; holders of ~40% have tender support agreements. HSR and UK NSIA clearances; offer expires Dec 3 (extendable).",
    "status": "open",
-   "lastPrice": 15.58,
+   "lastPrice": 15.6,
    "dealValueNow": 16.0,
    "fees": {
     "reversePct": 3.22,
@@ -1553,7 +1577,7 @@
    "breakPrice": 6.01,
    "downside": 0.617,
    "breakBasis": "undisturbed close 2026-10-26",
-   "breakLoss": 0.01831,
+   "breakLoss": 0.01834,
    "realizedPnl": 0.015413,
    "country": "United States",
    "region": "US",
@@ -1601,8 +1625,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 309220,
-    "avgClose": 15.66,
+    "shares": 191855,
+    "avgClose": 15.6595,
     "sessions": 20
    },
    "timeline": [
@@ -1707,6 +1731,10 @@
     [
      "2026-11-24",
      0.02696
+    ],
+    [
+     "2026-11-25",
+     0.02564
     ]
    ]
   },
@@ -1730,7 +1758,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Teledyne all-cash $18.90/share. Strategic serial acquirer, ample liquidity; boards unanimous. HSR and foreign clearances, early 2027 close.",
    "status": "open",
-   "lastPrice": 17.47,
+   "lastPrice": 17.73,
    "dealValueNow": 18.9,
    "fees": {
     "reversePct": null,
@@ -1742,7 +1770,7 @@
    "breakPrice": 12.41,
    "downside": 0.3274,
    "breakBasis": "undisturbed close 2026-08-07",
-   "breakLoss": 0.01925,
+   "breakLoss": 0.02022,
    "country": "United States",
    "region": "US",
    "sector": "Health Care",
@@ -1782,8 +1810,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 827930,
-    "avgClose": 18.28,
+    "shares": 927705,
+    "avgClose": 18.244,
     "sessions": 20
    },
    "timeline": [
@@ -1947,6 +1975,10 @@
     [
      "2026-11-24",
      0.08185
+    ],
+    [
+     "2026-11-25",
+     0.06599
     ]
    ]
   },
@@ -1970,7 +2002,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Epiris-backed Bradbury Bidco recommended cash offer, 1,120p/share by scheme. UK Takeover Code cash confirmation means the funding is committed; board recommends. Q1 2027.",
    "status": "open",
-   "lastPrice": 1106,
+   "lastPrice": 1105,
    "dealValueNow": 1120,
    "fees": {
     "reversePct": null,
@@ -1982,7 +2014,7 @@
    "breakPrice": 726.0,
    "downside": 0.3388,
    "breakBasis": "undisturbed close 2026-04-02",
-   "breakLoss": 0.0243,
+   "breakLoss": 0.02421,
    "country": "United Kingdom",
    "region": "UK",
    "sector": "Communication Services",
@@ -2018,8 +2050,8 @@
     "geo": "UK / USA"
    },
    "adv20": {
-    "shares": 1064962,
-    "avgClose": 1098.8445,
+    "shares": 1034775,
+    "avgClose": 1099.55,
     "sessions": 20
    },
    "timeline": [
@@ -2201,7 +2233,11 @@
     ],
     [
      "2026-11-25",
-     0.01276
+     0.01357
+    ],
+    [
+     "2026-11-26",
+     0.01266
     ]
    ]
   },
@@ -2237,7 +2273,7 @@
    "breakPrice": 688.125,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01769,
+   "breakLoss": 0.01767,
    "country": "United Kingdom",
    "region": "UK",
    "sector": "Industrials",
@@ -2273,8 +2309,8 @@
     "geo": "UK"
    },
    "adv20": {
-    "shares": 592519,
-    "avgClose": 918.15,
+    "shares": 644104,
+    "avgClose": 918.325,
     "sessions": 20
    },
    "timeline": [
@@ -2451,6 +2487,10 @@
     ],
     [
      "2026-11-25",
+     0.01446
+    ],
+    [
+     "2026-11-26",
      0.01391
     ]
    ]
@@ -2487,7 +2527,7 @@
    "breakPrice": 2.205,
    "downside": 0.25,
    "breakBasis": "default 25% (undisturbed price unavailable or pre-leaked)",
-   "breakLoss": 0.01819,
+   "breakLoss": 0.01817,
    "country": "Ireland",
    "region": "Europe ex-UK",
    "sector": "Financials",
@@ -2528,8 +2568,8 @@
     "geo": "Ireland / Austria"
    },
    "adv20": {
-    "shares": 138208,
-    "avgClose": 2.9545,
+    "shares": 138570,
+    "avgClose": 2.956,
     "sessions": 20
    },
    "timeline": [
@@ -2717,6 +2757,10 @@
     [
      "2026-11-25",
      0.0
+    ],
+    [
+     "2026-11-26",
+     -0.00336
     ]
    ]
   },
@@ -2740,7 +2784,7 @@
    "expectedClose": "2027-03-31",
    "rationale": "Thrive Holdings all-cash $10/share with debt fully committed by Apollo funds, no financing condition. Board approved; HSR only; the go-shop to Nov 28 is optional upside. Q1 2027.",
    "status": "open",
-   "lastPrice": 9.91,
+   "lastPrice": 9.89,
    "dealValueNow": 10.0,
    "fees": {
     "reversePct": 6.22,
@@ -2752,7 +2796,7 @@
    "breakPrice": 7.41,
    "downside": 0.2538,
    "breakBasis": "undisturbed close 2026-10-28",
-   "breakLoss": 0.01773,
+   "breakLoss": 0.01757,
    "country": "United States",
    "region": "US",
    "sector": "Consumer Discretionary",
@@ -2799,8 +2843,8 @@
     "geo": "USA"
    },
    "adv20": {
-    "shares": 31234565,
-    "avgClose": 9.763,
+    "shares": 31140355,
+    "avgClose": 9.887,
     "sessions": 20
    },
    "timeline": [
@@ -2897,6 +2941,10 @@
     [
      "2026-11-24",
      0.00908
+    ],
+    [
+     "2026-11-25",
+     0.01112
     ]
    ]
   },
@@ -2933,7 +2981,7 @@
    "breakPrice": 8.68,
    "downside": 0.5605,
    "breakBasis": "undisturbed close 2026-10-16",
-   "breakLoss": 0.0179,
+   "breakLoss": 0.01788,
    "realizedPnl": 0.005915,
    "country": "United Kingdom",
    "region": "UK",
@@ -2975,8 +3023,8 @@
     "geo": "UK / Germany"
    },
    "adv20": {
-    "shares": 1262385,
-    "avgClose": 19.792,
+    "shares": 1279780,
+    "avgClose": 19.8065,
     "sessions": 20
    },
    "timeline": [
@@ -3099,6 +3147,10 @@
     ],
     [
      "2026-11-24",
+     0.0
+    ],
+    [
+     "2026-11-25",
      0.0
     ]
    ]
@@ -3434,11 +3486,19 @@
    "long": 82.7201,
    "short": 5.1918,
    "open": 13
+  },
+  {
+   "date": "2026-11-25",
+   "nav": 99.8838,
+   "cash": 22.2624,
+   "long": 82.8161,
+   "short": 5.1947,
+   "open": 13
   }
  ],
- "asOf": "2026-11-25 13:09 UTC",
+ "asOf": "2026-11-26 13:06 UTC",
  "analytics": {
-  "updated": "2026-11-25 13:09 UTC",
+  "updated": "2026-11-26 13:06 UTC",
   "benchmarks": {
    "^GSPC": {
     "name": "S&P 500",
@@ -3498,6 +3558,10 @@
      [
       "2026-11-24",
       7201.0898
+     ],
+     [
+      "2026-11-25",
+      7182.7798
      ]
     ]
    },
@@ -3559,6 +3623,10 @@
      [
       "2026-11-24",
       36.84
+     ],
+     [
+      "2026-11-25",
+      36.91
      ]
     ]
    },
@@ -3619,6 +3687,10 @@
      ],
      [
       "2026-11-24",
+      17.66
+     ],
+     [
+      "2026-11-25",
       17.68
      ]
     ]
@@ -3681,21 +3753,25 @@
      [
       "2026-11-24",
       91.61
+     ],
+     [
+      "2026-11-25",
+      91.64
      ]
     ]
    }
   },
   "fxUsd": {
-   "GBP": 1.3066,
-   "EUR": 1.0943,
-   "CAD": 0.7015
+   "GBP": 1.3102,
+   "EUR": 1.0976,
+   "CAD": 0.7029
   },
   "notionalAum": 100000000,
   "riskFree": {
    "symbol": "^IRX",
    "name": "13-week T-bill yield",
-   "annualPct": 4.168,
-   "date": "2026-11-24"
+   "annualPct": 4.155,
+   "date": "2026-11-25"
   },
   "universe": {
    "definition": "Equal-weight benchmark: every active (pending, signed) deal on the site with a US, UK or European target",
@@ -4419,6 +4495,11 @@
      "ticker": "RSSS",
      "region": "US",
      "sector": "Information Technology"
+    },
+    {
+     "ticker": "private",
+     "region": "Europe ex-UK",
+     "sector": "Energy"
     }
    ]
   }
